@@ -1,0 +1,70 @@
+<template>
+  <view class="order-item-ctner">
+      <view class='num-outer'>
+        <text class='text'>订单编号：</text>
+        <text class='text'>201807300075686898989</text>
+        <text class='text'>已完成</text>
+      </view>
+
+      <view class='con-outer'>
+          <view class='item-wrap' wx:for='{{orderItem.content}}' wx:key='index'>
+            <view class='item-top'>
+                <image src='../../images/goods_small_del.png' />
+                <view class='item-des'>
+                    <view>彩色甜甜圈牛肉味</view>
+                    <view>x 2</view>
+                </view>
+            </view>
+            <view class='item-bottom'></view>
+          </view>
+      </view>
+
+      <view class='bottom-wrap'>
+          <text>总价：</text>
+          <text>¥78</text>
+          <text>再次购买</text>
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class OrderCom extends wepy.component {
+  props = {
+      orderItem: {
+          type: Object,
+          default: {
+              orderNum: '201807300075686898989',
+              orderType: 'finish',
+              content: [
+                  {url: '', title: '彩色甜甜圈牛肉味', num: 2, price: 89},
+                  {url: '', title: '彩色甜甜圈牛肉味12', num: 1, price: 25},
+                  {url: '', title: '彩色甜甜圈牛肉味12', num: 1, price: 25}
+              ]
+          }
+      }
+  }
+  data = {
+  }
+  methods = {
+      numAdd() {
+          console.log('numAdd');
+      },
+      numReduce() {
+          console.log('numReduce');
+      }
+  }
+  watch = {
+      item(newVal, oldVal) {
+
+      }
+  }
+  onLoad() {
+      console.log('item', this.item);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss'
+</style>

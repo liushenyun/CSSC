@@ -1,0 +1,110 @@
+<template>
+    <view class="my-service-ctner">
+        <view class="mys-same" @tap='toRecordA'>
+            <text>服务记录</text>
+            <image src='../../../images/ic_right.png' />
+        </view>
+
+        <view class="mys-same" @tap='toInstallA'>
+            <text>申请安装</text>
+            <image src='../../../images/ic_right.png' />
+        </view>
+
+        <view class="mys-same" @tap='toAfterA'>
+            <text>申请售后</text>
+            <image src='../../../images/ic_right.png' />
+        </view>
+
+        <view class="mys-same" @tap='toMoveDeviceA'>
+            <text>申请移机</text>
+            <image src='../../../images/ic_right.png' />
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class MyService extends wepy.page {
+    config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF'
+    navigationBarTitleText: '我的服务'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+
+  methods = {
+    toRecordA() {
+    //   wepy.navigateTo({ url: '/pages/packageMine/order/index' });
+    },
+    toInstallA() {
+    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    },
+     toAfterA() {
+    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    },
+     toMoveDeviceA() {
+    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    }
+  };
+
+  events = {};
+
+  async onLoad() {
+    // wepy.navigateTo({ url: '/pages/packageMine/orderDetail/index' });
+    this.getSystemInfo();
+    this.$apply();
+  }
+  async onShow() {}
+  onUnload() {}
+  onHide() {}
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '自定义转发标题'
+    };
+  }
+  getSystemInfo() {
+    let res = wepy.getSystemInfoSync();
+    let fitRatio = res.windowWidth / 750;
+    this.$apply();
+  }
+}
+
+</script>
+
+<style lang="scss" scoped>
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+.my-service-ctner{
+    padding: 0 rpx(34);
+    .mys-same{
+        display: flex;
+        position: relative;
+        width: 100%;
+        @include borderBottomOnePx;
+        height: rpx(120);
+        align-items: center;
+        font-size: $size-four;
+        color: $color-word-one;
+        text {
+            flex: 1;
+            letter-spacing: rpx(1)
+        }
+        image{
+            width: rpx(36);
+            height: rpx(36);
+        }
+    }
+}
+</style>

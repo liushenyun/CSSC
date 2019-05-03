@@ -1,0 +1,58 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+.account-ctner{
+    .accont-num{
+        height: rpx(300);
+        position: relative;
+        image {
+            width: 100%;
+            height: 100%;
+        }
+        .an-title{
+            position: absolute;
+            left: rpx(34);
+            top: rpx(52);
+            font-size: rpx(26);
+            color: rgba(255,255,255,0.70);
+            letter-spacing: rpx(0.72);
+        }
+        .an-num {
+            position: absolute;
+            left: rpx(34);
+            top: rpx(120);
+            font-size: rpx(100);
+            color: #FFF;
+            letter-spacing: rpx(1.5);
+        }
+    }
+    .accont-wrap{
+        padding: 0 rpx(34);
+        .account-item{
+            padding: rpx(39) 0;
+            display: flex;
+            align-items: center;
+            position: relative;
+            @include borderBottomOnePx;
+            .account-a{
+                width: rpx(82);
+                height: rpx(82);
+                margin-right: rpx(30);
+            }
+            .account-b {
+                flex: 1;
+                font-size: rpx(30);
+                color: $color-word-one;
+            }
+            .account-c {
+                font-size: rpx(24);
+                color: #B3B3B3;
+                text-align: center
+            }
+            .account-d {
+                width: rpx(36);
+                height: rpx(36);
+            }
+        }
+    }
+}

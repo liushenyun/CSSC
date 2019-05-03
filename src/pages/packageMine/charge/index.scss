@@ -1,0 +1,52 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+.charge-ctner{
+    .charge-input{
+        padding: rpx(30);
+        border-top: 1px solid #ECECEC;
+        border-bottom: 1px solid #ECECEC;
+        display: flex;
+        align-items: center;
+        text {
+            margin-right: rpx(30);
+            font-size: rpx(30);
+            color: #1F1F1F;
+        }
+        input {
+            flex: 1
+        }
+    }
+    .charge-tip{
+        padding: rpx(30);
+        border-top: 1px solid #ECECEC;
+        border-bottom: 1px solid #ECECEC;
+        margin-top: rpx(174);
+        display: flex;
+        align-items: center;
+        .ct-img1{
+            width: rpx(71);
+            height: rpx(71);
+            margin-right: rpx(28);
+        }
+        .ct-tip{
+            flex: 1;
+            view:nth-of-type(1) {
+                font-size: rpx(30);
+                color: #444;
+                letter-spacing: 0.69px;
+            }
+            view:nth-of-type(2) {
+                font-size: rpx(26);
+                color: #000000;
+                letter-spacing: 0.69px;
+                line-height: rpx(36);
+            }
+        }
+        .ct-img2{
+            width: rpx(48);
+            height: rpx(48);
+            margin-left: rpx(28);
+        }
+    }
+}

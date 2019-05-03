@@ -1,0 +1,67 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+page,
+.classify-ctner{
+    height: 100%;
+    position: relative;
+    .ix-input-wrap{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: rpx(12) rpx(45);
+        @include borderBottomOnePx;
+        display: flex;
+        .input-search{
+            width: rpx(36);
+            padding-left: rpx(16);
+            border-top-left-radius: rpx(24);
+            border-bottom-left-radius: rpx(24);
+            background: #F6F6F6;
+            display: flex;
+            align-items: center;
+            image {
+                width: rpx(25);
+                height: rpx(26);
+            }
+        }
+        input {
+            flex: 1;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .input-msg {
+            width: rpx(28);
+            display: flex;
+            align-items: center;
+            margin-left: rpx(18);
+            image {
+                width: rpx(27);
+                height: rpx(25);
+            }
+        }
+    }
+
+    .cs-scroll-outer{
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        height: 100%;
+        padding-top: rpx(76);
+    }
+    .cs-scroll-inner{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        .cs-left{
+            width: rpx(221);
+            position: relative;
+            @include borderRightOnePx;
+        }
+        .cs-right {
+            flex: 1;
+        }
+    }
+
+}

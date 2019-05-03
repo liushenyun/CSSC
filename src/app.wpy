@@ -1,0 +1,134 @@
+<style lang="scss">
+@import './common/css/common';
+@import './common/css/base';
+// page 公共样式
+page {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+</style>
+
+<script>
+import wepy from 'wepy';
+import 'wepy-async-function';
+import EventQueue from './common/js/eventQueue';
+import { EVENT_QUEUE_NAME } from './common/js/config';
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index/index',
+      'pages/classify/index',
+      'pages/recom/index',
+      'pages/cart/index',
+      'pages/mine/index',
+      // 'pages/mall/index',
+      'pages/login/index',
+      'pages/authorize/index',
+      'pages/webview/index'
+    ],
+    window: {
+      // backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#FFF',
+      navigationBarTitleText: '鼎绿源净水',
+      navigationBarTextStyle: 'black'
+    },
+    subPackages: [
+      {
+        root: 'pages/packageIndex',
+        pages: [
+          'message/index',
+          'test/index'
+        ]
+      },
+      {
+        root: 'pages/packageClassify',
+        pages: [
+          'test/index'
+        ]
+      },
+      {
+        root: 'pages/packageRecom',
+        pages: [
+          'test/index'
+        ]
+      },
+      {
+        root: 'pages/packageCart',
+        pages: [
+          'test/index'
+        ]
+      },
+      {
+        root: 'pages/packageMine',
+        pages: [
+          'message/index',
+          'account/index',
+          'charge/index',
+          'payedBill/index',
+          'unpayedBill/index',
+          'myService/index',
+          'userAgreement/index',
+          'deviceBook/index',
+          'about/index',
+          'feedback/index'
+        ]
+      }
+    ],
+    tabBar: {
+      color: '#333333',
+      selectedColor: '#FF7F00',
+      list: [
+        {
+          pagePath: 'pages/index/index',
+          text: '首页',
+          iconPath: './images/home_light.png',
+          selectedIconPath: './images/home_fill_light.png'
+        },
+        {
+          pagePath: 'pages/classify/index',
+          text: '分类',
+          iconPath: './images/news_hot_light.png',
+          selectedIconPath: './images/news_hot_fill_light.png'
+        },
+        {
+          pagePath: 'pages/recom/index',
+          text: '老成推荐',
+          iconPath: './images/appreciate_light.png',
+          selectedIconPath: './images/appreciate_fill_light.png'
+        },
+        {
+          pagePath: 'pages/cart/index',
+          text: '购物车',
+          iconPath: './images/cart_light.png',
+          selectedIconPath: './images/cart_fill_light.png'
+        },
+        {
+          pagePath: 'pages/mine/index',
+          text: '我的',
+          iconPath: './images/my_light.png',
+          selectedIconPath: './images/my_fill_light.png'
+        }
+      ]
+    }
+  };
+
+  globalData = {
+    userInfo: null,
+    [EVENT_QUEUE_NAME]: new EventQueue()
+  };
+
+  constructor() {
+    super();
+    this.use('requestfix');
+    // 启动 promise
+    // this.use('promisify');
+  }
+
+  async onLoad() {}
+  async onLaunch() {
+    // wx.setStorageSync(KEY,DATA)
+  }
+}
+</script>

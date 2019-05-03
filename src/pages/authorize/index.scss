@@ -1,0 +1,37 @@
+.auth-container{
+  .auth-same{
+    // display: inline-block;
+    text-align: center;
+  }
+  .auth-logo{
+    margin-top: 60rpx;
+    image{
+      width: 100rpx;
+      height: 100rpx;
+    }
+  }
+  .autn-name{
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 34rpx;
+  }
+  .auth-description{
+    margin: 80rpx 0 30rpx 0;
+    line-height: 40rpx;
+    color: #B0B0B0;
+    font-size: 24rpx;
+  }
+  .auth-btn{
+    text-align: center;
+    .btn{
+      display: inline-block;
+      background: #00BBFC;
+      width: 70%;
+      height: 80rpx;
+      line-height: 80rpx;
+      font-size: 30rpx;
+      color: #FFF;
+      border-radius: 10rpx; 
+    }
+  }
+}

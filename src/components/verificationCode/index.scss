@@ -1,0 +1,15 @@
+.verification-code-container{
+  display: inline-block;
+  padding: 14rpx 10rpx;
+  font-size: 24rpx;
+  color: #3385EE;
+  line-height: 24rpx;
+  border: 1rpx solid #3385EE;
+  border-radius: 4rpx;
+  min-width: 110rpx;
+  text-align: center;
+}
+.code-inner{
+  height: 100%;
+  width: 100%;
+}

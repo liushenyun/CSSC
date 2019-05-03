@@ -1,0 +1,17 @@
+/*
+ * 实现过滤器 不能使用es6语法
+ * @Author: icarbonx-mini 
+ * @Date: 2018-07-17 15:22:53 
+ * @Last Modified by: icarbonx-mini
+ * @Last Modified time: 2018-07-17 15:32:38
+ */
+
+ // 实现过滤器
+var typeFilter = function (type) {
+  var _arr = ['类型1', '类型2', '类型3'];
+  return _arr[type]
+}
+
+module.exports = {
+  typeFilter: typeFilter
+};

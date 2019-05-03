@@ -1,0 +1,41 @@
+/*
+ * @description css 常量
+ * @Author: icarbonx-mini 
+ * @Date: 2018-06-29 11:31:41 
+ * @Last Modified by: icarbonx-mini
+ * @Last Modified time: 2018-08-20 11:24:57
+ */
+
+
+@import './rpx.scss';
+// 页面基本字体颜色（个别字体在页面进行设置）
+$color-word-one:#333; // 字体主体颜色
+$color-word-two:#000000; // 次级字体颜色
+$color-word-three:#666; // 次级字体颜色 提醒字体（例如单位）
+$color-word-alarm:#FF7F00; // 提醒颜色
+
+// 页面基本背景
+$color-page-background: #FFF; // page背景颜色 背景主颜色
+$page-padding-lr: rpx(30); // 页面左右padding
+
+// 页面字体大小 根据项目自行调整
+$size-unit: rpx(20);
+$size-one: rpx(24);
+$size-two: rpx(26);
+$size-three: rpx(28);
+$size-four: rpx(30);
+$size-five: rpx(32);
+$size-six: rpx(34);
+$size-seven: rpx(42);
+$size-border-radius: rpx(8);
+// input
+$color-input-placeholder:#D8D8D8; // input placeholder 颜色
+$color-input:$color-word-one; // input placeholder 颜色
+
+// 按钮
+$color-button:$color-word-three; //  button背景颜色
+$color-border:$color-word-three ; // 按钮border线条颜色
+
+$color-text-important-one:#FFFFFF; //客制化字体颜色
+$color-text-important-two:#FF7B00 ; //客制化字体颜色
+$color-text-important-three:#3385EE; //客制化字体颜色

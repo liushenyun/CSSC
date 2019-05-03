@@ -1,0 +1,11 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+page,
+.cart-ctner{
+    height: 100%;
+    background: #EDEDED;
+    .cat-itme-wrap {
+        margin-bottom: rpx(8);
+    }
+}

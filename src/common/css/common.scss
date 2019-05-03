@@ -1,0 +1,94 @@
+@import './const.scss';
+@import './rpx.scss';
+// ===== button 伪类边框去掉 icx=====
+button.icx-clear-after-border::after{
+    // border: 1px solid rbag(0,0,0,0.2);
+    border: 0;
+}
+
+// ===== input 公共样式 =====
+.icx-placeholder{
+    color: $color-input-placeholder;
+    font-size: rpx(24);
+}
+input[class~="icx-input"]{
+    color: $color-input;
+    font-size: rpx(24);
+    background: red;
+    color:#444;
+    background:#F6F6F6;
+    padding:0 rpx(15);
+    border-radius: rpx(24);
+    letter-spacing: rpx(2);
+
+}
+textarea[class~="icx-input"]{
+    color: $color-input;
+    font-size: rpx(24);
+}
+// hover-class
+.icx-click-hover{
+    opacity: 0.8;
+}
+// 公共样式
+button.icx-btn::after {
+  border: 0;
+}
+// 提交 保存按钮
+.icx-btn-submit{
+    background: $color-word-three;
+    border-radius: 6px;
+    height: rpx(90);
+    line-height: rpx(90);
+    text-align: center;
+    font-size:rpx(26);
+    color: #FFF;
+}
+
+// 公共样式
+button.icx-btn-same-sure::after {
+  border: 0;
+}
+button.icx-btn-same-cancel::after {
+  border: 0;
+}
+button.icx-btn-same-sure{
+  height: rpx(88);
+  line-height: rpx(88);
+  background: #00AAFF;
+  color: #FFF;
+  border-radius: rpx(8);
+  font-size: rpx(30);
+}
+button.icx-btn-same-cancel{
+  height: rpx(90);
+  line-height: rpx(90);
+  font-size: rpx(32);
+  background: #E7E7E7;
+  color: $color-word-one;
+}
+
+// 滚动条设置
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+// ::-webkit-scrollbar  
+// {  
+//     width: 10rpx;  
+//     height: 10rpx;  
+//     background-color: red;  
+// }  
+  
+// /*定义滚动条轨道 内阴影+圆角*/  
+// ::-webkit-scrollbar-track  
+// {  
+//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+//     border-radius: 10px;  
+//     background-color: #F5F5F5;  
+// }  
+  
+// /*定义滑块 内阴影+圆角*/  
+// ::-webkit-scrollbar-thumb  
+// {  
+//     border-radius: 10px;  
+//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+//     background-color: #555;  
+// }  

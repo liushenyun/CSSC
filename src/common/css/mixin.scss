@@ -1,0 +1,54 @@
+// 底部 1px 边框
+@mixin borderBottomOnePx($color: #ECECEC) {
+  &::after{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      content: '';
+      height: 1px;
+      width: 100%;
+      background: $color;
+      transform: scaleY(0.5);
+  }
+}
+
+// 顶部
+@mixin borderTopOnePx($color: #ECECEC) {
+  &::before{
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      height: 1px;
+      width: 100%;
+      background: $color;
+      transform: scaleY(0.5);
+  }
+}
+
+// 右边
+@mixin borderRightOnePx($color: #ECECEC) {
+  &::after{
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: '';
+      height: 100%;
+      width: 1px;
+      background: $color;
+      transform: scaleX(0.5);
+  }
+}
+
+@mixin borderLeftOnePx($color: #ECECEC) {
+  &::after{
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      height: 100%;
+      width: 1px;
+      background: $color;
+      transform: scaleX(0.5);
+  }
+}

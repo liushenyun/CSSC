@@ -1,0 +1,113 @@
+<template>
+  <view class="login-container">
+    <view class="login-img">
+      <image class="login-p-img" src="./img/logo.png"></image>
+        <!-- <view class="login-p-img"><open-data type="userAvatarUrl"></open-data></view> -->
+    </view>
+    <view class="login-outer">
+        <!-- <view class="login-title">登录/注册</view> -->
+        <view class="login-input-outer">
+            <view class="input-same">
+                <input bindblur="telInutBlur" value="" placeholder-class="login-placeholder"  maxlength="11" placeholder="请输入电话号码" />
+            </view>
+            <view class="input-same has-code">
+                <input bindblur="codeInutBlur" value="{{code}}" placeholder-class="login-placeholder" maxlength="6" placeholder="请输入验证码" />
+                <verificationCode :phone.sync="tel" class="code-com" time="60"></verificationCode>
+            </view>
+        </view>
+        <view  class="login-submit-btn" bindtap="loginSubmit">登录/注册</view>
+        <view class="login-protocol">
+          注册即代表同意<text bindtap="toAgreement">【觅我用户协议】</text>及<text bindtap="toPrivacyPolicy">【觅我隐私政策】</text>
+        </view>
+    </view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import debounce from '../../utils/base/debounce.js';
+import {
+  WBVIEW_PAGE_URL,
+  MAIN_DOMAIN,
+  DEBOUNCE_TIME
+} from '../../common/js/config';
+import { getCodeFetch, loginFetch, doQueueEventG } from '../../services/login';
+import miniPro from '../../utils/wepy-pro';
+import verificationCode from '../../components/verificationCode/index';
+
+export default class Login extends wepy.page {
+  config = {
+    navigationBarTitleText: '登录',
+    navigationBarBackgroundColor: '#09103b',
+    navigationBarTextStyle: 'white'
+  };
+
+  components = {
+    verificationCode
+  };
+
+  data = {
+    tel: '',
+    code: '',
+    userInfo: {},
+    preUrl: ''
+  };
+
+  methods = {
+    loginSubmit: debounce(function() {
+      let { tel, code } = this.data;
+      loginFetch({
+        phoneNumber: tel,
+        verifyCode: code
+      })
+        .then(msg => {
+          miniPro.setAccessToken(msg.access_token);
+          miniPro.setRefreshToken(msg.access_token);
+          wepy.setStorageSync('isFromByLogin', true);
+          wepy.navigateBack({
+            delta: 1
+          });
+          doQueueEventG();
+        })
+        .catch();
+    }, DEBOUNCE_TIME),
+
+    toAgreement() {
+      wepy.navigateTo({
+        url: `${WBVIEW_PAGE_URL}?url=${MAIN_DOMAIN}/agreement`
+      });
+    },
+    toPrivacyPolicy() {
+      wepy.navigateTo({
+        url: `${WBVIEW_PAGE_URL}?url=${MAIN_DOMAIN}/privacy_policy`
+      });
+    },
+    telInutBlur(e) {
+      this.tel = e.detail.value;
+    },
+    codeInutBlur(e) {
+      this.code = e.detail.value;
+    }
+  };
+
+  sendGetCodeActive() {
+    let _tel = this.data.tel;
+    getCodeFetch({ phoneNumber: _tel, use: 1 })
+      .then(() => {})
+      .catch();
+  }
+  events = {
+    clickSendEvent: p1 => {
+      this.sendGetCodeActive();
+    }
+  };
+
+  onLoad() {}
+
+  onUnload() {}
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index';
+</style>

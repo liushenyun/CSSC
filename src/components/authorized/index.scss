@@ -1,0 +1,59 @@
+.authorized-container{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+.auth-inner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 80rpx 30rpx 40rpx 30rpx;
+  border-radius: 8rpx;
+  background: #FFF;
+  width: 550rpx;
+  text-align: center;
+  .img-top{
+    width: 220rpx;
+    height: 220rpx;
+  }
+  .auth-tip{
+    margin: 58rpx 0 52rpx 0;
+    .tip-img{
+      width: 66rpx;
+      height: 66rpx;
+      margin-right: 19rpx;
+    }
+    .tip-con{
+      display: inline-block;
+      .tip-con-1{
+        line-height: 32rpx;
+        font-size: 30rpx;
+      }
+      .tip-con-2{
+        font-size: 22rpx;
+        color: #999;
+        line-height: 34rpx;
+      }
+    }
+  }
+  .auth-btn{
+    background: #51A939;
+    border-radius: 8rpx;
+    height:80rpx;
+    line-height:80rpx;
+    color: #FFF;
+    font-size: 30rpx;
+  }
+  .auth-cancel-btn{
+    display: inline-block;
+    padding: 10rpx;
+    margin-top: 26rpx;
+    color: #999;
+    font-size: 24rpx;
+  }
+}

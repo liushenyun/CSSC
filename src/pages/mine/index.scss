@@ -1,0 +1,68 @@
+
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+page{
+  color: $color-word-one;
+}
+.mine-ctner{
+  .person-outer{
+    padding: rpx(60) rpx(44) rpx(103) rpx(44);
+    display: flex;
+    align-items: center;
+    .img{
+      width: rpx(130);
+      height: rpx(130);
+    }
+    .name{
+      flex: 1;
+      padding-left: rpx(52);
+      font-size: rpx(38);
+      font-weight: 600
+    }
+  }
+
+  .mid-outer{
+    padding: 0 rpx(80);
+    margin-bottom: rpx(60);
+    display: flex;
+    justify-content: space-between;
+    .mid-same-inner{
+      width: rpx(100);
+      font-size: $size-two;
+      image{
+        width: rpx(100);
+        height: rpx(100);
+        margin-bottom: rpx(10);
+      }
+      text-align: center;
+    }
+  }
+  
+  .action-outer{
+    padding: 0 rpx(30);
+    .action-same{
+      height: rpx(100);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      font-size: $size-four;
+      @include borderBottomOnePx(#ECECEC);
+      .ic-icon{
+        width: rpx(44);
+        height: rpx(44);
+        margin-right: rpx(26);
+      }
+      text{
+        flex: 1;
+      }
+      .ic-right{
+        width: rpx(36);
+        height: rpx(36);
+      }
+    }
+  }
+
+}
+

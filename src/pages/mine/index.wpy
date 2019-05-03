@@ -1,0 +1,150 @@
+
+<template>
+  <view class="mine-ctner">
+    <view class='person-outer'>
+        <view class='img'>
+          <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class='name'>
+          <open-data type="userNickName"></open-data>
+        </view>
+    </view>
+
+    <view class="mid-outer">
+        <view class="mid-same-inner" @tap='toMesA'>
+          <image src="../../images/icon_zhanghu.png" />
+          <text>消息</text>
+        </view>
+        <view class="mid-same-inner" @tap='toAccountA'>
+          <image src="../../images/icon_zhanghu.png" />
+          <text>账户</text>
+        </view>
+        <view class="mid-same-inner" @tap='toDeviceA'>
+          <image src="../../images/icon_zhanghu.png" />
+          <text>设备</text>
+        </view>
+    </view>
+
+    <view class='action-outer'>
+        <view class='action-same' @tap='toServiceA'>
+          <image class='ic-icon' src='../../images/icon_mefuwu.png' />
+          <text>我的服务</text>
+          <image class='ic-right' src='../../images/ic_right.png' />
+        </view>
+        
+        <view class='action-same' @tap='toAgreeA'>
+          <image class='ic-icon' src='../../images/icon_agreement.png' />
+          <text>用户协议</text>
+          <image class='ic-right' src='../../images/ic_right.png' />
+        </view>
+
+        <view class='action-same' @tap='toDeviceBookA'>
+          <image class='ic-icon' src='../../images/icon_problem.png' />
+          <text>设备说明书</text>
+          <image class='ic-right' src='../../images/ic_right.png' />
+        </view>
+
+        <view class='action-same' @tap='toAboutA'>
+          <image class='ic-icon' src='../../images/icon_abus.png' />
+          <text>关于我们</text>
+          <image class='ic-right' src='../../images/ic_right.png' />
+        </view>
+
+        <view class='action-same' @tap='toFeedbackA'>
+          <image class='ic-icon' src='../../images/icon_feback.png' />
+          <text>问题反馈</text>
+          <image class='ic-right' src='../../images/ic_right.png' />
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Auth from '../../common/js/authProcess.js';
+import { apiGetGiftListF } from '../../services/index';
+
+export default class Index extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF'
+    navigationBarTitleText: '我的'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {};
+
+  methods = {
+    toOrderA() {
+      wepy.navigateTo({ url: '/pages/packageMine/order/index' });
+    },
+    toFeedbackA() {
+      wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    },
+    toMesA() {
+      console.log('消息')
+      wepy.navigateTo({ url: '/pages/packageMine/message/index' });
+    },
+    toAccountA() {
+      wepy.navigateTo({ url: '/pages/packageMine/account/index' });
+      console.log('账户')
+    },
+    toDeviceA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/deviceList/index' });
+      console.log('设备')
+    },
+    toServiceA() {
+      wepy.navigateTo({ url: '/pages/packageMine/myService/index' });
+      console.log('我的服务')
+    },
+    toAgreeA() {
+      wepy.navigateTo({ url: '/pages/packageMine/userAgreement/index' });
+      console.log('用户协议')
+    },
+    toDeviceBookA() {
+      console.log('设备说明书')
+      wepy.navigateTo({ url: '/pages/packageMine/deviceBook/index' });
+    },
+    toAboutA() {
+      console.log('关于我们')
+      wepy.navigateTo({ url: '/pages/packageMine/about/index' });
+    },
+    toFeedbackA() {
+      console.log('问题反馈')
+      wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    }
+  };
+
+  events = {};
+
+  async onLoad() {
+    // wepy.navigateTo({ url: '/pages/packageMine/orderDetail/index' });
+    this.getSystemInfo();
+    this.$apply();
+  }
+  async onShow() {}
+  onUnload() {}
+  onHide() {}
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '自定义转发标题'
+    };
+  }
+  getSystemInfo() {
+    let res = wepy.getSystemInfoSync();
+    let fitRatio = res.windowWidth / 750;
+    this.$apply();
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index.scss';
+</style>

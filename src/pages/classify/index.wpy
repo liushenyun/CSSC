@@ -1,0 +1,118 @@
+
+<template>
+  <view class="classify-ctner container-same">
+    <wxs src="../../utils/filter.wxs" module="tools"></wxs>
+      
+      <view class="ix-input-wrap">
+        <view class="input-search">
+          <image src='../../images/nav_button_search_default.png' />
+        </view>
+        <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+        <view class="input-msg" @tap="toMsgA">
+          <image src='../../images/nav_button_message_default.png' />
+        </view>
+      </view>
+      
+      <view class="cs-scroll-outer">
+        <view class="cs-scroll-inner">
+          <view class="cs-left"></view>
+          <view class="cs-right"></view>
+        </view>
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Auth from '../../common/js/authProcess.js';
+import { apiIsAuthF, apiGoodsListF } from '../../services/index';
+import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
+import miniPro from '@/utils/wepy-pro.js';
+import { showAlertTips } from '@/utils/feature.js';
+
+export default class Index extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF'
+    navigationBarTitleText: '分类'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {
+    imgUrls: [
+      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000
+  };
+
+  computed = {};
+
+  methods = {
+    toMsgA() {
+      console.log('去往消息列表');
+       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
+    },
+    bindReplaceInput(e) {
+      console.log('input输入', e)
+    },
+    toDeviceA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
+    },
+    toScanAddDeviceA() {
+      // 允许从相机和相册扫码
+      wx.scanCode({
+        success(res) {
+          console.log(res)
+        }
+      })
+    },
+    toNoAddDeviceA() {
+      console.log(4646546)
+      wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
+    }
+  };
+
+  events = {};
+
+  async onLoad() {
+    // wepy.navigateTo({
+    //   url: '/pages/packageIndex/NearMachine/index'
+    // })
+    // apiGoodsListF().then(msg => {
+    //   console.log('86', msg)
+    // }).catch(err => {
+    //   console.log('88', err)
+    // });
+    this.getSystemInfo();
+    this.$apply();
+  }
+  onUnload() {}
+  onHide() {}
+  onShareAppMessage(res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '自定义转发标题',
+      path: '/page/index/index'
+    };
+  }
+  async onShow() {}
+  getSystemInfo() {
+    let res = wepy.getSystemInfoSync();
+    let fitRatio = res.windowWidth / 750;
+    this.$apply();
+  }
+}
+</script>
+<style lang="scss">
+@import './index.scss';
+</style>

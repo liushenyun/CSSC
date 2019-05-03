@@ -1,0 +1,11 @@
+@import './const.scss';
+page {
+	color: $color-word-one;
+	view, text, button, checkbox, radio, scroll-view, input, form, label, picker, silder, image {
+    box-sizing: border-box;
+    font-size: $size-one;
+  }
+  view{
+    line-height: 1;
+  }
+}

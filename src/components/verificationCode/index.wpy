@@ -1,0 +1,68 @@
+<template>
+  <view class="verification-code-container">
+    <view class="code-inner" wx:if="{{!showCount}}" bindtap='sendGetCode'>发送验证码</view>
+    <view class="code-inner" wx:if="{{showCount}}">{{value1}}</view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Validate from '../../services/Validate.js';
+
+export default class authorized extends wepy.component {
+  props = {
+    time: {
+      type: [Number, String],
+      default: 60
+    },
+    phone: {
+      type: [Number, String],
+      default: ''
+    }
+  };
+  data = {
+    count: 0,
+    value: '获取验证码',
+    showCount: false,
+    value1: ''
+  };
+  onLoad() {
+    this.count = this.time;
+  }
+
+  methods = {
+    sendGetCode() {
+      let countdown = this.time;
+      let _tel = this.phone;
+      console.log('_tel', this.$parent, _tel);
+      let vArr = [['phoneNumber', _tel, '电话号码', 'empty|phone']];
+      if (!Validate(vArr)) {
+        return;
+      }
+      let that = this;
+      count();
+      that.$emit('clickSendEvent', {});
+      function count() {
+        if (countdown == 0) {
+          that.showCount = false;
+          that.value = '重新发送'
+          that.$apply();
+          return;
+        } else {
+          that.showCount = true;
+          that.value1 = `${countdown} S`;
+          countdown--;
+          that.$apply();
+        }
+        setTimeout(function() {
+          count();
+        }, 1000);
+      }
+    }
+  };
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss';
+</style>

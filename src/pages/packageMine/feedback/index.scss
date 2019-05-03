@@ -1,0 +1,94 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+
+}
+.feedback-ctner{
+    width: 100%;
+    height: 100%;
+    padding: rpx(32) rpx(34);
+    .fb-btn{
+        width: 80%;
+        margin-left: 10%;
+        margin-top: rpx(80);
+        height: rpx(88);
+        line-height: rpx(88);
+        background: #00AAFF;
+        border-radius: rpx(8);
+        font-size: rpx(30);
+        color: #FFF;
+        text-align: center;
+    }
+    .type-photo-outer{
+        margin: rpx(36) 0;
+        overflow: hidden;
+        .photo-btn,
+        .photo-same{
+            width: rpx(150);
+            height: rpx(150);
+            margin: 0 rpx(20) rpx(20) 0;
+            float: left;
+            position: relative;
+            image {
+                width: 100%;
+                height: 100%;
+            }
+            image.img-del{
+                position: absolute;
+                top: rpx(10);
+                right: rpx(10);
+                width: rpx(30);
+                height: rpx(30);
+            }
+        }
+    }
+}
+.fb-type-outer {
+    .fd-title{
+        font-size: $size-four;
+        color: #1F1F1F;
+        font-weight: 600;
+        margin-bottom: rpx(36)
+    }
+    .type-list-inner{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: rpx(38);
+        .list-item{
+            width: rpx(188);
+            height: rpx(62);
+            text-align: center;
+            line-height: rpx(62);
+            border: rpx(1) solid #999;
+            border-radius: rpx(4);
+            font-size: $size-two;
+            color: $color-word-one;
+            &.list-item-active{
+                color: #00AAFF;
+                border-color: #00AAFF
+            }
+        }
+    }
+}
+.input-wrap{
+    padding-bottom: rpx(36);
+    border-bottom: rpx(1) solid rgba(0, 0, 0, 0.1);
+    .input-title{
+        width: rpx(100);
+        font-size: rpx(30);
+        color: #1F1F1F;
+        height: rpx(36);
+        line-height: rpx(36);
+        margin-bottom: rpx(20)
+    }
+    input{
+        width: 100%;
+        height: rpx(40);
+        line-height: rpx(40);
+        background: #F2F0F3;
+        border-radius: rpx(8);
+        padding:0 rpx(10);
+        font-size: rpx(30);
+    }
+}

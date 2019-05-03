@@ -1,0 +1,36 @@
+<template>
+  <view>
+    <web-view src="{{url}}"></web-view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+
+export default class WebView extends wepy.page {
+  config = {};
+
+  data = {
+    url: ''
+  };
+
+  onLoad(options) {
+    let _url = options.url;
+    let _queryObj = options.queryObj;
+    if (_queryObj) {
+      _queryObj = JSON.parse(_queryObj);
+      let _arr = [];
+      Object.entries(_queryObj).forEach(v => {
+        _arr.push(`${v[0]}=${v[1]}`);
+      });
+      this.url = `${_url}?${_arr.join('&')}`;
+    } else {
+      this.url = _url;
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index';
+</style>
