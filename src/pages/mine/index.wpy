@@ -1,60 +1,83 @@
 
 <template>
   <view class="mine-ctner">
-    <view class='person-outer'>
-        <view class='img'>
-          <open-data type="userAvatarUrl"></open-data>
-        </view>
-        <view class='name'>
-          <open-data type="userNickName"></open-data>
-        </view>
+    <view class="m-logo"></view>
+    <view class="m-hy">
+      <view class="hy-inner"></view>
     </view>
-
-    <view class="mid-outer">
-        <view class="mid-same-inner" @tap='toMesA'>
-          <image src="../../images/icon_zhanghu.png" />
-          <text>消息</text>
-        </view>
-        <view class="mid-same-inner" @tap='toAccountA'>
-          <image src="../../images/icon_zhanghu.png" />
-          <text>账户</text>
-        </view>
-        <view class="mid-same-inner" @tap='toDeviceA'>
-          <image src="../../images/icon_zhanghu.png" />
-          <text>设备</text>
-        </view>
+    <view class="m-partner">
+      <view class="m-partner-inner">
+        <image src='../../images/refund.png'></image>
+        <text>我是合伙人</text>
+      </view>
     </view>
+    <view class="m-order-outer">
+      <view class="m-order-innder">
+        <view class="m-order-title">
+          <text>我的订单</text>
+          <image src='../../images/unfold.png'></image>
+        </view>
+        <view class="m-order-item">
+          <view class="order_a">
+            <image src='../../images/pay.png'></image>
+            <view>待付款</view>
+          </view>
 
-    <view class='action-outer'>
-        <view class='action-same' @tap='toServiceA'>
-          <image class='ic-icon' src='../../images/icon_mefuwu.png' />
-          <text>我的服务</text>
-          <image class='ic-right' src='../../images/ic_right.png' />
+          <view class="order_b">
+            <image src='../../images/send.png'></image>
+            <view>待发货</view>
+          </view>
+
+          <view class="order_c">
+            <image src='../../images/deliver.png'></image>
+            <view>待收货</view>
+          </view>
+
+          <view class="order_d">
+            <image src='../../images/evaluation.png'></image>
+            <view>待评价</view>
+          </view>
+
+          <view class="order_e">
+            <image src='../../images/refund.png'></image>
+            <view>售后</view>
+          </view>
         </view>
-        
-        <view class='action-same' @tap='toAgreeA'>
-          <image class='ic-icon' src='../../images/icon_agreement.png' />
-          <text>用户协议</text>
-          <image class='ic-right' src='../../images/ic_right.png' />
+      </view>
+    </view>
+    <view class="m-service-outer">
+      <view class="m-service-title">我的服务</view>
+      <view class="m-service-item">
+        <view class="service-a">
+            <image src='../../images/abulk.png'></image>
+            <view>团购订单</view>
         </view>
 
-        <view class='action-same' @tap='toDeviceBookA'>
-          <image class='ic-icon' src='../../images/icon_problem.png' />
-          <text>设备说明书</text>
-          <image class='ic-right' src='../../images/ic_right.png' />
+        <view class="service-b">
+            <image src='../../images/location.png'></image>
+            <view>我的地址</view>
         </view>
 
-        <view class='action-same' @tap='toAboutA'>
-          <image class='ic-icon' src='../../images/icon_abus.png' />
-          <text>关于我们</text>
-          <image class='ic-right' src='../../images/ic_right.png' />
+        <view class="service-c">
+            <image src='../../images/favor.png'></image>
+            <view>我的收藏</view>
         </view>
 
-        <view class='action-same' @tap='toFeedbackA'>
-          <image class='ic-icon' src='../../images/icon_feback.png' />
-          <text>问题反馈</text>
-          <image class='ic-right' src='../../images/ic_right.png' />
+        <view class="service-d">
+            <image src='../../images/footprint.png'></image>
+            <view>我的足迹</view>
         </view>
+
+      </view>
+
+
+      <view class="m-service-item">
+        <view class="service-e">
+            <image src='../../images/similar.png'></image>
+            <view>了解更多</view>
+        </view>
+      </view>
+
     </view>
   </view>
 </template>
@@ -66,8 +89,8 @@ import { apiGetGiftListF } from '../../services/index';
 
 export default class Index extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
+    navigationBarBackgroundColor: '#FEA223',
+    navigationBarTextStyle: 'white',
     navigationBarTitleText: '我的'
   };
   components = {};

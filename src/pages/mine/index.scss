@@ -3,66 +3,113 @@
 @import '../../common/css/const.scss';
 @import '../../common/css/mixin.scss';
 page{
-  color: $color-word-one;
+  height: 100%;
 }
 .mine-ctner{
-  .person-outer{
-    padding: rpx(60) rpx(44) rpx(103) rpx(44);
-    display: flex;
-    align-items: center;
-    .img{
-      width: rpx(130);
-      height: rpx(130);
-    }
-    .name{
-      flex: 1;
-      padding-left: rpx(52);
-      font-size: rpx(38);
-      font-weight: 600
-    }
+  background: #EDEDED;
+  height: 100%;
+  .m-logo {
+    height: rpx(230);
+    background: #FEA223;
   }
-
-  .mid-outer{
-    padding: 0 rpx(80);
-    margin-bottom: rpx(60);
-    display: flex;
-    justify-content: space-between;
-    .mid-same-inner{
-      width: rpx(100);
-      font-size: $size-two;
-      image{
-        width: rpx(100);
-        height: rpx(100);
-        margin-bottom: rpx(10);
-      }
-      text-align: center;
-    }
-  }
-  
-  .action-outer{
-    padding: 0 rpx(30);
-    .action-same{
-      height: rpx(100);
+  .m-hy {
+    position: relative;
+    z-index: 1;
+    transform: translateY(-30rpx);
+    height: rpx(180);
+    .hy-inner {
+      background: #4934AD;
+      height: 100%;
       width: 100%;
-      display: flex;
-      align-items: center;
-      position: relative;
-      font-size: $size-four;
-      @include borderBottomOnePx(#ECECEC);
-      .ic-icon{
-        width: rpx(44);
-        height: rpx(44);
-        margin-right: rpx(26);
+      border-radius: rpx(10);
+    }
+  }
+  .m-partner,
+  .m-order-outer,
+  .m-hy {
+    padding: 0 $page-padding-lr;
+  }
+  .m-partner {
+    height: rpx(86);
+    .m-partner-inner {
+      height: 100%;
+      line-height: rpx(86);
+      text-align: center;
+      background: linear-gradient(-2deg,rgba(255,127,0,1),rgba(255,199,66,1));
+      border-radius: rpx(40);
+      image {
+        width: rpx(27);
+        height: rpx(25);
+        margin-right: rpx(20);
       }
-      text{
+      text {
+        font-size: rpx(26);
+        color: #FFF;
+      }
+    }
+  }
+  .m-order-innder {
+    background: #FFF;
+    padding: rpx(22) rpx(21);
+    border-radius: rpx(10);
+    margin: rpx(30) 0 rpx(16) 0;
+    .m-order-title {
+      height: rpx(66);
+      display: flex;
+      position: relative;
+      @include borderBottomOnePx;
+      align-items: center;
+      text {
         flex: 1;
       }
-      .ic-right{
-        width: rpx(36);
-        height: rpx(36);
+      image {
+        width: rpx(12);
+        height: rpx(18);
       }
+    }
+    .m-order-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: rpx(30);
+      view {
+        text-align: center;
+        image {
+          margin-bottom: rpx(10);
+        }
+      }
+      .order_a image{ width: rpx(36); height: rpx(30); } 
+      .order_b image{ width: rpx(36); height: rpx(30); } 
+      .order_c image{ width: rpx(34); height: rpx(32); } 
+      .order_d image{ width: rpx(29); height: rpx(31); } 
+      .order_e image{ width: rpx(35); height: rpx(32); } 
     }
   }
 
+  .m-service-outer {
+    padding: rpx(46) rpx(22);
+    background: #FFF;
+    .m-service-title {
+      margin-bottom: rpx(44)
+    }
+    .m-service-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 rpx(50);
+      margin-bottom: rpx(48);
+      view {
+        text-align: center;
+        image {
+          
+          margin-bottom: rpx(15);
+        }
+      }
+      .service-a image { width: rpx(24); height: rpx(26); }
+      .service-b image { width: rpx(24); height: rpx(30); }
+      .service-c image { width: rpx(30); height: rpx(30); }
+      .service-d image { width: rpx(29); height: rpx(30); }
+      .service-e image { width: rpx(28); height: rpx(31); }
+    }
+  }
 }
 

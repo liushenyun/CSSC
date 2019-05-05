@@ -5,6 +5,29 @@
       <repeat for="{{list}}" key="index" index="index" item="item">
           <CatItem class='cat-itme-wrap' :item="item"></CatItem>
       </repeat>
+
+      <view class="cart-like">
+        <view class="cart-like-title">·猜您喜欢·</view>
+        <view class='cat-container'>
+          <view class="cat-like-item">1</view>
+          <view class="cat-like-item"></view>
+          <view class="cat-like-item"></view>
+          <view class="cat-like-item"></view>
+        </view>
+      </view>
+
+      <view class='cat-bottom'>
+        <view class='check-all'>
+          <image src='../../images/uncheck.png' />
+          <text>全选</text>
+        </view>
+        <view class='price-total'>
+          <text>合计：</text>
+          <text>￥89</text>
+        </view>
+        <view class='pay-btn' @tap='toSureOrderA'>结算(4)</view>
+      </view>
+    
   </view>
 </template>
 
