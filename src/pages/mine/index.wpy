@@ -7,7 +7,7 @@
     </view>
     <view class="m-partner">
       <view class="m-partner-inner">
-        <image src='../../images/refund.png'></image>
+        <image src='../../images/partner_icon.png'></image>
         <text>我是合伙人</text>
       </view>
     </view>
