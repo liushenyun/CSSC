@@ -1,0 +1,73 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.address-list-ctner {
+    height: 100%;
+    background: #EEE;
+    padding: rpx(16) rpx(30);
+    .addl-new {
+        height: rpx(92);
+        background:#FFF;
+        border-radius: rpx(10);
+        padding:  0 rpx(18);
+        display: flex;
+        align-items: center;
+        image:nth-of-type(1) {
+            width: rpx(22);
+            height: rpx(28);
+            margin-right: rpx(6)
+        }
+        text {
+            flex: 1
+        }
+        image:nth-of-type(2) {
+            width: rpx(11);
+            height: rpx(18);
+        }
+    }
+    .addl-list-outer {
+        margin-top: rpx(14);
+        padding: 0 rpx(15);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+        .addl-list-item {
+            display: flex;
+            padding: rpx(25) 0;
+            align-items: center;
+            position: relative;
+            @include borderBottomOnePx;
+            .addl-img-a {
+                width: rpx(30);
+                height: rpx(30);
+                margin-right: rpx(14)
+            }
+            .addl-list-word {
+                flex: 1;
+                view {
+                    line-height: 1.2;
+                }
+                view:nth-of-type(1) {
+                    margin-bottom: rpx(12);
+                    font-size: $size-one
+                }
+                view:nth-of-type(2) {
+                    color: $color-word-three;
+                    font-size: $size-unit
+                }
+            }
+            .addl-edit {
+                width: rpx(60);
+                .addl-img-b {
+                    width: rpx(28);
+                    height: rpx(30);
+                    margin-left: rpx(30);
+                }
+            }
+            
+        }
+    }
+}

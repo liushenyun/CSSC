@@ -9,8 +9,35 @@ page{
   background: #EDEDED;
   height: 100%;
   .m-logo {
-    height: rpx(230);
+    height: rpx(246);
     background: #FEA223;
+    position: relative;
+    .m-log-bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .m-logo-con {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      height: auto;
+      view {
+        width: rpx(100);
+        height: rpx(100);
+        background: #FFF;
+        border-radius: 50%;
+        margin-bottom: rpx(16);
+      }
+      text {
+        font-size:rpx(24);
+        color: #FFF;
+      }
+    }
   }
   .m-hy {
     position: relative;
@@ -18,10 +45,48 @@ page{
     transform: translateY(-30rpx);
     height: rpx(180);
     .hy-inner {
+      position: relative;
       background: #4934AD;
       height: 100%;
       width: 100%;
       border-radius: rpx(10);
+      image {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+      text,
+      view {
+        font-size: $size-unit;
+        height: rpx(38);
+        line-height: rpx(38);
+        position: absolute;
+        top: rpx(15);
+      }
+      text {
+        display: inline-block;
+        left: rpx(31);
+        color: #FFF;
+        z-index: 1;
+      }
+      view {
+        right: rpx(14);
+        background: #FFF;
+        color: $color-word-alarm;
+        letter-spacing: rpx(1);
+        padding: 0 rpx(12);
+        border-radius:rpx(19);
+        z-index: 1;
+      }
+      .hy-word-wrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   .m-partner,

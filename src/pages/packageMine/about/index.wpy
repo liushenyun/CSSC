@@ -1,76 +1,37 @@
 <template>
-    <view class="about-ctner">
-        关于我们
-    </view>
+  <view class='about-ctner'>
+      关于我们
+  </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-
-export default class MyService extends wepy.page {
-    config = {
+export default class About extends wepy.page {
+  config = {
     // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
+    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '关于我们'
   };
-  components = {};
-
-  mixins = [];
-
-  data = {};
-
-  computed = {};
-
-  methods = {
-    toRecordA() {
-    //   wepy.navigateTo({ url: '/pages/packageMine/order/index' });
-    },
-    toInstallA() {
-    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
-    },
-     toAfterA() {
-    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
-    },
-     toMoveDeviceA() {
-    //   wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
-    }
+  components = {
   };
-
-  events = {};
-
-  async onLoad() {
-    // wepy.navigateTo({ url: '/pages/packageMine/orderDetail/index' });
-    this.getSystemInfo();
-    this.$apply();
-  }
-  async onShow() {}
-  onUnload() {}
-  onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
+  data = {
+    isRepair: false, // 检修
+    isBad: false
+  };
+  methods = {
+    startA() {
+      console.log('开启')
+    },
+    flashA() {
+      console.log('冲洗')
+    },
+    toFilterA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
     }
-    return {
-      title: '自定义转发标题'
-    };
-  }
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
-
 </script>
-
 <style lang="scss" scoped>
-@import '../../../common/css/rpx.scss';
-@import '../../../common/css/const.scss';
-@import '../../../common/css/mixin.scss';
-.about-ctner{
-    padding: 0 rpx(34);
-    color: $color-word-one;
-    font-size: $size-four;
-}
+@import './index'
 </style>
+

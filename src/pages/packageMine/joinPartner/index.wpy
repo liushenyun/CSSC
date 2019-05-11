@@ -1,0 +1,61 @@
+<template>
+  <view class='partner-ctner'>
+    <view class="partner-swiper-wrap">
+      <swiper
+        circular
+        autoplay="{{autoplay}}"
+        interval="{{interval}}"
+        duration="{{duration}}"
+        current="{{current}}"
+        @change='bindchange'
+      >
+        <block wx:for="{{partnerArr}}" wx:key="index">
+          <swiper-item>
+            <view class="partner-same {{item.class}}">
+              <text>{{item.name}}</text>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <button class="icx-btn-same-sure">立即加入</button>
+    <view class="des">· 三种合伙人权益介绍 ·</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class JoinPartner extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '加入合伙人'
+  };
+  components = {
+  };
+  data = {
+     partnerArr: [
+      { name: '普通合伙人', class: 'p-a' },
+      { name: '代购合伙人', class: 'p-b' },
+      { name: '高级合伙人', class: 'p-c' }
+    ],
+    autoplay: false,
+    interval: 5000,
+    duration: 1000,
+    current: 1
+  };
+  methods = {
+    choiceA(f) {
+      this.isActive = f
+      console.log(35, f)
+    },
+    bindchange(e) {
+      console.log(53, e.detail);
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

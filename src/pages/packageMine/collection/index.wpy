@@ -1,22 +1,26 @@
 <template>
-  <view class='agreement-ctner'>
-      用户协议
+  <view class='collection-ctner'>
+      <CatItem class='cat-itme-wrap' :item="item"></CatItem>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-export default class UserAgreement extends wepy.page {
+import CatItem from '@/components/catItem/index';
+
+export default class Collection extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF',
-    navigationBarTitleText: '用户协议'
+    navigationBarTitleText: '我的收藏'
   };
   components = {
+    CatItem: CatItem
   };
   data = {
     isRepair: false, // 检修
-    isBad: false
+    isBad: false,
+    item: { check: false, num: 1, name: '彩色甜甜圈牛肉味1' }
   };
   methods = {
     startA() {

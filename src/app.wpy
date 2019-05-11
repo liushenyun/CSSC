@@ -63,16 +63,18 @@ export default class extends wepy.app {
       {
         root: 'pages/packageMine',
         pages: [
-          'message/index',
-          'account/index',
-          'charge/index',
-          'payedBill/index',
-          'unpayedBill/index',
-          'myService/index',
-          'userAgreement/index',
-          'deviceBook/index',
+          'joinMembers/index',
+          'joinPartner/index',
+          'more/index',
+          'policy/index',
           'about/index',
-          'feedback/index'
+          'userAgreement/index',
+          'contact/index',
+          'addressList/index',
+          'addressEdit/index',
+          'bulkOrder/index',
+          'collection/index',
+          'footprint/index'
         ]
       }
     ],

@@ -1,0 +1,60 @@
+<template>
+  <view class="cat-item-ctner">
+    <view class='cat-l'>
+        <image src='../../images/uncheck.png' />
+    </view>
+    <view class='cat-m'>
+        <image src='../../images/goods_small_del.png' />
+    </view>
+    <view class="cat-m-t">
+        <view class='goods-name'>彩色甜甜圈牛肉味</view>
+        <view class='goods-des'>颜色：999哑光 3.5克</view>
+        <view class='goods-num'>仅剩5件</view>
+        <view class='goods-pri'>
+            <text>￥256</text>
+            <text>￥358</text>
+        </view>
+    </view>
+    <view class='cat-r'>
+        <view class='_num'>
+            <view class='num-l' @tap='numReduce'>-</view>
+            <view class='num-m'>2</view>
+            <view class='num-r' @tap='numAdd'>+</view>
+        </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class CatItem extends wepy.component {
+  props = {
+      item: {
+          type: Object,
+          default: {}
+      }
+  }
+  data = {
+  }
+  methods = {
+      numAdd() {
+          console.log('numAdd');
+      },
+      numReduce() {
+          console.log('numReduce');
+      }
+  }
+  watch = {
+      item(newVal, oldVal) {
+
+      }
+  }
+  onLoad() {
+      console.log('item', this.item);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss'
+</style>

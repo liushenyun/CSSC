@@ -1,16 +1,16 @@
 <template>
-  <view class='agreement-ctner'>
-      用户协议
+  <view class='contact-ctner'>
+      联系我们
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-export default class UserAgreement extends wepy.page {
+export default class Contact extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF',
-    navigationBarTitleText: '用户协议'
+    navigationBarTitleText: '联系我们'
   };
   components = {
   };

@@ -1,0 +1,43 @@
+<template>
+  <view class='more-ctner'>
+      <view class="more-same more-1" @tap="toPolicyA"><image src='../../../images/form.png'></image><text>招商采购政策</text></view>
+      <view class="more-same more-2" @tap="toAboutA"><image src='../../../images/friend.png'></image><text>关于我们</text></view>
+      <view class="more-same more-3" @tap="toUserAgreementA"><image src='../../../images/write.png'></image><text>用户协议</text></view>
+      <view class="more-same more-4" @tap="toContactA"><image src='../../../images/phone.png'></image><text>联系我们</text></view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class More extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '了解更多'
+  };
+  components = {
+  };
+  data = {
+    isRepair: false, // 检修
+    isBad: false
+  };
+  methods = {
+    toPolicyA() { 
+      wepy.navigateTo({ url: '/pages/packageMine/policy/index' });
+    },
+    toAboutA() { 
+      wepy.navigateTo({ url: '/pages/packageMine/about/index' });
+    },
+    toUserAgreementA() { 
+      wepy.navigateTo({ url: '/pages/packageMine/userAgreement/index' });
+    },
+    toContactA() { 
+      wepy.navigateTo({ url: '/pages/packageMine/contact/index' });
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

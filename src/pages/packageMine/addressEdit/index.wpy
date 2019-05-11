@@ -1,0 +1,128 @@
+<template>
+  <view class='address-edit-ctner'>
+      <view class="ade-same">
+        <view class="ade-a">收货人</view>
+        <view class="ade-b">
+          <input bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
+        </view>
+      </view>
+
+      <view class="ade-same">
+        <view class="ade-a">联系电话</view>
+        <view class="ade-b">
+          <input type='number' bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入联系电话" />
+        </view>
+      </view>
+
+      <view class="ade-same">
+        <view class="ade-a">收货地址</view>
+        <view class="ade-b">
+           <picker
+            mode="multiSelector"
+            bindchange="bindMultiPickerChange"
+            bindcolumnchange="bindMultiPickerColumnChange"
+            value="{{multiIndex}}"
+            range="{{multiArray}}"
+            range-key="name"
+          >
+            <view class="picker">
+              当前选择：{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}}
+            </view>
+          </picker>
+        </view>
+        <image class="ade-c" src='../../../images/unfold.png'></image>
+      </view>
+
+      <view class="ade-same">
+        <view class="ade-a">详细地址</view>
+        <view class="ade-b">
+          <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入详细地址" />
+        </view>
+      </view>
+
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class AddressEdit extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '编辑收货地址'
+  };
+  components = {
+  };
+  data = {
+    isRepair: false, // 检修
+    isBad: false,
+    region: ['广东省', '广州市', '海珠区'],
+    customItem: '全部',
+    multiArray: [
+      [
+        {
+          id: 0,
+          name: '无脊柱动物'
+        },
+        {
+          id: 1,
+          name: '脊柱动物'
+        }
+      ], [
+        {
+          id: 0,
+          name: '扁性动物'
+        },
+        {
+          id: 1,
+          name: '线形动物'
+        },
+        {
+          id: 2,
+          name: '环节动物'
+        },
+        {
+          id: 3,
+          name: '软体动物'
+        },
+        {
+          id: 3,
+          name: '节肢动物'
+        }
+      ], [
+        {
+          id: 0,
+          name: '猪肉绦虫'
+        },
+        {
+          id: 1,
+          name: '吸血虫'
+        }
+      ]
+    ],
+    multiIndex: [0, 0, 0],
+  };
+  methods = {
+    bindMultiPickerChange(e) {
+      console.log(108, e);
+    },
+    bindMultiPickerColumnChange(e) {
+      console.log(111, e);
+    },
+    startA() {
+      console.log('开启')
+    },
+    flashA() {
+      console.log('冲洗')
+    },
+    toFilterA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

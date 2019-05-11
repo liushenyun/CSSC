@@ -11,6 +11,8 @@
 	"appid": "wxa2af042698930ccb",
 	"projectname": "ChengMall",
 	"miniprogramRoot": "dist/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -28,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 12,
 			"list": [
 				{
 					"id": -1,
@@ -63,6 +65,61 @@
 					"name": "我的",
 					"pathName": "pages/mine/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "加入会员",
+					"pathName": "pages/packageMine/joinMembers/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "加入合伙人",
+					"pathName": "pages/packageMine/joinPartner/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "了解更多",
+					"pathName": "pages/packageMine/more/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "管理收货地址",
+					"pathName": "pages/packageMine/addressList/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "编辑收货地址",
+					"pathName": "pages/packageMine/addressEdit/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的收藏",
+					"pathName": "pages/packageMine/collection/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的足迹",
+					"pathName": "pages/packageMine/footprint/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "团购订单",
+					"pathName": "pages/packageMine/bulkOrder/index",
 					"scene": null
 				}
 			]

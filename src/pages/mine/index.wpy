@@ -1,12 +1,23 @@
 
 <template>
   <view class="mine-ctner">
-    <view class="m-logo"></view>
+    <view class="m-logo">
+      <image class="m-log-bg" src='../../images/mine_bg1.png'></image>
+      <view class="m-logo-con">
+        <view></view>
+        <text>成氏商城</text>
+      </view>
+    </view>
     <view class="m-hy">
-      <view class="hy-inner"></view>
+      <view class="hy-inner">
+        <image src='../../images/discount_bg1.png'></image>
+        <text>家亲会员</text>
+        <view wx:if="{{isPartner}}" class="hy-btn">查看会员特权</view>
+        <view wx:else class="hy-btn" @tap='joinMembersA'>加入会员</view>
+      </view>
     </view>
     <view class="m-partner">
-      <view class="m-partner-inner">
+      <view class="m-partner-inner" @tap='joinPartnerA'>
         <image src='../../images/partner_icon.png'></image>
         <text>我是合伙人</text>
       </view>
@@ -48,22 +59,22 @@
     <view class="m-service-outer">
       <view class="m-service-title">我的服务</view>
       <view class="m-service-item">
-        <view class="service-a">
+        <view class="service-a" @tap="toBulkOrderA">
             <image src='../../images/abulk.png'></image>
             <view>团购订单</view>
         </view>
 
-        <view class="service-b">
+        <view class="service-b" @tap="toAddressListA">
             <image src='../../images/location.png'></image>
             <view>我的地址</view>
         </view>
 
-        <view class="service-c">
+        <view class="service-c" @tap="toCollectionA">
             <image src='../../images/favor.png'></image>
             <view>我的收藏</view>
         </view>
 
-        <view class="service-d">
+        <view class="service-d" @tap="toFootprintA">
             <image src='../../images/footprint.png'></image>
             <view>我的足迹</view>
         </view>
@@ -72,7 +83,7 @@
 
 
       <view class="m-service-item">
-        <view class="service-e">
+        <view class="service-e" @tap="toMoreA">
             <image src='../../images/similar.png'></image>
             <view>了解更多</view>
         </view>
@@ -97,49 +108,34 @@ export default class Index extends wepy.page {
 
   mixins = [];
 
-  data = {};
+  data = {
+    isPartner: false
+  };
 
   computed = {};
 
   methods = {
-    toOrderA() {
-      wepy.navigateTo({ url: '/pages/packageMine/order/index' });
+    toBulkOrderA() {
+      wepy.navigateTo({ url: '/pages/packageMine/bulkOrder/index' });
     },
-    toFeedbackA() {
-      wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
+    toAddressListA() {
+      wepy.navigateTo({ url: '/pages/packageMine/addressList/index' });
     },
-    toMesA() {
-      console.log('消息')
-      wepy.navigateTo({ url: '/pages/packageMine/message/index' });
+    joinMembersA() {
+      wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
     },
-    toAccountA() {
-      wepy.navigateTo({ url: '/pages/packageMine/account/index' });
-      console.log('账户')
+    joinPartnerA() {
+      wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
     },
-    toDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/deviceList/index' });
-      console.log('设备')
+    toMoreA() {
+      wepy.navigateTo({ url: '/pages/packageMine/more/index' });
     },
-    toServiceA() {
-      wepy.navigateTo({ url: '/pages/packageMine/myService/index' });
-      console.log('我的服务')
+     toCollectionA() {
+      wepy.navigateTo({ url: '/pages/packageMine/collection/index' });
     },
-    toAgreeA() {
-      wepy.navigateTo({ url: '/pages/packageMine/userAgreement/index' });
-      console.log('用户协议')
+     toFootprintA() {
+      wepy.navigateTo({ url: '/pages/packageMine/footprint/index' });
     },
-    toDeviceBookA() {
-      console.log('设备说明书')
-      wepy.navigateTo({ url: '/pages/packageMine/deviceBook/index' });
-    },
-    toAboutA() {
-      console.log('关于我们')
-      wepy.navigateTo({ url: '/pages/packageMine/about/index' });
-    },
-    toFeedbackA() {
-      console.log('问题反馈')
-      wepy.navigateTo({ url: '/pages/packageMine/feedback/index' });
-    }
   };
 
   events = {};
