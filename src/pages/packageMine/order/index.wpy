@@ -1,0 +1,34 @@
+<template>
+  <view class='order-ctner'>
+      我的订单
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Order extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '我的订单'
+  };
+  components = {
+  };
+  data = {
+    isRepair: false, // 检修
+    isBad: false
+  };
+  methods = {
+    toFilterA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    }
+  };
+  onLoad(option) {
+    console.log(27, option)
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

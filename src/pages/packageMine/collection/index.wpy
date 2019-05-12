@@ -1,12 +1,13 @@
 <template>
   <view class='collection-ctner'>
       <CatItem class='cat-itme-wrap' :item="item"></CatItem>
+      <CatItem class='cat-itme-wrap' :item="item"></CatItem>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import CatItem from '@/components/catItem/index';
+import CatItem from '@/components/CollectionGoodCom/index';
 
 export default class Collection extends wepy.page {
   config = {

@@ -40,6 +40,8 @@
         </view>
       </view>
 
+      <button class="icx-btn-same-sure" @tap='saveA'>保存</button>
+      <button class="icx-btn-same-cancel" @tap='cancelA'>删除</button>
 
   </view>
 </template>
@@ -110,11 +112,12 @@ export default class AddressEdit extends wepy.page {
     bindMultiPickerColumnChange(e) {
       console.log(111, e);
     },
-    startA() {
-      console.log('开启')
+    saveA() {
+      console.log('save');
     },
-    flashA() {
-      console.log('冲洗')
+    cancelA() {
+      console.log('cancel');
+      
     },
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });

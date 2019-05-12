@@ -24,7 +24,7 @@
     </view>
     <view class="m-order-outer">
       <view class="m-order-innder">
-        <view class="m-order-title">
+        <view class="m-order-title" @tap="toOrderA('all')">
           <text>我的订单</text>
           <image src='../../images/unfold.png'></image>
         </view>
@@ -115,6 +115,9 @@ export default class Index extends wepy.page {
   computed = {};
 
   methods = {
+    toOrderA(type) {
+      wepy.navigateTo({ url: '/pages/packageMine/order/index?type=' + type });
+    },
     toBulkOrderA() {
       wepy.navigateTo({ url: '/pages/packageMine/bulkOrder/index' });
     },

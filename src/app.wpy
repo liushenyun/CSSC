@@ -31,7 +31,7 @@ export default class extends wepy.app {
     window: {
       // backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#FFF',
-      navigationBarTitleText: '鼎绿源净水',
+      navigationBarTitleText: '成氏商城',
       navigationBarTextStyle: 'black'
     },
     subPackages: [
@@ -74,7 +74,8 @@ export default class extends wepy.app {
           'addressEdit/index',
           'bulkOrder/index',
           'collection/index',
-          'footprint/index'
+          'footprint/index',
+          'order/index'
         ]
       }
     ],

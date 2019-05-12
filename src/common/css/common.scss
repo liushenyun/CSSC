@@ -53,19 +53,20 @@ button.icx-btn-same-cancel::after {
   border: 0;
 }
 button.icx-btn-same-sure{
-  height: rpx(88);
-  line-height: rpx(88);
-  background: #00AAFF;
+  height: rpx(62);
+  line-height: rpx(62);
+  background:$color-word-alarm;
   color: #FFF;
   border-radius: rpx(8);
-  font-size: rpx(30);
+  font-size: rpx(26);
 }
 button.icx-btn-same-cancel{
-  height: rpx(90);
-  line-height: rpx(90);
-  font-size: rpx(32);
-  background: #E7E7E7;
-  color: $color-word-one;
+  height: rpx(62);
+  line-height: rpx(62);
+  font-size: rpx(26);
+  background: #FFF;
+  color: $color-word-alarm;
+  border: rpx(1) solid $color-word-alarm;
 }
 
 // 滚动条设置

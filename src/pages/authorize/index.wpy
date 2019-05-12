@@ -3,7 +3,7 @@
     <view class='auth-logo auth-same'>
       <image src='../../images/logo_small.png'></image>
     </view>
-    <view class='autn-name auth-same'>积分</view>
+    <view class='autn-name auth-same'>微信授权页面</view>
     <view class='auth-description auth-same'>申请获取你的公开信息（昵称、头像等）</view>
     <view class='auth-btn auth-same'>
       <button class="btn icx-clear-after-border" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">微信授权</button>

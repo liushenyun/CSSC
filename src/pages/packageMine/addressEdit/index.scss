@@ -26,4 +26,14 @@ page{
            height: rpx(18);
        }
    }
+   .icx-btn-same-cancel,
+   .icx-btn-same-sure {
+       width: 70%;
+       margin-left: 15%;
+       border-radius: rpx(31);
+   }
+   .icx-btn-same-sure {
+       margin-top: rpx(48);
+       margin-bottom: rpx(24);
+   }
 }

@@ -2,18 +2,20 @@
 @import '../../common/css/const.scss';
 @import '../../common/css/mixin.scss';
 .cat-item-ctner{
+    position: relative;
+    @include borderBottomOnePx;
     padding: rpx(30) rpx(20);
     background: #FFF;
     display: flex;
     align-items: center;
-    .cat-l{
-        width: rpx(30);
-        // height: rpx(40);
-        image{
-            width: rpx(30);
-            height: rpx(30);
-        }
-    }
+    // .cat-l{
+    //     width: rpx(30);
+    //     // height: rpx(40);
+    //     image{
+    //         width: rpx(30);
+    //         height: rpx(30);
+    //     }
+    // }
     .cat-m{
         width: rpx(124);
         height: rpx(124);
@@ -34,6 +36,33 @@
             color: $color-word-three;
             margin: rpx(16) 0 rpx(20) 0;
         }
+        .goods-btom {
+            display: flex;
+            align-items: center;
+        }
+        .goods-btom-left {
+            flex: 1
+        }
+        .goods-btom-right {
+            .icx-btn-same-cancel,
+            .icx-btn-same-sure {
+                font-size: rpx(22);
+                box-sizing: border-box;
+                display: inline-block;
+                height: rpx(40);
+                line-height: rpx(36);
+                border-radius: rpx(20);
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            .icx-btn-same-cancel {
+                color: #333;
+                border-color: #333;
+            }
+            button:nth-of-type(1) {
+                margin-right: rpx(10);
+            }
+        }
         .goods-num {
             font-size: rpx(16);
             color: $color-word-alarm;
@@ -49,30 +78,30 @@
             }
         }
     }
-    .cat-r{
-        ._num{
-            border-radius: rpx(2);
-            height: rpx(42);
-            min-width: rpx(168);
-            border: rpx(1) solid #F2F0F3;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            .num-l{
-                width: rpx(42);
-                position: relative;
-                @include borderRightOnePx;
-            }
-            .num-m{
-                flex: 1;
-                font-size: rpx(26);
-                color: #060606;
-            }
-            .num-r{
-                width: rpx(42);
-                position: relative;
-                @include borderLeftOnePx;
-            }
-        }
-    }
+    // .cat-r{
+    //     ._num{
+    //         border-radius: rpx(2);
+    //         height: rpx(42);
+    //         min-width: rpx(168);
+    //         border: rpx(1) solid #F2F0F3;
+    //         display: flex;
+    //         align-items: center;
+    //         text-align: center;
+    //         .num-l{
+    //             width: rpx(42);
+    //             position: relative;
+    //             @include borderRightOnePx;
+    //         }
+    //         .num-m{
+    //             flex: 1;
+    //             font-size: rpx(26);
+    //             color: #060606;
+    //         }
+    //         .num-r{
+    //             width: rpx(42);
+    //             position: relative;
+    //             @include borderLeftOnePx;
+    //         }
+    //     }
+    // }
 }

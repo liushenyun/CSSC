@@ -91,6 +91,6 @@ const apiwechatLogin = () => `${API_DOMAIN}/connect/wechat`
 
 ### 资料缺少
 
-1. 我的 => 成氏商城logo图片
+1. 我的 => 成氏商城logo图片 + 授权页logo
 2. 缺少会员权益（UI + 交互）
 3. 缺少文案：招商采购政策、关于我们、用户协议、联系我们
