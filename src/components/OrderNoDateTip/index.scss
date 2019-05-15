@@ -1,0 +1,24 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.order-no-data-ctner{
+    padding-top: rpx(60);
+    border-radius: rpx(8);
+    text-align: center;
+    letter-spacing: rpx(4);
+    image {
+        width: rpx(117);
+        height: rpx(117);
+        background: yellow;
+    }
+    .t-a {
+        font-size: rpx(24);
+        line-height: rpx(28);
+        color: #333;
+        margin: rpx(34) 0 rpx(14) 0;
+    }
+    .t-b {
+        font-size: rpx(20);
+        color: #666
+    }
+}

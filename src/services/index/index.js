@@ -21,9 +21,16 @@ const apiIsAuthF = (fun) => packagePromise((resolve, reject) => {
 })
 
 const apiGoodsListF = (fun) => packagePromise((resolve, reject) => {
-  console.log('apiGetGiftListF', fun)
+  console.log('apiGetGiftListF', apiGoodsList())
   request({
-    url: apiGoodsList()
+    url: apiGoodsList(),
+    method: 'POST',
+    data: {
+      Authorization: '5465465',
+      pageForm: '4',
+      page: 1,
+      limit: 20
+    }
   }, fun)
     .then(msg => {
       resolve(msg);

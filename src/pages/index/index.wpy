@@ -187,11 +187,11 @@ export default class Index extends wepy.page {
     // wepy.navigateTo({
     //   url: '/pages/packageIndex/NearMachine/index'
     // })
-    // apiGoodsListF().then(msg => {
-    //   console.log('86', msg)
-    // }).catch(err => {
-    //   console.log('88', err)
-    // });
+    apiGoodsListF().then(msg => {
+      console.log('86', msg)
+    }).catch(err => {
+      console.log('88', err)
+    });
     this.getSystemInfo();
     this.$apply();
   }

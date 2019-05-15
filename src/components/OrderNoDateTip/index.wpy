@@ -1,0 +1,31 @@
+<template>
+  <view class="order-no-data-ctner">
+      <view>
+          <image src='../../images/'></image>
+          <view class="t-a">赞无相关订单</view>
+          <view class="t-b">好东西手慢无</view>
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class OrderNODataTip extends wepy.component {
+  props = {
+  }
+  data = {
+  }
+  methods = {
+     
+  }
+  watch = {
+  }
+  onLoad() {
+      console.log('item', this.item);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss'
+</style>

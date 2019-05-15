@@ -1,11 +1,32 @@
 <template>
   <view class='order-ctner'>
-      我的订单
+      <view class="order-top-outer">
+        <view class="ot-same ot-a {{currentIndex == index ? 'active':''}}" wx:for='{{topArr}}' wx:key="index" @tap="changeCurA({{index}})">{{item}}</view>
+      </view>
+      <view class="order-top-con">
+        <swiper
+          indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}"
+          interval="{{interval}}"
+          duration="{{duration}}"
+          current="{{currentIndex}}"
+        >
+          <block wx:for="{{imgUrls}}">
+            <swiper-item>
+              <!-- <view class="swiper-div-same">
+                {{index}}
+              </view> -->
+              <NoTip></NoTip>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import NoTip from '@/components/OrderNoDateTip/index'
 export default class Order extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -13,14 +34,28 @@ export default class Order extends wepy.page {
     navigationBarTitleText: '我的订单'
   };
   components = {
+    NoTip: NoTip
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false
+   topArr: ['全部', '待付款', '待发货', '待收货'],
+   currentIndex: 0,
+   imgUrls: [
+      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+    ],
+    indicatorDots: false,
+    autoplay: false,
+    interval: 5000,
+    duration: 1000
   };
   methods = {
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    },
+    changeCurA(i) {
+      this.currentIndex = i
+      console.log(i);
     }
   };
   onLoad(option) {

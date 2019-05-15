@@ -2,7 +2,47 @@
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
 page{
+    height: 100%;
 }
 .order-ctner{
-   
+   position: relative;
+   background: #EEE;
+   height: 100%;
+   padding-top: rpx(62);
+   .order-top-outer {
+       position: absolute;
+       left: 0;
+       top: 0;
+       width: 100%;
+       background: #FFF;
+       height: rpx(62);
+       @include borderTopOnePx;
+       padding: rpx(0) rpx(45);
+       align-items: center;
+       display: flex;
+       justify-content: space-between;
+       .ot-same {
+           padding: 0 rpx(10);
+           height: rpx(60);
+           line-height: rpx(60);
+           font-size: $size-one;
+           border-bottom: rpx(2) solid #FFF;
+       }
+       .ot-same.active {
+           color: $color-word-alarm;
+           border-color: $color-word-alarm
+       }
+   }
+   .order-top-con {
+       height: 100%;
+       padding: rpx(12) rpx(30);
+       swiper {
+           height: 100%;
+       }
+       .swiper-div-same {
+        height: 100%;
+        width: 100%;
+            background: #FFF
+        }
+   }
 }

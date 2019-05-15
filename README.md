@@ -88,9 +88,15 @@ const apiwechatLogin = () => `${API_DOMAIN}/connect/wechat`
 
 ### 错误积累
 - 'wechat.code.expire': 小程序没有绑定公众平台
+http://mjx-wx.natapp1.cc/swagger-ui.html#!/
+http://mjx-wx.natapp1.cc
 
 ### 资料缺少
 
-1. 我的 => 成氏商城logo图片 + 授权页logo
+1. 缺少图片
+  + 成氏商城logo图片
+  + 授权页logo
+  + 订单页面，暂无订单图片
+  + 
 2. 缺少会员权益（UI + 交互）
 3. 缺少文案：招商采购政策、关于我们、用户协议、联系我们
