@@ -35,14 +35,17 @@ page{
    }
    .order-top-con {
        height: 100%;
-       padding: rpx(12) rpx(30);
        swiper {
            height: 100%;
        }
        .swiper-div-same {
-        height: 100%;
-        width: 100%;
-            background: #FFF
+            padding: rpx(12) rpx(30);
+           height: 100%;
+           width: 100%;
+           overflow: auto;
         }
+   }
+   .order-com {
+       margin-bottom: rpx(20);
    }
 }

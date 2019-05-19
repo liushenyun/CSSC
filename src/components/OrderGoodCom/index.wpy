@@ -1,0 +1,70 @@
+<template>
+  <view class="cat-item-ctner">
+
+    <view class="order-status-order">
+        <text>米兔生活馆</text>
+        <image src='../../images/unfold.png'></image>
+        <text>交易成功</text>
+    </view>
+
+    <view class="goods-outer">
+        <view class='cat-m'>
+            <image src='../../images/goods_small_del.png' />
+        </view>
+        <view class="cat-m-t">
+            <view class='goods-name'>
+                <text>彩色甜甜圈牛肉味</text>
+                <text>￥258</text>
+            </view>
+            <view class='goods-des'>
+                <text>颜色：999哑光 3.5克</text>
+                <text>x1</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="order-num-outer">
+        <text>共1件 合计:</text>
+        <text>￥258</text>
+    </view>
+
+    <view class="order-button-outer">
+        <view class="order-btn">查看物流</view>
+        <view class="order-btn">追加评论</view>
+    </view>
+    
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class OrderGoodCom extends wepy.component {
+  props = {
+      item: {
+          type: Object,
+          default: {}
+      }
+  }
+  data = {}
+  methods = {
+      numAdd() {
+          console.log('numAdd');
+      },
+      numReduce() {
+          console.log('numReduce');
+      }
+  }
+  watch = {
+      item(newVal, oldVal) {
+
+      }
+  }
+  onLoad() {
+      console.log('item', this.item);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss'
+</style>

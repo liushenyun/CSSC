@@ -91,6 +91,9 @@ const apiwechatLogin = () => `${API_DOMAIN}/connect/wechat`
 http://mjx-wx.natapp1.cc/swagger-ui.html#!/
 http://mjx-wx.natapp1.cc
 
+固定永久token：026ecc8e63cc47d1acbc6567f520b001
+请求头格式：{Authorization:026ecc8e63cc47d1acbc6567f520b001}
+
 ### 资料缺少
 
 1. 缺少图片
