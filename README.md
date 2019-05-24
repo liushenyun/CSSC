@@ -95,7 +95,6 @@ http://mjx-wx.natapp1.cc
 请求头格式：{Authorization:026ecc8e63cc47d1acbc6567f520b001}
 
 ### 资料缺少
-
 1. 缺少图片
   + 成氏商城logo图片
   + 授权页logo

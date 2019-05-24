@@ -39,6 +39,7 @@ export default class extends wepy.app {
         root: 'pages/packageIndex',
         pages: [
           'message/index',
+          'goodsDetail/index',
           'test/index'
         ]
       },
@@ -135,3 +136,4 @@ export default class extends wepy.app {
   }
 }
 </script>
+

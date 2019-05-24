@@ -39,7 +39,7 @@
     <view class="ix-goods-wrap">
 
       <view class="goods-area-same">
-        <view class="area-title">
+        <view class="area-title" @tap='toGoodsDetail'>
           <text>文化衍生专区</text>
           <text>更多</text>
           <image src='../../images/unfold.png'></image>
@@ -47,17 +47,16 @@
         <view class="area-inner">
           <view class="wh-banner">
               <swiper
-              indicator-dots="{{indicatorDots}}"
-              autoplay="{{autoplay}}"
-              interval="{{interval}}"
-              duration="{{duration}}"
-              circular = 'true'
-            >
-              <block wx:for="{{imgUrls}}">
-                <swiper-item>
-                  <image src="{{item}}" class="slide-image" width="355" height="150" />
-                </swiper-item>
-              </block>
+                indicator-dots="{{indicatorDots}}"
+                autoplay="{{autoplay}}"
+                interval="{{interval}}"
+                duration="{{duration}}"
+                circular = 'true'>
+                <block wx:for="{{imgUrls}}">
+                  <swiper-item>
+                    <image src="{{item}}" class="slide-image" width="355" height="150" />
+                  </swiper-item>
+                </block>
             </swiper>
           </view>
         </view>
@@ -127,7 +126,11 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiIsAuthF, apiGoodsListF } from '../../services/index';
+import {
+  apiIsAuthF,
+  apiGoodsListF,
+  apiGetGoodsDetailsF
+} from '../../services/index';
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -136,7 +139,7 @@ export default class Index extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF'
-    navigationBarTitleText: '设备列表'
+    navigationBarTitleText: '成氏商城'
   };
   components = {};
 
@@ -164,22 +167,24 @@ export default class Index extends wepy.page {
     bindReplaceInput(e) {
       console.log('input输入', e)
     },
-    toDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
-    },
-    toScanAddDeviceA() {
-      // 允许从相机和相册扫码
-      wx.scanCode({
-        success(res) {
-          console.log(res)
-        }
-      })
-    },
-    toNoAddDeviceA() {
-      console.log(4646546)
-      wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
+    toGoodsDetail() {
+      let _goodsId = '20190524190903491861'
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
     }
-  };
+  }
+
+  getGoodsListA(fun) {
+    apiGoodsListF({
+      page: 0,
+      keyword: ''
+    }, fun).then(msg => {
+      console.log('86', msg)
+    }).catch(err => {
+      console.log('88', err)
+    });
+  }
+
+  
 
   events = {};
 
@@ -187,11 +192,8 @@ export default class Index extends wepy.page {
     // wepy.navigateTo({
     //   url: '/pages/packageIndex/NearMachine/index'
     // })
-    apiGoodsListF().then(msg => {
-      console.log('86', msg)
-    }).catch(err => {
-      console.log('88', err)
-    });
+    this.getGoodsListA(this.getGoodsListA.bind(this))
+    this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
     this.getSystemInfo();
     this.$apply();
   }

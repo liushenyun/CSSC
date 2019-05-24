@@ -12,35 +12,34 @@ import { wechatLogin, refreshToken } from '../../services/login/index'
 import { EVENT_QUEUE_NAME } from '../../common/js/config';
 import miniPro from '../../utils/wepy-pro'
 export default class Auth {
-  constructor() {
-  }
+  constructor() { }
 
   static getInstance() {
-    let _globalData = wepy.$instance.globalData;
+    let _globalData = wepy.$instance.globalData
     if (!_globalData.auth) {
       _globalData.auth = new Auth()
     }
     return _globalData.auth
   }
 
-  /**
-   * 刷新token
-   * @param {string} Refresh_Token - 本地存储的access-token
-   * @param {function} fun - bind的事件（刷新toekn后需要再次执行的事件，添加到事件队列里）
-   */
-  refreshToken(Refresh_Token, fun = null) {
-    this._addEvent(fun)
-    refreshToken(Refresh_Token).then(res => {
-      this._setToken(res);
-    });
-  }
+  // /**
+  //  * 刷新token
+  //  * @param {string} Refresh_Token - 本地存储的access-token
+  //  * @param {function} fun - bind的事件（刷新toekn后需要再次执行的事件，添加到事件队列里）
+  //  */
+  // refreshToken(Refresh_Token, fun = null) {
+  //   this._addEvent(fun)
+  //   refreshToken(Refresh_Token).then(res => {
+  //     this._setToken(res);
+  //   });
+  // }
   /**
    * 登录微信
-   * @param {*} userInfo 
-   * @param {*} fetchLofin 
+   * @param {*} userInfo
+   * @param {*} fetchLofin
    */
   login(userInfo, fetchLofin = true) {
-    let _globalData = wepy.$instance.globalData;
+    let _globalData = wepy.$instance.globalData
     let _that = this
     return new Promise((resolve, reject) => {
       wx.login({
@@ -55,7 +54,8 @@ export default class Auth {
           } else {
             wx.getUserInfo({
               success: function (res) {
-                _globalData.userInfo = res.userInfo
+                console.log(58, res)
+                _globalData.userInfo = res
                 if (fetchLofin) {
                   _that._webchatLogin(resCode.code, res, resolve, reject)
                 } else {
@@ -79,6 +79,7 @@ export default class Auth {
    * @param {Boolean} isHttp 是否http请求转发
    */
   checkWebchatAuth(flag = true, func = null, isHttp = false) {
+    console.log(83, flag, func, isHttp)
     let _that = this
     if (isHttp) {
       _that._addEvent(func)
@@ -86,7 +87,7 @@ export default class Auth {
     return new Promise((resolve) => {
       wx.getSetting({
         success: function (res) {
-          if (res.authSetting['scope.userInfo']) {// 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          if (res.authSetting['scope.userInfo']) { // 已经授权，可以直接调用 getUserInfo 获取头像昵称
             resolve(true)
             if (flag) {
               _that.login(null, flag)
@@ -106,11 +107,12 @@ export default class Auth {
    * @param {Object} res
    */
   _setToken(res) {
-    let { access_token, refresh_token, token_type } = res;
-    miniPro.setAccessToken(access_token);
-    miniPro.setRefreshToken(refresh_token);
-    miniPro.setTokenType(token_type);
-    wepy.$instance.globalData[EVENT_QUEUE_NAME].toDoEvent();
+    console.log(115, res)
+    let { token: access_token } = res
+    miniPro.setAccessToken(access_token)
+    // miniPro.setRefreshToken(refresh_token)
+    // miniPro.setTokenType(token_type)
+    wepy.$instance.globalData[EVENT_QUEUE_NAME].toDoEvent()
   }
 
   /**
@@ -136,7 +138,7 @@ export default class Auth {
    */
   _webchatLogin(code, userInfo, resolve, reject) {
     wechatLogin({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
-      this._setToken(res);
+      this._setToken(res)
       resolve(true)
       // this._toDoEvent()
     }).catch(err => {

@@ -1,4 +1,4 @@
-import { MAIN_API_DOMAIN, API_DOMAIN } from '../../common/js/config';
+import { MAIN_API_DOMAIN, API_DOMAIN, MAIN_DOMAIN } from '../../common/js/config';
 /**
  * @description 获取健康状况
  * server-developer: 张亚
@@ -11,7 +11,7 @@ const apiHealthStatus = () => `${MAIN_API_DOMAIN}/account-api/people/haveHealthS
  * server-developer: 张亚
  * api-url: http://confluence.icarbonx.cn/pages/viewpage.action?pageId=11506926
  */
-const apiWechatLogin = () => `${API_DOMAIN}/connect/wechat`
+const apiWechatLogin = () => `${MAIN_DOMAIN}/api/wx/user/login`
 
 /**
  * @description 刷新token

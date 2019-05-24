@@ -22,6 +22,7 @@ export default class Authorize extends wepy.page {
   onGotUserInfo(e) {
     let _auth = Auth.getInstance()
     let { userInfo } = e.detail;
+    console.log(25, e, userInfo)
     if (userInfo) {
       _auth.login(null, true).then(res => {
         console.log('登录授权成功')
@@ -33,25 +34,6 @@ export default class Authorize extends wepy.page {
     } else {
       wepy.navigateBack({ delta: 1 });
     }
-    // console.log('_curPage', e);
-    // let { userInfo } = e.detail;
-    // const Refresh_Token = miniPro.getRefreshToken();
-    // if (userInfo) {
-    //   let _pages = this.getCurrentPages();
-    //   let _prePage = _pages[_pages.length - 2];
-    //   console.log('_curPage', _prePage);
-    //   wepy.navigateBack({ delta: 1 });
-    //   // 允许后，立刻置换token
-    //   setTimeout(() => {
-    //     if (Refresh_Token) {
-    //       refreshToken(Refresh_Token);
-    //     } else {
-    //       authProcess(msg => {}, true);
-    //     }
-    //   }, 100);
-    //   console.log('this', this.getCurrentPages());
-    // }
-    // console.log('e', e, userInfo);
   }
 }
 </script>

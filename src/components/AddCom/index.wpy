@@ -1,0 +1,46 @@
+<template>
+  <view class="add-num-ctner">
+    <view class="add-l" @tap='numAdd'>-</view>
+    <view class="add-m">{{number}}</view>
+    <view class="add-r" @tap='numReduce'>+</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class AddCom extends wepy.component {
+  props = {
+      num: {
+          type: Number,
+          default: 1
+      }
+  }
+  data = {
+      number: this.num
+  }
+  methods = {
+      numAdd() {
+          this.$emit('addComEvent', 12);
+          console.log('numAdd');
+      },
+      numReduce() {
+          this.$emit('addComEvent', 12);
+          console.log('numReduce');
+      }
+  }
+  watch = {
+      item(newVal, oldVal) {
+
+      }
+  }
+  onLoad() {
+      this.number = this.num
+      this.$apply()
+      console.log('item', this.num);
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss'
+</style>

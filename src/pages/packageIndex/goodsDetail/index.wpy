@@ -1,0 +1,178 @@
+<template>
+  <view class='goods-detail-ctner'>
+    <import src="../../../common/wxParse/wxParse.wxml"/>
+      <view class="goods-banner">
+        <swiper
+            indicator-dots="{{indicatorDots}}"
+            autoplay="{{autoplay}}"
+            interval="{{interval}}"
+            duration="{{duration}}"
+            indicator-color='#999'
+            indicator-active-color='#FFF'
+            circular = 'true'>
+            <block wx:for="{{bannerArr}}" wx:key="indx">
+              <swiper-item>
+                <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
+              </swiper-item>
+            </block>
+        </swiper>
+      </view>
+
+      <view class="goods-des-outer">
+        <view><tex>￥</tex><tex></tex>{{firstSpec.price}}</view>
+        <view>{{goodsDetailObj.goodsName || '--'}}</view>
+        <!-- <view>3秒拥有水光肌</view> -->
+      </view>
+      <view class="G-line"></view>
+      <view class="goods-detail">
+        <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
+      </view>
+      <view class="goods-bottom">
+        <view class="gb-kf">
+          <button class="icx-btn" open-type="contact">
+            <image src='../../../images/service_light.png'></image>
+            <view>客服</view>
+          </button>
+        </view>
+        <view class="gb-cart">
+          <button class="icx-btn">
+            <image src='../../../images/cart_light.png'></image>
+            <view>客服</view>
+          </button>
+        </view>
+        <view hover-class='icx-click-hover' class="gb-join">
+          加入购物车
+        </view>
+        <view hover-class='icx-click-hover' class="gb-buy">
+          立即购买
+        </view>
+      </view>
+
+      <view class="goods-spc-outer" @touchmove.stop='spcTouch'>
+          <view class="goods-spc-con">
+              <view class="goods-des">
+                <view class="des-l">
+                  <image src=''></image>
+                </view>
+                <view class="des-r">
+                    <view>￥258</view>
+                    <view>库存13件</view>
+                    <view>迪奥唇膏口红</view>
+                </view>
+              </view>
+              <view class="goods-pop-same goods-gg">
+                <view class="goods-pop-title">规格</view>
+                <view class="goods-outer-same goods-gg-outer">
+                  <view class="small">M</view>
+                  <view class="small active">L</view>
+                  <view class="small">M</view>
+                </view>
+              </view>
+              <view class="goods-pop-same goods-color">
+                <view class="goods-pop-title">颜色分类</view>
+                <view class="goods-color-outer">
+                    <view class="small">M</view>
+                    <view class="small active">L</view>
+                    <view class="small">M</view>
+                </view>
+              </view>
+              <view class="goods-pop-same goods-buy-num">
+                <view class="goods-pop-title">颜色分类</view>
+                <AddCom></AddCom>
+              </view>
+              <view class="goods-pop-same goods-buy-btn">
+                <button class="icx-btn-same-sure">确定</button>
+              </view>
+              
+              
+          </view>
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {
+  apiGetGoodsDetailsF
+} from '../../../services/index'
+import WxParse from '../../../common/wxParse/wxParse.js'
+import AddCom from '@/components/AddCom/index';
+
+export default class GoodsDetail extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '商品详情'
+  };
+  components = {
+    AddCom: AddCom
+  };
+  data = {
+    goodsDetailObj: {},
+    bannerArr: [],
+    goodsSpecificationVoList: [], // 规格
+    firstSpec: {
+        id: '--',
+        marketPrice: '--',
+        price: '--',
+        specification: '--'
+    },
+    goodsName: '',
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
+  };
+  methods = {
+    toFilterA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    },
+    spcTouch() {
+      console.log(12)
+    }
+  }
+
+  apiGetGoodsDetailsA(id, fun) {
+    var _self = this
+    apiGetGoodsDetailsF(id, fun).then(msg => {
+      let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList } = msg;
+      this.bannerArr = goodsBannerVoList;
+      this.goodsSpecificationVoList = goodsSpecificationVoList;
+      let _first = goodsSpecificationVoList[0];
+      this.goodsDetailObj = msg;
+      console.log(101, _first)
+      if (_first) {
+        this.firstSpec = {
+          id: _first.id || '--',
+          marketPrice: _first.marketPrice || '--',
+          price: _first.price || '--',
+          specification: _first.specification || '--'
+        }
+      }
+      
+      WxParse.wxParse('goodsDetail', 'html', goodsDetail, _self, 5);
+      this.$apply();
+    }).catch(err => {
+      console.log('87', err)
+    });
+  }
+
+  events = {
+      'addComEvent': (p1, p2, p3, $event) => {
+          console.log(111, p1, p2, p3, $event)
+      }
+  };
+
+  async onLoad(option) {
+    let _goodsId = option.goodsId
+    this.apiGetGoodsDetailsA(_goodsId, this.apiGetGoodsDetailsA.bind(this))
+    this.$apply();
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import '../../../common/wxParse/wxParse.wxss';
+@import './index'
+</style>
+

@@ -7,7 +7,6 @@ import miniPro from '../../utils/wepy-pro'
 import Validate from '../Validate';
 import Auth from '../../common/js/authProcess.js';
 
-
 /**
   * 获取验证码
  */
@@ -63,11 +62,14 @@ const loginFetch = (data) => packagePromise((resolve, reject) => {
   })
 })
 
-
 const wechatLogin = (data) => packagePromise((resolve, reject) => {
-  let _isGettingToken = wepy.getStorageSync('isGettingToken');
+  console.log(67, data)
+  let _isGettingToken = wepy.getStorageSync('isGettingToken')
+  console.log('_isGettingToken', _isGettingToken)
   if (_isGettingToken) { return }
-  wepy.setStorageSync('isGettingToken', true);
+  wepy.setStorageSync('isGettingToken', true)
+  console.log(71, JSON.parse(data.miniprogramParam))
+  let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
   request({
     url: apiWechatLogin(),
     method: 'POST',
@@ -76,52 +78,26 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
     },
     data: {
       code: data.code,
-      appName: WECHAT_APP_NAME,
-      miniprogramParam: data.miniprogramParam
+      signature,
+      rawData,
+      encryptedData,
+      iv: iv
     }
   })
     .then(msg => {
-      wepy.setStorageSync('isGettingToken', false);
+      console.log('请求成1')
+      wepy.setStorageSync('isGettingToken', false)
       resolve(msg)
     })
     .catch(err => {
-      wepy.setStorageSync('isGettingToken', false);
+      console.log('请求成2')
+      wepy.setStorageSync('isGettingToken', false)
       reject(err)
-    })
-})
-
-const refreshToken = (refreshToken) => packagePromise((resolve, reject) => {
-  let _isGettingToken = wepy.getStorageSync('isGettingToken');
-  if (_isGettingToken) { return }
-  wepy.setStorageSync('isGettingToken', true);
-  request({
-    url: apiRefreshToken(),
-    method: 'POST',
-    header: {
-      'Authorization': `Basic ${WECHAT_AUTH_BASE}`
-    },
-    data: {
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      appName: WECHAT_APP_NAME,
-    },
-    haveLoading: false
-  })
-    .then((res) => {
-      wepy.setStorageSync('isGettingToken', false);
-      resolve(res)
-    })
-    .catch(err => {
-      wepy.setStorageSync('isGettingToken', false);
-      err()
     })
 })
 
 export {
   wechatLogin,
-  refreshToken,
   getCodeFetch,
   loginFetch
 }
-
-

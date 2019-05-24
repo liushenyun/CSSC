@@ -1,0 +1,26 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.add-num-ctner {
+    width: rpx(140);
+    height: rpx(40);
+    border: rpx(1) solid #817F7F;
+    display: flex;
+    text-align: center;
+    .add-m {
+        flex: 1;
+        position: relative;
+        @include borderLeftOnePx;
+        line-height: rpx(38);
+    }
+    .add-r {
+        position: relative;
+        @include borderLeftOnePx;
+    }
+    .add-r,
+    .add-l {
+        width: rpx(38);
+        line-height: rpx(38);
+        vertical-align: middle;
+    }
+}
