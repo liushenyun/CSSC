@@ -1,8 +1,8 @@
 <template>
   <view class="add-num-ctner">
-    <view class="add-l" @tap='numAdd'>-</view>
+    <view class="add-l" @tap='numReduce'>-</view>
     <view class="add-m">{{number}}</view>
-    <view class="add-r" @tap='numReduce'>+</view>
+    <view class="add-r" @tap='numAdd'>+</view>
   </view>
 </template>
 
@@ -20,12 +20,13 @@ export default class AddCom extends wepy.component {
   }
   methods = {
       numAdd() {
-          this.$emit('addComEvent', 12);
-          console.log('numAdd');
+          this.number += 1;
+          this.$emit('addComEvent', this.number);
       },
       numReduce() {
-          this.$emit('addComEvent', 12);
-          console.log('numReduce');
+          if (this.number < 2) return
+          this.number -= 1;
+          this.$emit('addComEvent', this.number);
       }
   }
   watch = {

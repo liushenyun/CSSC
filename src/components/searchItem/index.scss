@@ -6,14 +6,7 @@
     background: #FFF;
     display: flex;
     align-items: center;
-    .cat-l{
-        width: rpx(30);
-        // height: rpx(40);
-        image{
-            width: rpx(30);
-            height: rpx(30);
-        }
-    }
+    margin-bottom: rpx(8);
     .cat-m{
         width: rpx(124);
         height: rpx(124);
@@ -50,38 +43,15 @@
         }
     }
     .cat-r{
-        text-align: right;
-        .del-btn {
-            padding: rpx(10) rpx(16);
-            border-radius: rpx(8);
-            background: $color-word-alarm;
-            display: inline-block;
-            color: #FFF;
-            margin-bottom: rpx(20);
-        }
-        ._num{
-            border-radius: rpx(2);
-            height: rpx(42);
-            min-width: rpx(168);
-            border: rpx(1) solid #F2F0F3;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            .num-l{
-                width: rpx(42);
-                position: relative;
-                @include borderRightOnePx;
-            }
-            .num-m{
-                flex: 1;
-                font-size: rpx(26);
-                color: #060606;
-            }
-            .num-r{
-                width: rpx(42);
-                position: relative;
-                @include borderLeftOnePx;
-            }
+        text-align: left;
+        width: rpx(50);
+        height: rpx(124);
+        line-height: rpx(124);
+        .star {
+           width: rpx(27);
+           height: rpx(27);
+           background: red;
+           vertical-align: bottom;
         }
     }
 }

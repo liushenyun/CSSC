@@ -2,12 +2,12 @@
   <view class="cat-item-ctner">
 
     <view class="order-status-order">
-        <text>米兔生活馆</text>
-        <!-- <image src='../../images/unfold.png'></image>
-        <text>交易成功</text> -->
+        <text>米兔生活馆1</text>
+        <image src='../../images/unfold.png'></image>
+        <text>交易成功</text>
     </view>
 
-    <view class="goods-outer">
+    <view class="sure-same-outer goods-outer">
         <view class='cat-m'>
             <image src='../../images/goods_small_del.png' />
         </view>
@@ -23,14 +23,24 @@
         </view>
     </view>
 
+    <view class="sub-same s-num">
+        <text>购买数据</text>
+        <AddCom :num="num"></AddCom>
+    </view>
+
+    <view class="sub-same s-type">
+        <text>购买方式</text>
+        <text>免运费(快递发货)</text>
+    </view>
+
+    <view class="sub-same s-word">
+        <text>买家留言：</text>
+        <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="点击给商家留言" />
+    </view>
+
     <view class="order-num-outer">
         <text>共1件 合计:</text>
         <text>￥258</text>
-    </view>
-
-    <view class="order-button-outer">
-        <view class="order-btn">查看物流</view>
-        <view class="order-btn">追加评论</view>
     </view>
     
   </view>
@@ -38,14 +48,20 @@
 
 <script>
 import wepy from 'wepy';
-export default class SureGoodsCom extends wepy.component {
+import AddCom from '../AddCom/index'
+export default class OrderGoodCom extends wepy.component {
   props = {
       item: {
           type: Object,
           default: {}
       }
   }
-  data = {}
+  components = {
+      AddCom: AddCom
+  }
+  data = {
+      num: 2
+  }
   methods = {
       numAdd() {
           console.log('numAdd');

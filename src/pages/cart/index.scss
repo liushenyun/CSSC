@@ -9,6 +9,17 @@ page,
     .cat-itme-wrap {
         margin-bottom: rpx(8);
     }
+    .cart-goods-no {
+        padding: rpx(86) 0;
+        text-align: center;
+        background: #FFF;
+        image {
+            width: rpx(170);
+            height: rpx(133);
+            display: inline-block;
+            margin-bottom: rpx(40);
+        }
+    }
     .cart-like {
         padding: 0 $page-padding-lr rpx(110) $page-padding-lr;
         margin-top: rpx(4);

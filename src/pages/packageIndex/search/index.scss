@@ -1,0 +1,88 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.search-ctner{
+    height: 100%;
+    position: relative;
+    .search-top-outer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: rpx(132);
+    }
+    .ix-input-wrap{
+        position: relative;
+        padding: rpx(12) rpx(45);
+        @include borderBottomOnePx;
+        display: flex;
+        .input-search{
+            width: rpx(36);
+            padding-left: rpx(16);
+            border-top-left-radius: rpx(24);
+            border-bottom-left-radius: rpx(24);
+            background: #F6F6F6;
+            display: flex;
+            align-items: center;
+            image {
+                width: rpx(25);
+                height: rpx(26);
+            }
+        }
+        .input-close {
+            width: rpx(40);
+            padding-right: rpx(16);
+            border-top-right-radius: rpx(24);
+            border-bottom-right-radius: rpx(24);
+            background: #F6F6F6;
+            display: flex;
+            align-items: center;
+            image {
+                width: rpx(27);
+                height: rpx(27);
+            }
+        }
+        input {
+            flex: 1;
+            // border-top-left-radius: 0;
+            // border-bottom-left-radius: 0;
+            border-radius: 0;
+        }
+        .input-msg {
+            width: rpx(60);
+            margin-left: rpx(18);
+            display: flex;
+            align-items: center;
+        }
+    }
+    .search-rank-outer {
+        height: rpx(56);
+        display: flex;
+        align-items: center;
+        padding: rpx(0) rpx(62);
+        justify-content: space-between;
+        .rank-same {
+            padding: 0 rpx(10);
+        }
+        .rank-same.active {
+            color: $color-word-alarm;
+        }
+    }
+
+    
+    .ix-goods-wrap{
+        height: 100%;
+        padding-top: rpx(134);
+        scroll-view {
+            background: #F7F7F7;
+            padding-top: rpx(6);
+            SearchItem {
+                margin-bottom: rpx(12);
+            }
+        }
+    }
+    
+}

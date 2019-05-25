@@ -1,29 +1,20 @@
 <template>
   <view class="cat-item-ctner">
-    <view class='cat-l' @tap="toggleCheckA({{item.check}})">
-        <image wx:if="{{item.check}}" src='../../images/selected.png' />
-        <image wx:else src='../../images/uncheck.png' />
-    </view>
     <view class='cat-m'>
-        <image src='{{item.goodsIco}}' />
+        <image src='../../images/goods_small_del.png' />
     </view>
     <view class="cat-m-t">
-        <view class='goods-name'>{{item.goodsName}}</view>
-        <view class='goods-des'>{{current}}颜色：{{item.colorName}}</view>
-        <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
+        <view class='goods-name'>迪奥唇膏口红迪奥唇膏口红</view>
+        <view class='goods-des'>颜色：黄色</view>
+        <view class='goods-num'>仅剩12件</view>
         <view class='goods-pri'>
-            <text>￥{{item.price}}</text>
+            <text>￥179</text>
             <!-- <text>￥358</text> -->
         </view>
     </view>
     <view class='cat-r'>
-        <!-- <AddCom :num="item.quantity"></AddCom> -->
-        <view hover-class='icx-click-hove' @tap='deleteA' class="del-btn">删除</view>
-        <view class='_num'>
-            <view class='num-l' @tap='numReduce'>-</view>
-            <view class='num-m'>{{item.quantity}}</view>
-            <view class='num-r' @tap='numAdd'>+</view>
-        </view>
+        <image hover-class='icx-click-hove' @tap='deleteA' class="star">
+        </image>
     </view>
   </view>
 </template>
@@ -31,7 +22,7 @@
 <script>
 import wepy from 'wepy';
 import AddCom from '../AddCom/index'
-export default class CatItem extends wepy.component {
+export default class SearchItem extends wepy.component {
   props = {
       item: {
           type: Object,

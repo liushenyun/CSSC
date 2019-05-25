@@ -35,53 +35,49 @@
           </button>
         </view>
         <view class="gb-cart">
-          <button class="icx-btn">
+          <button @tap='toCartA' class="icx-btn">
             <image src='../../../images/cart_light.png'></image>
-            <view>客服</view>
+            <view>购物车</view>
           </button>
         </view>
-        <view hover-class='icx-click-hover' class="gb-join">
+        <view @tap='addCartA' hover-class='icx-click-hover' class="gb-join">
           加入购物车
         </view>
-        <view hover-class='icx-click-hover' class="gb-buy">
+        <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
           立即购买
         </view>
       </view>
 
-      <view class="goods-spc-outer" @touchmove.stop='spcTouch'>
+      <view class="goods-spc-outer" wx:if="{{showGoodsPop}}" @touchmove.stop='spcTouch'>
           <view class="goods-spc-con">
               <view class="goods-des">
                 <view class="des-l">
-                  <image src=''></image>
+                  <image src="{{goodsDetailObj.goodsIco}}"></image>
                 </view>
                 <view class="des-r">
-                    <view>￥258</view>
-                    <view>库存13件</view>
-                    <view>迪奥唇膏口红</view>
+                    <view>￥{{goodsSpecificationVoList[specCurrentIndex].price}}</view>
+                    <view>库存{{goodsDetailObj.leavingsQuantity}}件</view>
+                    <view>{{goodsDetailObj.goodsName }}</view>
                 </view>
               </view>
               <view class="goods-pop-same goods-gg">
                 <view class="goods-pop-title">规格</view>
                 <view class="goods-outer-same goods-gg-outer">
-                  <view class="small">M</view>
-                  <view class="small active">L</view>
-                  <view class="small">M</view>
+                  <view @tap="specChoiceA({{index}}, {{item}})" wx:for="{{goodsSpecificationVoList}}" wx:key="index" class="small {{specCurrentIndex == index ? 'active':''}}">{{item.specification}}</view>
                 </view>
               </view>
               <view class="goods-pop-same goods-color">
                 <view class="goods-pop-title">颜色分类</view>
                 <view class="goods-color-outer">
-                    <view class="small">M</view>
-                    <view class="small active">L</view>
-                    <view class="small">M</view>
+                    <view @tap="colorChoiceA({{index}}, {{item}})"  wx:for="{{goodsColorVoList}}" wx:key="index" class="small {{colorCurrentIndex == index ? 'active':''}}">{{item.colorName}}</view>
                 </view>
               </view>
               <view class="goods-pop-same goods-buy-num">
-                <view class="goods-pop-title">颜色分类</view>
+                <view class="goods-pop-title">购买数量</view>
                 <AddCom></AddCom>
               </view>
               <view class="goods-pop-same goods-buy-btn">
-                <button class="icx-btn-same-sure">确定</button>
+                <button @tap='goodsSureA' class="icx-btn-same-sure">确定</button>
               </view>
               
               
@@ -92,9 +88,13 @@
 
 <script>
 import wepy from 'wepy'
+import miniPro from '../../../utils/wepy-pro'
 import {
   apiGetGoodsDetailsF
 } from '../../../services/index'
+import {
+  apiCartSaveF
+} from '../../../services/cart'
 import WxParse from '../../../common/wxParse/wxParse.js'
 import AddCom from '@/components/AddCom/index';
 
@@ -108,9 +108,16 @@ export default class GoodsDetail extends wepy.page {
     AddCom: AddCom
   };
   data = {
+    isWhichFlag: '', // 1:加入购物车 2：立即购买
+    showGoodsPop: false,
+    goodsId: '',
+    buyNum: 1,
     goodsDetailObj: {},
     bannerArr: [],
     goodsSpecificationVoList: [], // 规格
+    specCurrentIndex: 0,
+    colorCurrentIndex: 0,
+    goodsColorVoList: [], // 颜色规格
     firstSpec: {
         id: '--',
         marketPrice: '--',
@@ -125,20 +132,56 @@ export default class GoodsDetail extends wepy.page {
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
   };
   methods = {
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    spcTouch() {},
+    toCartA() {
+      wepy.switchTab({ url: '/pages/cart/index' });
     },
-    spcTouch() {
-      console.log(12)
+    specChoiceA(index, item) {
+       this.specCurrentIndex = index
+    },
+    colorChoiceA(index, item) {
+      this.colorCurrentIndex = index
+    },
+    goodsSureA() {
+      if (this.isWhichFlag == 1) {
+        this.apiCartSaveA(this.apiCartSaveA.bind(this))
+      } else if (this.isWhichFlag == 2) {
+        wepy.navigateTo({ url: '/pages/packageMine/sureOrder/index' });
+      }
+    },
+    addCartA() {
+      this.isWhichFlag = 1
+      this.showGoodsPop = true
+    },
+    buyNowA() {
+      this.isWhichFlag = 2
+      this.showGoodsPop = true
     }
   }
 
-  apiGetGoodsDetailsA(id, fun) {
+  apiCartSaveA(fun) { // 添加购物车
     var _self = this
-    apiGetGoodsDetailsF(id, fun).then(msg => {
-      let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList } = msg;
+    apiCartSaveF({
+        goodsId: this.goodsId,
+        specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+        colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
+        quantity: this.buyNum
+      }, fun).then(msg => {
+      setTimeout(() => { this.showGoodsPop = false }, 1500);
+      miniPro.showToast('添加成功')
+      this.$apply()
+    }).catch(err => {
+
+    })
+  }
+
+  apiGetGoodsDetailsA(fun) {
+    var _self = this
+    apiGetGoodsDetailsF(_self.goodsId, fun).then(msg => {
+      let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList, goodsColorVoList } = msg;
       this.bannerArr = goodsBannerVoList;
       this.goodsSpecificationVoList = goodsSpecificationVoList;
+      this.goodsColorVoList = goodsColorVoList;
       let _first = goodsSpecificationVoList[0];
       this.goodsDetailObj = msg;
       console.log(101, _first)
@@ -159,14 +202,12 @@ export default class GoodsDetail extends wepy.page {
   }
 
   events = {
-      'addComEvent': (p1, p2, p3, $event) => {
-          console.log(111, p1, p2, p3, $event)
-      }
+      'addComEvent': (p1) => { this.buyNum = p1; this.$apply() }
   };
 
   async onLoad(option) {
-    let _goodsId = option.goodsId
-    this.apiGetGoodsDetailsA(_goodsId, this.apiGetGoodsDetailsA.bind(this))
+    this.goodsId = option.goodsId
+    this.apiGetGoodsDetailsA( this.apiGetGoodsDetailsA.bind(this))
     this.$apply();
   }
 }

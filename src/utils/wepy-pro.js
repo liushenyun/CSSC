@@ -37,14 +37,17 @@ let proFun = () => {
   }
 
   // confirm
-  miniPro.showConfirm = () => {
+  miniPro.showConfirm = (obj) => {
     wepy.showModal({
-      title: '提示',
-      content: '这是一个模态弹窗',
+      title: obj.title || '提示',
+      content: obj.content || '',
       success: function(res) {
+        console.log(res)
         if (res.confirm) {
+          obj.callback && obj.callback(true)
           console.log('用户点击确定')
         } else if (res.cancel) {
+          obj.callback && obj.callback(false)
           console.log('用户点击取消')
         }
       }
@@ -187,7 +190,7 @@ let proFun = () => {
                 resolve(res.data.data)
               }
             } else {
-              wepy.showToast(errMsg)
+              miniPro.showToast(errMsg)
               reject(data)
             }
 
@@ -206,7 +209,7 @@ let proFun = () => {
           } else if (statusCode === 403) { // 未绑定需要绑定操作（手机号，验证码）
             // wepy.setStorageSync(WECHAT_ACCESS_TOKEN_NAME, res.data.token)
             // miniPro.setBindToken(res.data.token)
-            wepy.showToast('请先登录')
+            miniPro.showToast('请先登录')
             setTimeout(() => {
               wepy.navigateTo({ url: '/pages/login/index' })
             }, TOAST_DURATION - 1000)
@@ -219,13 +222,13 @@ let proFun = () => {
               if (data.error === 'invalid_grant' || data.error === 'wechat.code.expire' || data.error === 'wechatToken.time.out') {
                 Auth.getInstance().checkWebchatAuth(true, fun, true)
               } else if (data.error === 'mobile.bind') {
-                wepy.showToast('手机号已被占用，无法获取数据');
+                miniPro.showToast('手机号已被占用，无法获取数据');
               }
             }
           } else if (statusCode === 500 && data && data.status == 500) {
             reject(res.data)
           } else {
-            wepy.showToast('加载失败')
+            miniPro.showToast('加载失败')
             reject(res)
           }
         },
@@ -236,7 +239,7 @@ let proFun = () => {
         }
       })
     })
-  };
+  }
   return miniPro
 }
 

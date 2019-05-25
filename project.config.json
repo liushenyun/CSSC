@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 15,
+			"current": 21,
 			"list": [
 				{
 					"id": -1,
@@ -142,6 +142,48 @@
 					"name": "商品详情",
 					"pathName": "pages/packageIndex/goodsDetail/index",
 					"query": "goodsId=20190524190903491861",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "确认订单",
+					"pathName": "pages/packageMine/sureOrder/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品搜索",
+					"pathName": "pages/packageIndex/search/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/packageMine/about/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "用户协议",
+					"pathName": "pages/packageMine/userAgreement/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "招商采购政策",
+					"pathName": "pages/packageMine/policy/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "联系我们",
+					"pathName": "pages/packageMine/contact/index",
+					"query": "",
 					"scene": null
 				}
 			]

@@ -2,9 +2,18 @@
 <template>
   <view class="cart-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-      <repeat for="{{list}}" key="index" index="index" item="item">
-          <CatItem class='cat-itme-wrap' :item="item"></CatItem>
-      </repeat>
+      <view class="cart-goods-outer">
+        <view class="cart-goods-has">
+          <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">
+            <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>
+          </repeat>
+        </view>
+        <view class="cart-goods-no" wx:if='{{rowsArr.length < 1}}'>
+          <image src='../../images/shopping.png'></image>
+          <view>空空如也 马上添加</view>
+        </view>
+      </view>
+      
 
       <view class="cart-like">
         <view class="cart-like-title">·猜您喜欢·</view>
@@ -34,7 +43,11 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiIsAuthF, apiGoodsListF } from '../../services/index';
+import {
+  apiCartFindPageF,
+  apiChangeQuantityF,
+  apiCartDeleteF
+} from '../../services/cart';
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -59,15 +72,13 @@ export default class Index extends wepy.page {
       { check: false, num: 1, name: '彩色甜甜圈牛肉味3' },
       { check: false, num: 1, name: '彩色甜甜圈牛肉味3' }
     ],
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 5000,
-    duration: 1000
+    pageNum: 0,
+    rowsArr: [],
+    changeQuantity: {
+      id: '',
+      type: ''
+    },
+    delGoosId: ''
   };
 
   computed = {};
@@ -96,19 +107,67 @@ export default class Index extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
     }
   };
+  apiCartFindPageA(fun) {
+    let _pageNum = this.pageNum
+    apiCartFindPageF({
+      page: _pageNum
+    }, fun).then(msg => {
+      let { rows } = msg
+      this.rowsArr = rows.map((val) => {
+        val.check = false
+        return val
+      })
+      this.$apply()
+      console.log(96, this.rowsArr);
+      
+    }).catch(err => {
 
-  events = {};
+    })
+  }
+  apiChangeQuantityA(fun) {
+    apiChangeQuantityF(this.changeQuantity, fun).then(msg => {
+
+    }).catch(err => {
+
+    })
+  }
+  apiCartDeleteA(fun) {
+    apiCartDeleteF(this.delGoosId, fun).then(msg => {
+
+    }).catch(err => {
+
+    })
+  }
+  events = {
+    'calt-item-check': (index, check) => {
+      this.rowsArr[index].check = check
+      this.$apply()
+    },
+    'num-change-event': (index, type) => {
+      console.log(index, type)
+      this.changeQuantity.id = this.rowsArr[index].goodsId
+      this.changeQuantity.type = type
+      this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
+      this.$apply()
+      // this.rowsArr[index].quantity = num
+    },
+    'calt-item-del': (index) => {
+      let _self = this
+      miniPro.showConfirm({
+        title: '提示',
+        content: '确实删除次商品？',
+        callback(flag) {
+          if (!flag) return
+          _self.delGoosId = _self.rowsArr[index].goodsId
+          _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
+        }
+      })
+      
+    }
+  };
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    // apiGoodsListF().then(msg => {
-    //   console.log('86', msg)
-    // }).catch(err => {
-    //   console.log('88', err)
-    // });
-    this.getSystemInfo();
+    this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
     this.$apply();
   }
   onUnload() {}

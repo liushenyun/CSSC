@@ -1,6 +1,11 @@
 <template>
   <view class='contact-ctner'>
-      联系我们
+      <view class="word">
+        <text class="word-b">公司电话</text>：0755-26929276
+      </view>
+      <view class="word">
+        <text class="word-b">联系地址</text>：深圳市南山区西丽街道聚创金谷创意园A栋808室 
+      </view>
   </view>
 </template>
 

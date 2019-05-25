@@ -40,6 +40,7 @@ export default class extends wepy.app {
         pages: [
           'message/index',
           'goodsDetail/index',
+          'search/index',
           'test/index'
         ]
       },
@@ -76,7 +77,8 @@ export default class extends wepy.app {
           'bulkOrder/index',
           'collection/index',
           'footprint/index',
-          'order/index'
+          'order/index',
+          'sureOrder/index',
         ]
       }
     ],

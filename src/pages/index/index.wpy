@@ -14,7 +14,7 @@
       <view class="input-search">
         <image src='../../images/nav_button_search_default.png' />
       </view>
-      <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+      <input bindfocus="bindfocusInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
       <view class="input-msg" @tap="toMsgA">
         <image src='../../images/nav_button_message_default.png' />
       </view>
@@ -164,7 +164,8 @@ export default class Index extends wepy.page {
       console.log('去往消息列表');
        wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
-    bindReplaceInput(e) {
+    bindfocusInput(e) {
+      wepy.navigateTo({ url: '/pages/packageIndex/search/index' });
       console.log('input输入', e)
     },
     toGoodsDetail() {
