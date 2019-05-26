@@ -8,8 +8,11 @@ import {
   apiCollectDelete,
   apiCollectFindPage,
   apiCollectSave,
+  apiFootDelete,
+  apiFootFindPage,
   apiPayCreate,
   apiAddressDelete,
+  apiAddressFind,
   apiAddressFindPage,
   apiAddressSave,
   apiAddressUpdate
@@ -108,6 +111,7 @@ const apiCollectFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiCollectFindPage(),
     method: 'POST',
+    noOutData: true,
     data
   }, fun)
     .then(msg => {
@@ -121,6 +125,32 @@ const apiCollectSaveF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiCollectSave(),
     method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 足迹模块 => 删除足迹
+const apiFootDeleteF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFootDelete(id),
+    method: 'DELETE'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 足迹模块 => 分页获取我的足迹
+const apiFootFindPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFootFindPage(),
+    method: 'POST',
+    noOutData: true,
     data
   }, fun)
     .then(msg => {
@@ -143,11 +173,22 @@ const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
 })
 
 // 收货地址模块 => 删除收货地址
-const apiAddressDeleteF = (data, fun) => packagePromise((resolve, reject) => {
+const apiAddressDeleteF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiAddressDelete(),
-    method: 'DELETE',
-    data
+    url: apiAddressDelete(id),
+    method: 'DELETE'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 收货地址模块 => 获取地址详情
+const apiAddressFindF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAddressFind(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -204,8 +245,11 @@ export {
   apiCollectDeleteF,
   apiCollectFindPageF,
   apiCollectSaveF,
+  apiFootDeleteF,
+  apiFootFindPageF,
   apiPayCreateF,
   apiAddressDeleteF,
+  apiAddressFindF,
   apiAddressFindPageF,
   apiAddressSaveF,
   apiAddressUpdateF

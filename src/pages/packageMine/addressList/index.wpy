@@ -1,6 +1,6 @@
 <template>
   <view class='address-list-ctner'>
-      <view class="addl-new" @tap='toAddAddressA'>
+      <view class="addl-new" @tap="toAddressA">
         <image src='../../../images/location_a.png'></image>
         <text>新增收货地址</text>
         <image src='../../../images/unfold.png'></image>
@@ -15,7 +15,7 @@
             <view> <text>{{item.name}}</text> <text>{{ item.phone}}</text> </view>
             <view>收货地址：{{item.province}}{{item.city}}{{item.district}}{{item.address}} </view>
           </view>
-          <view class="addl-edit"  @tap.stop="toAddressEditA">
+          <view class="addl-edit"  @tap.stop="toAddressEditA({{item.id}})">
               <image class="addl-img-b" src='../../../images/edit.png'></image>
           </view>
           
@@ -53,11 +53,11 @@ export default class AddressList extends wepy.page {
       this.$apply()
       
     },
-    toAddressEditA() {
-      wepy.navigateTo({ url: '/pages/packageMine/addressEdit/index' });
+    toAddressEditA(id) {
+      wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index?id=${id}` });
     },
-    toAddAddressA() {
-      
+    toAddressA() {
+      wepy.navigateTo({ url: '/pages/packageMine/addressEdit/index' });
     }
   }
   apiAddressFindPageA(fun) {

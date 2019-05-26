@@ -41,13 +41,20 @@
       </view>
 
       <button class="icx-btn-same-sure" @tap='saveA'>保存</button>
-      <button class="icx-btn-same-cancel" @tap='cancelA'>删除</button>
+      <button class="icx-btn-same-cancel" @tap='deleteA'>删除</button>
 
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import {
+  apiAddressFindF,
+  apiAddressDeleteF,
+  apiAddressSaveF,
+  apiAddressUpdateF
+} from '../../../services/mine/index'
+
 export default class AddressEdit extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -104,6 +111,10 @@ export default class AddressEdit extends wepy.page {
       ]
     ],
     multiIndex: [0, 0, 0],
+    addressId: '',
+    addressData: {
+      shippingAddress: '广东省深圳市宝安区西乡劳动二队'
+    }
   };
   methods = {
     bindMultiPickerChange(e) {
@@ -113,14 +124,60 @@ export default class AddressEdit extends wepy.page {
       console.log(111, e);
     },
     saveA() {
+      // this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
+      this.apiAddressSaveA(this.apiAddressSaveA.bind(this))
       console.log('save');
     },
-    cancelA() {
+    deleteA() {
       console.log('cancel');
-      
+      this.apiAddressDeleteA(this.apiAddressDeleteA.bind(this))
     },
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    }
+  }
+
+
+  apiAddressDeleteA(fun) {
+    apiAddressDeleteF(this.addressId, fun).then((result) => {
+      console.log(134, result)
+    }).catch((err) => {
+      
+    });
+  }
+  
+  apiAddressFindA(fun) {
+    apiAddressFindF(this.addressId, fun).then((result) => {
+      console.log(134, result)
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiAddressSaveA(fun) {
+    apiAddressSaveF({
+      shippingAddress: this.addressData.shippingAddress
+    }, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiAddressUpdateA(fun) {
+    apiAddressUpdateF(this.addressData.shippingAddress, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+
+  onLoad(option) {
+    console.log(128, option.id);
+    this.addressId = option.id
+    if (option.id) {
+      this.apiAddressFindA(this.apiAddressFindA.bind(this))
     }
   }
 }

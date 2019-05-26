@@ -1,14 +1,15 @@
 <template>
   <view class='footprint-ctner'>
-      <CatItem class='cat-itme-wrap' :item="item"></CatItem>
-      <CatItem class='cat-itme-wrap' :item="item"></CatItem>
+    <repeat for="{{footArr}}" key="index" index="index" item="item">
+      <CatItem class='cat-itme-wrap' :current="index" :item="item"></CatItem>
+    </repeat>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import CatItem from '@/components/CollectionGoodCom/index';
-
+import CatItem from '@/components/FootGoodCom/index';
+import { apiFootFindPageF, apiFootDeleteF } from '../../../services/mine/index'
 export default class Footprint extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -19,20 +20,44 @@ export default class Footprint extends wepy.page {
     CatItem: CatItem
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false,
-    item: { check: false, num: 1, name: '彩色甜甜圈牛肉味1' }
+    footArr: []
   };
   methods = {
-    startA() {
-      console.log('开启')
+    
+  }
+  events = {
+    'look-event': (index) => {
+      console.log(30, index);
     },
-    flashA() {
-      console.log('冲洗')
-    },
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    'buy-event': (index) => {
+      console.log(40, index);
     }
+  }
+
+  apiFootFindPageA(fun) {
+    apiFootFindPageF({
+      page: 1,
+      limit: 20
+    }, fun).then((result) => {
+      let { rows } = result
+      this.footArr = rows
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiFootDeleteA(fun) {
+    apiFootDeleteF('20190509153955704421', fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+  onLoad() {
+    // this.apiFootDeleteA(this.apiFootDeleteA.bind(this))
+    this.apiFootFindPageA(this.apiFootFindPageA.bind(this))
   }
 }
 </script>

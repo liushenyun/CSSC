@@ -24,11 +24,20 @@ const apiCollectFindPage = (id) => `${MAIN_DOMAIN}/api/goods/collection/find_pag
 // 收藏模块 => 添加收藏
 const apiCollectSave = (id) => `${MAIN_DOMAIN}/api/goods/collection/save`
 
+// 足迹模块 => 删除足迹
+const apiFootDelete = (id) => `${MAIN_DOMAIN}/api/goods/browse/delete/${id}`
+
+// 足迹模块 => 分页获取我的足迹
+const apiFootFindPage = (id) => `${MAIN_DOMAIN}/api/goods/browse/find_page`
+
 // 支付模块 => 创建支付订单
 const apiPayCreate = (id) => `${MAIN_DOMAIN}/api/pay/create`
 
 // 收货地址模块 => 删除收货地址
 const apiAddressDelete = (id) => `${MAIN_DOMAIN}/api/user/address/delete/${id}`
+
+// 收货地址模块 => 获取地址详情
+const apiAddressFind = (id) => `${MAIN_DOMAIN}/api/user/address/find_by_id/${id}`
 
 // 收货地址模块 => 分页获取我的收货地址
 const apiAddressFindPage = () => `${MAIN_DOMAIN}/api/user/address/find_page`
@@ -48,8 +57,11 @@ export {
   apiCollectDelete,
   apiCollectFindPage,
   apiCollectSave,
+  apiFootDelete,
+  apiFootFindPage,
   apiPayCreate,
   apiAddressDelete,
+  apiAddressFind,
   apiAddressFindPage,
   apiAddressSave,
   apiAddressUpdate
