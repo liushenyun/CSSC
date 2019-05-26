@@ -1,6 +1,96 @@
 <template>
   <view class='policy-ctner'>
-      招商采购政策
+      <view class="word word-title word-b">入驻条件及流程</view>
+      <view class="word word-sub-title word-b">
+        一、入驻条件：
+      </view>
+      <view class="word">
+        1、成氏商城暂不接受个体商家的入驻申请，商家须为正式注册企业；
+      </view>
+      <view class="word">
+        2、公司注册资金10万及10万以上人民币；
+      </view>
+      <view class="word">
+        3、商家必须提供正规发票，发票盖章的公司名称必须与商家与成氏商城的公司  名称一致；
+      </view>
+      <view class="word">
+        4、商家提供品牌销售授权证明、代理授权书；
+      </view>
+      <view class="word">
+        5、产品需在京东/天猫及其他知名电商平台有旗舰店或者有售；
+      </view>
+      <view class="word">
+        6、商品类目：全品类；
+      </view>
+      <view class="word">
+        7、免收平台保证金、免进驻费 ；
+      </view>
+      <view class="word word-sub-title word-b">
+        二、材料准备：需提交复印件，必须盖红色公章
+      </view>
+      <view class="word">
+        1、三证合一营业执照副本，需确保未在企业经营异常名录中且需所售商品属于经营范围内；
+      </view>
+      <view class="word">
+        2、一般纳税人资格证 ；
+      </view>
+      <view class="word">
+        3、法人身份证正反面；
+      </view>
+      <view class="word">
+        4、银行开户许可证；
+      </view>
+      <view class="word">
+        5、品牌有关资质：（需在有效期内）
+      </view>
+      <view class="word">
+        （1）商标注册证/商品注册申请书；
+      </view>
+      <view class="word">
+        （2）销售授权书：自有品牌： 国家商标总局颁发的《商标注册证》或《商标注册申请受理通知书》；非自有品牌，需另出具《授权书》；
+      </view>
+      <view class="word">
+        （3）质检、检疫、检验报告；
+      </view>
+      <view class="word">
+        （4）卫生、生产许可证、化妆品卫生许可证、工业生产许可证、医疗器械许可证等，根据具体类目资质要求提交。
+      </view>
+      <view class="word word-sub-title word-b">
+        三、入驻流程
+      </view>
+      <view class="word">
+        联系我们 => 核实资料 => 审核产品信息 => 邮寄、检验样品 => 正式运作 => 开通管理后台 => 签订合同
+      </view>
+      <view class="word word-sub-title word-b">
+        四、服务细节
+      </view>
+      <view class="word">
+        1. 付款方式：公对公转帐；
+      </view>
+      <view class="word">
+        2. 结算方式：30天财务对账结算；
+      </view>
+      <view class="word">
+        3. 商品支持一件代发, 发货能力：600单/天，发货时限为T+1，活动日如订单  量较大可3天内发完；
+      </view>
+      <view class="word">
+        4. 快递物流：圆通中通申通、顺丰、EMS等正规物流；
+      </view>
+      <view class="word">
+        5. 外包装箱使用纯色无LOGO或成氏商城LOGO纸箱（供应商二维码禁止出现），商品质量需与所提供的样品质量一致；
+      </view>
+      <view class="word">
+        6. 品质保证：上线商品如接到客诉，一经查证属假冒伪劣、价值严重不对等产品，直接做永久下架处理，并官网通告；
+      </view>
+      <view class="word word-sub-title word-b">
+        五、联系方式
+      </view>
+      <view class="word">
+        <text class="word-b">公司电话</text>：0755-26929276
+      </view>
+       <view class="word">
+        <text class="word-b">联系地址</text>：深圳市南山区西丽街道聚创金谷创意园A栋808室
+      </view>
   </view>
 </template>
 

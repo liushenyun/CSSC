@@ -30,7 +30,8 @@
         .goods-num {
             font-size: rpx(16);
             color: $color-word-alarm;
-            margin-bottom: rpx(10);
+            margin: rpx(26) 0 rpx(16) 0;
+            // margin-bottom: rpx(10);
         }
         .goods-pri{
             font-size: rpx(20);
@@ -50,7 +51,6 @@
         .star {
            width: rpx(27);
            height: rpx(27);
-           background: red;
            vertical-align: bottom;
         }
     }

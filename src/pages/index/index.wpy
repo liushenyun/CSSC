@@ -11,10 +11,10 @@
     >
     
     <view class="ix-input-wrap">
-      <view class="input-search">
+      <view class="input-search" @tap='bindfocusInput'>
         <image src='../../images/nav_button_search_default.png' />
       </view>
-      <input bindfocus="bindfocusInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+      <input @tap='bindfocusInput' disabled maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
       <view class="input-msg" @tap="toMsgA">
         <image src='../../images/nav_button_message_default.png' />
       </view>

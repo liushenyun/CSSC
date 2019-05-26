@@ -1,32 +1,36 @@
 <template>
   <view class='goods-detail-ctner'>
     <import src="../../../common/wxParse/wxParse.wxml"/>
-      <view class="goods-banner">
-        <swiper
-            indicator-dots="{{indicatorDots}}"
-            autoplay="{{autoplay}}"
-            interval="{{interval}}"
-            duration="{{duration}}"
-            indicator-color='#999'
-            indicator-active-color='#FFF'
-            circular = 'true'>
-            <block wx:for="{{bannerArr}}" wx:key="indx">
-              <swiper-item>
-                <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
-              </swiper-item>
-            </block>
-        </swiper>
+      <view class="goods-con-outer">
+          <view class="goods-banner">
+          <swiper
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              interval="{{interval}}"
+              duration="{{duration}}"
+              indicator-color='#999'
+              indicator-active-color='#FFF'
+              circular = 'true'>
+              <block wx:for="{{bannerArr}}" wx:key="indx">
+                <swiper-item>
+                  <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
+                </swiper-item>
+              </block>
+          </swiper>
+        </view>
+
+        <view class="goods-des-outer">
+          <view><tex>￥</tex><tex></tex>{{firstSpec.price}}</view>
+          <view>{{goodsDetailObj.goodsName || '--'}}</view>
+          <!-- <view>3秒拥有水光肌</view> -->
+        </view>
+        <view class="G-line"></view>
+        <view class="goods-detail">
+          <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
+        </view>
       </view>
 
-      <view class="goods-des-outer">
-        <view><tex>￥</tex><tex></tex>{{firstSpec.price}}</view>
-        <view>{{goodsDetailObj.goodsName || '--'}}</view>
-        <!-- <view>3秒拥有水光肌</view> -->
-      </view>
-      <view class="G-line"></view>
-      <view class="goods-detail">
-        <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
-      </view>
+      
       <view class="goods-bottom">
         <view class="gb-kf">
           <button class="icx-btn" open-type="contact">
@@ -48,8 +52,8 @@
         </view>
       </view>
 
-      <view class="goods-spc-outer" wx:if="{{showGoodsPop}}" @touchmove.stop='spcTouch'>
-          <view class="goods-spc-con">
+      <view class="goods-spc-outer" wx:if="{{showGoodsPop}}" @tap.stop='specPopA' @touchmove.stop='spcTouch'>
+          <view class="goods-spc-con" @tap.stop='specConStopA'>
               <view class="goods-des">
                 <view class="des-l">
                   <image src="{{goodsDetailObj.goodsIco}}"></image>
@@ -95,6 +99,11 @@ import {
 import {
   apiCartSaveF
 } from '../../../services/cart'
+
+import {
+  apiCreateOrderF
+} from '../../../services/mine'
+
 import WxParse from '../../../common/wxParse/wxParse.js'
 import AddCom from '@/components/AddCom/index';
 
@@ -129,10 +138,16 @@ export default class GoodsDetail extends wepy.page {
     autoplay: true,
     interval: 5000,
     duration: 1000,
+    createData: [],
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
   };
   methods = {
     spcTouch() {},
+    specConStopA() {},
+    specPopA() {
+      console.log(1132)
+      this.showGoodsPop = false
+    },
     toCartA() {
       wepy.switchTab({ url: '/pages/cart/index' });
     },
@@ -146,7 +161,18 @@ export default class GoodsDetail extends wepy.page {
       if (this.isWhichFlag == 1) {
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
       } else if (this.isWhichFlag == 2) {
-        wepy.navigateTo({ url: '/pages/packageMine/sureOrder/index' });
+        this.createData.push({
+          cartId: '',
+          goodsId: this.goodsId,
+          specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+          colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
+          goodsNumber : this.buyNum
+        })
+        this.$apply()
+        setTimeout(() => {
+          this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
+        }, 10);
+        
       }
     },
     addCartA() {
@@ -170,6 +196,15 @@ export default class GoodsDetail extends wepy.page {
       setTimeout(() => { this.showGoodsPop = false }, 1500);
       miniPro.showToast('添加成功')
       this.$apply()
+    }).catch(err => {
+
+    })
+  }
+
+  apiCreateOrderA(fun) {
+    apiCreateOrderF(this.createData, fun).then(msg => {
+      let _id = msg.id
+      wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
     }).catch(err => {
 
     })

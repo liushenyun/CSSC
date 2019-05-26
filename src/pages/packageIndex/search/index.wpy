@@ -1,7 +1,7 @@
 
 <template>
   <view class="search-ctner container-same">
-    <wxs src="../../../utils/filter.wxs" module="tools"></wxs>
+    <!-- <wxs src="../../../utils/filter.wxs" module="tools"></wxs> -->
       <view class="search-top-outer">
         <view class="ix-input-wrap">
           <view class="input-search">
@@ -26,9 +26,13 @@
           scroll-y
           style="height: 100%;"
           >
-            <block wx:for="{{array}}" wx:key="index">
-              <SearchItem></SearchItem>
-            </block>
+            <repeat for="{{goodsArray}}" key="index" index="index" item="item">
+                <SearchItem :current="index" :item="item"></SearchItem>
+            </repeat>
+
+            <!-- <block wx:for="{{goodsArray}}" wx:for-index="idx" wx:for-item="idxItem" wx:key="idx">
+              <view>{{index}}</view>
+            </block> -->
         </scroll-view>
       </view>
     
@@ -43,6 +47,12 @@ import {
   apiGoodsListF,
   apiGetGoodsDetailsF
 } from '../../../services/index';
+import {
+  apiCollectDeleteF,
+  apiCollectFindPageF,
+  apiCollectSaveF
+} from '../../../services/mine';
+
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -70,7 +80,11 @@ export default class Index extends wepy.page {
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    array: [1,2,3,4,1,2,3,4,1,2,3,4]
+    goodsArray: [],
+    starFData: {
+      goodsId: '',
+      current: ''
+    }
   };
 
   computed = {};
@@ -84,10 +98,6 @@ export default class Index extends wepy.page {
     },
     bindfocusInput(e) {
       console.log('input输入', e)
-    },
-    toGoodsDetail() {
-      let _goodsId = '20190524190903491861'
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
     }
   }
 
@@ -96,15 +106,54 @@ export default class Index extends wepy.page {
       page: 0,
       keyword: ''
     }, fun).then(msg => {
+      let { rows } = msg
+      this.goodsArray = rows
+      this.$apply()
       console.log('86', msg)
     }).catch(err => {
       console.log('88', err)
     });
   }
 
+  apiCollectSaveA(fun) {
+    apiCollectSaveF({
+      goodsId: this.starFData.goodsId
+    }, fun).then(msg => {
+      this.goodsArray[this.starFData.current].collection = true
+      this.$apply()
+    }).catch(err => {
+      miniPro.showToast('收藏失败')
+    })
+  }
   
+  apiCollectDeleteA(fun) {
+    apiCollectDeleteF(this.starFData.goodsId, fun).then(msg => {
+      this.goodsArray[this.starFData.current].collection = false
+      this.$apply()
+    }).catch(err => {
+      miniPro.showToast('删除收藏失败')
+    })
+  }
 
-  events = {};
+  events = {
+    'goods-start-event': (current, collection) => {
+      this.starFData.goodsId = this.goodsArray[current].id
+      this.starFData.current = current
+      this.$apply()
+      console.log(147, current, collection)
+      setTimeout(() => {
+        if (collection) {
+          this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
+        } else {
+          this.apiCollectSaveA(this.apiCollectSaveA.bind(this))
+        }
+      }, 10);
+    },
+    'to-goods-event': (goodsId) => {
+      let _goodsId = goodsId || '20190524190903491861'
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
+    }
+  };
 
   async onLoad() {
     // wepy.navigateTo({

@@ -1,19 +1,19 @@
 <template>
-  <view class="cat-item-ctner">
+  <view class="cat-item-ctner" @tap='toGoodsA'>
     <view class='cat-m'>
-        <image src='../../images/goods_small_del.png' />
+        <image src='{{item.goodsIco}}' />
     </view>
     <view class="cat-m-t">
-        <view class='goods-name'>迪奥唇膏口红迪奥唇膏口红</view>
-        <view class='goods-des'>颜色：黄色</view>
-        <view class='goods-num'>仅剩12件</view>
+        <view class='goods-name'>{{item.goodsName}}</view>
+        <!-- <view class='goods-des'>颜色：{{item.goodsName}}</view> -->
+        <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
         <view class='goods-pri'>
-            <text>￥179</text>
+            <text>￥{{item.price || '--'}}</text>
             <!-- <text>￥358</text> -->
         </view>
     </view>
-    <view class='cat-r'>
-        <image hover-class='icx-click-hove' @tap='deleteA' class="star">
+    <view class='cat-r' @tap.stop='startA'>
+        <image wx:if="0" src="../../images/start_{{item.collection?'on':'off'}}.png" hover-class='icx-click-hove' class="star">
         </image>
     </view>
   </view>
@@ -40,33 +40,22 @@ export default class SearchItem extends wepy.component {
       AddCom: AddCom
   }
   methods = {
-      numAdd() {
-          this.currentNum = this.item.quantity + 1;
-          console.log('numAdd', this.item);
-        //   this.$emit('num-change-event', this.current, this.currentNum)
-          this.$emit('num-change-event', this.current, 'add')
-          
+      startA() {
+        let _collection = this.item.collection
+        this.$emit('goods-start-event', this.current, _collection)
       },
-      numReduce() {
-          if (this.currentNum < 2) return
-          this.currentNum = this.item.quantity - 1;
-        //   this.$emit('num-change-event', this.current, this.currentNum)
-          this.$emit('num-change-event', this.current, 'sub')
-      },
-      toggleCheckA(check) {
-          this.$emit('calt-item-check', this.current, !check)
-      },
-      deleteA() {
-        this.$emit('calt-item-del', this.current)
+      toGoodsA() {
+          this.$emit('to-goods-event', this.item.id)
       }
   }
   watch = {
       item(newVal, oldVal) {
-          this.currentNum = newVal.quantity
           this.$apply()
       }
   }
   onLoad() {
+      console.log(53, this.item);
+      
   }
 }
 </script>

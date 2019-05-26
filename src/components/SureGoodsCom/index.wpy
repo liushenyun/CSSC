@@ -9,23 +9,24 @@
 
     <view class="sure-same-outer goods-outer">
         <view class='cat-m'>
-            <image src='../../images/goods_small_del.png' />
+            <image src='{{item.goodsIco}}' />
         </view>
         <view class="cat-m-t">
             <view class='goods-name'>
-                <text>彩色甜甜圈牛肉味</text>
-                <text>￥258</text>
+                <text>{{item.goodsName}}</text>
+                <text>￥{{item.price}}</text>
             </view>
             <view class='goods-des'>
-                <text>颜色：999哑光 3.5克</text>
-                <text>x1</text>
+                <text>颜色：{{item.colorName}}</text>
+                <text>x{{item.goodsNumber}}</text>
             </view>
         </view>
     </view>
 
     <view class="sub-same s-num">
         <text>购买数据</text>
-        <AddCom :num="num"></AddCom>
+        <text>{{item.goodsNumber}}</text>
+        <!-- <AddCom :num="num"></AddCom> -->
     </view>
 
     <view class="sub-same s-type">
@@ -39,8 +40,8 @@
     </view>
 
     <view class="order-num-outer">
-        <text>共1件 合计:</text>
-        <text>￥258</text>
+        <text>共{{item.goodsNumber}}件 合计:</text>
+        <text>￥{{item.goodsNumber * item.price}}</text>
     </view>
     
   </view>
@@ -54,6 +55,10 @@ export default class OrderGoodCom extends wepy.component {
       item: {
           type: Object,
           default: {}
+      },
+      current: {
+          type: Number,
+          default: 0
       }
   }
   components = {
@@ -68,6 +73,10 @@ export default class OrderGoodCom extends wepy.component {
       },
       numReduce() {
           console.log('numReduce');
+      },
+      bindReplaceInput(e) {
+          console.log(e.detail.value, this.current);
+          this.$emit('order-detail-input', e.detail.value, this.current)
       }
   }
   watch = {

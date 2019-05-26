@@ -1,8 +1,23 @@
 @import '../../../common/css/rpx.scss';
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
-page{
-}
-.device-ctner{
-   
-}
+.policy-ctner{
+    padding: rpx(12) rpx(30);
+    .word {
+        text-indent: 2em;
+        line-height: 2;
+        font-size: rpx(26);
+        margin-bottom: rpx(4);
+    }
+    .word-sub-title {
+        font-size: rpx(30);
+        margin-top: rpx(30);
+    }
+    .word-title {
+        text-align: center;
+        font-size: rpx(30);
+    }
+    .word-b {
+        font-weight: bold;
+    }
+ }

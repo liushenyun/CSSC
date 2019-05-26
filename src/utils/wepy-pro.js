@@ -173,7 +173,7 @@ let proFun = () => {
         data: options.data,
         header: {
           'Authorization': `${Access_Token}`,
-          'content-type': 'application/x-www-form-urlencoded',
+          'content-type': 'application/x-www-form-urlencoded', // application/json
           ..._header
         },
         success(res) {

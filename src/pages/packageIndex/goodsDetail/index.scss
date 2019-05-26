@@ -9,6 +9,10 @@ page{
     height: 100%;
     padding-bottom: rpx(100);
     position: relative;
+    .goods-con-outer {
+        height: 100%;
+        overflow: auto;
+    }
    .goods-banner {
        height: rpx(438);
         swiper,
@@ -38,10 +42,10 @@ page{
        background: #EDEDED
    }
    .goods-bottom {
-       position: absolute;
+       position: fixed;
        @include borderTopOnePx;
        left: 0;
-       bottom: 0px;
+       bottom: 0;
        width: 100%;
        height: rpx(98);
        display: flex;
