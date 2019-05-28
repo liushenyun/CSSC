@@ -3,14 +3,14 @@
       <view class="ade-same">
         <view class="ade-a">收货人</view>
         <view class="ade-b">
-          <input bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
+          <input value="{{addressObj.name}}" bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
         </view>
       </view>
 
       <view class="ade-same">
         <view class="ade-a">联系电话</view>
         <view class="ade-b">
-          <input type='number' bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入联系电话" />
+          <input value="{{addressObj.phone}}"  type='number' bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入联系电话" />
         </view>
       </view>
 
@@ -26,7 +26,8 @@
             range-key="name"
           >
             <view class="picker">
-              当前选择：{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}}
+              <!-- 当前选择：{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}} -->
+              {{addressJoin}}
             </view>
           </picker>
         </view>
@@ -36,7 +37,7 @@
       <view class="ade-same">
         <view class="ade-a">详细地址</view>
         <view class="ade-b">
-          <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入详细地址" />
+          <input value="{{addressObj.address}}"  bindinput="bindAddressInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入详细地址" />
         </view>
       </view>
 
@@ -52,7 +53,8 @@ import {
   apiAddressFindF,
   apiAddressDeleteF,
   apiAddressSaveF,
-  apiAddressUpdateF
+  apiAddressUpdateF,
+  apiAddressByParentF
 } from '../../../services/mine/index'
 
 export default class AddressEdit extends wepy.page {
@@ -66,7 +68,6 @@ export default class AddressEdit extends wepy.page {
   data = {
     isRepair: false, // 检修
     isBad: false,
-    region: ['广东省', '广州市', '海珠区'],
     customItem: '全部',
     multiArray: [
       [
@@ -114,9 +115,29 @@ export default class AddressEdit extends wepy.page {
     addressId: '',
     addressData: {
       shippingAddress: '广东省深圳市宝安区西乡劳动二队'
-    }
+    },
+    addressObj: {
+      province: '',
+      city: '',
+      district: '',
+      address: '',
+      name: '',
+      phone: '',
+      cityId: ''
+    },
+    addressJoin: '',
+    parentId: 0
   };
+  computed = {
+    addressJoin() {
+      return `${this.addressObj.province} ${this.addressObj.city}  ${this.addressObj.district}`
+    }
+  }
   methods = {
+    bindAddressInput(e) {
+      console.log(108, e);
+      this.addressObj.address = e.detail.value
+    },
     bindMultiPickerChange(e) {
       console.log(108, e);
     },
@@ -124,12 +145,14 @@ export default class AddressEdit extends wepy.page {
       console.log(111, e);
     },
     saveA() {
-      // this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
-      this.apiAddressSaveA(this.apiAddressSaveA.bind(this))
+      if (this.addressId) {
+        this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
+      } else {
+        this.apiAddressSaveA(this.apiAddressSaveA.bind(this))
+      }
       console.log('save');
     },
     deleteA() {
-      console.log('cancel');
       this.apiAddressDeleteA(this.apiAddressDeleteA.bind(this))
     },
     toFilterA() {
@@ -142,12 +165,28 @@ export default class AddressEdit extends wepy.page {
     apiAddressDeleteF(this.addressId, fun).then((result) => {
       console.log(134, result)
     }).catch((err) => {
-      
     });
   }
   
   apiAddressFindA(fun) {
     apiAddressFindF(this.addressId, fun).then((result) => {
+        this.addressObj = result;
+        this.addressObj.province = result.province
+        this.addressObj.city = result.city
+        this.addressObj.district = result.district
+        this.addressObj.address = result.address
+        this.addressObj.name = result.name
+        this.addressObj.phone = result.phone
+        this.addressObj.cityId = result.cityId
+        this.$apply()
+      console.log(134, result)
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiAddressByParentFA(fun) {
+    apiAddressByParentF(this.parentId, fun).then((result) => {
       console.log(134, result)
     }).catch((err) => {
       
@@ -156,7 +195,10 @@ export default class AddressEdit extends wepy.page {
 
   apiAddressSaveA(fun) {
     apiAddressSaveF({
-      shippingAddress: this.addressData.shippingAddress
+        phone: this.addressObj.phone,
+        name: this.addressObj.name,
+        cityId: this.addressObj.cityId,
+        address: this.addressObj.address
     }, fun).then((result) => {
       
     }).catch((err) => {
@@ -165,7 +207,13 @@ export default class AddressEdit extends wepy.page {
   }
 
   apiAddressUpdateA(fun) {
-    apiAddressUpdateF(this.addressData.shippingAddress, fun).then((result) => {
+    apiAddressUpdateF({
+      id: this.addressId,
+      phone: this.addressObj.phone,
+      name: this.addressObj.name,
+      cityId: this.addressObj.cityId,
+      address: this.addressObj.address
+    }, fun).then((result) => {
       
     }).catch((err) => {
       
@@ -175,7 +223,9 @@ export default class AddressEdit extends wepy.page {
 
   onLoad(option) {
     console.log(128, option.id);
+    option.id = '23423423545'
     this.addressId = option.id
+    this.apiAddressByParentFA(this.apiAddressByParentFA.bind(this))
     if (option.id) {
       this.apiAddressFindA(this.apiAddressFindA.bind(this))
     }

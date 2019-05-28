@@ -39,6 +39,9 @@ const apiAddressDelete = (id) => `${MAIN_DOMAIN}/api/user/address/delete/${id}`
 // 收货地址模块 => 获取地址详情
 const apiAddressFind = (id) => `${MAIN_DOMAIN}/api/user/address/find_by_id/${id}`
 
+// 收货地址模块 => 获取城市数据
+const apiAddressByParent = (parentId) => `${MAIN_DOMAIN}/api/user/address/find_by_parentid/${parentId}`
+
 // 收货地址模块 => 分页获取我的收货地址
 const apiAddressFindPage = () => `${MAIN_DOMAIN}/api/user/address/find_page`
 
@@ -62,6 +65,7 @@ export {
   apiPayCreate,
   apiAddressDelete,
   apiAddressFind,
+  apiAddressByParent,
   apiAddressFindPage,
   apiAddressSave,
   apiAddressUpdate

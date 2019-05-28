@@ -9,6 +9,7 @@ import {
   apiCollectFindPage,
   apiCollectSave,
   apiFootDelete,
+  apiAddressByParent,
   apiFootFindPage,
   apiPayCreate,
   apiAddressDelete,
@@ -196,6 +197,18 @@ const apiAddressFindF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 收货地址模块 => 获取城市数据
+const apiAddressByParentF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAddressByParent(id),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 // 收货地址模块 => 分页获取我的收货地址
 const apiAddressFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
@@ -249,6 +262,7 @@ export {
   apiFootFindPageF,
   apiPayCreateF,
   apiAddressDeleteF,
+  apiAddressByParentF,
   apiAddressFindF,
   apiAddressFindPageF,
   apiAddressSaveF,
