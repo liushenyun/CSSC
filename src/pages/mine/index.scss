@@ -26,14 +26,16 @@ page{
       transform: translate(-50%, -50%);
       display: inline-block;
       height: auto;
-      view {
+      view:nth-of-type(1) {
         width: rpx(100);
         height: rpx(100);
-        background: #FFF;
         border-radius: 50%;
         margin-bottom: rpx(16);
+        border-radius: 50%;
+        overflow: hidden;
       }
-      text {
+      view:nth-of-type(2) {
+        text-align: center;
         font-size:rpx(24);
         color: #FFF;
       }

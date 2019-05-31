@@ -16,7 +16,11 @@ import {
   apiAddressFind,
   apiAddressFindPage,
   apiAddressSave,
-  apiAddressUpdate
+  apiAddressUpdate,
+  apiPartnerPhoneCode,
+  apiPartnerPay,
+  apiPartnerSave,
+  apiSales
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -249,6 +253,58 @@ const apiAddressUpdateF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 合伙人申请模块 => 合伙人申请验证手机号
+const apiPartnerPhoneCodeF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerPhoneCode(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 合伙人申请模块 => 申请高级合伙人付款
+const apiPartnerPayF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerPay(),
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 合伙人申请模块 => 提交合伙人信息
+const apiPartnerSaveF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerSave(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后模块 => 商品售后api
+const apiSalesF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiSales(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiCancelOrderF,
   apiConfirmOrderF,
@@ -266,5 +322,9 @@ export {
   apiAddressFindF,
   apiAddressFindPageF,
   apiAddressSaveF,
-  apiAddressUpdateF
+  apiAddressUpdateF,
+  apiPartnerPhoneCodeF,
+  apiPartnerPayF,
+  apiPartnerSaveF,
+  apiSalesF
 }

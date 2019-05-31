@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 21,
+			"current": 22,
 			"list": [
 				{
 					"id": -1,
@@ -183,6 +183,13 @@
 					"id": -1,
 					"name": "联系我们",
 					"pathName": "pages/packageMine/contact/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后",
+					"pathName": "pages/packageMine/afterSales/index",
 					"query": "",
 					"scene": null
 				}

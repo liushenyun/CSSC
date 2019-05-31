@@ -13,8 +13,8 @@
             <view class="goods-btom-left">
                 <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
                 <view class='goods-pri'>
-                    <text>￥256</text>
-                    <text>￥358</text>
+                    <text>￥{{item.price}}</text>
+                    <text>￥{{item.marketPrice}}</text>
                 </view>
             </view>
             <view class="goods-btom-right">

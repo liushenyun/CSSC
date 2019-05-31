@@ -1,6 +1,6 @@
 <template>
   <view class='collection-ctner'>
-    <repeat for="{{footArr}}" key="index" index="index" item="item">
+    <repeat for="{{collectionArr}}" key="index" index="index" item="item">
       <CatItem class='cat-itme-wrap' :item="item"></CatItem>
     </repeat>
   </view>
@@ -21,7 +21,7 @@ export default class Collection extends wepy.page {
   };
   data = {
     item: { check: false, num: 1, name: '彩色甜甜圈牛肉味1' },
-    footArr: [1, 2]
+    collectionArr: [1, 2]
   };
   methods = {
     // toFilterA() {
@@ -34,7 +34,8 @@ export default class Collection extends wepy.page {
       page: 1,
       limit: 20
     }, fun).then((result) => {
-      console.log(37, result);
+      let { rows = [] } = result
+      this.collectionArr = rows
       this.$apply()
     }).catch((err) => {
       

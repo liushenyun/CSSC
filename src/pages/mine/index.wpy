@@ -4,8 +4,10 @@
     <view class="m-logo">
       <image class="m-log-bg" src='../../images/mine_bg1.png'></image>
       <view class="m-logo-con">
-        <view></view>
-        <text>成氏商城</text>
+        <view><open-data type="userAvatarUrl"></open-data></view>
+        <view>
+          <open-data type="userNickName"></open-data>
+        </view>
       </view>
     </view>
     <view class="m-hy">
@@ -49,7 +51,7 @@
             <view>待评价</view>
           </view>
 
-          <view class="order_e">
+          <view class="order_e" @tap.stop="toAfterSales()">
             <image src='../../images/refund.png'></image>
             <view>售后</view>
           </view>
@@ -139,6 +141,9 @@ export default class Index extends wepy.page {
      toFootprintA() {
       wepy.navigateTo({ url: '/pages/packageMine/footprint/index' });
     },
+    toAfterSales() {
+      wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+    }
   };
 
   events = {};

@@ -51,6 +51,18 @@ const apiAddressSave = () => `${MAIN_DOMAIN}/api/user/address/save`
 // 收货地址模块 => 修改收货地址
 const apiAddressUpdate = () => `${MAIN_DOMAIN}/api/user/address/update`
 
+// 合伙人申请模块 => 合伙人申请验证手机号
+const apiPartnerPhoneCode = () => `${MAIN_DOMAIN}/api/partner/apply/get_validate_code`
+
+// 合伙人申请模块 => 申请高级合伙人付款
+const apiPartnerPay = () => `${MAIN_DOMAIN}/api/partner/apply/pay`
+
+// 合伙人申请模块 => 提交合伙人信息
+const apiPartnerSave = () => `${MAIN_DOMAIN}/api/partner/apply/save`
+
+// 商品售后模块 => 商品售后api
+const apiSales = () => `${MAIN_DOMAIN}/sales/apply`
+
 export {
   apiCancelOrder,
   apiConfirmOrder,
@@ -68,5 +80,9 @@ export {
   apiAddressByParent,
   apiAddressFindPage,
   apiAddressSave,
-  apiAddressUpdate
+  apiAddressUpdate,
+  apiPartnerPhoneCode,
+  apiPartnerPay,
+  apiPartnerSave,
+  apiSales
 }
