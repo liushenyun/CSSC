@@ -1,21 +1,32 @@
 import { MAIN_DOMAIN } from '../../common/js/config';
 
-// 更新购物车数据
-const apiChangeQuantity = () => `${MAIN_DOMAIN}/api/cart/change_quantity`
+// 文化衍生故事模块 => 删除自己评论
+const apiTaleCommentDelete = (id) => `${MAIN_DOMAIN}/api/tale/comment/delete/${id}`
 
-// 购物车移除商品
-const apiCartDelete = (id) => `${MAIN_DOMAIN}/api/cart/delete/${id}`
+// 文化衍生故事模块 => 分页获取某个故事的评论
+const apiTaleCommentFindPage = (id) => `${MAIN_DOMAIN}/api/tale/comment/find_page`
 
-// 购物车分页查询
-const apiCartFindPage = () => `${MAIN_DOMAIN}/api/cart/find_page`
+// 文化衍生故事模块 => 文化衍生故事发布评论
+const apiTaleCommentSave = (id) => `${MAIN_DOMAIN}/api/tale/comment/save`
 
-// 添加购物车
-const apiCartSave = () => `${MAIN_DOMAIN}/api/cart/save`
-// 获取商品详情
+// 文化衍生故事模块 => 获取故事详情
+const apiTaleFindDetails = (id) => `${MAIN_DOMAIN}/api/tale/find_tale_details/${id}`
+
+// 文化衍生故事模块 => 分页获取故事列表
+const apiTaleFindPage = (id) => `${MAIN_DOMAIN}/api/tale/find_tale_page`
+
+// 文化衍生故事模块 => 点赞
+const apiTalePatronize = (taleId) => `${MAIN_DOMAIN}/api/tale/patronize/${taleId}`
+
+// 文化衍生故事模块 => 点赞
+const apiTaleUnpatronize = (taleId) => `${MAIN_DOMAIN}/api/tale/unpatronize/${taleId}`
 
 export {
-  apiChangeQuantity,
-  apiCartDelete,
-  apiCartFindPage,
-  apiCartSave
+  apiTaleCommentDelete,
+  apiTaleCommentFindPage,
+  apiTaleCommentSave,
+  apiTaleFindDetails,
+  apiTaleFindPage,
+  apiTalePatronize,
+  apiTaleUnpatronize
 }

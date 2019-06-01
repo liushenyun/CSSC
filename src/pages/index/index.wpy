@@ -27,10 +27,12 @@
         interval="{{interval}}"
         duration="{{duration}}"
         circular = 'true'
+        indicator-color="{{indicatorColor}}"
+        indicator-active-colo="{{indicatorActiveColor}}"
       >
-        <block wx:for="{{imgUrls}}">
+        <block wx:for="{{homeBannerVoList}}">
           <swiper-item>
-            <image src="{{item}}" class="slide-image" width="355" height="150" />
+            <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
           </swiper-item>
         </block>
       </swiper>
@@ -39,26 +41,13 @@
     <view class="ix-goods-wrap">
 
       <view class="goods-area-same">
-        <view class="area-title" @tap='toGoodsDetail'>
+        <view class="area-title">
           <text>文化衍生专区</text>
           <text>更多</text>
           <image src='../../images/unfold.png'></image>
         </view>
-        <view class="area-inner">
-          <view class="wh-banner">
-              <swiper
-                indicator-dots="{{indicatorDots}}"
-                autoplay="{{autoplay}}"
-                interval="{{interval}}"
-                duration="{{duration}}"
-                circular = 'true'>
-                <block wx:for="{{imgUrls}}">
-                  <swiper-item>
-                    <image src="{{item}}" class="slide-image" width="355" height="150" />
-                  </swiper-item>
-                </block>
-            </swiper>
-          </view>
+        <view class="area-inner home-tale">
+          <image src='{{homeTale.taleCover}}'></image>
         </view>
       </view>
 
@@ -69,21 +58,17 @@
           <text>更多</text>
           <image src='../../images/unfold.png'></image>
         </view>
-        <view class="area-inner">
-          <view class="wh-banner">
-              <swiper
-              indicator-dots="{{indicatorDots}}"
-              autoplay="{{autoplay}}"
-              interval="{{interval}}"
-              duration="{{duration}}"
-              circular = 'true'
-            >
-              <block wx:for="{{imgUrls}}">
-                <swiper-item>
-                  <image src="{{item}}" class="slide-image" width="355" height="150" />
-                </swiper-item>
-              </block>
-            </swiper>
+        <view class="area-inner area-vip">
+          <view data-goodsid="{{homeVipGoodsInfoList[0].goodsId}}" class="area-vip-top" @tap="toGoodsDetailA">
+            <image src='{{homeVipGoodsInfoList[0].goodsIco}}'></image>
+          </view>
+          <view class="area-vip-bottom">
+            <view data-goodsid="{{homeVipGoodsInfoList[1].goodsId}}" @tap="toGoodsDetailA" class="vip-bottom-left">
+              <image src='{{homeVipGoodsInfoList[1].goodsIco}}'></image>
+            </view>
+            <view data-goodsid="{{homeVipGoodsInfoList[2].goodsId}}" @tap="toGoodsDetailA" class="vip-bottom-right">
+              <image src='{{homeVipGoodsInfoList[2].goodsIco}}'></image>
+            </view>
           </view>
         </view>
       </view>
@@ -96,22 +81,21 @@
           <text>更多</text>
           <image src='../../images/unfold.png'></image>
         </view>
-        <view class="area-inner">
-          <view class="wh-banner">
-              <swiper
-              indicator-dots="{{indicatorDots}}"
-              autoplay="{{autoplay}}"
-              interval="{{interval}}"
-              duration="{{duration}}"
-              circular = 'true'
-            >
-              <block wx:for="{{imgUrls}}">
-                <swiper-item>
-                  <image src="{{item}}" class="slide-image" width="355" height="150" />
-                </swiper-item>
-              </block>
-            </swiper>
-          </view>
+        <view class="area-classify-outer">
+            <view class="area-classify-top" data-goodsid="{{homeVipGoodsInfoList[0].goodsId}}" @tap="toGoodsDetailA">
+            <image src='{{homeVipGoodsInfoList[0].goodsIco}}'></image>
+            </view>
+            <view class="area-classify-bottom">
+              <view data-goodsid="{{homeVipGoodsInfoList[1].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-left">
+                <image src='{{homeVipGoodsInfoList[1].goodsIco}}'></image>
+              </view>
+              <view data-goodsid="{{homeVipGoodsInfoList[2].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-mid">
+                <image src='{{homeVipGoodsInfoList[2].goodsIco}}'></image>
+              </view>
+              <view data-goodsid="{{homeVipGoodsInfoList[3].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-right">
+                <image src='{{homeVipGoodsInfoList[3].goodsIco}}'></image>
+              </view>
+            </view>
         </view>
       </view>
 
@@ -129,7 +113,10 @@ import Auth from '../../common/js/authProcess.js';
 import {
   apiIsAuthF,
   apiGoodsListF,
-  apiGetGoodsDetailsF
+  apiGetGoodsDetailsF,
+  apiGetHomeDataF,
+  INDICATOR_COLOR,
+  INDICATOR_ACTIVE_COLOR
 } from '../../services/index';
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
@@ -154,7 +141,13 @@ export default class Index extends wepy.page {
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
-    duration: 1000
+    duration: 1000,
+    indicatorColor: INDICATOR_COLOR,
+    indicatorActiveColor: INDICATOR_ACTIVE_COLOR,
+    homeBannerVoList: [], // 首页banner
+    homeGoodsCategoryList: [], // 分类推荐
+    homeTale: [], // 文化衍生区
+    homeVipGoodsInfoList: [] // 会员专区
   };
 
   computed = {};
@@ -171,6 +164,11 @@ export default class Index extends wepy.page {
     toGoodsDetail() {
       let _goodsId = '20190524190903491861'
       wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+    },
+    toGoodsDetailA(e) {
+      let _goodsId = e.currentTarget.dataset.goodsid
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+      console.log(169, e)
     }
   }
 
@@ -185,16 +183,28 @@ export default class Index extends wepy.page {
     });
   }
 
+  apiGetHomeDataFA(fun) {
+    apiGetHomeDataF(fun).then(msg => {
+      let { homeBannerVoList, homeGoodsCategoryList, homeTale, homeVipGoodsInfoList } = msg
+      this.homeBannerVoList = homeBannerVoList
+      this.homeGoodsCategoryList = homeGoodsCategoryList
+      this.homeTale = homeTale
+      this.homeVipGoodsInfoList = homeVipGoodsInfoList
+      this.$apply()
+      console.log('86', msg)
+    }).catch(err => {
+      console.log('88', err)
+    });
+  }
+
   
 
   events = {};
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    this.getGoodsListA(this.getGoodsListA.bind(this))
-    this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
+    this.apiGetHomeDataFA(this.apiGetHomeDataFA.bind(this))
+    // this.getGoodsListA(this.getGoodsListA.bind(this))
+    // this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
     this.getSystemInfo();
     this.$apply();
   }

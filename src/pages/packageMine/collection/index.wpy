@@ -29,10 +29,17 @@ export default class Collection extends wepy.page {
     // }
   }
 
+  events = {
+    'look-event': function (id) {
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
+      console.log(34, id)
+    }
+  }
+
   apiCollectFindPageA(fun) {
     apiCollectFindPageF({
       page: 1,
-      limit: 20
+      limit: 80
     }, fun).then((result) => {
       let { rows = [] } = result
       this.collectionArr = rows

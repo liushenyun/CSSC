@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 22,
+			"current": 23,
 			"list": [
 				{
 					"id": -1,
@@ -191,6 +191,12 @@
 					"name": "售后",
 					"pathName": "pages/packageMine/afterSales/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "文化衍生故事详情",
+					"pathName": "pages/packageRecom/taleDetail/index",
 					"scene": null
 				}
 			]

@@ -25,7 +25,6 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiIsAuthF, apiGoodsListF } from '../../services/index';
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -82,14 +81,6 @@ export default class Index extends wepy.page {
   events = {};
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    // apiGoodsListF().then(msg => {
-    //   console.log('86', msg)
-    // }).catch(err => {
-    //   console.log('88', err)
-    // });
     this.getSystemInfo();
     this.$apply();
   }

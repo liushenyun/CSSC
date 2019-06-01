@@ -8,7 +8,7 @@
     </view>
     <view class="cat-m-t">
         <view class='goods-name'>{{item.goodsName}}</view>
-        <view class='goods-des'>颜色：{{item.color}}</view>
+        <!-- <view class='goods-des'>颜色：{{item.color}}</view> -->
         <view class="goods-btom">
             <view class="goods-btom-left">
                 <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
@@ -18,8 +18,9 @@
                 </view>
             </view>
             <view class="goods-btom-right">
-                <button class="icx-btn-same-cancel" @tap='toLookA'>找相似</button>
-                <button class="icx-btn-same-sure" @tap='toBuyA'>购买</button>
+                <!-- <button class="icx-btn-same-cancel" @tap='toLookA'>找相似</button> -->
+                <!-- <button class="icx-btn-same-sure" @tap='toBuyA'>购买</button> -->
+                <button class="icx-btn-same-sure" @tap='toLookA'>查看商品</button>
             </view>
         </view>
         
@@ -51,7 +52,7 @@ export default class CatItem extends wepy.component {
   }
   methods = {
      toLookA() {
-         this.$emit('look-event', this.current)
+         this.$emit('look-event', this.item.goodsId)
      },
      toBuyA() {
         this.$emit('buy-event', this.current)

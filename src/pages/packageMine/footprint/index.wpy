@@ -26,8 +26,8 @@ export default class Footprint extends wepy.page {
     
   }
   events = {
-    'look-event': (index) => {
-      console.log(30, index);
+    'look-event': (id) => {
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
     },
     'buy-event': (index) => {
       console.log(40, index);
@@ -36,7 +36,7 @@ export default class Footprint extends wepy.page {
 
   apiFootFindPageA(fun) {
     apiFootFindPageF({
-      page: 1,
+      page: 0,
       limit: 20
     }, fun).then((result) => {
       let { rows } = result

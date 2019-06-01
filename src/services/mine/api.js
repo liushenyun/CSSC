@@ -43,13 +43,16 @@ const apiAddressFind = (id) => `${MAIN_DOMAIN}/api/user/address/find_by_id/${id}
 const apiAddressByParent = (parentId) => `${MAIN_DOMAIN}/api/user/address/find_by_parentid/${parentId}`
 
 // 收货地址模块 => 分页获取我的收货地址
-const apiAddressFindPage = () => `${MAIN_DOMAIN}/api/user/address/find_page`
+const apiAddressFindAll = () => `${MAIN_DOMAIN}/api/user/address/find_all`
 
 // 收货地址模块 => 添加收货地址
 const apiAddressSave = () => `${MAIN_DOMAIN}/api/user/address/save`
 
 // 收货地址模块 => 修改收货地址
 const apiAddressUpdate = () => `${MAIN_DOMAIN}/api/user/address/update`
+
+// 收货地址模块 => 设置默认地址
+const apiAddressSetDefault = (id) => `${MAIN_DOMAIN}/api/user/address/set_def/${id}`
 
 // 合伙人申请模块 => 合伙人申请验证手机号
 const apiPartnerPhoneCode = () => `${MAIN_DOMAIN}/api/partner/apply/get_validate_code`
@@ -78,9 +81,10 @@ export {
   apiAddressDelete,
   apiAddressFind,
   apiAddressByParent,
-  apiAddressFindPage,
+  apiAddressFindAll,
   apiAddressSave,
   apiAddressUpdate,
+  apiAddressSetDefault,
   apiPartnerPhoneCode,
   apiPartnerPay,
   apiPartnerSave,

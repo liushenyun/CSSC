@@ -66,15 +66,26 @@ export default class SureOrder extends wepy.page {
   apiPayCreateA(fun) {
     apiPayCreateF({
       orderId: this.orderDetailObj.id,
-      addressId: '23423423545',
+      addressId: '20190601125524687967',
       remarks: '这是测试'
     }, fun).then(msg => {
       let data = msg
-       wepy.requestPayment({'timeStamp': data.timestamp,'nonceStr': data.noncestr,'package': data.packageVal, 'signType': 'MD5','paySign': data.sign}).then(res=>{
+      console.log(73, );
+       wepy.requestPayment({
+         'timeStamp': data.timeStamp,
+         'nonceStr': data.nonceStr,
+         'package': data.packageValue, 
+         'signType': 'MD5',
+         'paySign': data.paySign,
+          success (res) {
+            console.log(81, res);
             miniPro.showToast('调用成功')
-        }).catch(err=>{
+          },
+          fail (res) {
+             console.log(82, err);
             miniPro.showToast('调用失败')
-        })
+          }
+         })
     }).catch((err) => {
       
     });

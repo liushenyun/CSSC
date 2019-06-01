@@ -2,7 +2,8 @@ import wepy from 'wepy'
 import {
   apiIsAuth,
   apiGoodsList,
-  apiGetGoodsDetails
+  apiGetGoodsDetails,
+  apiGetHomeData
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -51,8 +52,21 @@ const apiGetGoodsDetailsF = (goodsId, fun) => packagePromise((resolve, reject) =
     .catch(err => reject(err))
 })
 
+// 首页 => 获取首页数据
+const apiGetHomeDataF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetHomeData(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiIsAuthF,
   apiGoodsListF,
-  apiGetGoodsDetailsF
+  apiGetGoodsDetailsF,
+  apiGetHomeDataF
 }

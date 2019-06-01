@@ -3,9 +3,12 @@
 @import '../../common/css/mixin.scss';
 // page,
 .recom-ctner{
-    padding: 0 $page-padding-lr;
+    background: #EDEDED;
+    // padding: 0 $page-padding-lr;
     .recom-same{
-        padding: rpx(20) 0 rpx(30) 0;
+        background: #FFF;
+        padding: rpx(20) $page-padding-lr rpx(30) $page-padding-lr;
+        margin-bottom: rpx(6);
         .recom-title{
             height: rpx(68);
             display: flex;

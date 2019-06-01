@@ -3,33 +3,23 @@
       <view class="ade-same">
         <view class="ade-a">收货人</view>
         <view class="ade-b">
-          <input value="{{addressObj.name}}" bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
+          <input value="{{addressObj.name}}" bindinput="bindPersonInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
         </view>
       </view>
 
       <view class="ade-same">
         <view class="ade-a">联系电话</view>
         <view class="ade-b">
-          <input value="{{addressObj.phone}}"  type='number' bindinput="bindReplaceInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入联系电话" />
+          <input value="{{addressObj.phone}}"  type='number' bindinput="bindPhoneInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入联系电话" />
         </view>
       </view>
 
       <view class="ade-same">
         <view class="ade-a">收货地址</view>
         <view class="ade-b">
-           <picker
-            mode="multiSelector"
-            bindchange="bindMultiPickerChange"
-            bindcolumnchange="bindMultiPickerColumnChange"
-            value="{{multiIndex}}"
-            range="{{multiArray}}"
-            range-key="name"
-          >
-            <view class="picker">
-              <!-- 当前选择：{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}} -->
-              {{addressJoin}}
-            </view>
-          </picker>
+           <picker mode="multiSelector" range="{{pickerRegionRange}}" range-key="name" value="{{pickerSelect}}" bindchange="bindchange" bindcolumnchange="bindcolumnchange">
+              {{showRegionStr}}
+            </picker>
         </view>
         <image class="ade-c" src='../../../images/unfold.png'></image>
       </view>
@@ -49,12 +39,14 @@
 
 <script>
 import wepy from 'wepy'
+import miniPro from '../../../utils/wepy-pro'
 import {
   apiAddressFindF,
   apiAddressDeleteF,
   apiAddressSaveF,
   apiAddressUpdateF,
-  apiAddressByParentF
+  apiAddressByParentF,
+  apiAddressSetDefaultF
 } from '../../../services/mine/index'
 
 export default class AddressEdit extends wepy.page {
@@ -66,6 +58,9 @@ export default class AddressEdit extends wepy.page {
   components = {
   };
   data = {
+    pickerRegionRange: [],
+    pickerSelect:[0, 0, 0],
+    showRegionStr: '请选择',
     isRepair: false, // 检修
     isBad: false,
     customItem: '全部',
@@ -126,7 +121,13 @@ export default class AddressEdit extends wepy.page {
       cityId: ''
     },
     addressJoin: '',
-    parentId: 0
+    parentId: 0,
+    childrenId: 0,
+    childrenColumn: '',
+    pObject: {},
+    cObject: {},
+    dObject: {},
+    districtId: 0
   };
   computed = {
     addressJoin() {
@@ -134,17 +135,19 @@ export default class AddressEdit extends wepy.page {
     }
   }
   methods = {
+    bindPhoneInput(e) {
+       this.addressObj.phone = e.detail.value
+    },
+    bindPersonInput(e) {
+       this.addressObj.name = e.detail.value
+    },
     bindAddressInput(e) {
       console.log(108, e);
       this.addressObj.address = e.detail.value
     },
-    bindMultiPickerChange(e) {
-      console.log(108, e);
-    },
-    bindMultiPickerColumnChange(e) {
-      console.log(111, e);
-    },
     saveA() {
+      this.apiAddressSetDefaultFA(this.apiAddressSetDefaultFA.bind(this))
+      console.log()
       if (this.addressId) {
         this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
       } else {
@@ -157,9 +160,33 @@ export default class AddressEdit extends wepy.page {
     },
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    },
+    bindchange(e) {
+      console.log(169, e)
+      const pObject = this.pickerRegionRange[0][e.detail.value[0]]
+      const cObject = this.pickerRegionRange[1][e.detail.value[1]]
+      const dObject = this.pickerRegionRange[2][e.detail.value[2]]
+      const showRegionStr = pObject.name + cObject.name + dObject.name
+      this.pObject = pObject
+      this.cObject = cObject
+      this.dObject = dObject
+      if (dObject.id) {
+        this.addressObj.cityId = dObject.id
+      } else if (cObject.id) {
+        this.addressObj.cityId = cObject.id
+      } else if (dObject.id) {
+        this.addressObj.cityId = dObject.id
+      }
+
+      this.showRegionStr = showRegionStr
+      this.$apply();
+      console.log(269, pObject, cObject, dObject, showRegionStr)
     }
   }
 
+  initRegionPicker () {
+    this.apiAddressProvinceFA(this.apiAddressProvinceFA.bind(this))
+  }
 
   apiAddressDeleteA(fun) {
     apiAddressDeleteF(this.addressId, fun).then((result) => {
@@ -185,22 +212,100 @@ export default class AddressEdit extends wepy.page {
     });
   }
 
-  apiAddressByParentFA(fun) {
+  apiAddressProvinceFA(fun) {
+    console.log(121654)
     apiAddressByParentF(this.parentId, fun).then((result) => {
-      console.log(134, result)
+      console.log(268, result)
+      let _pickerRegionRange = []
+      _pickerRegionRange.push(result)
+      _pickerRegionRange.push([{ name: '请选择' }])
+      _pickerRegionRange.push([{ name: '请选择' }])
+      this.pickerRegionRange = _pickerRegionRange
+      this.$apply()
+      console.log(268, _pickerRegionRange)
+      this.bindcolumnchange({ detail: { column: 0, value: 0 } })
     }).catch((err) => {
       
     });
   }
 
+  apiAddressSetDefaultFA(fun) {
+      apiAddressSetDefaultF('20190527163745156381', fun).then((result) => {
+        
+      }).catch((err) => {
+        
+      });
+    }
+  
+
+  bindcolumnchange(e) {
+    const column = e.detail.column
+    const index = e.detail.value
+    console.log('eeee:', e)
+    const regionObject = this.pickerRegionRange[column][index]
+    console.log('bindcolumnchange', regionObject)
+    if (column === 2) {
+      this.pickerRegionRange = this.pickerRegionRange
+      // this.setData({
+      //   pickerRegionRange: this.pickerRegionRange
+      // })
+      return
+    }
+    if (column === 1) {
+      this.pickerRegionRange[2] = [{ name: '请选择' }]
+    }
+    if (column === 0) {
+      this.pickerRegionRange[1] = [{ name: '请选择' }]
+      this.pickerRegionRange[2] = [{ name: '请选择' }]
+    }
+    // // 后面的数组全部清空
+    // this.data.pickerRegionRange.splice(column+1)
+    // 追加后面的一级数组
+    this.childrenId = regionObject.id
+    this.childrenColumn = column
+    this.$apply()
+    this.apiAddressCityFA(this.apiAddressCityFA.bind(this))
+    
+    // WXAPI.nextRegion(regionObject.id).then(res => {
+    //   if (res.code === 0) {
+    //     this.data.pickerRegionRange[column + 1] = res.data     
+    //   }
+    //   this.bindcolumnchange({ detail: { column: column + 1, value: 0 } })
+    // })
+  }
+
+  
+
+   apiAddressCityFA(fun) {
+    apiAddressByParentF(this.childrenId, fun).then((result) => {
+      console.log(134, result)
+      let column = this.childrenColumn
+      this.pickerRegionRange[column + 1] = result
+      this.$apply()
+      this.bindcolumnchange({ detail: { column: column + 1, value: 0 } })
+    }).catch((err) => {
+       
+    });
+  }
+
+
+  
+
   apiAddressSaveA(fun) {
+    console.log({
+        phone: this.addressObj.phone,
+        name: this.addressObj.name,
+        cityId: this.addressObj.cityId,
+        address: this.addressObj.address
+    });
+    
     apiAddressSaveF({
         phone: this.addressObj.phone,
         name: this.addressObj.name,
         cityId: this.addressObj.cityId,
         address: this.addressObj.address
     }, fun).then((result) => {
-      
+        miniPro.showToast('添加成功')
     }).catch((err) => {
       
     });
@@ -214,7 +319,7 @@ export default class AddressEdit extends wepy.page {
       cityId: this.addressObj.cityId,
       address: this.addressObj.address
     }, fun).then((result) => {
-      
+      miniPro.showToast('修改成功')
     }).catch((err) => {
       
     });
@@ -222,10 +327,10 @@ export default class AddressEdit extends wepy.page {
 
 
   onLoad(option) {
+    this.initRegionPicker() // 初始化省市区选择器
     console.log(128, option.id);
-    option.id = '23423423545'
     this.addressId = option.id
-    this.apiAddressByParentFA(this.apiAddressByParentFA.bind(this))
+    
     if (option.id) {
       this.apiAddressFindA(this.apiAddressFindA.bind(this))
     }

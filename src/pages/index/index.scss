@@ -73,13 +73,71 @@ page,
                     height: rpx(18);
                 }
             }
-            .wh-banner {
+            .home-tale{
                 height: rpx(260);
-                swiper,
-                swiper-item,
-                swiper-item image {
+                image {
                     width: 100%;
                     height: 100%;
+                    border-radius: rpx(10);
+                }
+            }
+            .area-vip {
+                min-height: rpx(100);
+                .area-vip-top {
+                    height: 140rpx;
+                    border-radius: rpx(6);
+                    overflow: hidden;
+                    margin-bottom: rpx(18);
+                    image {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .area-vip-bottom {
+                    height: rpx(140);
+                    display: flex;
+                    justify-content: space-between;
+                    .vip-bottom-right,
+                    .vip-bottom-left {
+                        width: 49%;
+                        height: 100%;
+                        border-radius: rpx(6);
+                        overflow: hidden;
+                        image {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+            .area-classify-outer {
+                min-height: rpx(100);
+                .area-classify-top {
+                    height: 260rpx;
+                    border-radius: rpx(6);
+                    overflow: hidden;
+                    margin-bottom: rpx(18);
+                    image {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .area-classify-bottom {
+                    height: rpx(250);
+                    display: flex;
+                    justify-content: space-between;
+                    .classify-bottom-right,
+                    .classify-bottom-mid,
+                    .classify-bottom-left {
+                        width: 32%;
+                        height: 100%;
+                        border-radius: rpx(6);
+                        overflow: hidden;
+                        image {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
                 }
             }
         }

@@ -18,9 +18,7 @@
           <view class="addl-edit"  @tap.stop="toAddressEditA({{item.id}})">
               <image class="addl-img-b" src='../../../images/edit.png'></image>
           </view>
-          
         </view>
-
       </view>
 
   </view>
@@ -28,7 +26,7 @@
 
 <script>
 import wepy from 'wepy'
-import { apiAddressFindPageF } from '../../../services/mine/index'
+import { apiAddressFindAllF } from '../../../services/mine/index'
 export default class AddressList extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -57,16 +55,13 @@ export default class AddressList extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index?id=${id}` });
     },
     toAddressA() {
-      wepy.navigateTo({ url: '/pages/packageMine/addressEdit/index' });
+      wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index` });
     }
   }
-  apiAddressFindPageA(fun) {
-    apiAddressFindPageF({
-      page: 0,
-      limit: 1000
-    }, fun).then((result) => {
-      let { rows } = result
-      this.addressList = rows.map(val => {
+  apiAddressFindAllA(fun) {
+    apiAddressFindAllF(fun).then((result) => {
+      // let { rows } = result
+      this.addressList = result.map(val => {
         val.isChecked = val.def == 1 ? true : false
         return val
       })
@@ -76,7 +71,7 @@ export default class AddressList extends wepy.page {
     });
   }
   onLoad() {
-    this.apiAddressFindPageA(this.apiAddressFindPageA.bind(this))
+    this.apiAddressFindAllA(this.apiAddressFindAllA.bind(this))
   }
 }
 </script>

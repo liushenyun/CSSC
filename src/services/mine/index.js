@@ -14,9 +14,10 @@ import {
   apiPayCreate,
   apiAddressDelete,
   apiAddressFind,
-  apiAddressFindPage,
+  apiAddressFindAll,
   apiAddressSave,
   apiAddressUpdate,
+  apiAddressSetDefault,
   apiPartnerPhoneCode,
   apiPartnerPay,
   apiPartnerSave,
@@ -214,12 +215,10 @@ const apiAddressByParentF = (id, fun) => packagePromise((resolve, reject) => {
 })
 
 // 收货地址模块 => 分页获取我的收货地址
-const apiAddressFindPageF = (data, fun) => packagePromise((resolve, reject) => {
+const apiAddressFindAllF = (fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiAddressFindPage(),
-    method: 'POST',
-    noOutData: true,
-    data
+    url: apiAddressFindAll(),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -246,6 +245,18 @@ const apiAddressUpdateF = (data, fun) => packagePromise((resolve, reject) => {
     url: apiAddressUpdate(),
     method: 'PUT',
     data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 收货地址模块 => 设置默认地址
+const apiAddressSetDefaultF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAddressSetDefault(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -320,9 +331,10 @@ export {
   apiAddressDeleteF,
   apiAddressByParentF,
   apiAddressFindF,
-  apiAddressFindPageF,
+  apiAddressFindAllF,
   apiAddressSaveF,
   apiAddressUpdateF,
+  apiAddressSetDefaultF,
   apiPartnerPhoneCodeF,
   apiPartnerPayF,
   apiPartnerSaveF,

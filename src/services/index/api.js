@@ -12,8 +12,12 @@ const apiGoodsList = () => `${MAIN_DOMAIN}/api/buy/goods/find_page`
 // 获取商品详情
 const apiGetGoodsDetails = (goodsId) => `${MAIN_DOMAIN}/api/buy/goods/get_goods_details/${goodsId}`
 
+// 首页 => 获取首页数据
+const apiGetHomeData = () => `${MAIN_DOMAIN}/api/home/get_home_data`
+
 export {
   apiIsAuth,
   apiGoodsList,
-  apiGetGoodsDetails
+  apiGetGoodsDetails,
+  apiGetHomeData
 }

@@ -1,18 +1,33 @@
 import wepy from 'wepy'
 import {
-  apiChangeQuantity,
-  apiCartDelete,
-  apiCartFindPage,
-  apiCartSave
+  apiTaleCommentDelete,
+  apiTaleCommentFindPage,
+  apiTaleCommentSave,
+  apiTaleFindDetails,
+  apiTaleFindPage,
+  apiTalePatronize,
+  apiTaleUnpatronize
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
 
-// 更新购物车数据
-const apiChangeQuantityF = (data, fun) => packagePromise((resolve, reject) => {
+// 文化衍生故事模块 => 删除自己评论
+const apiTaleCommentDeleteF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiChangeQuantity(),
+    url: apiTaleCommentDelete(),
+    method: 'DELETE'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 文化衍生故事模块 => 分页获取某个故事的评论
+const apiTaleCommentFindPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiTaleCommentFindPage(),
     method: 'POST',
     noOutData: true,
     data: {
@@ -26,10 +41,37 @@ const apiChangeQuantityF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 购物车移除商品
-const apiCartDeleteF = (data, fun) => packagePromise((resolve, reject) => {
+// 文化衍生故事模块 => 文化衍生故事发布评论
+const apiTaleCommentSaveF = (data, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiCartDelete(),
+    url: apiTaleCommentSave(),
+    method: 'POST',
+    data: {
+      ...data
+    }
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 文化衍生故事模块 => 获取故事详情
+const apiTaleFindDetailsF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiTaleFindDetails(id),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 文化衍生故事模块 => 分页获取故事列表
+const apiTaleFindPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiTaleFindPage(),
     method: 'POST',
     noOutData: true,
     data: {
@@ -43,16 +85,11 @@ const apiCartDeleteF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 购物车分页查询
-const apiCartFindPageF = (data, fun) => packagePromise((resolve, reject) => {
+// 文化衍生故事模块 => 点赞
+const apiTalePatronizeF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiCartFindPage(),
-    method: 'POST',
-    noOutData: true,
-    data: {
-      limit: 20,
-      ...data
-    }
+    url: apiTalePatronize(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -60,12 +97,11 @@ const apiCartFindPageF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 添加购物车
-const apiCartSaveF = (data, fun) => packagePromise((resolve, reject) => {
+// 文化衍生故事模块 => 点赞
+const apiTaleUnpatronizeF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiCartSave(),
-    method: 'POST',
-    data
+    url: apiTaleUnpatronize(id),
+    method: 'DELETE'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -74,8 +110,11 @@ const apiCartSaveF = (data, fun) => packagePromise((resolve, reject) => {
 })
 
 export {
-  apiChangeQuantityF,
-  apiCartDeleteF,
-  apiCartFindPageF,
-  apiCartSaveF
+  apiTaleCommentDeleteF,
+  apiTaleCommentFindPageF,
+  apiTaleCommentSaveF,
+  apiTaleFindDetailsF,
+  apiTaleFindPageF,
+  apiTalePatronizeF,
+  apiTaleUnpatronizeF
 }

@@ -53,6 +53,7 @@ export default class extends wepy.app {
       {
         root: 'pages/packageRecom',
         pages: [
+          'taleDetail/index',
           'test/index'
         ]
       },

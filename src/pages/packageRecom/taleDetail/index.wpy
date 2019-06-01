@@ -1,0 +1,56 @@
+<template>
+  <view class='tale-detail-ctner'>
+      TaleDetail
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {
+  apiTaleCommentDeleteF,
+  apiTaleCommentFindPageF,
+  apiTaleCommentSaveF,
+  apiTaleFindDetailsF,
+  apiTaleFindPageF,
+  apiTalePatronizeF,
+  apiTaleUnpatronizeF
+} from '../../../services/classify';
+
+export default class TaleDetail extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '故事详情'
+  };
+  components = {
+  };
+  data = {
+    taleId: '',
+    taleObj: {}
+  };
+  methods = {
+
+  }
+
+  apiTaleFindDetailsFA(fun) {
+    apiTaleFindDetailsF(this.taleId, fun).then((result) => {
+      this.taleObj = result
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
+
+  onLoad(option) {
+    this.taleId = option.taleId
+    this.$apply()
+    this.apiTaleFindDetailsFA(this.apiTaleFindDetailsFA.bind(this))
+    console.log(37, option)
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

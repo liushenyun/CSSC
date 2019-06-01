@@ -2,7 +2,7 @@
 <template>
   <view class="recom-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-      <view class="recom-same" wx:for="{{imgUrls}}"  wx:for-index="index" wx:for-item="item" wx:key="index">
+      <view class="recom-same" wx:for="{{taleArr}}" @tap='toTaleDetailA({{item.id}})'  wx:for-index="index" wx:for-item="item" wx:key="index">
         <view class="recom-title">
             <image src='../../images/home_fill_light.png'></image>
             <text>老成</text>
@@ -10,9 +10,10 @@
             <text>89.23W人看过</text>
         </view>
         <view class="recom-img">
-          <image src="{{item}}"></image>
+          <image src="{{item.taleCover}}"></image>
         </view>
-        <view class="recom-des">春风十里不如你,女神心机搭配,春风十里不如你
+        <view class="recom-des">
+          {{item.taleName}}
         </view>
       </view>
   </view>
@@ -21,7 +22,16 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiIsAuthF, apiGoodsListF } from '../../services/index';
+import {
+  apiTaleCommentDeleteF,
+  apiTaleCommentFindPageF,
+  apiTaleCommentSaveF,
+  apiTaleFindDetailsF,
+  apiTaleFindPageF,
+  apiTalePatronizeF,
+  apiTaleUnpatronizeF
+} from '../../services/classify';
+
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -37,55 +47,35 @@ export default class Recom extends wepy.page {
   mixins = [];
 
   data = {
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 5000,
-    duration: 1000
+    taleArr: []
   };
 
   computed = {};
 
   methods = {
-    toMsgA() {
-      console.log('去往消息列表');
-       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
-    },
-    bindReplaceInput(e) {
-      console.log('input输入', e)
-    },
-    toDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
-    },
-    toScanAddDeviceA() {
-      // 允许从相机和相册扫码
-      wx.scanCode({
-        success(res) {
-          console.log(res)
-        }
-      })
-    },
-    toNoAddDeviceA() {
-      console.log(4646546)
-      wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
+    toTaleDetailA(taleId) {
+      console.log(57, taleId)
+       wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
     }
   };
+
+  apiTaleFindPageFA(fun) {
+    apiTaleFindPageF({
+      page: 0,
+      limit: 100
+    }, fun).then((result) => {
+      let { rows } = result
+      this.taleArr = rows
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
 
   events = {};
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    // apiGoodsListF().then(msg => {
-    //   console.log('86', msg)
-    // }).catch(err => {
-    //   console.log('88', err)
-    // });
+    this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
     this.getSystemInfo();
     this.$apply();
   }
