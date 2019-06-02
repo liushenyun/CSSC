@@ -1,4 +1,5 @@
 import wepy from 'wepy'
+import Validate from '../Validate'
 import {
   apiCancelOrder,
   apiConfirmOrder,
@@ -228,6 +229,16 @@ const apiAddressFindAllF = (fun) => packagePromise((resolve, reject) => {
 
 // 收货地址模块 => 添加收货地址
 const apiAddressSaveF = (data, fun) => packagePromise((resolve, reject) => {
+  let _params = data
+  let vArr = [
+    ['name', _params.name, '收货人', 'empty'],
+    ['phone', _params.phone, '联系电话', 'empty|phone'],
+    ['cityId', _params.cityId, '收货地址', 'empty'],
+    ['address', _params.address, '详细地址', 'empty']
+  ]
+  let _Validated = Validate(vArr)
+  if (!_Validated) { return }
+
   request({
     url: apiAddressSave(),
     method: 'POST',
@@ -241,6 +252,15 @@ const apiAddressSaveF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 收货地址模块 => 修改收货地址
 const apiAddressUpdateF = (data, fun) => packagePromise((resolve, reject) => {
+  let _params = data
+  let vArr = [
+    ['name', _params.name, '收货人', 'empty'],
+    ['phone', _params.phone, '联系电话', 'empty|phone'],
+    ['cityId', _params.cityId, '收货地址', 'empty'],
+    ['address', _params.address, '详细地址', 'empty']
+  ]
+  let _Validated = Validate(vArr)
+  if (!_Validated) { return }
   request({
     url: apiAddressUpdate(),
     method: 'PUT',

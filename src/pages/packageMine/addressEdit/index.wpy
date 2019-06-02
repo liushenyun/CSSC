@@ -3,7 +3,7 @@
       <view class="ade-same">
         <view class="ade-a">收货人</view>
         <view class="ade-b">
-          <input value="{{addressObj.name}}" bindinput="bindPersonInput" maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
+          <input value="{{addressObj.name}}" bindinput="bindPersonInput" maxlength='20' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入收货人" />
         </view>
       </view>
 
@@ -31,8 +31,14 @@
         </view>
       </view>
 
+      <view class="ade-same switch">
+        <view class="ade-a">设置默认</view>
+        <view class="ade-b">
+          <switch checked="{{addressObj.checked}}" bindchange="switchChange"/>
+        </view>
+      </view>
       <button class="icx-btn-same-sure" @tap='saveA'>保存</button>
-      <button class="icx-btn-same-cancel" @tap='deleteA'>删除</button>
+      <button wx:if="{{addressId}}" class="icx-btn-same-cancel" @tap='deleteA'>删除</button>
 
   </view>
 </template>
@@ -61,52 +67,6 @@ export default class AddressEdit extends wepy.page {
     pickerRegionRange: [],
     pickerSelect:[0, 0, 0],
     showRegionStr: '请选择',
-    isRepair: false, // 检修
-    isBad: false,
-    customItem: '全部',
-    multiArray: [
-      [
-        {
-          id: 0,
-          name: '无脊柱动物'
-        },
-        {
-          id: 1,
-          name: '脊柱动物'
-        }
-      ], [
-        {
-          id: 0,
-          name: '扁性动物'
-        },
-        {
-          id: 1,
-          name: '线形动物'
-        },
-        {
-          id: 2,
-          name: '环节动物'
-        },
-        {
-          id: 3,
-          name: '软体动物'
-        },
-        {
-          id: 3,
-          name: '节肢动物'
-        }
-      ], [
-        {
-          id: 0,
-          name: '猪肉绦虫'
-        },
-        {
-          id: 1,
-          name: '吸血虫'
-        }
-      ]
-    ],
-    multiIndex: [0, 0, 0],
     addressId: '',
     addressData: {
       shippingAddress: '广东省深圳市宝安区西乡劳动二队'
@@ -118,7 +78,8 @@ export default class AddressEdit extends wepy.page {
       address: '',
       name: '',
       phone: '',
-      cityId: ''
+      cityId: '',
+      checked: false
     },
     addressJoin: '',
     parentId: 0,
@@ -135,6 +96,10 @@ export default class AddressEdit extends wepy.page {
     }
   }
   methods = {
+    switchChange(e) {
+      console.log('switch1 发生 change 事件，携带值为', e.detail.value)
+      this.addressObj.checked = e.detail.value
+    },
     bindPhoneInput(e) {
        this.addressObj.phone = e.detail.value
     },
@@ -190,7 +155,13 @@ export default class AddressEdit extends wepy.page {
 
   apiAddressDeleteA(fun) {
     apiAddressDeleteF(this.addressId, fun).then((result) => {
-      console.log(134, result)
+      miniPro.showToast('删除成功')
+      setTimeout(() => {
+        wx.navigateBack();
+        let pages = getCurrentPages();
+        let prevPage = pages[pages.length - 2]; // 上一级页面
+        prevPage.onLoad()
+      }, 1500);
     }).catch((err) => {
     });
   }
@@ -205,6 +176,8 @@ export default class AddressEdit extends wepy.page {
         this.addressObj.name = result.name
         this.addressObj.phone = result.phone
         this.addressObj.cityId = result.cityId
+        this.addressObj.checked = result.def == 1 ? true : false
+        this.showRegionStr = `${result.province} ${result.city} ${result.district}`
         this.$apply()
       console.log(134, result)
     }).catch((err) => {
@@ -230,7 +203,7 @@ export default class AddressEdit extends wepy.page {
   }
 
   apiAddressSetDefaultFA(fun) {
-      apiAddressSetDefaultF('20190527163745156381', fun).then((result) => {
+      apiAddressSetDefaultF('20190602182635650747', fun).then((result) => {
         
       }).catch((err) => {
         
@@ -265,13 +238,6 @@ export default class AddressEdit extends wepy.page {
     this.childrenColumn = column
     this.$apply()
     this.apiAddressCityFA(this.apiAddressCityFA.bind(this))
-    
-    // WXAPI.nextRegion(regionObject.id).then(res => {
-    //   if (res.code === 0) {
-    //     this.data.pickerRegionRange[column + 1] = res.data     
-    //   }
-    //   this.bindcolumnchange({ detail: { column: column + 1, value: 0 } })
-    // })
   }
 
   
@@ -306,6 +272,12 @@ export default class AddressEdit extends wepy.page {
         address: this.addressObj.address
     }, fun).then((result) => {
         miniPro.showToast('添加成功')
+        setTimeout(() => {
+          wx.navigateBack();
+          let pages = getCurrentPages();
+          let prevPage = pages[pages.length - 2]; // 上一级页面
+          prevPage.onLoad()
+        }, 1500);
     }).catch((err) => {
       
     });
@@ -320,6 +292,12 @@ export default class AddressEdit extends wepy.page {
       address: this.addressObj.address
     }, fun).then((result) => {
       miniPro.showToast('修改成功')
+      setTimeout(() => {
+        wx.navigateBack();
+        let pages = getCurrentPages();
+        let prevPage = pages[pages.length - 2]; // 上一级页面
+        prevPage.onLoad()
+      }, 1500);
     }).catch((err) => {
       
     });

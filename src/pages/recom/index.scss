@@ -1,7 +1,10 @@
 @import '../../common/css/rpx.scss';
 @import '../../common/css/const.scss';
 @import '../../common/css/mixin.scss';
-// page,
+ page,
+ .recom-ctner {
+    height: 100%;
+ }
 .recom-ctner{
     background: #EDEDED;
     // padding: 0 $page-padding-lr;

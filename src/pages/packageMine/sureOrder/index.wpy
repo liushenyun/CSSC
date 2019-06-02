@@ -71,21 +71,17 @@ export default class SureOrder extends wepy.page {
     }, fun).then(msg => {
       let data = msg
       console.log(73, );
-       wepy.requestPayment({
-         'timeStamp': data.timeStamp,
-         'nonceStr': data.nonceStr,
-         'package': data.packageValue, 
-         'signType': 'MD5',
-         'paySign': data.paySign,
-          success (res) {
-            console.log(81, res);
-            miniPro.showToast('调用成功')
-          },
-          fail (res) {
-             console.log(82, err);
-            miniPro.showToast('调用失败')
-          }
-         })
+      miniPro.requestPayment(data).then((result) => {
+        miniPro.showToast('调用成功')
+        setTimeout(() => {
+          wepy.navigateTo({ url: `/pages/packageMine/paySuccess/index` })
+        }, 1500)
+      }).catch((err) => {
+        miniPro.showToast('调用失败')
+        setTimeout(() => {
+          wepy.navigateTo({ url: `/pages/packageMine/payFail/index` })
+        }, 1500)
+      });
     }).catch((err) => {
       
     });
@@ -97,7 +93,7 @@ export default class SureOrder extends wepy.page {
     }
   }
   onLoad(option) {
-    this.orderId = option.orderId || '20190526153524760669';
+    this.orderId = option.orderId || '20190602181116164951';
     this.$apply()
     // 20190526145853664473
     console.log(27, option.orderId)

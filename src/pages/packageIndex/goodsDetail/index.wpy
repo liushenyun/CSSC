@@ -193,7 +193,10 @@ export default class GoodsDetail extends wepy.page {
         colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
         quantity: this.buyNum
       }, fun).then(msg => {
-      setTimeout(() => { this.showGoodsPop = false }, 1500);
+      setTimeout(() => {
+        this.showGoodsPop = false
+        this.$apply()
+      }, 1500);
       miniPro.showToast('添加成功')
       this.$apply()
     }).catch(err => {
@@ -219,7 +222,6 @@ export default class GoodsDetail extends wepy.page {
       this.goodsColorVoList = goodsColorVoList;
       let _first = goodsSpecificationVoList[0];
       this.goodsDetailObj = msg;
-      console.log(101, _first)
       if (_first) {
         this.firstSpec = {
           id: _first.id || '--',
@@ -242,7 +244,7 @@ export default class GoodsDetail extends wepy.page {
 
   async onLoad(option) {
     this.goodsId = option.goodsId
-    this.apiGetGoodsDetailsA( this.apiGetGoodsDetailsA.bind(this))
+    this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
     this.$apply();
   }
 }

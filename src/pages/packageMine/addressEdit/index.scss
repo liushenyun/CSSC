@@ -21,6 +21,12 @@ page{
                background: #FFF;
            }
        }
+       &.switch {
+         height: rpx(100);
+         .ade-b {
+            text-align: right
+         }
+       }
        .ade-c {
            width: rpx(11);
            height: rpx(18);

@@ -28,7 +28,7 @@
         duration="{{duration}}"
         circular = 'true'
         indicator-color="{{indicatorColor}}"
-        indicator-active-colo="{{indicatorActiveColor}}"
+        indicator-active-color="{{indicatorActiveColor}}"
       >
         <block wx:for="{{homeBannerVoList}}">
           <swiper-item>
@@ -115,12 +115,17 @@ import {
   apiGoodsListF,
   apiGetGoodsDetailsF,
   apiGetHomeDataF,
+  
+} from '../../services/index';
+import {
+  BLOOD_TIP_READED,
+  TIP_GLYCEMIC_TEXT,
   INDICATOR_COLOR,
   INDICATOR_ACTIVE_COLOR
-} from '../../services/index';
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
+} from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
+console.log(INDICATOR_COLOR, INDICATOR_ACTIVE_COLOR);
 
 export default class Index extends wepy.page {
   config = {

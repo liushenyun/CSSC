@@ -1,0 +1,38 @@
+<template>
+  <view class='pay-fail-ctner'>
+    <view>支付失败</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import miniPro from '@/utils/wepy-pro.js';
+export default class PayFail extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '支付失败'
+  };
+  components = {
+  };
+  data = {
+  };
+  methods = {
+    continueBuyA() {
+      console.log(565);
+      wepy.navigateTo({ url: `/pages/index/index` });
+    },
+    checkOrderA() {
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+    }
+  };
+  
+  events = {}
+  onLoad() {
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

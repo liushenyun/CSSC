@@ -147,6 +147,24 @@ let proFun = () => {
     }, time)
   }
 
+  miniPro.requestPayment = (data) => {
+    return new Promise((resolve, reject) => {
+      wepy.requestPayment({
+        'timeStamp': data.timeStamp,
+        'nonceStr': data.nonceStr,
+        'package': data.packageValue,
+        'signType': 'MD5',
+        'paySign': data.paySign,
+        success (res) {
+          resolve(res)
+        },
+        fail (err) {
+          reject(err)
+        }
+      })
+    })
+  }
+
   /**
    * 请求
    * @param { Object } options - { header, method, haveLoading ...}

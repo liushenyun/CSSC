@@ -79,6 +79,8 @@ export default class extends wepy.app {
           'collection/index',
           'footprint/index',
           'order/index',
+          'paySuccess/index',
+          'payFail/index',
           'afterSales/index',
           'sureOrder/index',
         ]

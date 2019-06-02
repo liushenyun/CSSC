@@ -2,20 +2,34 @@
 <template>
   <view class="recom-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-      <view class="recom-same" wx:for="{{taleArr}}" @tap='toTaleDetailA({{item.id}})'  wx:for-index="index" wx:for-item="item" wx:key="index">
-        <view class="recom-title">
-            <image src='../../images/home_fill_light.png'></image>
-            <text>老成</text>
-            <image src='../../images/attention_favor_fill.png'></image>
-            <text>89.23W人看过</text>
+    <scroll-view  scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+         
+         <!-- <view wx:if="{{hasRefesh}}" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;">
+          <icon type="waiting" size="45"/><text>刷新中...</text></view>
+        <view wx:else  style="display:none" ><text></text></view> -->
+
+         <view class="recom-same" wx:for="{{taleArr}}" @tap='toTaleDetailA({{item.id}})'  wx:for-index="index" wx:for-item="item" wx:key="index">
+          <view class="recom-title">
+              <image src='{{item.authorHead}}'></image>
+              <text>{{item.authorName}}</text>
+              <image src='../../images/attention_favor_fill.png'></image>
+              <text>{{item.readCount}}人看过</text>
+          </view>
+          <view class="recom-img">
+            <image src="{{item.taleCover}}"></image>
+          </view>
+          <view class="recom-des">
+            {{item.taleName}}
+          </view>
         </view>
-        <view class="recom-img">
-          <image src="{{item.taleCover}}"></image>
+
+        <view class="tips1" style="text-align: center">
+          <view wx:if="{{hasMore}}" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;">
+          <icon type="waiting" size="45"/><text>玩命的加载中...</text></view>
+          <view wx:else><text>没有更多内容了</text></view>
         </view>
-        <view class="recom-des">
-          {{item.taleName}}
-        </view>
-      </view>
+
+    </scroll-view>
   </view>
 </template>
 
@@ -47,7 +61,11 @@ export default class Recom extends wepy.page {
   mixins = [];
 
   data = {
-    taleArr: []
+    taleArr: [],
+    hasMore:false,
+    pageParams: {
+      page: 0
+    }
   };
 
   computed = {};
@@ -56,16 +74,24 @@ export default class Recom extends wepy.page {
     toTaleDetailA(taleId) {
       console.log(57, taleId)
        wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
+    },
+    loadMore() { // 加载更多
+      if (!this.hasMore) return
+      this.pageParams.page += 1
+      this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+
+      console.log(63)
     }
   };
 
   apiTaleFindPageFA(fun) {
     apiTaleFindPageF({
-      page: 0,
+      page: this.pageParams.page,
       limit: 100
     }, fun).then((result) => {
-      let { rows } = result
-      this.taleArr = rows
+      let { rows, last } = result
+      this.hasMore = !last
+      this.taleArr = this.taleArr.concat(rows)
       this.$apply()
     }).catch((err) => {
       
