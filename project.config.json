@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 24,
+			"current": 28,
 			"list": [
 				{
 					"id": -1,
@@ -204,6 +204,34 @@
 					"id": -1,
 					"name": "支付成功",
 					"pathName": "pages/packageMine/paySuccess/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "支付失败",
+					"pathName": "pages/packageMine/payFail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分类推荐",
+					"pathName": "pages/packageIndex/classifyRecom/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "文化衍生区",
+					"pathName": "pages/packageIndex/culture/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员专区",
+					"pathName": "pages/packageIndex/members/index",
 					"scene": null
 				}
 			]

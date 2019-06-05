@@ -1,8 +1,20 @@
 <template>
   <view class='pay-success-ctner'>
-    <view>支付成功</view>
-    <button @tap='continueBuyA'>继续逛逛</button>
-    <button @tap='checkOrderA'>查看订单</button>
+    <view class="suc-top">
+      <image class="top-a" src='../../../images/successful_icon.png'></image>
+      <view class="top-b">
+        ·恭喜您已完成支付·
+      </view>
+      <view class="top-c">小成将马上给你安排发货</view>
+      <view class="top-d">
+        <image src='../../../images/logo_b.png'></image>
+      </view>
+    </view>
+    <view class="pat-btn-wrap">
+      <button class="icx-btn-same-sure" @tap='continueBuyA'>继续逛逛</button>
+      <button class="icx-btn-same-cancel" @tap='checkOrderA'>查看订单</button>
+    </view>
+    
   </view>
 </template>
 

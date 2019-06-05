@@ -8,19 +8,22 @@
 
       <view class="addl-list-outer">
 
-        <view class="addl-list-item" wx:for="{{addressList}}" wx:key="index" @tap="checked({{index}})">
-          <image wx:if="{{item.isChecked}}" class="addl-img-a" src='../../../images/selected.png'></image>
-          <image wx:else class="addl-img-a" src='../../../images/uncheck.png'></image>
+        <view hover-class='icx-click-hover' class="addl-list-item" wx:for="{{addressList}}" wx:key="index" @tap="checked({{item}})">
+          <!-- <image wx:if="{{item.isChecked}}" class="addl-img-a" src='../../../images/selected.png'></image>
+          <image wx:else class="addl-img-a" src='../../../images/uncheck.png'></image> -->
           <view class="addl-list-word">
             <view> <text>{{item.name}}</text> <text>{{ item.phone}}</text> </view>
             <view>收货地址：{{item.province}}{{item.city}}{{item.district}}{{item.address}} </view>
+          </view>
+          <view class="addl-def" wx:if="{{item.def == 1}}">
+            默认
           </view>
           <view class="addl-edit"  @tap.stop="toAddressEditA({{item.id}})">
               <image class="addl-img-b" src='../../../images/edit.png'></image>
           </view>
         </view>
       </view>
-
+      <button @tap='modifyA'>修改地址</button>
   </view>
 </template>
 
@@ -39,23 +42,49 @@ export default class AddressList extends wepy.page {
     addressList: []
   };
   methods = {
-    checked(index) {
-      let _list = this.addressList
-      this.addressList.forEach((val, i) => {
-        if (index == i) {
-          val.isChecked = true
-        } else {
-          val.isChecked = false
-        }
-      })
+    checked(item) {
+      // let _list = this.addressList
+      // this.addressList.forEach((val, i) => {
+      //   if (index == i) {
+      //     val.isChecked = true
+      //   } else {
+      //     val.isChecked = false
+      //   }
+      // })
+      let _address = `${item.province} ${item.city} ${item.district}`
+      let _addressId = item.id
+      let pages = getCurrentPages();
+      let prevPage = pages[pages.length - 2]; // 上一级页面
+      console.log(_address, _addressId)
+      // prevPage.setData({
+      //   addressStr: _address,
+      //   addressId: _addressId
+      // })
+      prevPage.data.addressId = _addressId
+      this.$wxpage = prevPage;
+      console.log(item)
       this.$apply()
-      
+      setTimeout(() => {
+        wepy.navigateBack();
+      }, 300);
     },
     toAddressEditA(id) {
       wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index?id=${id}` });
     },
     toAddressA() {
       wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index` });
+    },
+    modifyA() {
+      let pages = getCurrentPages();
+      let prevPage = pages[pages.length - 2]; // 上一级页面
+      prevPage.addressStr = '45456'
+      prevPage.setData({
+        addressStr: 'dskjl',
+        addressId: ''
+      })
+      console.log(prevPage)
+      // this.$wxpage = prevPage;
+      this.$apply();
     }
   }
   apiAddressFindAllA(fun) {

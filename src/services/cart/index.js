@@ -41,7 +41,7 @@ const apiCartFindPageF = (data, fun) => packagePromise((resolve, reject) => {
     method: 'POST',
     noOutData: true,
     data: {
-      limit: 20,
+      limit: 1000,
       ...data
     }
   }, fun)

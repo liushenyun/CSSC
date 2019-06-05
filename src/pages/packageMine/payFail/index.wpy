@@ -1,6 +1,17 @@
 <template>
   <view class='pay-fail-ctner'>
-    <view>支付失败</view>
+    <view class="fail-top">
+      <view class="fail-top-inner">
+        <image src="../../../images/fail_icon.png"></image>
+        <view>支付失败 请重新支付</view>
+      </view>
+      
+    </view>
+    <view class="pat-btn-wrap">
+      <button class="icx-btn-same-sure" @tap='continueBuyA'>继续逛逛</button>
+      <button class="icx-btn-same-cancel" @tap='checkOrderA'>查看订单</button>
+    </view>
+    
   </view>
 </template>
 
@@ -19,8 +30,7 @@ export default class PayFail extends wepy.page {
   };
   methods = {
     continueBuyA() {
-      console.log(565);
-      wepy.navigateTo({ url: `/pages/index/index` });
+      wepy.switchTab({ url: `/pages/index/index` })
     },
     checkOrderA() {
       wepy.navigateTo({ url: `/pages/packageMine/order/index` });

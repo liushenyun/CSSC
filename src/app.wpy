@@ -40,6 +40,9 @@ export default class extends wepy.app {
         pages: [
           'message/index',
           'goodsDetail/index',
+          'classifyRecom/index',
+          'members/index',
+          'culture/index',
           'search/index',
           'test/index'
         ]

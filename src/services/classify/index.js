@@ -75,7 +75,7 @@ const apiTaleFindPageF = (data, fun) => packagePromise((resolve, reject) => {
     method: 'POST',
     noOutData: true,
     data: {
-      limit: 20,
+      limit: 200,
       ...data
     }
   }, fun)

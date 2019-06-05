@@ -1,0 +1,94 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.classify-recom-ctner{
+    height: 100%;
+    position: relative;
+    padding: rpx(60) rpx(32) rpx(10) rpx(32);
+    background: #EFEFEF;
+}
+.clre-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    height: rpx(60);
+    padding: 0 rpx(30);
+    scroll-view {
+        white-space: nowrap;
+    }
+    .top-item {
+        display: inline-block;
+        line-height: rpx(60);
+        margin-right: rpx(30);
+        font-size: rpx(22)
+    }
+    .top-item-active {
+        color: $color-word-alarm;
+    }
+    .top-item:last-of-type {
+        margin-right: rpx(0);
+    }
+}
+.clre-con {
+    height: 100%;
+    .clre-con-top,
+    .clre-goods-outer {
+        margin-bottom: rpx(17);
+    }
+    .clre-con-top {
+        height: rpx(260);
+        background:rgba(191,191,191,1);
+        border-radius: rpx(10);
+    }
+    .clre-goods-outer {
+        padding: rpx(16);
+        border-radius: rpx(10);
+        background: #FFF;
+        display: flex;
+    }
+    .clre-l{
+        width: rpx(190);
+        height: rpx(190);
+        margin-right: rpx(34);
+        background: red;
+        image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .clre-r {
+        flex: 1;
+        view:nth-of-type(1) {
+            font-size: rpx(24);
+        }
+        view:nth-of-type(2) {
+            font-size: rpx(18);
+            color: $color-word-three;
+            margin: rpx(22) 0 rpx(60) 0;
+            line-height: rpx(28);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        view:nth-of-type(3) {
+            color: $color-word-alarm;
+            text-align: right;
+            line-height: rpx(20);
+            text {
+                font-size: rpx(18);
+                margin-right: rpx(10);
+            }
+            image {
+                width: rpx(22);
+                height: rpx(18);
+                vertical-align: middle
+            }
+        }
+    }
+}

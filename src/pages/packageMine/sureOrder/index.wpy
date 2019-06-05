@@ -3,7 +3,7 @@
     <view class="sure-order-inner">
         <view class="address-outer" @tap='toChoiceAddressA'>
           <image src='../../../images/location_a.png'></image>
-          <text>点击选择地址</text>
+          <text>{{addressStr ? addressStr : '请选择地址'}}</text>
           <image src='../../../images/unfold.png'></image>
         </view>
 
@@ -41,7 +41,9 @@ export default class SureOrder extends wepy.page {
   data = {
     orderId: '',
     orderDetailArr: [],
-    orderDetailObj: {}
+    orderDetailObj: {},
+    addressStr: '',
+    addressId: ''
   };
   methods = {
     submitOrderA() {
@@ -58,15 +60,20 @@ export default class SureOrder extends wepy.page {
       let { orderDetailVoList } = result
       this.orderDetailArr = orderDetailVoList
       this.orderDetailObj = result
+      if (result.shippingAddressVo) {
+        this.addressStr = `${result.shippingAddressVo.province} ${result.shippingAddressVo.city} ${result.shippingAddressVo.district}`
+        this.addressId = result.shippingAddressVo.id
+      }
       this.$apply()
     }).catch((err) => {
       
     });
   }
   apiPayCreateA(fun) {
+    console.log(69, this, this.addressStr)
     apiPayCreateF({
       orderId: this.orderDetailObj.id,
-      addressId: '20190601125524687967',
+      addressId: this.addressId,
       remarks: '这是测试'
     }, fun).then(msg => {
       let data = msg
@@ -102,6 +109,10 @@ export default class SureOrder extends wepy.page {
     setTimeout(() => {
         this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
     }, 30);
+  }
+  onShow() {
+    // this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
+    console.log(108, this.addressStr)
   }
 }
 </script>

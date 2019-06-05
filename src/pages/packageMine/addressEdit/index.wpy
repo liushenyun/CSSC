@@ -111,7 +111,7 @@ export default class AddressEdit extends wepy.page {
       this.addressObj.address = e.detail.value
     },
     saveA() {
-      this.apiAddressSetDefaultFA(this.apiAddressSetDefaultFA.bind(this))
+      // this.apiAddressSetDefaultFA(this.apiAddressSetDefaultFA.bind(this))
       console.log()
       if (this.addressId) {
         this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
@@ -135,12 +135,14 @@ export default class AddressEdit extends wepy.page {
       this.pObject = pObject
       this.cObject = cObject
       this.dObject = dObject
+      console.log(135, pObject, cObject, dObject);
+      
       if (dObject.id) {
         this.addressObj.cityId = dObject.id
       } else if (cObject.id) {
         this.addressObj.cityId = cObject.id
-      } else if (dObject.id) {
-        this.addressObj.cityId = dObject.id
+      } else if (pObject.id) {
+        this.addressObj.cityId = pObject.id
       }
 
       this.showRegionStr = showRegionStr
@@ -269,7 +271,8 @@ export default class AddressEdit extends wepy.page {
         phone: this.addressObj.phone,
         name: this.addressObj.name,
         cityId: this.addressObj.cityId,
-        address: this.addressObj.address
+        address: this.addressObj.address,
+        def: this.addressObj.checked ? 1 : 0
     }, fun).then((result) => {
         miniPro.showToast('添加成功')
         setTimeout(() => {
@@ -289,7 +292,8 @@ export default class AddressEdit extends wepy.page {
       phone: this.addressObj.phone,
       name: this.addressObj.name,
       cityId: this.addressObj.cityId,
-      address: this.addressObj.address
+      address: this.addressObj.address,
+      def: this.addressObj.checked ? 1 : 0
     }, fun).then((result) => {
       miniPro.showToast('修改成功')
       setTimeout(() => {

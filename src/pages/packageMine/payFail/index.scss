@@ -5,5 +5,35 @@ page{
     height: 100%;
 }
 .pay-fail-ctner {
-    
+    .fail-top {
+        position: relative;
+        height: rpx(466);
+        .fail-top-inner {
+            height: auto;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            image {
+                width: rpx(156);
+                height: rpx(140);
+                display: inline-block;
+                margin-bottom: rpx(20)
+            }
+            view {
+                color: $color-word-three
+            }
+        }
+        
+    }
+    .pat-btn-wrap {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        button {
+            width: 30%;
+        }
+    }
 }

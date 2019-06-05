@@ -15,7 +15,7 @@
             <swiper-item>
               <view class="swiper-div-same">
                 <view class="order-com">
-                  <OrderCom></OrderCom>
+                  <OrderCom orderItem=''></OrderCom>
                 </view>
 
                 <view class="order-com">
@@ -55,7 +55,7 @@ export default class Order extends wepy.page {
   };
   data = {
    topArr: ['全部', '待付款', '待发货', '待收货'],
-   currentIndex: 0,
+   currentIndex: 1,
    imgUrls: [
       'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
       'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',

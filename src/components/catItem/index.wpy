@@ -51,14 +51,13 @@ export default class CatItem extends wepy.component {
   methods = {
       numAdd() {
           this.currentNum = this.item.quantity + 1;
-          console.log('numAdd', this.item);
         //   this.$emit('num-change-event', this.current, this.currentNum)
           this.$emit('num-change-event', this.current, 'add')
           
       },
       numReduce() {
           if (this.currentNum < 2) return
-          this.currentNum = this.item.quantity - 1;
+        //   this.currentNum = this.item.quantity - 1;
         //   this.$emit('num-change-event', this.current, this.currentNum)
           this.$emit('num-change-event', this.current, 'sub')
       },
