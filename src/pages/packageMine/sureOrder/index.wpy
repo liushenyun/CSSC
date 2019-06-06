@@ -8,7 +8,7 @@
         </view>
 
         <view class="order-outer">
-          <repeat for="{{orderDetailArr}}" key="index" index="index" item="item">
+          <repeat for="{{orderDetailObj.orderChildList}}" key="index" index="index" item="item">
               <SureCom :current="index" :item="item"></SureCom>
           </repeat>
         </view>
@@ -26,7 +26,7 @@
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDateTip/index'
 import SureCom from '@/components/SureGoodsCom/index'
-import { apiFindOrderDetailF, apiPayCreateF } from '../../../services/mine/index'
+import { apiFindOrderDetailF, apiPayCreateF, apiFindDefAddressF } from '../../../services/mine/index'
 import miniPro from '@/utils/wepy-pro.js';
 export default class SureOrder extends wepy.page {
   config = {
@@ -43,7 +43,8 @@ export default class SureOrder extends wepy.page {
     orderDetailArr: [],
     orderDetailObj: {},
     addressStr: '',
-    addressId: ''
+    addressId: '',
+    payRemarksList:[]
   };
   methods = {
     submitOrderA() {
@@ -57,13 +58,23 @@ export default class SureOrder extends wepy.page {
   apiFindOrderDetailA(fun) {
     apiFindOrderDetailF(this.orderId, fun).then((result) => {
       console.log(45, result);
-      let { orderDetailVoList } = result
-      this.orderDetailArr = orderDetailVoList
+      let { orderChildList } = result
+      this.orderDetailArr = orderChildList
       this.orderDetailObj = result
       if (result.shippingAddressVo) {
-        this.addressStr = `${result.shippingAddressVo.province} ${result.shippingAddressVo.city} ${result.shippingAddressVo.district}`
-        this.addressId = result.shippingAddressVo.id
+        // this.addressStr = `${result.shippingAddressVo.province} ${result.shippingAddressVo.city} ${result.shippingAddressVo.district}`
+        // this.addressId = result.shippingAddressVo.id
       }
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiFindDefAddressFA(fun) {
+    apiFindDefAddressF(fun).then((result) => {
+      this.addressStr = `${result.province} ${result.city} ${result.district}`
+      this.addressId = result.id
       this.$apply()
     }).catch((err) => {
       
@@ -74,7 +85,9 @@ export default class SureOrder extends wepy.page {
     apiPayCreateF({
       orderId: this.orderDetailObj.id,
       addressId: this.addressId,
-      remarks: '这是测试'
+      payRemarksList: [],
+      remarksList: this.orderDetailObj.orderChildList || [],
+      userId: 0
     }, fun).then(msg => {
       let data = msg
       console.log(73, );
@@ -95,12 +108,12 @@ export default class SureOrder extends wepy.page {
   }
   events = {
     'order-detail-input': (value, index) => {
-      this.orderDetailArr[index].remark = value
+      this.orderDetailArr[index].remarks = value
       this.$apply()
     }
   }
   onLoad(option) {
-    this.orderId = option.orderId || '20190602181116164951';
+    this.orderId = option.orderId || '20190606214057333697';
     this.$apply()
     // 20190526145853664473
     console.log(27, option.orderId)
@@ -111,8 +124,21 @@ export default class SureOrder extends wepy.page {
     }, 30);
   }
   onShow() {
-    // this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
-    console.log(108, this.addressStr)
+    let a = [
+      {flag: true, a: 12},
+      {flag: false, a: 13},
+      {flag: true, a: 14}
+    ]
+    let _a = a.filter(val => {
+      if(val.flag == 11) {
+        return {
+          key: '12',
+          value: val.a
+        }
+      }
+    })
+    console.log(139, _a);
+    this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
   }
 }
 </script>

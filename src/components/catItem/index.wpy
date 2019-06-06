@@ -9,8 +9,8 @@
     </view>
     <view class="cat-m-t">
         <view class='goods-name'>{{item.goodsName}}</view>
-        <view class='goods-des'>{{current}}颜色：{{item.colorName}}</view>
-        <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
+        <view class='goods-des'>颜色：{{item.colorName}}</view>
+        <!-- <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view> -->
         <view class='goods-pri'>
             <text>￥{{item.price}}</text>
             <!-- <text>￥358</text> -->
@@ -56,7 +56,7 @@ export default class CatItem extends wepy.component {
           
       },
       numReduce() {
-          if (this.currentNum < 2) return
+          if (this.item.quantity < 2) return
         //   this.currentNum = this.item.quantity - 1;
         //   this.$emit('num-change-event', this.current, this.currentNum)
           this.$emit('num-change-event', this.current, 'sub')

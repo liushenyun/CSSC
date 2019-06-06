@@ -11,6 +11,7 @@ import {
   apiCollectSave,
   apiFootDelete,
   apiAddressByParent,
+  apiFindDefAddress,
   apiFootFindPage,
   apiPayCreate,
   apiAddressDelete,
@@ -168,10 +169,29 @@ const apiFootFindPageF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 支付模块 => 创建支付订单
 const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
+  console.log(172, data)
+  let _list = []
+  data.remarksList.forEach(val => {
+    if (val.remarks) {
+      _list.push({
+        orderChildId: val.id,
+        remarks: val.remarks
+      })
+    }
+  })
+  console.log(181, _list)
   request({
     url: apiPayCreate(),
     method: 'POST',
-    data
+    header: {
+      'content-type': 'application/json' // application/json
+    },
+    data: {
+      orderId: data.orderId,
+      addressId: data.addressId,
+      payRemarksList: _list,
+      userId: 0
+    }
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -214,6 +234,19 @@ const apiAddressByParentF = (id, fun) => packagePromise((resolve, reject) => {
     })
     .catch(err => reject(err))
 })
+
+// 收货地址模块 => 获取默认地址
+const apiFindDefAddressF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFindDefAddress(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+// apiFindDefAddress
 
 // 收货地址模块 => 分页获取我的收货地址
 const apiAddressFindAllF = (fun) => packagePromise((resolve, reject) => {
@@ -350,6 +383,7 @@ export {
   apiPayCreateF,
   apiAddressDeleteF,
   apiAddressByParentF,
+  apiFindDefAddressF,
   apiAddressFindF,
   apiAddressFindAllF,
   apiAddressSaveF,

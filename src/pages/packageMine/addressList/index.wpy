@@ -12,7 +12,7 @@
           <!-- <image wx:if="{{item.isChecked}}" class="addl-img-a" src='../../../images/selected.png'></image>
           <image wx:else class="addl-img-a" src='../../../images/uncheck.png'></image> -->
           <view class="addl-list-word">
-            <view> <text>{{item.name}}</text> <text>{{ item.phone}}</text> </view>
+            <view> <text style="margin-right: 10rpx">{{item.name}}</text> <text>{{ item.phone}}</text> </view>
             <view>收货地址：{{item.province}}{{item.city}}{{item.district}}{{item.address}} </view>
           </view>
           <view class="addl-def" wx:if="{{item.def == 1}}">

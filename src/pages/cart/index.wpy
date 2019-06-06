@@ -74,7 +74,8 @@ export default class Index extends wepy.page {
     rowsArr: [],
     changeQuantity: {
       id: '',
-      type: ''
+      type: '',
+      current: -1
     },
     isAllCkeck: false,
     totalMoney: 0,
@@ -104,7 +105,6 @@ export default class Index extends wepy.page {
       })
     },
     toNoAddDeviceA() {
-      console.log(4646546)
       wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
     },
     toSureOrderA() {
@@ -134,22 +134,25 @@ export default class Index extends wepy.page {
         return val
       })
       this.$apply()
-      console.log(96, this.rowsArr);
-      
     }).catch(err => {
 
     })
   }
   apiChangeQuantityA(fun) {
-    apiChangeQuantityF(this.changeQuantity, fun).then(msg => {
-
+    apiChangeQuantityF({
+      id: this.changeQuantity.id,
+      type: this.changeQuantity.type
+    }, fun).then(msg => {
+      this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
+      this.$apply()
     }).catch(err => {
 
     })
   }
   apiCartDeleteA(fun) {
     apiCartDeleteF(this.delGoosId, fun).then(msg => {
-
+      this.rowsArr.splice(this.changeQuantity.current, 1)
+      this.$apply()
     }).catch(err => {
 
     })
@@ -177,7 +180,6 @@ export default class Index extends wepy.page {
           });
           this.totalMoney = _totalMoney
           this.createData = _createData
-          // console.log(145, _isAllCheck)
     }
   }
   events = {
@@ -189,14 +191,9 @@ export default class Index extends wepy.page {
       console.log(index, type)
       this.changeQuantity.id = this.rowsArr[index].id
       this.changeQuantity.type = type
+      this.changeQuantity.current = index
       this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
-      // if (type == 'add') {
-      //   this.rowsArr[index].quantity += 1
-      // } else {
-      //   this.rowsArr[index].quantity -= 1
-      // }
       this.$apply()
-      // this.rowsArr[index].quantity = num
     },
     'calt-item-del': (index) => {
       let _self = this
@@ -205,6 +202,7 @@ export default class Index extends wepy.page {
         content: '确实删除次商品？',
         callback(flag) {
           if (!flag) return
+          _self.changeQuantity.current = index
           _self.delGoosId = _self.rowsArr[index].id
           _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
         }

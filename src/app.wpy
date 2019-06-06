@@ -42,7 +42,6 @@ export default class extends wepy.app {
           'goodsDetail/index',
           'classifyRecom/index',
           'members/index',
-          'culture/index',
           'search/index',
           'test/index'
         ]

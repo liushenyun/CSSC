@@ -179,7 +179,7 @@ export default class Index extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageIndex/classifyRecom/index`});
     },
     toCultureA() {
-      wepy.navigateTo({ url: `/pages/packageIndex/culture/index`});
+      wepy.switchTab({ url: '/pages/recom/index' });
     },
     toMembersA() {
       wepy.navigateTo({ url: `/pages/packageIndex/members/index`});
@@ -230,8 +230,8 @@ export default class Index extends wepy.page {
       console.log(res.target);
     }
     return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
+      title: '成氏商城',
+      path: '/pages/index/index'
     };
   }
   async onShow() {}

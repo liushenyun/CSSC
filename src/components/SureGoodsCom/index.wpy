@@ -7,27 +7,27 @@
         <text>交易成功</text>
     </view>
 
-    <view class="sure-same-outer goods-outer">
+    <view class="sure-same-outer goods-outer" wx:for="{{item.orderDetailList}}" wx:key="index" wx:for-item="subItem">
         <view class='cat-m'>
-            <image src='{{item.goodsIco}}' />
+            <image src='{{subItem.goodsIco}}' />
         </view>
         <view class="cat-m-t">
             <view class='goods-name'>
-                <text>{{item.goodsName}}</text>
-                <text>￥{{item.price}}</text>
+                <text>{{subItem.goodsName}}</text>
+                <text>￥{{subItem.price}}</text>
             </view>
             <view class='goods-des'>
-                <text>颜色：{{item.colorName}}</text>
-                <text>x{{item.goodsNumber}}</text>
+                <text>颜色：{{subItem.colorName}}</text>
+                <text>x{{subItem.goodsNumber}}</text>
             </view>
         </view>
     </view>
-
+    
+<!-- 
     <view class="sub-same s-num">
         <text>购买数据</text>
         <text>{{item.goodsNumber}}</text>
-        <!-- <AddCom :num="num"></AddCom> -->
-    </view>
+    </view> -->
 
     <view class="sub-same s-type">
         <text>购买方式</text>
@@ -41,7 +41,7 @@
 
     <view class="order-num-outer">
         <text>共{{item.goodsNumber}}件 合计:</text>
-        <text>￥{{item.goodsNumber * item.price}}</text>
+        <text>￥{{item.orderAmount}}</text>
     </view>
     
   </view>
@@ -54,7 +54,8 @@ export default class OrderGoodCom extends wepy.component {
   props = {
       item: {
           type: Object,
-          default: {}
+          default: {},
+          twoWay: true
       },
       current: {
           type: Number,
@@ -77,6 +78,8 @@ export default class OrderGoodCom extends wepy.component {
       bindReplaceInput(e) {
           console.log(e.detail.value, this.current);
           this.$emit('order-detail-input', e.detail.value, this.current)
+        //   this.item.remarks = e.detail.value
+          this.$apply()
       }
   }
   watch = {

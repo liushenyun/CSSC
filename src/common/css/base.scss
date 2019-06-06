@@ -4,6 +4,7 @@ page {
 	view, text, button, checkbox, radio, scroll-view, input, form, label, picker, silder, image {
     box-sizing: border-box;
     font-size: $size-one;
+    -webkit-overflow-scrolling: touch; 
   }
   view{
     line-height: 1;
