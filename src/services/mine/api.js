@@ -69,6 +69,9 @@ const apiPartnerSave = () => `${MAIN_DOMAIN}/api/partner/apply/save`
 // 商品售后模块 => 商品售后api
 const apiSales = () => `${MAIN_DOMAIN}/sales/apply`
 
+// 用户模块 => 获取我的页面数据
+const apiGetMyHomeData = () => `${MAIN_DOMAIN}/api/wx/user/get_my_home_data`
+
 export {
   apiCancelOrder,
   apiConfirmOrder,
@@ -92,5 +95,6 @@ export {
   apiPartnerPhoneCode,
   apiPartnerPay,
   apiPartnerSave,
-  apiSales
+  apiSales,
+  apiGetMyHomeData
 }

@@ -23,21 +23,18 @@ import {
   apiPartnerPhoneCode,
   apiPartnerPay,
   apiPartnerSave,
-  apiSales
+  apiSales,
+  apiGetMyHomeData
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
 
 // 订单模块 => 取消订单
-const apiCancelOrderF = (data, fun) => packagePromise((resolve, reject) => {
+const apiCancelOrderF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiCancelOrder(),
-    method: 'POST',
-    data: {
-      limit: 20,
-      ...data
-    }
+    url: apiCancelOrder(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -46,14 +43,10 @@ const apiCancelOrderF = (data, fun) => packagePromise((resolve, reject) => {
 })
 
 // 订单模块 => 确认收货
-const apiConfirmOrderF = (data, fun) => packagePromise((resolve, reject) => {
+const apiConfirmOrderF = (id, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiConfirmOrder(),
-    method: 'POST',
-    data: {
-      limit: 20,
-      ...data
-    }
+    url: apiConfirmOrder(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -94,6 +87,7 @@ const apiOrderFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiOrderFindPage(),
     method: 'POST',
+    noOutData: true,
     data
   }, fun)
     .then(msg => {
@@ -369,6 +363,18 @@ const apiSalesF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 用户模块 => 获取我的页面数据
+const apiGetMyHomeDataF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetMyHomeData(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiCancelOrderF,
   apiConfirmOrderF,
@@ -392,5 +398,6 @@ export {
   apiPartnerPhoneCodeF,
   apiPartnerPayF,
   apiPartnerSaveF,
-  apiSalesF
+  apiSalesF,
+  apiGetMyHomeDataF
 }

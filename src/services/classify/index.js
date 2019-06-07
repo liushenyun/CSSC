@@ -6,7 +6,8 @@ import {
   apiTaleFindDetails,
   apiTaleFindPage,
   apiTalePatronize,
-  apiTaleUnpatronize
+  apiTaleUnpatronize,
+  apiCategoryByParent
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -109,6 +110,19 @@ const apiTaleUnpatronizeF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 商品分类模块 => 分类【tab】
+const apiCategoryByParentF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiCategoryByParent(id),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+
 export {
   apiTaleCommentDeleteF,
   apiTaleCommentFindPageF,
@@ -116,5 +130,6 @@ export {
   apiTaleFindDetailsF,
   apiTaleFindPageF,
   apiTalePatronizeF,
-  apiTaleUnpatronizeF
+  apiTaleUnpatronizeF,
+  apiCategoryByParentF
 }

@@ -4,10 +4,10 @@
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
       
       <view class="ix-input-wrap">
-        <view class="input-search">
+        <view class="input-search" @tap="toSearchA(0)">
           <image src='../../images/nav_button_search_default.png' />
         </view>
-        <input bindinput="bindReplaceInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+        <input  @tap='toSearchA(0)' disabled maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
         <view class="input-msg" @tap="toMsgA">
           <image src='../../images/nav_button_message_default.png' />
         </view>
@@ -15,8 +15,26 @@
       
       <view class="cs-scroll-outer">
         <view class="cs-scroll-inner">
-          <view class="cs-left"></view>
-          <view class="cs-right"></view>
+          <view class="cs-left">
+            <scroll-view scroll-y="true" style="height: 100%;width: 100%">
+              <view class="cs-left-item {{currenIndex == index ? 'cs-left-item-active' : ''}}" wx:for='{{pageList}}' @tap='classifyA({{item}}, {{index}})' wx:key='index'>
+                {{item.categoryName}}
+              </view>
+            </scroll-view>
+          </view>
+          <view class="cs-right">
+            <scroll-view scroll-y="true" style="height: 100%;width: 100%">
+              <view class='right-con-outer'>
+                <view class='right-banner'>这是banner</view>
+                <view class='right-list'>
+                  <view class='right-list-item'  wx:for='{{subPageList}}' wx:key='index' @tap="toSearchA({{item.id}})">
+                    <image src='{{item.categoryIco}}'></image>
+                    <view>{{item.categoryName}}</view>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
         </view>
       </view>
   </view>
@@ -25,6 +43,9 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
+import {
+  apiCategoryByParentF
+} from '../../services/classify/index'
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -40,47 +61,58 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 5000,
-    duration: 1000
+    parentId: 0,
+    pageList: [],
+    currenIndex: 0,
+    subPageList: [],
+    subParentId: ''
   };
 
   computed = {};
 
   methods = {
     toMsgA() {
-      console.log('去往消息列表');
        wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
-    bindReplaceInput(e) {
-      console.log('input输入', e)
+    classifyA(item, index) {
+      if (this.currenIndex == index) return
+      this.currenIndex = index;
+      this.subParentId = item.id
+      this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
     },
-    toDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
-    },
-    toScanAddDeviceA() {
-      // 允许从相机和相册扫码
-      wx.scanCode({
-        success(res) {
-          console.log(res)
-        }
-      })
-    },
-    toNoAddDeviceA() {
-      console.log(4646546)
-      wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
+    toSearchA(categoryId) {
+      console.log(81, categoryId)
+      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}` });
     }
   };
 
   events = {};
 
+  apiCategoryByParentFA(fun) {
+    console.log(124)
+    apiCategoryByParentF(this.parentId,fun).then(reslut => {
+      this.pageList = reslut
+      this.subParentId = reslut[0].id
+      this.$apply()
+      this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
+    }).catch(err => {
+      console.log(55, err)
+    })
+  }
+
+  apiCategoryByParentSubFA(fun) {
+    apiCategoryByParentF(this.subParentId,fun).then(reslut => {
+      this.subPageList = reslut
+      this.$apply()
+      console.log(54)
+    }).catch(err => {
+      console.log(55, err)
+    })
+  }
+
   async onLoad() {
+    console.log(123)
+    this.apiCategoryByParentFA(this.apiCategoryByParentFA.bind(this))
     this.getSystemInfo();
     this.$apply();
   }

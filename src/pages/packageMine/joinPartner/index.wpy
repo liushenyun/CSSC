@@ -11,14 +11,14 @@
       >
         <block wx:for="{{partnerArr}}" wx:key="index">
           <swiper-item>
-            <view class="partner-same {{item.class}}">
+            <view class="partner-same {{item.class}} {{index == current ? 'active' : ''}}">
               <text>{{item.name}}</text>
             </view>
           </swiper-item>
         </block>
       </swiper>
     </view>
-    <button class="icx-btn-same-sure">立即加入</button>
+    <button class="icx-btn-same-sure" @tap="joinA">立即加入</button>
     <view class="des">· 三种合伙人权益介绍 ·</view>
   </view>
 </template>
@@ -45,12 +45,12 @@ export default class JoinPartner extends wepy.page {
     current: 1
   };
   methods = {
-    choiceA(f) {
-      this.isActive = f
-      console.log(35, f)
-    },
     bindchange(e) {
-      console.log(53, e.detail);
+      this.current = e.detail.current
+    },
+    joinA() {
+      console.log(this.current);
+      wepy.navigateTo({ url: '/pages/packageMine/joinPartnerGao/index' });
     }
   }
 }

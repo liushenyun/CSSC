@@ -70,6 +70,7 @@ export default class extends wepy.app {
         pages: [
           'joinMembers/index',
           'joinPartner/index',
+          'joinPartnerGao/index',
           'more/index',
           'policy/index',
           'about/index',

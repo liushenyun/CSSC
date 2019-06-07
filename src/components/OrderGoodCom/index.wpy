@@ -2,56 +2,88 @@
   <view class="cat-item-ctner">
 
     <view class="order-status-order">
-        <text>米兔生活馆</text>
+        <text>{{item.companyName}}</text>
         <!-- <image src='../../images/unfold.png'></image>
         <text>交易成功</text> -->
     </view>
 
-    <view class="goods-outer">
+    <view class="goods-outer" wx:for="{{item.orderDetailList}}" wx:key='index' wx:for-item='subItem'>
         <view class='cat-m'>
-            <image src='../../images/goods_small_del.png' />
+            <image src='{{subItem.goodsIco}}' />
         </view>
         <view class="cat-m-t">
             <view class='goods-name'>
-                <text>彩色甜甜圈牛肉味</text>
-                <text>￥258</text>
+                <text>{{subItem.goodsName}}</text>
+                <text>￥{{subItem.price}}</text>
             </view>
             <view class='goods-des'>
-                <text>颜色：999哑光 3.5克</text>
-                <text>x1</text>
+                <text><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}}</text></text>
+                <text>x{{subItem.goodsNumber}}</text>
             </view>
         </view>
     </view>
 
     <view class="order-num-outer">
-        <text>共1件 合计:</text>
-        <text>￥258</text>
+        <text>{{OrderComIndex}}共 {{item.goodsCount}} 件 合计:</text>
+        <text>￥{{item.orderAmount}}</text>
     </view>
 
     <view class="order-button-outer">
-        <view class="order-btn">查看物流</view>
-        <view class="order-btn">追加评论</view>
+        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item.id}}, {{item.parentId}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : ''}}" >
+            {{btnItem.word}}
+        </view>
     </view>
     
   </view>
 </template>
 
 <script>
+// 待发货：提醒发货，查看物流
+// 待收货：延长收货，查看物流，确认收货
+// 待付款：退款，付款
+// 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
+
 import wepy from 'wepy';
 export default class SureGoodsCom extends wepy.component {
   props = {
       item: {
           type: Object,
           default: {}
+      },
+      OrderComIndex: {
+          type: [Number, String],
+          default: 0
       }
   }
-  data = {}
+  data = {
+      btnObj: {
+        '1': [
+            {word: '退款', action: '1a'},
+            {word: '付款', action: '1b', color: 'sure'}
+        ],
+        '2': [
+            {word: '提醒发货', action: '2a'},
+            {word: '查看物流', action: '2b'}
+        ],
+        '4': [
+            {word: '延长收货', action: '4a'},
+            {word: '查看物流', action: '4b'},
+            {word: '确认收货', action: '4c', color: 'sure'}
+        ],
+        '5': [
+            {word: '最近评论', action: '5c'}
+        ]
+    }
+  }
   methods = {
       numAdd() {
           console.log('numAdd');
       },
       numReduce() {
           console.log('numReduce');
+      },
+      orderBtnA(btnItem, id, parentId) {
+          this.$emit('order-btn-event', { id: id, parentId: parentId, ...btnItem }, this.OrderComIndex)
       }
   }
   watch = {
@@ -60,7 +92,7 @@ export default class SureGoodsCom extends wepy.component {
       }
   }
   onLoad() {
-      console.log('item', this.item);
+      console.log('101----item', this.OrderComIndex);
   }
 }
 </script>

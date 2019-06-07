@@ -30,6 +30,9 @@
     .goods-outer {
         display: flex;
         align-items: center;
+        padding: rpx(10) 0;
+        position: relative;
+        @include borderBottomOnePx;
     }
     .cat-m {
         width: rpx(124);
@@ -48,6 +51,8 @@
         }
         .goods-des {
             font-size: rpx(20);
+            height: rpx(20);
+            line-height: rpx(20);
             color: $color-word-three;
             margin: rpx(16) 0 rpx(20) 0;
         }
@@ -79,6 +84,10 @@
             color: $color-word-one;
             border-radius: rpx(20);
             margin-right: rpx(17);
+        }
+        .order-btn.order-btn-active {
+            color: $color-word-alarm;
+            border-color: $color-word-alarm;
         }
     }
 }

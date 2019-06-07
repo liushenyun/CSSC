@@ -21,32 +21,32 @@
     <view class="m-partner">
       <view class="m-partner-inner" @tap='joinPartnerA'>
         <image src='../../images/partner_icon.png'></image>
-        <text>我是合伙人</text>
+        <text>{{partnerText}}</text>
       </view>
     </view>
     <view class="m-order-outer">
       <view class="m-order-innder">
-        <view class="m-order-title" @tap="toOrderA('all')">
+        <view class="m-order-title" @tap="toOrderTapA('0')">
           <text>我的订单</text>
           <image src='../../images/unfold.png'></image>
         </view>
         <view class="m-order-item">
-          <view class="order_a">
+          <view class="order_a" @tap="toOrderTapA(1)">
             <image src='../../images/pay.png'></image>
             <view>待付款</view>
           </view>
 
-          <view class="order_b">
+          <view class="order_b" @tap="toOrderTapA(2)">
             <image src='../../images/send.png'></image>
             <view>待发货</view>
           </view>
 
-          <view class="order_c">
+          <view class="order_c" @tap="toOrderTapA(3)">
             <image src='../../images/deliver.png'></image>
             <view>待收货</view>
           </view>
 
-          <view class="order_d">
+          <view class="order_d" @tap="toOrderTapA(4)">
             <image src='../../images/evaluation.png'></image>
             <view>待评价</view>
           </view>
@@ -98,9 +98,9 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiGetGiftListF } from '../../services/index';
+import { apiGetMyHomeDataF } from '../../services/mine';
 
-export default class Index extends wepy.page {
+export default class Mine extends wepy.page {
   config = {
     navigationBarBackgroundColor: '#FEA223',
     navigationBarTextStyle: 'white',
@@ -111,15 +111,21 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    isPartner: false
+    isPartner: false,
+    partnerText: '',
+    pageData: {
+      userLevel: '', // 用户级别(0:普通用户 1：月卡会员 2：年卡会员)
+      userType: '', // 用户类型(0:普通用户 1：普通合伙人 2：高级合伙人 3：代购合伙人)
+      withoutEvaluateOrderCount: '', // 待评价订单数量 
+      withoutPayOrderCount: '', // 待支付订单数量
+      withoutReceiveOrderCount: '', // 待收货订单数量
+      withoutShippingOrderCount: '' // 待发货订单数量
+    }
   };
 
   computed = {};
 
   methods = {
-    toOrderA(type) {
-      wepy.navigateTo({ url: '/pages/packageMine/order/index?type=' + type });
-    },
     toBulkOrderA() {
       wepy.navigateTo({ url: '/pages/packageMine/bulkOrder/index' });
     },
@@ -130,7 +136,9 @@ export default class Index extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
     },
     joinPartnerA() {
-      wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+      if (this.pageData.userType == 0 || this.pageData.userType == -1) {
+         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+      }
     },
     toMoreA() {
       wepy.navigateTo({ url: '/pages/packageMine/more/index' });
@@ -143,14 +151,41 @@ export default class Index extends wepy.page {
     },
     toAfterSales() {
       wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+    },
+    toOrderTapA(index) {
+      wepy.navigateTo({ url: `/pages/packageMine/order/index?current=${index}` });
     }
   };
 
   events = {};
 
+  apiGetMyHomeDataFA(fun) {
+    apiGetMyHomeDataF(fun).then((result) => {
+      this.pageData = result
+      let _text
+       switch (result.userType) {
+         case 1:
+           _text = '普通合伙人'
+           break;
+        case 2:
+           _text = '高级合伙人'
+           break;
+        case 3:
+           _text = '代购合伙人'
+           break;
+         default:
+           _text = '立即成为合伙人'
+           break;
+       }
+       this.partnerText = _text
+       this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+  
   async onLoad() {
-    // wepy.navigateTo({ url: '/pages/packageMine/orderDetail/index' });
-    this.getSystemInfo();
+    this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
   }
   async onShow() {}
@@ -164,11 +199,6 @@ export default class Index extends wepy.page {
     return {
       title: '自定义转发标题'
     };
-  }
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
 </script>

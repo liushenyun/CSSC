@@ -1,6 +1,11 @@
 <template>
   <view class='msg-ctner'>
-      消息列表
+      <view wx:if="{{pageList.length > 0}}" class="msg-has">
+      </view>
+      <view wx:else class="msg-no">
+        <image src='../../../images/msg_cion.png'></image>
+        <view>暂时没有新消息</view>
+      </view>
   </view>
 </template>
 
@@ -15,19 +20,10 @@ export default class Index extends wepy.page {
   components = {
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false
+    pageList: []
   };
   methods = {
-    startA() {
-      console.log('开启')
-    },
-    flashA() {
-      console.log('冲洗')
-    },
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
-    }
+    
   }
 }
 </script>

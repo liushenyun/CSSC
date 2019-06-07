@@ -7,31 +7,24 @@
         <swiper
           indicator-dots="{{indicatorDots}}"
           autoplay="{{autoplay}}"
-          interval="{{interval}}"
           duration="{{duration}}"
           current="{{currentIndex}}"
         >
-          <block wx:for="{{imgUrls}}">
+          <block wx:for="{{topArr}}">
             <swiper-item>
-              <view class="swiper-div-same">
-                <view class="order-com">
-                  <OrderCom orderItem=''></OrderCom>
+              <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+                <view class="swiper-div-same">
+                  <!-- <repeat for="{{pageList}}" wx:key="index" wx:for-index="subIndex" wx:for-item="subItem"> -->
+                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
+                    <view class="order-com">
+                      <OrderCom :item="subItem" :OrderComIndex="subIndex"></OrderCom>
+                    </view>
+                  </repeat>
+                  
+                  <NoTip wx:if="{{pageList.length == 0}}"></NoTip>
                 </view>
-
-                <view class="order-com">
-                  <OrderCom></OrderCom>
-                </view>
-
-                <view class="order-com">
-                  <OrderCom></OrderCom>
-                </view>
-
-                <view class="order-com">
-                  <OrderCom></OrderCom>
-                </view>
-                
-              </view>
-              <NoTip></NoTip>
+              </scroll-view>
+              
             </swiper-item>
           </block>
         </swiper>
@@ -43,6 +36,12 @@
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDateTip/index'
 import OrderCom from '@/components/OrderGoodCom/index'
+import miniPro from '@/utils/wepy-pro.js'
+import {
+  apiOrderFindPageF,
+  apiCancelOrderF, // 取消订单
+  apiConfirmOrderF // 确认收货
+} from '../../../services/mine/index'
 export default class Order extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -54,29 +53,102 @@ export default class Order extends wepy.page {
     OrderCom: OrderCom
   };
   data = {
-   topArr: ['全部', '待付款', '待发货', '待收货'],
-   currentIndex: 1,
-   imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: false,
-    autoplay: false,
-    interval: 5000,
-    duration: 1000
+   topArr: ['全部', '待付款', '待发货', '待收货', '待评价'],
+   currentIndex: 0,
+   indicatorDots: false,
+   autoplay: false,
+   duration: 100,
+   orderStatusObj: [0, 1, 2, 4, 5], // 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
+   pageList: [],
+   cancelOrderId: '',
+   confirmOrderId: '',
+   btnClickCurrenIndex: -1,
+   pageParams: {
+     page: 0,
+     limit: 10,
+     orderStatus: 0,
+     hasMore:false
+   }
   };
+  events = {
+    'order-btn-event': (item, index) => {
+      this.btnClickCurrenIndex = index
+      let _action = item.action
+      if (_action == "1b") { // 付款
+        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
+      } else if (_action == "1a") { // 取消订单
+        this.cancelOrderId = item.id
+        this.apiCancelOrderFA(this.apiCancelOrderFA.bind(this))
+      } else if (_action == '2b' || _action == '5b') { // 查看物流
+        // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
+      } else if (_action == '4c') {
+        this.confirmOrderId = item.id
+        this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
+      }
+      console.log(item)
+    }
+  }
   methods = {
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
     },
     changeCurA(i) {
-      this.currentIndex = i
+      this.currentIndex = i;
+      this.pageParams.orderStatus = this.orderStatusObj[i]
+      this.pageParams.page = 0
+      this.pageParams.hasMore = false
+      this.pageList = []
+      this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
       console.log(i);
+    },
+    loadMore() { // 加载更多
+      console.log(12123);
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
     }
   };
+  apiOrderFindPageFA(fun) {
+    apiOrderFindPageF({
+      page: this.pageParams.page,
+      limit:  this.pageParams.limit,
+      orderStatus:  this.pageParams.orderStatus
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+  apiCancelOrderFA(fun) {
+    apiCancelOrderF(this.cancelOrderId, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiConfirmOrderFA(fun) {
+    apiConfirmOrderF(this.confirmOrderId, fun).then((result) => {
+      miniPro.showToast('确认成功')
+      setTimeout(() => {
+        this.pageList.splice(this.btnClickCurrenIndex, 1)
+        this.$apply()
+      }, 1000)
+    }).catch((err) => {
+      
+    });
+  }
+
+  
   onLoad(option) {
-    console.log(27, option)
+    console.log(27, option.current)
+    this.currentIndex = option.current || 0
+    this.pageParams.orderStatus = this.orderStatusObj[this.currentIndex]
+    this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
   }
 }
 </script>

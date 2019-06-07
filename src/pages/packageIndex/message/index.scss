@@ -2,7 +2,29 @@
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
 page{
+    height: 100%;
 }
-.device-ctner{
-   
+.msg-ctner{
+    height: 100%;
+    .msg-has {
+        height: 100%;
+        padding: rpx(14) rpx(30);
+        background: #EEEEEE;
+    }
+    .msg-no {
+        height: 100%;
+        padding: rpx(14) rpx(30);
+        background: #FFF;
+        text-align: center;
+        image {
+            width: rpx(162);
+            height: rpx(140);
+            margin: rpx(160) 0 rpx(16) 0;
+        }
+        view {
+            font-size: $size-unit;
+            color: $color-word-three;
+            
+        }
+    }
 }

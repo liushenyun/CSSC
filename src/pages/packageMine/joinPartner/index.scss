@@ -27,6 +27,15 @@ page{
                         text-shadow:0px 4px 3px rgba(199,60,10,0.63);
                     }
                 }
+                .partner-same {
+                    height: 80%;
+                    margin-top: 5%;
+                    transition: all 0.5s linear
+                }
+                .partner-same.active {
+                    height: 100%;
+                    margin-top: 0;
+                }
                 .p-a {
                     background: #FFB92B
                 }

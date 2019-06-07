@@ -84,6 +84,10 @@ export default class Index extends wepy.page {
     starFData: {
       goodsId: '',
       current: ''
+    },
+    pageParams: {
+      categoryId: '',
+      keyword: ''
     }
   };
 
@@ -104,7 +108,8 @@ export default class Index extends wepy.page {
   getGoodsListA(fun) {
     apiGoodsListF({
       page: 0,
-      keyword: ''
+      keyword: this.pageParams.keyword,
+      categoryId: this.pageParams.categoryId
     }, fun).then(msg => {
       let { rows } = msg
       this.goodsArray = rows
@@ -155,13 +160,9 @@ export default class Index extends wepy.page {
     }
   };
 
-  async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
+  async onLoad(option) {
+    this.pageParams.categoryId = option.categoryId || 0
     this.getGoodsListA(this.getGoodsListA.bind(this))
-    this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
-    this.getSystemInfo();
     this.$apply();
   }
   onUnload() {}
@@ -173,15 +174,10 @@ export default class Index extends wepy.page {
     }
     return {
       title: '自定义转发标题',
-      path: '/page/index/index'
+      path: '/pages/index/index'
     };
   }
   async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
-  }
 }
 </script>
 <style lang="scss">

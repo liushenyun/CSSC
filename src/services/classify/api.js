@@ -21,6 +21,9 @@ const apiTalePatronize = (taleId) => `${MAIN_DOMAIN}/api/tale/patronize/${taleId
 // 文化衍生故事模块 => 点赞
 const apiTaleUnpatronize = (taleId) => `${MAIN_DOMAIN}/api/tale/unpatronize/${taleId}`
 
+// 商品分类模块 => 分类【tab】
+const apiCategoryByParent = (parentId) => `${MAIN_DOMAIN}/api/manage/goods/category/find_by_parentid/${parentId}`
+
 export {
   apiTaleCommentDelete,
   apiTaleCommentFindPage,
@@ -28,5 +31,6 @@ export {
   apiTaleFindDetails,
   apiTaleFindPage,
   apiTalePatronize,
-  apiTaleUnpatronize
+  apiTaleUnpatronize,
+  apiCategoryByParent
 }

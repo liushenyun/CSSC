@@ -25,6 +25,9 @@ input[class~="icx-input"]{
 textarea[class~="icx-input"]{
     color: $color-input;
     font-size: rpx(24);
+    background:#F6F6F6;
+    width: 100%;
+    padding:rpx(15) rpx(15);
 }
 // hover-class
 .icx-click-hover{

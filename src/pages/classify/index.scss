@@ -55,12 +55,57 @@ page,
         height: 100%;
         display: flex;
         .cs-left{
-            width: rpx(221);
+            width: rpx(220);
             position: relative;
             @include borderRightOnePx;
+            text-align: center;
+            .cs-left-item {
+                display: inline-block;
+                width: rpx(150);
+                padding: rpx(10) rpx(10);
+                margin: rpx(30);
+                font-size: $size-one;
+                line-height: 1.4;
+                border-radius:rpx(18);
+            }
+            .cs-left-item-active {
+                background: $color-word-alarm;
+                color: #FFF
+            }
         }
         .cs-right {
             flex: 1;
+            .right-con-outer {
+                padding: rpx(16)
+            }
+            .right-banner {
+                height: rpx(228);
+                margin-bottom: rpx(28);
+                background: red;
+                border-radius: rpx(10);
+            }
+            .right-list {
+                overflow: hidden;
+                .right-list-item:nth-child(odd) {
+                    margin-right: 4%;
+                }
+                .right-list-item {
+                    text-align:center;
+                    width: 48%;
+                    float: left;
+                    margin-bottom: rpx(34);
+                    image {
+                        width: rpx(90);
+                        height: rpx(100);
+                        display: inline-block;
+                        margin-bottom: rpx(18);
+                    }
+                    view {
+                        line-height: 1.2;
+                        font-size: $size-unit;
+                    }
+                }
+            }
         }
     }
 

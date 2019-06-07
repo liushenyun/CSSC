@@ -1,0 +1,50 @@
+<template>
+  <view class='partnerGao-ctner'>
+      <view class="gao-con-outer">
+        <view class="gao-same gao-title">
+          <image src='../../../images/friend.png'></image>
+          <text>合伙人类型：</text>
+          <text>高级合伙人</text>
+        </view>
+        <view class="gao-same">
+          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+        </view>
+        <view class="gao-same">
+          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+        </view>
+        <view class="gao-same">
+          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+        </view>
+
+        <view class="gao-same textarea">
+          <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="自动变高" />
+          <!-- <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" /> -->
+        </view>
+
+      </view>
+      <view class="gao-upload-outer"></view>
+      <view class="gao-btn-outer"></view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class JoinPartnerGao extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '成为高级合伙人'
+  };
+  components = {
+  };
+  data = {
+  };
+  methods = {
+    
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+
