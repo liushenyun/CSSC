@@ -1,6 +1,6 @@
 <template>
   <view class="verification-code-container">
-    <view class="code-inner" wx:if="{{!showCount}}" bindtap='sendGetCode'>发送验证码</view>
+    <view class="code-inner" wx:if="{{!showCount}}" @tap='sendGetCode'>发送验证码</view>
     <view class="code-inner" wx:if="{{showCount}}">{{value1}}</view>
 </view>
 </template>
@@ -9,7 +9,7 @@
 import wepy from 'wepy';
 import Validate from '../../services/Validate.js';
 
-export default class authorized extends wepy.component {
+export default class VerificationCode extends wepy.component {
   props = {
     time: {
       type: [Number, String],

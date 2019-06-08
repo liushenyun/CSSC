@@ -1,0 +1,44 @@
+<template>
+  <view class='member-ctner'>
+    <view class="member-moneny-wrap">
+      <view class="moneny-item {{isActive == 'm' ? 'active' : ''}}"  @tap="choiceA('m')">
+        <view class="m-a">· 月卡 ·</view>
+        <view class="m-b"><text>￥</text> <text>9.9</text></view>
+        <view class="m-c">连续包月</view>
+      </view>
+      <view class="moneny-item {{isActive == 'y' ? 'active' : ''}}" @tap="choiceA('y')">
+        <view class="m-a">· 年卡 ·</view>
+        <view class="m-b"><text>￥</text> <text>99</text></view>
+        <view class="m-c">连续包年</view>
+      </view>
+    </view>
+    <button class="icx-btn-same-sure">立即加入</button>
+    <view class="des">· 会员权益相关介绍 ·</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class MemberDetail extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '会员明细'
+  };
+  components = {
+  };
+  data = {
+    isActive: 'm'
+  };
+  methods = {
+    choiceA(f) {
+      this.isActive = f
+      console.log(35, f)
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

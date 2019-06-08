@@ -1,0 +1,174 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+    background: #FC9125;
+}
+.bench-ctner {
+    height: 100%;
+    padding: 0 rpx(30);
+    background: #fc9125;
+    .bench-title {
+        height: rpx(186);
+        position: relative;
+        .bench-bg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .bench-name {
+            position: absolute;
+            left: 0;
+            top: rpx(30);
+            font-size: rpx(22);
+            height: rpx(22);
+            color: #000;
+            width: 100%;
+            text-align: center;
+            z-index: 3;
+        }
+        .bench-can-get {
+            position: absolute;
+            left: 0;
+            bottom: rpx(30);
+            width: 100%;;
+            z-index: 2;
+            padding: 0 rpx(40);
+            display: flex;
+            align-items: center;
+            text:nth-of-type(1) {
+                font-size: $size-one;
+            }
+            text:nth-of-type(2) {
+                color: $color-word-alarm;
+                font-size: $size-seven;
+                flex: 1;
+                text-align: center;
+            }
+            text:nth-of-type(3) {
+                padding: rpx(12) rpx(40);
+                background: $color-word-alarm;
+                font-size: $size-one;
+                color: #FFF;
+                border-radius: rpx(22);
+            }
+        }
+    }
+
+    .bench-money {
+        padding: 0 rpx(30);
+        display: flex;
+        justify-content: space-between;
+        .bench-money-same {
+            min-width: rpx(190);
+            text-align: center;
+            background: #FFF;
+            border-radius: rpx(10);
+            view:nth-of-type(1) {
+                position: relative;
+                height: rpx(60);
+                line-height: rpx(60);
+                @include borderBottomOnePx;
+                color: $color-word-alarm;
+                font-size: $size-two;
+            }
+            view:nth-of-type(2) {
+                height: rpx(46);
+                line-height: rpx(40);
+                font-size: $size-one;
+            }
+        }
+    }
+
+    .bench-other {
+        padding: rpx(0) rpx(30);
+        min-height: rpx(100);
+        margin-top: rpx(50);
+        .bench-other-con {
+            width: 100%;
+            height: 100%;
+            border-radius: rpx(10);
+            background: #FFF;
+            display: flex;
+            overflow: hidden;
+            align-items: center;
+            padding: rpx(10) 0;
+            .bench-other-left {
+                @include borderRightOnePx;
+                image {
+                    width: rpx(58);
+                    height: rpx(46);
+                    margin-bottom: rpx(10);
+                }
+            }
+           
+            .bench-other-right:nth-of-type(2) {
+                image {
+                    width: rpx(58);
+                    height: rpx(56);
+                    margin-bottom: rpx(10);
+                }
+            }
+            .bench-other-right,
+            .bench-other-left {
+                flex: 1;
+                position: relative;
+                background: #FFF;
+                text-align: center;
+                padding: rpx(30) 0;
+            }
+            
+        }
+    }
+
+    .bench-poster {
+        margin-top: rpx(20);
+        .poster-title {
+            height: rpx(22);
+            line-height: rpx(40);
+            height: rpx(40);
+            color: #FFF;
+            padding-left: rpx(30);
+            margin-bottom: rpx(20);
+        }
+        .poster-img {
+            height: rpx(360);
+            border-radius: rpx(10);
+            background: #FFF;
+            position: relative;
+            .poster-img-bg {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .poster-tip {
+                position: absolute;
+                left: 0;
+                bottom: rpx(55);
+                width: 100%;
+                height: rpx(48);
+                line-height: rpx(48);
+                color: #FFF;
+                z-index: 2;
+                padding-left: rpx(40);
+            }
+        }
+    }
+
+    .bench-btn {
+        margin-top: rpx(30);
+        button {
+            background: #FFF;
+            width: 70%;
+            margin-left: 15%;
+            color: $color-word-alarm;
+            border-radius: rpx(30);
+        }
+    }
+
+}

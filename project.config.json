@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 30,
+			"current": 31,
 			"list": [
 				{
 					"id": -1,
@@ -246,6 +246,13 @@
 					"id": -1,
 					"name": "成为高级合伙人",
 					"pathName": "pages/packageMine/joinPartnerGao/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "合伙人工作台",
+					"pathName": "pages/packageMine/joinPartnerBench/index",
 					"scene": null
 				}
 			]

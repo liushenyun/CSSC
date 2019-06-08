@@ -137,7 +137,8 @@ export default class Mine extends wepy.page {
     },
     joinPartnerA() {
       if (this.pageData.userType == 0 || this.pageData.userType == -1) {
-         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+        //  wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+         wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
       }
     },
     toMoreA() {

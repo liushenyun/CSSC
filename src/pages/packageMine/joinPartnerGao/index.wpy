@@ -1,34 +1,58 @@
 <template>
   <view class='partnerGao-ctner'>
       <view class="gao-con-outer">
-        <view class="gao-same gao-title">
+        <view class="gao-title">
           <image src='../../../images/friend.png'></image>
           <text>合伙人类型：</text>
           <text>高级合伙人</text>
         </view>
         <view class="gao-same">
-          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+          <text>姓  名：</text><input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
         </view>
         <view class="gao-same">
-          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+         <text>电  话：</text> <input @tap='bindfocusInput' type='number' maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
         </view>
         <view class="gao-same">
-          <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+         <text>验证码：</text>
+         <input @tap='bindfocusInput' type='number' maxlength='6' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入验证码" />
+         <view class="code-outer">
+           <VerificationCode :phone='pageParams.phone'></VerificationCode>
+         </view>
         </view>
 
         <view class="gao-same textarea">
-          <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="自动变高" />
+          <text>地址：</text> <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入详细地址" />
           <!-- <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" /> -->
         </view>
 
       </view>
-      <view class="gao-upload-outer"></view>
-      <view class="gao-btn-outer"></view>
+      <view class="gao-upload-outer">
+        <view class="upload-btn1" @tap="uploadA">
+          <image src='../../../images/upload_img.png'></image>
+          <text>点击上传推广背景头像</text>
+        </view>
+        <view class="upload-btn2">
+            <view @tap='readA'>
+              <image wx:if="{{pageParams.isReadAgreement}}" src='../../../images/btn_selected.png'></image>
+              <image wx:else src='../../../images/btn_uncheck.png'></image>
+            </view>
+           <text>《勾选即代表同意成为代购合伙人协议》</text>
+        </view>
+      </view>
+      <view class="gao-btn-outer">
+        
+      </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import VerificationCode from '../../../components/verificationCode/index'
+import {
+  apiPartnerPhoneCodeF, // 发送验证码
+  apiPartnerSaveF, // 提交合伙人信息
+  apiPartnerPayF // 高级合伙人付款
+} from '../../../services/mine/index'
 export default class JoinPartnerGao extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -36,11 +60,74 @@ export default class JoinPartnerGao extends wepy.page {
     navigationBarTitleText: '成为高级合伙人'
   };
   components = {
+    VerificationCode: VerificationCode
   };
+  events = {
+    clickSendEvent(p) {
+      this.apiPartnerPhoneCodeFA(this.apiPartnerPhoneCodeFA.bind(this))
+      console.log(48, p)
+    }
+  }
   data = {
+    phoneNum: '13828758660',
+    pageParams: {
+      phoneNum: '13828758660',
+      type: '2', // 类型（1：普通合伙人 2：高级合伙人 3：代购合伙人)
+      name: '',
+      address: '',
+      inviteId: '',
+      phone: '',
+      sessionId: '',
+      code: '',
+      isReadAgreement: false
+    }
   };
+
+  apiPartnerPhoneCodeFA(fun) {
+    apiPartnerPhoneCodeF({
+      type: this.pageParams.phoneNum,
+      phone: this.pageParams.type
+    }, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiPartnerSaveFA(fun) {
+    apiPartnerSaveF({
+      name: this.pageParams.name,
+      type: this.pageParams.type,
+      address: this.pageParams.address,
+      inviteId: this.pageParams.inviteId,
+      phone: this.pageParams.phone,
+      sessionId: this.pageParams.sessionId,
+      code: this.pageParams.code
+    }, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+
+
   methods = {
-    
+    readA() {
+      this.pageParams.isReadAgreement = !this.pageParams.isReadAgreement
+    },
+    uploadA() {
+      wepy.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success (res) {
+          // tempFilePath可以作为img标签的src属性显示图片
+          const tempFilePaths = res.tempFilePaths
+          console.log(125, tempFilePaths)
+        }
+      })
+    }
   }
 }
 </script>

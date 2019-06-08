@@ -15,6 +15,20 @@ page{
         border-radius: rpx(10);
         .gao-same {
             margin-bottom: rpx(20);
+            display: flex;
+            align-items: center;
+            text {
+                width: rpx(100);
+                text-align: left;
+            }
+            textarea,
+            input {
+                flex: 1;
+            }
+            .code-outer {
+                width: rpx(160);
+                text-align: right;
+            }
         }
         .gao-title {
             display: flex;
@@ -33,7 +47,7 @@ page{
             textarea {
                 width: 100%;
                 background:#F6F6F6;
-                height: rpx(174);
+                height: rpx(120);
                 box-sizing: border-box;
             }
         }
@@ -46,5 +60,36 @@ page{
         min-height: rpx(60);
         background: #FFF;
         border-radius: rpx(10);
+        overflow: hidden;
+        .upload-btn1 {
+            padding: rpx(14) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: $size-unit;
+            image {
+                width: rpx(60);
+                height: rpx(60);
+                margin-right: rpx(10);
+            }
+        }
+        .upload-btn2 {
+            padding: rpx(10) 0;
+            display: flex;
+            align-items: center;
+            background: $color-word-alarm;
+            justify-content: center;
+            font-size: $size-unit;
+            color: #FFF;
+            view {
+                width: rpx(30);
+                height: rpx(30);
+                margin-right: rpx(10);
+            }
+            image {
+                width: rpx(30);
+                height: rpx(30);
+            }
+        }
     }
 }

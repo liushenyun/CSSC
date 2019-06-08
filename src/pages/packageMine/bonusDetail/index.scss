@@ -1,0 +1,71 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+}
+.member-ctner{
+    .member-moneny-wrap {
+        text-align: center;
+        .moneny-item:nth-of-type(1) {
+            margin-right: rpx(48);
+        }
+        .moneny-item {
+            display: inline-block;
+            width: rpx(156);
+            min-height: rpx(180);
+            border: 1px solid #BFBFBF;
+            border-radius: rpx(10);
+            overflow: hidden;
+            .m-a {
+                font-size: rpx(18);
+                font-weight: 600;
+                letter-spacing: rpx(1);
+                padding: rpx(40) 0 rpx(34) 0;
+            }
+            .m-b {
+                color: $color-word-alarm;
+                height: rpx(36);
+                line-height: rpx(36);
+                text:nth-of-type(1) {
+                    font-size: rpx(26);
+                }
+                text:nth-of-type(2) {
+                    font-size: rpx(32);
+                }
+                margin-bottom: rpx(26);
+            }
+            .m-c {
+                position: relative;
+                @include borderTopOnePx;
+                height: rpx(48);
+                line-height: rpx(48);
+                color: $color-word-three;
+                font-size: rpx(20);
+                letter-spacing: rpx(1);
+            }
+            &.active {
+                border-color: $color-word-alarm;
+                .m-c {
+                    color:rgba(255,94,19,1);
+                    background:rgba(255,127,0,.23)
+                }
+            }
+        }
+    }
+    .icx-btn-same-sure {
+        color: #000;
+        margin: rpx(66) 0 rpx(30) 12%;
+        width: 76%;
+        height: rpx(62);
+        line-height: rpx(62);
+        background:rgba(241,202,150,1);
+        border-radius: rpx(30);
+    }
+    .des {
+        letter-spacing: rpx(1);
+        text-align: center;
+        height: rpx(22);
+        font-size: rpx(22);
+        color:rgba(51,51,51,1)
+    }
+}
