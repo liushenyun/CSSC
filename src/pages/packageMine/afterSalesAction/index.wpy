@@ -1,0 +1,62 @@
+<template>
+  <view class='after-action-ctner'>
+     <view class='after-goods-outer'>
+       <view class="after-tips">
+         <text class="after-tips-word">本次售后服务将由<text>成氏商城</text>为您提供</text>
+       </view>
+     </view>
+
+     <view class="after-action-outer">
+       <view class="after-action-list">
+          <view @tap='toTuiA'><image src='../../../images/refund.png'></image><text>退货</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
+          <view @tap='toHuanA'><image src='../../../images/refund.png'></image><text>换货</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
+          <view @tap='toBuA'><image src='../../../images/refund.png'></image><text>补发商品</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
+       </view>
+
+       <view class="after-btn-outer">
+         <view> <image src='../../../images/service_light.png'></image> <text>联系客户</text> </view>
+         <view> <image src='../../../images/phone.png'></image> <text>拨打电话</text> </view>
+       </view>
+     </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import NoTip from '@/components/OrderNoDateTip/index'
+import AfterSale from '@/components/AfterSaleCom/index'
+export default class AfterSalesAction extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '售后'
+  };
+  components = {
+    NoTip: NoTip,
+    AfterSale: AfterSale
+  };
+  data = {
+  };
+
+  events = {
+  }
+
+  methods = {
+    toTuiA(i) {
+      wepy.navigateTo({ url: '/pages/packageMine/returnGoods/index' });
+    },
+    toHuanA() {
+      wepy.navigateTo({ url: '/pages/packageMine/exchangeGoods/index' });
+    },
+    toBuA() {
+      wepy.navigateTo({ url: '/pages/packageMine/replacementGoods/index' });
+    }
+  };
+  onLoad(option) {
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

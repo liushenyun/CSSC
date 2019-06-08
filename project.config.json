@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 31,
+			"current": 37,
 			"list": [
 				{
 					"id": -1,
@@ -187,8 +187,8 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "售后",
+					"id": 22,
+					"name": "我的售后",
 					"pathName": "pages/packageMine/afterSales/index",
 					"query": "",
 					"scene": null
@@ -253,6 +253,49 @@
 					"id": -1,
 					"name": "合伙人工作台",
 					"pathName": "pages/packageMine/joinPartnerBench/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "奖金明细",
+					"pathName": "pages/packageMine/bonusDetail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员明细",
+					"pathName": "pages/packageMine/memberDetail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后",
+					"pathName": "pages/packageMine/afterSalesAction/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "退货",
+					"pathName": "pages/packageMine/returnGoods/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "换货",
+					"pathName": "pages/packageMine/exchangeGoods/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "补发商品",
+					"pathName": "pages/packageMine/replacementGoods/index",
+					"query": "",
 					"scene": null
 				}
 			]

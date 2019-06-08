@@ -1,19 +1,39 @@
 <template>
-  <view class='member-ctner'>
-    <view class="member-moneny-wrap">
-      <view class="moneny-item {{isActive == 'm' ? 'active' : ''}}"  @tap="choiceA('m')">
-        <view class="m-a">· 月卡 ·</view>
-        <view class="m-b"><text>￥</text> <text>9.9</text></view>
-        <view class="m-c">连续包月</view>
-      </view>
-      <view class="moneny-item {{isActive == 'y' ? 'active' : ''}}" @tap="choiceA('y')">
-        <view class="m-a">· 年卡 ·</view>
-        <view class="m-b"><text>￥</text> <text>99</text></view>
-        <view class="m-c">连续包年</view>
-      </view>
-    </view>
-    <button class="icx-btn-same-sure">立即加入</button>
-    <view class="des">· 会员权益相关介绍 ·</view>
+  <view class='member-detail-ctner'>
+      <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+        <view class="member-item">
+          <view class="member-item-word-one">
+            <text>用户姓名(544)</text>
+            <text>高级合伙人</text>
+          </view>
+          <view class="member-item-word">
+            <text>XXX</text>
+            <text>2019-02-04 20:12</text>
+          </view>
+        </view>
+
+        <view class="member-item">
+          <view class="member-item-word-one">
+            <text>用户姓名(544)</text>
+            <text>高级合伙人</text>
+          </view>
+          <view class="member-item-word">
+            <text>XXX</text>
+            <text>2019-02-04 20:12</text>
+          </view>
+        </view>
+
+        <view class="member-item">
+          <view class="member-item-word-one">
+            <text>用户姓名(544)</text>
+            <text>高级合伙人</text>
+          </view>
+          <view class="member-item-word">
+            <text>XXX</text>
+            <text>2019-02-04 20:12</text>
+          </view>
+        </view>
+      </scroll-view>
   </view>
 </template>
 

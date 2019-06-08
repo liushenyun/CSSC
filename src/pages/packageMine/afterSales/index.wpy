@@ -15,15 +15,15 @@
             <swiper-item>
               <view class="swiper-div-same">
                 <view class="order-com">
-                  <OrderCom></OrderCom>
+                  <AfterSale></AfterSale>
                 </view>
 
                 <view class="order-com">
-                  <OrderCom></OrderCom>
+                  <AfterSale></AfterSale>
                 </view>
 
                 <view class="order-com">
-                  <OrderCom></OrderCom>
+                  <AfterSale></AfterSale>
                 </view>
               </view>
               <NoTip></NoTip>
@@ -37,7 +37,7 @@
 <script>
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDateTip/index'
-import OrderCom from '@/components/OrderGoodCom/index'
+import AfterSale from '@/components/AfterSaleCom/index'
 export default class AfterSales extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -46,7 +46,7 @@ export default class AfterSales extends wepy.page {
   };
   components = {
     NoTip: NoTip,
-    OrderCom: OrderCom
+    AfterSale: AfterSale
   };
   data = {
    topArr: ['售后申请', '处理中', '申请记录'],
@@ -61,6 +61,13 @@ export default class AfterSales extends wepy.page {
     interval: 5000,
     duration: 1000
   };
+
+  events = {
+    'sale-com-event': () => {
+      wepy.navigateTo({ url: '/pages/packageMine/afterSalesAction/index' });
+    }
+  }
+
   methods = {
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });

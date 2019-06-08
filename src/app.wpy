@@ -77,6 +77,9 @@ export default class extends wepy.app {
           'more/index',
           'policy/index',
           'about/index',
+          'returnGoods/index',
+          'exchangeGoods/index',
+          'replacementGoods/index',
           'userAgreement/index',
           'contact/index',
           'addressList/index',
@@ -88,6 +91,7 @@ export default class extends wepy.app {
           'paySuccess/index',
           'payFail/index',
           'afterSales/index',
+          'afterSalesAction/index',
           'sureOrder/index',
         ]
       }
