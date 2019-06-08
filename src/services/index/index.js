@@ -3,7 +3,8 @@ import {
   apiIsAuth,
   apiGoodsList,
   apiGetGoodsDetails,
-  apiGetHomeData
+  apiGetHomeData,
+  apiGoodsLikePage
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -64,9 +65,24 @@ const apiGetHomeDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 猜你喜欢商品
+const apiGoodsLikePageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGoodsLikePage(),
+    method: 'POST',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiIsAuthF,
   apiGoodsListF,
   apiGetGoodsDetailsF,
-  apiGetHomeDataF
+  apiGetHomeDataF,
+  apiGoodsLikePageF
 }

@@ -1,6 +1,35 @@
 <template>
-  <view class='about-ctner'>
-      退货
+  <view class='return-goods-ctner'>
+     <view class='return-goods-outer'>
+       <view class="return-tips">
+         <text class="return-tips-word">本次售后服务将由<text>成氏商城</text>为您提供</text>
+       </view>
+     </view>
+
+     <view class="return-action-outer">
+       <view class="return-action-list">
+          <view class="return-o" @tap='toTuiA'>
+            <image src='../../../images/refund.png'></image>
+              <text>退货</text>
+              <view class="picker-outer">
+                 <picker @change="bindPickerChange" value="{{reasonIndex}}" range="{{reasonArray}}">
+                  <view class="picker">
+                    当前选择：{{reasonArray[reasonIndex]}}
+                  </view>
+                </picker>
+              </view>
+              <image src='../../../images/unfold.png'></image>
+            </view>
+       </view>
+      
+       <view class="return-des-outer">
+         <view>问题描述</view>
+         <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入问题，描述" />
+       </view>
+       <view class="return-btn-outer">
+         <button hover-class='icx-click-hover' class="icx-btn-same-sure">提交</button>
+       </view>
+     </view>
   </view>
 </template>
 
@@ -15,16 +44,14 @@ export default class ReturnGoods extends wepy.page {
   components = {
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false
+    reasonArray: ['卖家少发货品', '七天无理由退货', '商品与描述不符合', '数量问题', '卖家发错货'],
+    reasonIndex: 0
   };
   methods = {
-    startA() {
-      console.log('开启')
-    },
-    flashA() {
-      console.log('冲洗')
-    },
+    bindPickerChange: function(e) {
+      console.log('e.detail.value', e.detail.value);
+      this.reasonIndex = e.detail.value
+    },        
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
     }

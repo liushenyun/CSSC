@@ -1,6 +1,35 @@
 <template>
-  <view class='about-ctner'>
-      补发商品
+  <view class='replacement-goods-ctner'>
+     <view class='replacement-goods-outer'>
+       <view class="replacement-tips">
+         <text class="replacement-tips-word">本次售后服务将由<text>成氏商城</text>为您提供</text>
+       </view>
+     </view>
+
+     <view class="replacement-action-outer">
+       <view class="replacement-action-list">
+          <view class="replacement-o" @tap='toTuiA'>
+            <image src='../../../images/refund.png'></image>
+              <text>申请原因</text>
+              <view class="picker-outer">
+                 <picker @change="bindPickerChange" value="{{reasonIndex}}" range="{{reasonArray}}">
+                  <view class="picker">
+                    当前选择：{{reasonArray[reasonIndex]}}
+                  </view>
+                </picker>
+              </view>
+              <image src='../../../images/unfold.png'></image>
+            </view>
+       </view>
+      
+       <view class="replacement-des-outer">
+         <view>问题描述</view>
+         <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入问题，描述" />
+       </view>
+       <view class="replacement-btn-outer">
+         <button hover-class='icx-click-hover' class="icx-btn-same-sure">提交</button>
+       </view>
+     </view>
   </view>
 </template>
 
@@ -15,15 +44,13 @@ export default class ReplacementGoods extends wepy.page {
   components = {
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false
+    reasonArray: ['卖家少发货品', '其他'],
+    reasonIndex: 0
   };
   methods = {
-    startA() {
-      console.log('开启')
-    },
-    flashA() {
-      console.log('冲洗')
+    bindPickerChange: function(e) {
+      console.log('e.detail.value', e.detail.value);
+      this.reasonIndex = e.detail.value
     },
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });

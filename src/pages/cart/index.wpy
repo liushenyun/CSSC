@@ -15,13 +15,12 @@
       </view>
       
 
-      <view class="cart-like">
+      <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
         <view class="cart-like-title">·猜您喜欢·</view>
         <view class='cat-container'>
-          <view class="cat-like-item">1</view>
-          <view class="cat-like-item"></view>
-          <view class="cat-like-item"></view>
-          <view class="cat-like-item"></view>
+          <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
+            <image src="{{item.goodsIco}}"></image>
+          </view>
         </view>
       </view>
 
@@ -52,6 +51,9 @@ import {
 import {
   apiCreateOrderF
 } from '../../services/mine'
+
+import { apiGoodsLikePageF } from '../../services/index/index'
+
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -80,7 +82,12 @@ export default class Index extends wepy.page {
     isAllCkeck: false,
     totalMoney: 0,
     createData: [],
-    delGoosId: ''
+    delGoosId: '',
+    pageParamsLike: {
+      page: 0,
+      limit: 20
+    },
+    pageLikeList: []
   };
 
   computed = {};
@@ -112,6 +119,9 @@ export default class Index extends wepy.page {
     },
     checkAll() {
       this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
+    },
+    toGoodsDetail(item) {
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${item.id}` })
     }
   };
 
@@ -156,6 +166,20 @@ export default class Index extends wepy.page {
     }).catch(err => {
 
     })
+  }
+
+  apiGoodsLikePageFA(fun) {
+    apiGoodsLikePageF({
+      page: this.pageParamsLike.page,
+      limit: this.pageParamsLike.limit
+    }, fun).then((result) => {
+      let { rows } = result
+      this.pageLikeList = rows
+      this.$apply();
+      console.log(173, result);
+    }).catch((err) => {
+      
+    });
   }
 
   watch = {
@@ -213,6 +237,8 @@ export default class Index extends wepy.page {
 
   async onLoad() {
     this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
+    this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
+    // apiGoodsLikePageFA
     this.$apply();
   }
   onUnload() {}

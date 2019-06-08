@@ -37,6 +37,10 @@ page,
                 background:#FFF;
                 border-radius:rpx(10);
                 float: left;
+                image {
+                    width: 100%;
+                    height: 100%;
+                }
             }
             .cat-like-item:nth-child(odd) {
                 margin-right: 2%;

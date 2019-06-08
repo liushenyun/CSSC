@@ -110,11 +110,11 @@ import {
 import WxParse from '../../../common/wxParse/wxParse.js'
 import AddCom from '@/components/AddCom/index';
 
-export default class GoodsDetail extends wepy.page {
+export default class BulkDetail extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF',
-    navigationBarTitleText: '商品详情'
+    navigationBarTitleText: '成氏商城拼团'
   };
   components = {
     AddCom: AddCom
@@ -185,9 +185,6 @@ export default class GoodsDetail extends wepy.page {
     buyNowA() {
       this.isWhichFlag = 2
       this.showGoodsPop = true
-    },
-    toTuanA() {
-      wepy.navigateTo({ url: `/pages/packageIndex/bulkDetail/index?goodsId=${this.goodsId}` })
     }
   }
 

@@ -28,6 +28,7 @@ textarea[class~="icx-input"]{
     background:#F6F6F6;
     width: 100%;
     padding:rpx(15) rpx(15);
+    box-sizing: border-box;
 }
 // hover-class
 .icx-click-hover{

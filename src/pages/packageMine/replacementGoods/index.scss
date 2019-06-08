@@ -2,15 +2,95 @@
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
 page{
+    height: 100%;
 }
-.about-ctner{
-   padding: rpx(12) rpx(30);
-   .word {
-       text-indent: 2em;
-       line-height: 2;
-       font-size: rpx(26);
-   }
-   .word-b {
-       font-weight: bold;
-   }
+.replacement-goods-ctner {
+    height: 100%;
+    background: #EEE;
+    .replacement-goods-outer {
+        min-height: rpx(100);
+        background: #FFF;
+        padding: rpx(18) rpx(45)
+    }
+    .replacement-tips {
+        text-align: center;
+        .replacement-tips-word {
+            padding: rpx(12) rpx(38);
+            background: #F6F6F6;
+            border-radius: rpx(20);
+            color: #999;
+            font-size: rpx(22);
+            text {
+                color: $color-word-alarm;
+                font-size: rpx(22);
+            }
+        }
+    }
+
+    .replacement-action-outer {
+        padding: rpx(18) rpx(30);
+        .replacement-action-list {
+            padding: rpx(16);
+            background: #FFF;
+            border-radius: rpx(10);
+            .replacement-o {
+                padding: rpx(48) 0;
+                display: flex;
+                align-items: center;
+                position: relative;
+                image:nth-of-type(1) {
+                    width: rpx(28);
+                    height: rpx(24);
+                    margin-right: rpx(10);
+                }
+                image:nth-of-type(2) {
+                    width: rpx(12);
+                    height: rpx(18);
+                }
+                text:nth-of-type(1) {
+                    font-size: $size-one;
+                    font-weight: 800;
+                }
+                .picker-outer {
+                    flex: 1;
+                    font-size: $size-unit;
+                    color: #999;
+                    margin-right: rpx(16);
+                    picker {
+                        width: 100%;
+                    }
+                    .picker{
+                        text-align: right;
+                    }
+                }
+            }
+        }
+        
+        .replacement-des-outer {
+            min-height: rpx(100);
+            background: #FFF;
+            margin-top: rpx(16);
+            border-radius: rpx(10);
+            padding: rpx(36) rpx(30);
+            view {
+                font-weight:bold;
+                line-height: rpx(28);
+                margin-bottom: rpx(20);
+            }
+            textarea {
+                height: rpx(200);
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        .replacement-btn-outer {
+            margin-top: rpx(60);
+            button {
+                width: 70%;
+                margin-left: 15%;
+            }
+        }
+
+    }
+
 }
