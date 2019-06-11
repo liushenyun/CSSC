@@ -1,0 +1,61 @@
+<template>
+  <view class='withdrawal-ctner'>
+    <view class="withdrawal-inner">
+
+      <view class="account">
+        <view>到账</view>
+        <view>
+          <text>微信号：8889999</text>
+          <text>72小时内到账(每笔限额最低1万，最高2万元)</text>
+        </view>
+      </view>
+
+      <view class="money-outer">
+        <view class="money-title">提现金额</view>
+        <view class="money-num">
+          <view>￥</view>
+          <input @tap='bindfocusInput' type='number' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入金额" />
+        </view>
+        <view class="money-action">
+          <view>可提现金额¥100</view>
+          <view hover-class="icx-click-hover">全部提现</view>
+        </view>
+      </view>
+    </view>
+
+    <button hover-class="icx-click-hover" class="icx-btn-same-sure">提现</button>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import miniPro from '@/utils/wepy-pro.js';
+export default class Withdrawal extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '提现'
+  };
+  components = {
+  };
+  data = {
+  };
+  methods = {
+    continueBuyA() {
+      wepy.switchTab({ url: `/pages/index/index` })
+    },
+    checkOrderA() {
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+    }
+  };
+  
+  events = {}
+  onLoad() {
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

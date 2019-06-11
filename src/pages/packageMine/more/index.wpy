@@ -40,4 +40,3 @@ export default class More extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

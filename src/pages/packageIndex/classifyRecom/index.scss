@@ -74,6 +74,7 @@ page{
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
+            min-height: rpx(48);
             overflow: hidden;
         }
         view:nth-of-type(3) {

@@ -46,7 +46,7 @@
           <text>更多</text>
           <image src='../../images/unfold.png'></image>
         </view>
-        <view class="area-inner home-tale">
+        <view class="area-inner home-tale" @tap='toTaleA'>
           <image src='{{homeTale.taleCover}}'></image>
         </view>
       </view>
@@ -82,18 +82,18 @@
           <image src='../../images/unfold.png'></image>
         </view>
         <view class="area-classify-outer">
-            <view class="area-classify-top" data-goodsid="{{homeVipGoodsInfoList[0].goodsId}}" @tap="toGoodsDetailA">
-            <image src='{{homeVipGoodsInfoList[0].goodsIco}}'></image>
+            <view class="area-classify-top" data-category="{{homeGoodsCategoryList[0].categoryId}}" @tap="toCategoryDetailA">
+            <image src='{{homeGoodsCategoryList[0].categoryIco}}'></image>
             </view>
             <view class="area-classify-bottom">
-              <view data-goodsid="{{homeVipGoodsInfoList[1].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-left">
-                <image src='{{homeVipGoodsInfoList[1].goodsIco}}'></image>
+              <view data-category="{{homeGoodsCategoryList[1].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-left">
+                <image src='{{homeGoodsCategoryList[1].categoryIco}}'></image>
               </view>
-              <view data-goodsid="{{homeVipGoodsInfoList[2].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-mid">
-                <image src='{{homeVipGoodsInfoList[2].goodsIco}}'></image>
+              <view data-category="{{homeGoodsCategoryList[2].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-mid">
+                <image src='{{homeGoodsCategoryList[2].categoryIco}}'></image>
               </view>
-              <view data-goodsid="{{homeVipGoodsInfoList[3].goodsId}}" @tap="toGoodsDetailA" class="classify-bottom-right">
-                <image src='{{homeVipGoodsInfoList[3].goodsIco}}'></image>
+              <view data-category="{{homeGoodsCategoryList[3].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-right">
+                <image src='{{homeGoodsCategoryList[3].categoryIco}}'></image>
               </view>
             </view>
         </view>
@@ -165,9 +165,13 @@ export default class Index extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageIndex/search/index' });
       console.log('input输入', e)
     },
-    toGoodsDetail() {
-      let _goodsId = '20190524190903491861'
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+    // toGoodsDetail() {
+    //   let _goodsId = '20190524190903491861'
+    //   wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+    // },
+    toCategoryDetailA(e) {
+      let _categoryId = e.currentTarget.dataset.category
+      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${_categoryId}`});
     },
     toGoodsDetailA(e) {
       let _goodsId = e.currentTarget.dataset.goodsid
@@ -182,6 +186,11 @@ export default class Index extends wepy.page {
     },
     toMembersA() {
       wepy.navigateTo({ url: `/pages/packageIndex/members/index`});
+    },
+    toTaleA() {
+      let _taleId = this.homeTale.taleId
+      if (!_taleId) return
+      wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${_taleId}` });
     }
   }
 

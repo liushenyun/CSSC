@@ -38,7 +38,7 @@
             <view>客服</view>
           </button>
         </view>
-        <view class="gb-cart">
+        <!-- <view class="gb-cart">
           <button @tap='toCartA' class="icx-btn">
             <image src='../../../images/cart_light.png'></image>
             <view>购物车</view>
@@ -49,9 +49,9 @@
         </view>
         <view @tap='toTuanA' hover-class='icx-click-hover' class="gb-tuan">
           团购
-        </view>
+        </view> -->
         <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
-          立即购买
+          参团购买
         </view>
       </view>
 

@@ -84,6 +84,8 @@ export default class Order extends wepy.page {
       } else if (_action == '4c') {
         this.confirmOrderId = item.id
         this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
+      } else if (_action == '4b') {
+        wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index` });
       }
       console.log(item)
     }

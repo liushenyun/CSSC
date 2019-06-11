@@ -4,30 +4,24 @@
     <!-- <wxs src="../../../utils/filter.wxs" module="tools"></wxs> -->
       <view class="clre-top">
         <scroll-view scroll-x="true" style="height: 100%;width: 100%">
-          <view @tap="toggleItemA({{index}})" class="top-item {{index == classIndex?'top-item-active' : ''}}" wx:for="{{classArr}}" wx:key="index">
-            {{item}}
+          <view @tap="toggleItemA({{index}}, {{item}})" class="top-item {{index == classIndex?'top-item-active' : ''}}" wx:for="{{classArr}}" wx:key="index">
+            {{item.categoryName}}
           </view>
         </scroll-view>
       </view>
       <view class="clre-con">
         <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
           <view class="clre-con-top">12</view>
-          <view class="clre-goods-outer" wx:for="{{classArr}}" wx:key="index">
+          <view class="clre-goods-outer" wx:for="{{pageList}}" wx:key="index" @tap="toGoodsDetailA({{item.id}})">
             <view class="clre-l">
-              <image></image>
+              <image src='{{item.goodsIco}}'></image>
             </view>
             <view class="clre-r">
-              <view>面膜修复防晒套装</view>
+              <view>{{item.goodsName}}</view>
               <view>
-                  肤发酵清洁黑面膜3盒囤货装紧致
-                  肤发酵清洁黑面膜3盒囤货装紧致
-                  肤发酵清洁黑面膜3盒囤货装紧致
-                  肤发酵清洁黑面膜3盒囤货装紧致
-                  肤发酵清洁黑面膜3盒囤货装紧致
-                  修护肌肤柔嫩肌肤 软化角质 舒敏补水
               </view>
               <view>
-                <text>5003人推荐</text>
+                <text>{{item.commentNumber}}人推荐</text>
                 <image src='../../../images/recom_icon.png' @tap='recomA'></image>
               </view>
             </view>
@@ -42,14 +36,9 @@
 import wepy from 'wepy';
 import Auth from '../../../common/js/authProcess.js';
 import {
-  apiGoodsListF,
-  apiGetGoodsDetailsF
+  apiGoodFindCategoryIdF,
+  apiCategoryListF
 } from '../../../services/index';
-import {
-  apiCollectDeleteF,
-  apiCollectFindPageF,
-  apiCollectSaveF
-} from '../../../services/mine';
 
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
@@ -68,65 +57,74 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    classArr: ['推荐', '数码', '生活家', '推荐', '推荐', '推荐', '推荐', '推荐', '推荐', '推荐', '推荐1'],
-    classIndex: 0
+    classArr: [],
+    pageList: [],
+    classIndex: 0,
+    pageParams: {
+     page: 0,
+     limit:  20,
+     categoryId:  '',
+     hasMore:false
+   }
   };
 
   computed = {};
 
   methods = {
-    toggleItemA(index) {
+    toggleItemA(index, item) {
+      if (this.classIndex == index) return
+      this.pageParams.page = 0
       this.classIndex = index
+      this.pageParams.categoryId = item.id
+      this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     },
-    toSearchA() {
-      console.log('搜索');
-      //  wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
+    toGoodsDetailA(id) {
+      if (!id) return
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}`});
     },
     recomA() {
-      console.log('recomA')
+    },
+    loadMore() { // 加载更多
+      console.log(12123);
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiGoodFindCategoryIdFA(this.apiGoodFindCategoryIdFA.bind(this))
     }
   }
 
-  getGoodsListA(fun) {
-    apiGoodsListF({
-      page: 0,
-      keyword: ''
-    }, fun).then(msg => {
-      let { rows } = msg
-      this.goodsArray = rows
+  apiCategoryListFA(fun) {
+    apiCategoryListF(fun).then(msg => {
+      this.classArr = msg
+      this.pageParams.categoryId = msg[0].id
       this.$apply()
-      console.log('86', msg)
+      this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     }).catch(err => {
       console.log('88', err)
     });
   }
-  events = {
-    'goods-start-event': (current, collection) => {
-      this.starFData.goodsId = this.goodsArray[current].id
-      this.starFData.current = current
+
+  apiGoodFindCategoryIdFA(fun) {
+    apiGoodFindCategoryIdF({
+      page: this.pageParams.page,
+      limit:  this.pageParams.limit,
+      categoryId:  this.pageParams.categoryId
+    }, fun).then(result => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = last
+      this.pageList = this.pageList.concat(rows)
       this.$apply()
-      console.log(147, current, collection)
-      setTimeout(() => {
-        if (collection) {
-          this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
-        } else {
-          this.apiCollectSaveA(this.apiCollectSaveA.bind(this))
-        }
-      }, 10);
-    },
-    'to-goods-event': (goodsId) => {
-      let _goodsId = goodsId || '20190524190903491861'
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
-    }
-  };
+    }).catch(err => {
+      console.log('88', err)
+    });
+  }
+
+  events = { };
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    // this.getGoodsListA(this.getGoodsListA.bind(this))
-    this.getSystemInfo();
     this.$apply();
+    this.apiCategoryListFA(this.apiCategoryListFA.bind(this))
+    
   }
   onUnload() {}
   onHide() {}
@@ -141,11 +139,6 @@ export default class Index extends wepy.page {
     };
   }
   async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
-  }
 }
 </script>
 <style lang="scss">

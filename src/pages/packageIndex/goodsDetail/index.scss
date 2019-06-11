@@ -41,6 +41,9 @@ page{
        height: rpx(8);
        background: #EDEDED
    }
+   .goods-detail image {
+       width: 100%;
+   }
    .goods-bottom {
        position: fixed;
        @include borderTopOnePx;

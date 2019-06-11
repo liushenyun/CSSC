@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 37,
+			"current": 40,
 			"list": [
 				{
 					"id": -1,
@@ -296,6 +296,26 @@
 					"name": "补发商品",
 					"pathName": "pages/packageMine/replacementGoods/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商城拼团",
+					"pathName": "pages/packageIndex/bulkDetail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "查看物流",
+					"pathName": "pages/packageMine/logisticsInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "提现",
+					"pathName": "pages/packageMine/withdrawal/index",
 					"scene": null
 				}
 			]

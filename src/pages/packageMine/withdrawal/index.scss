@@ -1,0 +1,97 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.withdrawal-ctner {
+    height: 100%;
+    padding: rpx(26) rpx(30);
+    background: #EEE;
+    .withdrawal-inner {
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+    }
+    .account {
+        background: #F9F9F9;
+        padding: rpx(50) rpx(44);
+        display: flex;
+        
+        view:nth-of-type(1) {
+            width: rpx(120);
+        }
+        view:nth-of-type(2) {
+            flex: 1;
+            text{
+                display: block;
+            }
+            text:nth-of-type(1) {
+                color: $color-word-alarm;
+                font-size: $size-one;
+                margin-bottom: rpx(16);
+                line-height: rpx(24);
+            }
+            text:nth-of-type(2) {
+                color: $color-word-three;
+                font-size: rpx(18);
+                line-height: rpx(20);
+            }
+        }
+    }
+
+    .money-outer {
+        padding: rpx(44) rpx(40);
+        background: #FFF;
+        .money-title {
+            font-size: $size-one;
+            margin-bottom: rpx(60);
+        }
+        .money-num {
+            padding-bottom: rpx(30);
+            position: relative;
+            @include borderBottomOnePx;
+            display: flex;
+            // align-items: baseline;
+            // align-items: botttom;
+            height: rpx(114);
+            view {
+                width: rpx(90);
+                font-size: rpx(84);
+                height: 100%;
+            }
+            input {
+                height: rpx(60);
+                flex: 1;
+                margin-top: rpx(20);
+                border-radius: 0;
+                background: #FFF;
+            }
+        }
+    }
+
+    .money-action{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: rpx(14);
+        view:nth-of-type(1) {
+            flex: 1;
+        }
+        view:nth-of-type(2) {
+            padding: rpx(10) rpx(16);
+            border: rpx(1) solid $color-word-alarm;
+            border-radius: rpx(10);
+            color: $color-word-alarm;
+            text-align: center;
+            box-sizing: border-box;
+            font-size: rpx(22);
+            letter-spacing: rpx(2);
+        }
+    }
+
+    .icx-btn-same-sure {
+        width: 80%;
+        margin: rpx(40) 0 0 10%;
+    }
+}

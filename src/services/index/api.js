@@ -7,6 +7,13 @@ console.log(4, MAIN_DOMAIN)
  * api-url: http://confluence.icarbonx.cn/pages/viewpage.action?pageId=11506926
  */
 const apiIsAuth = () => `${MAIN_DOMAIN}/mini-royal-sugar/person-auth/isAuth`
+
+// 分类推荐，查询某个分类的商品
+const apiGoodFindCategoryId = () => `${MAIN_DOMAIN}/api/buy/goods/find_category_id`
+
+// 获取推荐类别列表
+const apiCategoryList = () => `${MAIN_DOMAIN}/api/buy/goods/get_recommend_category_list`
+
 // 分页查询商品信息
 const apiGoodsList = () => `${MAIN_DOMAIN}/api/buy/goods/find_page`
 // 获取商品详情
@@ -23,5 +30,7 @@ export {
   apiGoodsList,
   apiGetGoodsDetails,
   apiGetHomeData,
-  apiGoodsLikePage
+  apiGoodsLikePage,
+  apiGoodFindCategoryId,
+  apiCategoryList
 }

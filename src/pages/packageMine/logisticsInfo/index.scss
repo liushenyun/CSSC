@@ -1,0 +1,73 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.logistics-ctner {
+    height: 100%;
+    padding: rpx(14) rpx(30);
+    background: #EEE;
+}
+.logis-inner {
+    .logis-status-outer {
+        min-height: rpx(60);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+        .logis-goods {
+            padding: rpx(30) 0;
+            text-align: center;
+            image {
+                width: rpx(124);
+                height: rpx(124);
+                margin-bottom: rpx(24);
+                background: red;
+            }
+        }
+        .logis-status {
+            padding: rpx(28) rpx(36);
+            color: #FFF;
+            background:linear-gradient(54deg,rgba(255,127,0,1),rgba(255,78,0,1));
+            view:nth-of-type(1) {
+                font-size: rpx(30);
+                margin-bottom: rpx(12);
+            }
+            view:nth-of-type(2) {
+                font-size: rpx(20)
+            }
+        }
+    }
+
+    .logis-which-outer {
+        min-height: rpx(20);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+        margin: rpx(18) 0; 
+        .which-one {
+            padding: rpx(22) rpx(30);
+            view:nth-of-type(1) {
+                font-size: rpx(30);
+            }
+            view:nth-of-type(2) {
+                color: $color-word-three;
+                font-size: $size-unit;
+                margin-top: rpx(20);
+            }
+        }
+        .which-two {
+            height: rpx(54);
+            line-height: rpx(54);
+            padding-left: rpx(12);
+            background: #F8F8F8;
+        }
+    }
+
+    .logis-info-outer {
+        min-height: rpx(80);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+    }
+}

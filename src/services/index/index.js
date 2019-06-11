@@ -4,7 +4,9 @@ import {
   apiGoodsList,
   apiGetGoodsDetails,
   apiGetHomeData,
-  apiGoodsLikePage
+  apiGoodsLikePage,
+  apiGoodFindCategoryId,
+  apiCategoryList
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -79,10 +81,38 @@ const apiGoodsLikePageF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 分类推荐，查询某个分类的商品
+const apiGoodFindCategoryIdF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGoodFindCategoryId(),
+    method: 'POST',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 获取推荐类别列表
+const apiCategoryListF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiCategoryList(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiIsAuthF,
   apiGoodsListF,
   apiGetGoodsDetailsF,
   apiGetHomeDataF,
-  apiGoodsLikePageF
+  apiGoodsLikePageF,
+  apiGoodFindCategoryIdF,
+  apiCategoryListF
 }

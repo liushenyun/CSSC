@@ -7,7 +7,7 @@
         <view class="bench-can-get">
           <text>可提现(元）</text>
           <text>96.66</text>
-          <text hover-class='icx-click-hover'>提现</text>
+          <text @tap='toWithdrawalA' hover-class='icx-click-hover'>提现</text>
         </view>
         <image class="bench-bg" src='../../../images/rectangular.png'></image>
       </view>
@@ -92,6 +92,9 @@ export default class JoinPartnerBench extends wepy.page {
     },
     toMemberDetail() {
       wepy.navigateTo({ url: '/pages/packageMine/memberDetail/index' })
+    },
+    toWithdrawalA() {
+      wepy.navigateTo({ url: '/pages/packageMine/withdrawal/index' })
     }
   }
 }

@@ -82,7 +82,7 @@ export default class Index extends wepy.page {
     },
     toSearchA(categoryId) {
       console.log(81, categoryId)
-      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}` });
+      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}`});
     }
   };
 

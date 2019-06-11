@@ -73,6 +73,7 @@ export default class extends wepy.app {
           'joinPartner/index',
           'joinPartnerGao/index',
           'joinPartnerBench/index',
+          'logisticsInfo/index',
           'memberDetail/index',
           'bonusDetail/index',
           'more/index',
@@ -94,6 +95,7 @@ export default class extends wepy.app {
           'afterSales/index',
           'afterSalesAction/index',
           'sureOrder/index',
+          'withdrawal/index'
         ]
       }
     ],
