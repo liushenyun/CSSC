@@ -7,21 +7,21 @@
           <text>高级合伙人</text>
         </view>
         <view class="gao-same">
-          <text>姓  名：</text><input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
+          <text>姓  名：</text><input @input='nameBindInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
         </view>
         <view class="gao-same">
-         <text>电  话：</text> <input @tap='bindfocusInput' type='number' maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
+         <text>电  话：</text> <input @input='telBindInput' type='number' maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
         </view>
         <view class="gao-same">
          <text>验证码：</text>
-         <input @tap='bindfocusInput' type='number' maxlength='6' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入验证码" />
+         <input @input='codeBindInput' type='number' maxlength='6' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入验证码" />
          <view class="code-outer">
-           <VerificationCode :phone='pageParams.phone'></VerificationCode>
+           <VerificationCode :phone='pageParams'></VerificationCode>
          </view>
         </view>
 
         <view class="gao-same textarea">
-          <text>地址：</text> <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入详细地址" />
+          <text>地址：</text> <textarea @input='addressBindInput' class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入详细地址" />
           <!-- <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" /> -->
         </view>
 
@@ -53,6 +53,7 @@ import {
   apiPartnerSaveF, // 提交合伙人信息
   apiPartnerPayF // 高级合伙人付款
 } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
 export default class JoinPartnerGao extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -69,7 +70,6 @@ export default class JoinPartnerGao extends wepy.page {
     }
   }
   data = {
-    phoneNum: '13828758660',
     pageParams: {
       phoneNum: '13828758660',
       type: '2', // 类型（1：普通合伙人 2：高级合伙人 3：代购合伙人)
@@ -85,12 +85,12 @@ export default class JoinPartnerGao extends wepy.page {
 
   apiPartnerPhoneCodeFA(fun) {
     apiPartnerPhoneCodeF({
-      type: this.pageParams.phoneNum,
-      phone: this.pageParams.type
+      type: this.pageParams.type,
+      phone: this.pageParams.phoneNum
     }, fun).then((result) => {
-      
+      miniPro.showToast("短信已发送")
     }).catch((err) => {
-      
+      miniPro.showToast("短信发送失败")
     });
   }
 
@@ -113,6 +113,21 @@ export default class JoinPartnerGao extends wepy.page {
 
 
   methods = {
+    nameBindInput(e) {
+      console.log(e.detail.value)
+      this.pageParams.name = e.detail.value
+    },
+    codeBindInput(e) {
+      console.log(e.detail.value)
+      this.pageParams.code = e.detail.value
+    },
+    addressBindInput(e) {
+      console.log(e.detail.value)
+      this.pageParams.address = e.detail.value
+    },
+    telBindInput(e) {
+      this.pageParams.phoneNum = e.detail.value
+    },
     readA() {
       this.pageParams.isReadAgreement = !this.pageParams.isReadAgreement
     },

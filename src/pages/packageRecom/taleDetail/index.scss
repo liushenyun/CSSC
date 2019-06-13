@@ -2,7 +2,38 @@
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
 page{
+    height: 100%;
 }
 .tale-detail-ctner{
-  
+  height: 100%;
+  padding-bottom: rpx(98);
+  position: relative;
+  .tale-wxParse {
+      height: 100%;
+      overflow: auto;
+  }
+  .tale-btn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: rpx(98);
+      background: #FFF;
+      @include borderTopOnePx;
+      padding: 0 rpx(65);
+      display: flex;
+      align-items: center;
+      .tale-btn-left {
+          text-align: center;
+          margin-right: rpx(40);
+          image {
+              width: rpx(30);
+              height: rpx(30);
+              margin-bottom: rpx(12);
+          }
+      }
+      button {
+          flex: 1;
+      }
+  }
 }

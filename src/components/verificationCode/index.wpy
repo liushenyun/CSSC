@@ -16,7 +16,7 @@ export default class VerificationCode extends wepy.component {
       default: 60
     },
     phone: {
-      type: [Number, String],
+      type: Object,
       default: ''
     }
   };
@@ -33,15 +33,14 @@ export default class VerificationCode extends wepy.component {
   methods = {
     sendGetCode() {
       let countdown = this.time;
-      let _tel = this.phone;
-      console.log('_tel', this.$parent, _tel);
+      let _tel = this.phone.phoneNum;
       let vArr = [['phoneNumber', _tel, '电话号码', 'empty|phone']];
       if (!Validate(vArr)) {
         return;
       }
       let that = this;
       count();
-      that.$emit('clickSendEvent', {});
+      // that.$emit('clickSendEvent', {});
       function count() {
         if (countdown == 0) {
           that.showCount = false;

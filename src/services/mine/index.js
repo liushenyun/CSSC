@@ -24,7 +24,10 @@ import {
   apiPartnerPay,
   apiPartnerSave,
   apiSales,
-  apiGetMyHomeData
+  apiGetMyHomeData,
+  apiPartnerFindMoneyPage,
+  apiPartnerFindSpectators,
+  apiPartnerData
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -375,6 +378,45 @@ const apiGetMyHomeDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 合伙人工作台 => 分页查询奖金记录
+const apiPartnerFindMoneyPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerFindMoneyPage(),
+    method: 'POST',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 合伙人工作台 => 分页查询我推广的客户
+const apiPartnerFindSpectatorsF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerFindSpectators(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 合伙人工作台 => 获取合伙人工作台数据
+const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerData(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiCancelOrderF,
   apiConfirmOrderF,
@@ -399,5 +441,8 @@ export {
   apiPartnerPayF,
   apiPartnerSaveF,
   apiSalesF,
-  apiGetMyHomeDataF
+  apiGetMyHomeDataF,
+  apiPartnerFindMoneyPageF,
+  apiPartnerFindSpectatorsF,
+  apiPartnerDataF
 }

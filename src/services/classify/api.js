@@ -24,6 +24,9 @@ const apiTaleUnpatronize = (taleId) => `${MAIN_DOMAIN}/api/tale/unpatronize/${ta
 // 商品分类模块 => 分类【tab】
 const apiCategoryByParent = (parentId) => `${MAIN_DOMAIN}/api/manage/goods/category/find_by_parentid/${parentId}`
 
+// 商品分类模块 => 获取分类页面的banner信息
+const apiCategoryGetBanner = () => `${MAIN_DOMAIN}/api/manage/goods/category/get_banner`
+
 export {
   apiTaleCommentDelete,
   apiTaleCommentFindPage,
@@ -32,5 +35,6 @@ export {
   apiTaleFindPage,
   apiTalePatronize,
   apiTaleUnpatronize,
-  apiCategoryByParent
+  apiCategoryByParent,
+  apiCategoryGetBanner
 }

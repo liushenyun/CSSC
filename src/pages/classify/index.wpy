@@ -25,7 +25,9 @@
           <view class="cs-right">
             <scroll-view scroll-y="true" style="height: 100%;width: 100%">
               <view class='right-con-outer'>
-                <view class='right-banner'>这是banner</view>
+                <view class='right-banner'>
+                  <image src='{{bannerObj.bannerPath}}'></image>
+                </view>
                 <view class='right-list'>
                   <view class='right-list-item'  wx:for='{{subPageList}}' wx:key='index' @tap="toSearchA({{item.id}})">
                     <image src='{{item.categoryIco}}'></image>
@@ -44,8 +46,10 @@
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
 import {
-  apiCategoryByParentF
+  apiCategoryByParentF,
+  apiCategoryGetBannerF
 } from '../../services/classify/index'
+
 import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
@@ -65,7 +69,8 @@ export default class Index extends wepy.page {
     pageList: [],
     currenIndex: 0,
     subPageList: [],
-    subParentId: ''
+    subParentId: '',
+    bannerObj: {}
   };
 
   computed = {};
@@ -110,8 +115,18 @@ export default class Index extends wepy.page {
     })
   }
 
+  apiCategoryGetBannerFA(fun) {
+    apiCategoryGetBannerF(fun).then((result) => {
+      this.bannerObj = result
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
   async onLoad() {
     console.log(123)
+    this.apiCategoryGetBannerFA(this.apiCategoryGetBannerFA.bind(this))
     this.apiCategoryByParentFA(this.apiCategoryByParentFA.bind(this))
     this.getSystemInfo();
     this.$apply();

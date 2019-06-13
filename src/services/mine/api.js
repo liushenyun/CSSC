@@ -72,6 +72,15 @@ const apiSales = () => `${MAIN_DOMAIN}/sales/apply`
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeData = () => `${MAIN_DOMAIN}/api/wx/user/get_my_home_data`
 
+// 合伙人工作台 => 分页查询奖金记录
+const apiPartnerFindMoneyPage = () => `${MAIN_DOMAIN}/api/partner/find_award_money_record_page`
+
+// 合伙人工作台 => 分页查询我推广的客户
+const apiPartnerFindSpectators = () => `${MAIN_DOMAIN}/api/partner/find_spectators`
+
+// 合伙人工作台 => 获取合伙人工作台数据
+const apiPartnerData = () => `${MAIN_DOMAIN}/api/partner/get_partner_data`
+
 export {
   apiCancelOrder,
   apiConfirmOrder,
@@ -96,5 +105,8 @@ export {
   apiPartnerPay,
   apiPartnerSave,
   apiSales,
-  apiGetMyHomeData
+  apiGetMyHomeData,
+  apiPartnerFindMoneyPage,
+  apiPartnerFindSpectators,
+  apiPartnerData
 }

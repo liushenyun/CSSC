@@ -2,27 +2,27 @@
   <view class='bench-ctner'>
       <view class="bench-title">
         <view class="bench-name">
-          高级签约合伙人
+          {{userType}}:{{partnerData.userId}}
         </view>
         <view class="bench-can-get">
           <text>可提现(元）</text>
-          <text>96.66</text>
+          <text>{{ partnerData.balance }}</text>
           <text @tap='toWithdrawalA' hover-class='icx-click-hover'>提现</text>
         </view>
         <image class="bench-bg" src='../../../images/rectangular.png'></image>
       </view>
       <view class="bench-money">
           <view class="bench-money-same">
-            <view>￥5000</view>
+            <view>￥{{ partnerData.totalAmount }}</view>
             <view>总奖金</view>
           </view>
           <view class="bench-money-same">
-            <view>￥5000</view>
-            <view>总奖金</view>
+            <view>￥{{partnerData.withdrawAmount}}</view>
+            <view>已提现</view>
           </view>
           <view class="bench-money-same">
-            <view>￥5000</view>
-            <view>总奖金</view>
+            <view>￥{{partnerData.computusAmount}}</view>
+            <view>结算中</view>
           </view>
       </view>
       <view class="bench-other">
@@ -56,7 +56,10 @@ import VerificationCode from '../../../components/verificationCode/index'
 import {
   apiPartnerPhoneCodeF, // 发送验证码
   apiPartnerSaveF, // 提交合伙人信息
-  apiPartnerPayF // 高级合伙人付款
+  apiPartnerPayF, // 高级合伙人付款
+  apiPartnerFindMoneyPageF, // 合伙人工作台 => 分页查询奖金记录
+  apiPartnerFindSpectatorsF, // 合伙人工作台 => 分页查询我推广的客户
+  apiPartnerDataF // 合伙人工作台 => 获取合伙人工作台数据
 } from '../../../services/mine/index'
 export default class JoinPartnerBench extends wepy.page {
   config = {
@@ -70,14 +73,38 @@ export default class JoinPartnerBench extends wepy.page {
   events = {
   }
   data = {
+    partnerData: {},
+    userType: ''
   };
 
-  apiPartnerPhoneCodeFA(fun) {
-    apiPartnerPhoneCodeF({
-      type: this.pageParams.phoneNum,
-      phone: this.pageParams.type
-    }, fun).then((result) => {
-      
+  apiPartnerDataFA(fun) {
+    apiPartnerDataF(fun).then((result) => {
+      /**
+       *  balance (number, optional): 可提现金额 ,
+          computusAmount (number, optional): 计算中金额 ,
+          totalAmount (number, optional): 总奖金 ,
+          userId (integer, optional): 用户ID，同时也是邀请码 ,
+          userType (integer, optional): 用户类型（1：普通合伙人 2：高级合伙人 3：代购合伙人） ,
+          withdrawAmount (number, optional): 已提现金额
+       */
+      this.partnerData = result
+      let userType = ''
+      switch (result.userType) {
+        case 1:
+          userType = '普通合伙人'
+          break;
+        case 1:
+          userType = '高级合伙人'
+          break;
+        case 1:
+          userType = '代购合伙人'
+          break;
+        default:
+          userType = '---'
+          break;
+      }
+      this.userType = userType
+      this.$apply()
     }).catch((err) => {
       
     });
@@ -96,6 +123,10 @@ export default class JoinPartnerBench extends wepy.page {
     toWithdrawalA() {
       wepy.navigateTo({ url: '/pages/packageMine/withdrawal/index' })
     }
+  }
+
+  onLoad() {
+    this.apiPartnerDataFA(this.apiPartnerDataFA.bind(this))
   }
 }
 </script>

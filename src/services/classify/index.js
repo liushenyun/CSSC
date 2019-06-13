@@ -7,7 +7,8 @@ import {
   apiTaleFindPage,
   apiTalePatronize,
   apiTaleUnpatronize,
-  apiCategoryByParent
+  apiCategoryByParent,
+  apiCategoryGetBanner
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -87,9 +88,9 @@ const apiTaleFindPageF = (data, fun) => packagePromise((resolve, reject) => {
 })
 
 // 文化衍生故事模块 => 点赞
-const apiTalePatronizeF = (id, fun) => packagePromise((resolve, reject) => {
+const apiTalePatronizeF = (data, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiTalePatronize(id),
+    url: apiTalePatronize(data.id),
     method: 'GET'
   }, fun)
     .then(msg => {
@@ -99,9 +100,9 @@ const apiTalePatronizeF = (id, fun) => packagePromise((resolve, reject) => {
 })
 
 // 文化衍生故事模块 => 点赞
-const apiTaleUnpatronizeF = (id, fun) => packagePromise((resolve, reject) => {
+const apiTaleUnpatronizeF = (data, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiTaleUnpatronize(id),
+    url: apiTaleUnpatronize(data.id),
     method: 'DELETE'
   }, fun)
     .then(msg => {
@@ -122,6 +123,17 @@ const apiCategoryByParentF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 商品分类模块 => 获取分类页面的banner信息
+const apiCategoryGetBannerF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiCategoryGetBanner(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
 
 export {
   apiTaleCommentDeleteF,
@@ -131,5 +143,6 @@ export {
   apiTaleFindPageF,
   apiTalePatronizeF,
   apiTaleUnpatronizeF,
-  apiCategoryByParentF
+  apiCategoryByParentF,
+  apiCategoryGetBannerF
 }

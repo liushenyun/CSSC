@@ -1,21 +1,30 @@
 <template>
   <view class='tale-detail-ctner'>
-      TaleDetail
+      <import src="../../../common/wxParse/wxParse.wxml"/>
+      <view class="tale-wxParse">
+        <template is="wxParse" data="{{wxParseData:taleDetail.nodes}}"/>
+      </view>
+      <view class="tale-btn">
+        <view class="tale-btn-left" @tap="toCollectA">
+          <image wx:if="{{isCollect}}" src='../../../images/start_on.png'></image>
+          <image wx:else src='../../../images/favor.png'></image>
+          <view>收藏</view>
+        </view>
+        <button @tap="toGoodsDetailA" class="icx-btn-same-sure" hover-class='icx-click-hover'>点击购买</button>
+      </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
 import {
-  apiTaleCommentDeleteF,
-  apiTaleCommentFindPageF,
-  apiTaleCommentSaveF,
   apiTaleFindDetailsF,
-  apiTaleFindPageF,
-  apiTalePatronizeF,
-  apiTaleUnpatronizeF
+  apiTaleUnpatronizeF,
+  apiTalePatronizeF
 } from '../../../services/classify';
 
+import miniPro from '../../../utils/wepy-pro'
+import WxParse from '../../../common/wxParse/wxParse.js'
 export default class TaleDetail extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -26,24 +35,62 @@ export default class TaleDetail extends wepy.page {
   };
   data = {
     taleId: '',
-    taleObj: {}
+    taleObj: {},
+    isCollect: false
   };
   methods = {
-
+    toGoodsDetailA() {
+      let _goodsId = this.taleObj.goodsId
+      if (_goodsId) {
+        wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+      }
+    },
+    toCollectA() {
+      this.apiTaleUnpatronizeFA(this.apiTaleUnpatronizeFA.bind(this))
+    }
   }
 
   apiTaleFindDetailsFA(fun) {
+    let _self = this
     apiTaleFindDetailsF(this.taleId, fun).then((result) => {
       this.taleObj = result
+      WxParse.wxParse('taleDetail', 'html', result.taleContent, _self, 5);
       this.$apply()
     }).catch((err) => {
       
     });
   }
 
+  apiTaleUnpatronizeFA(fun) {
+    apiTalePatronizeF({
+      id: this.taleObj.id
+    }, fun).then(msg => {
+      miniPro.showToast('点赞成功')
+      setTimeout(() => {
+          this.isCollect = true
+          this.$apply()
+      }, 1000);
+    }).catch(err => {
+      miniPro.showToast('点赞失败')
+    })
+  }
+
+  apiTaleUnpatronizeFA(fun) { // 取消点赞
+    apiTaleUnpatronizeF({
+      id: this.taleObj.id
+    }, fun).then(msg => {
+      miniPro.showToast('取消点赞成功')
+      setTimeout(() => {
+          this.isCollect = true
+          this.$apply()
+      }, 1000);
+    }).catch(err => {
+      miniPro.showToast('取消点赞失败')
+    })
+  }
 
   onLoad(option) {
-    this.taleId = option.taleId
+    this.taleId = option.taleId || '20190529214340640811'
     this.$apply()
     this.apiTaleFindDetailsFA(this.apiTaleFindDetailsFA.bind(this))
     console.log(37, option)

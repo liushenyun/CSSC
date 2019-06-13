@@ -9,7 +9,7 @@
      <view class="after-action-outer">
        <view class="after-action-list">
           <view @tap='toTuiA'><image src='../../../images/refund.png'></image><text>退货</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
-          <view @tap='toHuanA'><image src='../../../images/refund.png'></image><text>换货</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
+          <!-- <view @tap='toHuanA'><image src='../../../images/refund.png'></image><text>换货</text><text>退货</text><image src='../../../images/unfold.png'></image></view> -->
           <view @tap='toBuA'><image src='../../../images/refund.png'></image><text>补发商品</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
        </view>
 
@@ -17,6 +17,7 @@
          <view> <image src='../../../images/service_light.png'></image> <text>联系客户</text> </view>
          <view> <image src='../../../images/phone.png'></image> <text>拨打电话</text> </view>
        </view>
+       
      </view>
   </view>
 </template>

@@ -81,8 +81,12 @@ page,
             .right-banner {
                 height: rpx(228);
                 margin-bottom: rpx(28);
-                background: red;
                 border-radius: rpx(10);
+                overflow: hidden;
+                image {
+                    width: 100%;
+                    height: 100%;
+                }
             }
             .right-list {
                 overflow: hidden;
