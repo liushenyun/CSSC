@@ -1,24 +1,29 @@
 <template>
   <view class='member-ctner'>
     <view class="member-moneny-wrap">
-      <view class="moneny-item {{isActive == 'm' ? 'active' : ''}}"  @tap="choiceA('m')">
+      <view class="moneny-item {{isActive == '1' ? 'active' : ''}}"  @tap="choiceA('1')">
         <view class="m-a">· 月卡 ·</view>
-        <view class="m-b"><text>￥</text> <text>9.9</text></view>
+        <view class="m-b"><text>￥</text> <text>{{pageObj.vipMonthFee}}</text></view>
         <view class="m-c">连续包月</view>
       </view>
-      <view class="moneny-item {{isActive == 'y' ? 'active' : ''}}" @tap="choiceA('y')">
+      <view class="moneny-item {{isActive == '2' ? 'active' : ''}}" @tap="choiceA('2')">
         <view class="m-a">· 年卡 ·</view>
-        <view class="m-b"><text>￥</text> <text>99</text></view>
+        <view class="m-b"><text>￥</text> <text>{{pageObj.vipAnnualFee}}</text></view>
         <view class="m-c">连续包年</view>
       </view>
     </view>
-    <button class="icx-btn-same-sure">立即加入</button>
+    <button @tap='joinA' class="icx-btn-same-sure">立即加入</button>
     <view class="des">· 会员权益相关介绍 ·</view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import {
+  apiVipFinanceConfigF,
+  apiVipPayF
+} from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
 export default class JoinMembers extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -28,13 +33,48 @@ export default class JoinMembers extends wepy.page {
   components = {
   };
   data = {
-    isActive: 'm'
+    isActive: '1',
+    pageObj: {}
   };
   methods = {
     choiceA(f) {
+      if (this.isActive == f) return;
       this.isActive = f
-      console.log(35, f)
+    },
+    joinA() {
+      this.apiVipPayFA(this.apiVipPayFA.bind(this))
+      console.log(this.isActive);
     }
+  }
+
+  apiVipFinanceConfigFA(fun) {
+    apiVipFinanceConfigF(fun).then((result) => {
+      this.pageObj = result
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
+  apiVipPayFA(fun) {
+    apiVipPayF({
+      vipType: this.isActive
+    }, fun).then((result) => {
+      miniPro.requestPayment(result).then((result) => {
+        miniPro.showToast('支付成功')
+        setTimeout(() => {
+          wepy.switchTab({ url: `/pages/mine/index` })
+        }, 1500)
+      }).catch((err) => {
+        miniPro.showToast('支付失败')
+      });
+    }).catch((err) => {
+      
+    });
+  }
+
+  onLoad() {
+    this.apiVipFinanceConfigFA(this.apiVipFinanceConfigFA.bind(this))
   }
 }
 </script>

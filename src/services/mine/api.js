@@ -81,6 +81,12 @@ const apiPartnerFindSpectators = () => `${MAIN_DOMAIN}/api/partner/find_spectato
 // 合伙人工作台 => 获取合伙人工作台数据
 const apiPartnerData = () => `${MAIN_DOMAIN}/api/partner/get_partner_data`
 
+// 会员模块 => 会员费、合伙人申请费用配置
+const apiVipFinanceConfig = () => `${MAIN_DOMAIN}/api/vip/get_finance_config`
+
+// 会员模块 => 开通会员
+const apiVipPay = () => `${MAIN_DOMAIN}/api/vip/pay`
+
 export {
   apiCancelOrder,
   apiConfirmOrder,
@@ -108,5 +114,7 @@ export {
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
-  apiPartnerData
+  apiPartnerData,
+  apiVipFinanceConfig,
+  apiVipPay
 }

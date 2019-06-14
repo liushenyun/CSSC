@@ -4,13 +4,16 @@
         <view class="gao-title">
           <image src='../../../images/friend.png'></image>
           <text>合伙人类型：</text>
-          <text>高级合伙人</text>
+          <text>{{pageParams.typeTitle}}</text>
         </view>
         <view class="gao-same">
           <text>姓  名：</text><input @input='nameBindInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" />
         </view>
         <view class="gao-same">
          <text>电  话：</text> <input @input='telBindInput' type='number' maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
+        </view>
+        <view class="gao-same">
+         <text>推荐人ID：</text> <input @input='inviteIdBindInput' maxlength='20' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
         </view>
         <view class="gao-same">
          <text>验证码：</text>
@@ -40,7 +43,7 @@
         </view>
       </view>
       <view class="gao-btn-outer">
-        
+        <button @tap='toSaveA' hover-class='icx-click-hover' class="icx-btn-same-sure">提交</button>
       </view>
   </view>
 </template>
@@ -58,7 +61,7 @@ export default class JoinPartnerGao extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF',
-    navigationBarTitleText: '成为高级合伙人'
+    navigationBarTitleText: '成为合伙人'
   };
   components = {
     VerificationCode: VerificationCode
@@ -72,14 +75,19 @@ export default class JoinPartnerGao extends wepy.page {
   data = {
     pageParams: {
       phoneNum: '13828758660',
-      type: '2', // 类型（1：普通合伙人 2：高级合伙人 3：代购合伙人)
+      type: '', // 类型（1：普通合伙人 2：高级合伙人 3：代购合伙人)
       name: '',
       address: '',
       inviteId: '',
-      phone: '',
       sessionId: '',
       code: '',
-      isReadAgreement: false
+      isReadAgreement: false,
+      typeTitle: ''
+    },
+    typeName: {
+      '1': '普通合伙人',
+      '2': '高级合伙人',
+      '3': '代购合伙人'
     }
   };
 
@@ -88,6 +96,9 @@ export default class JoinPartnerGao extends wepy.page {
       type: this.pageParams.type,
       phone: this.pageParams.phoneNum
     }, fun).then((result) => {
+      // e8ac4f3089044b9c89768e5de2a9959e
+      this.pageParams.sessionId = result
+      this.$apply()
       miniPro.showToast("短信已发送")
     }).catch((err) => {
       miniPro.showToast("短信发送失败")
@@ -100,16 +111,33 @@ export default class JoinPartnerGao extends wepy.page {
       type: this.pageParams.type,
       address: this.pageParams.address,
       inviteId: this.pageParams.inviteId,
-      phone: this.pageParams.phone,
-      sessionId: this.pageParams.sessionId,
+      phone: this.pageParams.phoneNum,
+      sessionId: this.pageParams.sessionId || 'e8ac4f3089044b9c89768e5de2a9959e',
       code: this.pageParams.code
     }, fun).then((result) => {
-      
+      this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
     }).catch((err) => {
       
     });
   }
 
+  apiPartnerPayFA(fun) {
+    apiPartnerPayF(fun).then(msg => {
+      miniPro.requestPayment(msg).then((result) => {
+        miniPro.showToast('支付成功')
+        setTimeout(() => {
+          wepy.redirectTo({ url: `/pages/packageMine/posters/index` })
+        }, 1500)
+      }).catch((err) => {
+        miniPro.showToast('调用失败')
+        setTimeout(() => {
+          wepy.navigateTo({ url: `/pages/packageMine/payFail/index` })
+        }, 1500)
+      });
+    }).catch(err => {
+
+    })
+  }
 
 
   methods = {
@@ -128,6 +156,9 @@ export default class JoinPartnerGao extends wepy.page {
     telBindInput(e) {
       this.pageParams.phoneNum = e.detail.value
     },
+    inviteIdBindInput(e) {
+      this.pageParams.inviteId = e.detail.value
+    },
     readA() {
       this.pageParams.isReadAgreement = !this.pageParams.isReadAgreement
     },
@@ -142,7 +173,16 @@ export default class JoinPartnerGao extends wepy.page {
           console.log(125, tempFilePaths)
         }
       })
+    },
+    toSaveA() {
+      this.apiPartnerSaveFA(this.apiPartnerSaveFA.bind(this))
+      console.log(this.pageParams);
     }
+  }
+
+  onLoad(option) {
+    this.pageParams.type = option.type
+    this.pageParams.typeTitle = this.typeName[option.type]
   }
 }
 </script>

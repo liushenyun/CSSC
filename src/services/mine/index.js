@@ -27,7 +27,9 @@ import {
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
-  apiPartnerData
+  apiPartnerData,
+  apiVipFinanceConfig,
+  apiVipPay
 } from './api'
 import packagePromise from '../packagePromise'
 import { request } from '../request'
@@ -328,11 +330,10 @@ const apiPartnerPhoneCodeF = (data, fun) => packagePromise((resolve, reject) => 
 })
 
 // 合伙人申请模块 => 申请高级合伙人付款
-const apiPartnerPayF = (data, fun) => packagePromise((resolve, reject) => {
+const apiPartnerPayF = (fun) => packagePromise((resolve, reject) => {
   request({
     url: apiPartnerPay(),
-    method: 'GET',
-    data
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -342,6 +343,18 @@ const apiPartnerPayF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 合伙人申请模块 => 提交合伙人信息
 const apiPartnerSaveF = (data, fun) => packagePromise((resolve, reject) => {
+  // 1：普通合伙人 2：高级合伙人 3：代购合伙人
+  let _params = data
+  let vArr = [
+    ['name', _params.name, '姓名', 'empty'],
+    ['phone', _params.phone, '电话', 'empty|phone'],
+    ['code', _params.code, '验证码', 'empty|verifyCode']
+  ]
+  if (data.type == 3) {
+    vArr.push(['address', _params.address, '地址', 'empty'])
+  }
+  let _Validated = Validate(vArr)
+  if (!_Validated) { return }
   request({
     url: apiPartnerSave(),
     method: 'POST',
@@ -417,6 +430,31 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 会员模块 => 会员费、合伙人申请费用配置
+const apiVipFinanceConfigF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiVipFinanceConfig(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 会员模块 => 开通会员
+const apiVipPayF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiVipPay(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiCancelOrderF,
   apiConfirmOrderF,
@@ -444,5 +482,7 @@ export {
   apiGetMyHomeDataF,
   apiPartnerFindMoneyPageF,
   apiPartnerFindSpectatorsF,
-  apiPartnerDataF
+  apiPartnerDataF,
+  apiVipFinanceConfigF,
+  apiVipPayF
 }

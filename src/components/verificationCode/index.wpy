@@ -40,7 +40,7 @@ export default class VerificationCode extends wepy.component {
       }
       let that = this;
       count();
-      // that.$emit('clickSendEvent', {});
+      that.$emit('clickSendEvent', {});
       function count() {
         if (countdown == 0) {
           that.showCount = false;

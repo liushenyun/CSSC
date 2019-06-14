@@ -1,0 +1,27 @@
+<template>
+  <view class='more-ctner'>
+     分享页面
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Posters extends wepy.page {
+  config = {
+    navigationBarTitleText: '分享页面'
+  };
+  components = {
+  };
+  data = {
+   
+  };
+  methods = {
+    toContactA() { 
+      wepy.navigateTo({ url: '/pages/packageMine/contact/index' });
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

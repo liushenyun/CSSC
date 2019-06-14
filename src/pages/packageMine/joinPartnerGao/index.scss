@@ -18,7 +18,7 @@ page{
             display: flex;
             align-items: center;
             text {
-                width: rpx(100);
+                width: rpx(126);
                 text-align: left;
             }
             textarea,
@@ -92,4 +92,9 @@ page{
             }
         }
     }
+
+    .gao-btn-outer {
+        margin-top: rpx(30);
+    }
+
 }
