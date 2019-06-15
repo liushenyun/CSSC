@@ -1,60 +1,83 @@
 <template>
   <view class='member-detail-ctner'>
       <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-        <view class="member-item">
+        <view class="member-item" wx:for="{{pageList}}" wx:key="index">
           <view class="member-item-word-one">
-            <text>用户姓名(544)</text>
-            <text>高级合伙人</text>
+            <text>{{item.nickName}}</text>
+            <text>{{item.typeText}}</text>
           </view>
           <view class="member-item-word">
-            <text>XXX</text>
-            <text>2019-02-04 20:12</text>
+            <text></text>
+            <text>{{item.createTime}}</text>
           </view>
         </view>
 
-        <view class="member-item">
-          <view class="member-item-word-one">
-            <text>用户姓名(544)</text>
-            <text>高级合伙人</text>
-          </view>
-          <view class="member-item-word">
-            <text>XXX</text>
-            <text>2019-02-04 20:12</text>
-          </view>
-        </view>
-
-        <view class="member-item">
-          <view class="member-item-word-one">
-            <text>用户姓名(544)</text>
-            <text>高级合伙人</text>
-          </view>
-          <view class="member-item-word">
-            <text>XXX</text>
-            <text>2019-02-04 20:12</text>
-          </view>
-        </view>
+        <view class="list-no-data" wx:if="{{pageList.length == 0}}">暂无数据</view>
       </scroll-view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import {apiPartnerFindSpectatorsF} from '../../../services/mine/index'
 export default class MemberDetail extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
     // navigationBarTextStyle: '#FFF',
-    navigationBarTitleText: '会员明细'
+    navigationBarTitleText: '用户明细'
   };
   components = {
   };
   data = {
-    isActive: 'm'
+    pageParams: {
+      page: 0,
+      limit: 40,
+      hasMore:false
+    },
+    pageList: []
   };
   methods = {
-    choiceA(f) {
-      this.isActive = f
-      console.log(35, f)
+    loadMore() { // 加载更多
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiPartnerFindSpectatorsFA(this.apiPartnerFindSpectatorsFA.bind(this))
     }
+  }
+
+  apiPartnerFindSpectatorsFA(fun) {
+    apiPartnerFindSpectatorsF({
+      page: this.pageParams.page,
+      limit: this.pageParams.limit
+    }, fun).then((result) => {
+      console.log(53, result);
+      
+      let { rows, last, pageNumber } = result
+      rows.forEach(val => {
+        let { userLevel, userType } = val
+        let _userLevel = ['普通用户', '月卡用户', '年卡用户'][Number(userLevel)]
+        let _userType = ['普通用户', '普通合伙人', '高级合伙人', '代购合伙人'][Number(userType)]
+        console.log(_userLevel, _userLevel);
+        if (_userLevel == '普通用户' && _userType == '普通用户') {
+          val.typeText = '普通用户'
+        } else if (_userLevel == '普通用户' && _userType != '普通用户') {
+          val.typeText = _userType
+        } else if (_userLevel != '普通用户' && _userType == '普通用户') {
+          val.typeText = _userLevel
+        } else {
+           val.typeText = `${_userLevel}|${_userType}`
+        }
+      });
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+
+  onLoad() {
+    this.apiPartnerFindSpectatorsFA(this.apiPartnerFindSpectatorsFA.bind(this))
   }
 }
 </script>

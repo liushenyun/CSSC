@@ -66,12 +66,12 @@ export default class SureGoodsCom extends wepy.component {
             {word: '查看物流', action: '2b'}
         ],
         '4': [
-            {word: '延长收货', action: '4a'},
+            // {word: '延长收货', action: '4a'},
             {word: '查看物流', action: '4b'},
             {word: '确认收货', action: '4c', color: 'sure'}
         ],
         '5': [
-            {word: '最近评论', action: '5c'}
+            {word: '评论', action: '5c'}
         ]
     }
   }

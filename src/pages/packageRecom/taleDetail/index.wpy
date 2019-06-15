@@ -46,7 +46,12 @@ export default class TaleDetail extends wepy.page {
       }
     },
     toCollectA() {
-      this.apiTaleUnpatronizeFA(this.apiTaleUnpatronizeFA.bind(this))
+      if (this.isCollect) {
+        this.apiTaleUnpatronizeFA(this.apiTaleUnpatronizeFA.bind(this))
+      } else {
+        this.apiTalePatronizeFA(this.apiTalePatronizeFA.bind(this))
+      }
+      
     }
   }
 
@@ -54,6 +59,7 @@ export default class TaleDetail extends wepy.page {
     let _self = this
     apiTaleFindDetailsF(this.taleId, fun).then((result) => {
       this.taleObj = result
+      this.isCollect = result.patronize 
       WxParse.wxParse('taleDetail', 'html', result.taleContent, _self, 5);
       this.$apply()
     }).catch((err) => {
@@ -61,7 +67,7 @@ export default class TaleDetail extends wepy.page {
     });
   }
 
-  apiTaleUnpatronizeFA(fun) {
+  apiTalePatronizeFA(fun) {
     apiTalePatronizeF({
       id: this.taleObj.id
     }, fun).then(msg => {
@@ -81,7 +87,7 @@ export default class TaleDetail extends wepy.page {
     }, fun).then(msg => {
       miniPro.showToast('取消点赞成功')
       setTimeout(() => {
-          this.isCollect = true
+          this.isCollect = false
           this.$apply()
       }, 1000);
     }).catch(err => {

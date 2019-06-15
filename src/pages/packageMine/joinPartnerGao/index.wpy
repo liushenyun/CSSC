@@ -12,8 +12,8 @@
         <view class="gao-same">
          <text>电  话：</text> <input @input='telBindInput' type='number' maxlength='11' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
         </view>
-        <view class="gao-same">
-         <text>推荐人ID：</text> <input @input='inviteIdBindInput' maxlength='20' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入电话号码" />
+        <view class="gao-same" wx:if="{{pageParams.type == 2}}">
+         <text>推荐人ID：</text> <input @input='inviteIdBindInput' maxlength='20' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入推荐人ID" />
         </view>
         <view class="gao-same">
          <text>验证码：</text>
@@ -23,17 +23,17 @@
          </view>
         </view>
 
-        <view class="gao-same textarea">
+        <view class="gao-same textarea" wx:if="{{pageParams.type == 3}}">
           <text>地址：</text> <textarea @input='addressBindInput' class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入详细地址" />
           <!-- <input @tap='bindfocusInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入姓名" /> -->
         </view>
 
       </view>
       <view class="gao-upload-outer">
-        <view class="upload-btn1" @tap="uploadA">
+        <!-- <view class="upload-btn1" @tap="uploadA">
           <image src='../../../images/upload_img.png'></image>
           <text>点击上传推广背景头像</text>
-        </view>
+        </view> -->
         <view class="upload-btn2">
             <view @tap='readA'>
               <image wx:if="{{pageParams.isReadAgreement}}" src='../../../images/btn_selected.png'></image>
@@ -115,7 +115,21 @@ export default class JoinPartnerGao extends wepy.page {
       sessionId: this.pageParams.sessionId || 'e8ac4f3089044b9c89768e5de2a9959e',
       code: this.pageParams.code
     }, fun).then((result) => {
-      this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
+      console.log(118, result)
+      miniPro.showAlert({
+        title: '提示',
+        content: '您的信息已经提交成功，我们会尽快审核',
+        confirmText: '确认',
+        success: function(flag) {
+          wepy.switchTab({ url: `/pages/mine/index` })
+        }
+      })
+      // miniPro.showAlert('提示', '您的信息已经提交成功，我们会尽快审核', '确定', function (flag) {
+      //   wepy.switchTab({ url: `/pages/mine/index` })
+      // })
+      // if (this.pageParams.type == 2) {
+      //   this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
+      // }
     }).catch((err) => {
       
     });

@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 40,
+			"current": 33,
 			"list": [
 				{
 					"id": -1,
@@ -264,8 +264,8 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "会员明细",
+					"id": 33,
+					"name": "用户明细",
 					"pathName": "pages/packageMine/memberDetail/index",
 					"query": "",
 					"scene": null
@@ -316,6 +316,14 @@
 					"id": -1,
 					"name": "提现",
 					"pathName": "pages/packageMine/withdrawal/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员特权",
+					"pathName": "pages/packageMine/memberDocument/index",
+					"query": "",
 					"scene": null
 				}
 			]

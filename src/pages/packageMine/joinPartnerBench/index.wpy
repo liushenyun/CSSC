@@ -2,7 +2,7 @@
   <view class='bench-ctner'>
       <view class="bench-title">
         <view class="bench-name">
-          {{userType}}:{{partnerData.userId}}
+          {{userType}}
         </view>
         <view class="bench-can-get">
           <text>可提现(元）</text>
@@ -33,7 +33,7 @@
           </view>
           <view class="bench-other-right" @tap="toMemberDetail">
               <image src='../../../images/members_icon.png'></image>
-              <view>会员明细</view>
+              <view>用户明细</view>
           </view>
         </view>
       </view>
@@ -45,7 +45,7 @@
         </view>
       </view>
       <view class="bench-btn">
-        <button class="icx-btn-same-sure">分享朋友圈</button>
+        <button @tap='toPosterA' class="icx-btn-same-sure">生成海报</button>
       </view>
   </view>
 </template>
@@ -93,10 +93,10 @@ export default class JoinPartnerBench extends wepy.page {
         case 1:
           userType = '普通合伙人'
           break;
-        case 1:
+        case 2:
           userType = '高级合伙人'
           break;
-        case 1:
+        case 3:
           userType = '代购合伙人'
           break;
         default:
@@ -122,6 +122,9 @@ export default class JoinPartnerBench extends wepy.page {
     },
     toWithdrawalA() {
       wepy.navigateTo({ url: '/pages/packageMine/withdrawal/index' })
+    },
+    toPosterA() {
+      wepy.navigateTo({ url: '/pages/packageMine/posters/index' })
     }
   }
 

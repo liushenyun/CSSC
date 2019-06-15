@@ -7,10 +7,10 @@
           <view class="input-search">
             <image src='../../../images/nav_button_search_default.png' />
           </view>
-          <input bindfocus="bindfocusInput" maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
-          <view class="input-close" @tap='toCloseWordA'>
+          <input @input='bindInput' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+          <!-- <view class="input-close" @tap='toCloseWordA'>
             <image src='../../../images/nav_button_search_default.png' />
-          </view>
+          </view> -->
           <view class="input-msg" @tap="toSearchA">搜索</view>
         </view>
 
@@ -22,17 +22,10 @@
       </view>
 
      <view class="ix-goods-wrap">
-       <scroll-view
-          scroll-y
-          style="height: 100%;"
-          >
-            <repeat for="{{goodsArray}}" key="index" index="index" item="item">
+       <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+            <repeat for="{{pageList}}" key="index" index="index" item="item">
                 <SearchItem :current="index" :item="item"></SearchItem>
             </repeat>
-
-            <!-- <block wx:for="{{goodsArray}}" wx:for-index="idx" wx:for-item="idxItem" wx:key="idx">
-              <view>{{index}}</view>
-            </block> -->
         </scroll-view>
       </view>
     
@@ -71,24 +64,18 @@ export default class Index extends wepy.page {
   mixins = [];
 
   data = {
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 5000,
-    duration: 1000,
-    goodsArray: [],
+    pageList: [],
     starFData: {
       goodsId: '',
       current: ''
     },
     pageParams: {
-      categoryId: '',
-      keyword: ''
-    }
+     page: 0,
+     limit: 7,
+     categoryId: '',
+     keyword: '',
+     hasMore:false
+   }
   };
 
   computed = {};
@@ -96,25 +83,37 @@ export default class Index extends wepy.page {
   methods = {
     toSearchA() {
       console.log('搜索');
+      this.pageParams.page = 0
+      this.pageList = []
+      this.getGoodsListA(this.getGoodsListA.bind(this))
       //  wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     toCloseWordA() {
     },
-    bindfocusInput(e) {
+    bindInput(e) {
+      this.pageParams.keyword = e.detail.value
       console.log('input输入', e)
+    },
+    loadMore() { // 加载更多
+      console.log(12123);
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.getGoodsListA(this.getGoodsListA.bind(this))
     }
   }
 
   getGoodsListA(fun) {
     apiGoodsListF({
-      page: 0,
+      page: this.pageParams.page,
+      limit: this.pageParams.limit,
       keyword: this.pageParams.keyword,
       categoryId: this.pageParams.categoryId
-    }, fun).then(msg => {
-      let { rows } = msg
-      this.goodsArray = rows
+    }, fun).then(result => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
       this.$apply()
-      console.log('86', msg)
     }).catch(err => {
       console.log('88', err)
     });
@@ -124,7 +123,7 @@ export default class Index extends wepy.page {
     apiCollectSaveF({
       goodsId: this.starFData.goodsId
     }, fun).then(msg => {
-      this.goodsArray[this.starFData.current].collection = true
+      this.pageList[this.starFData.current].collection = true
       this.$apply()
     }).catch(err => {
       miniPro.showToast('收藏失败')
@@ -133,7 +132,7 @@ export default class Index extends wepy.page {
   
   apiCollectDeleteA(fun) {
     apiCollectDeleteF(this.starFData.goodsId, fun).then(msg => {
-      this.goodsArray[this.starFData.current].collection = false
+      this.pageList[this.starFData.current].collection = false
       this.$apply()
     }).catch(err => {
       miniPro.showToast('删除收藏失败')
@@ -142,7 +141,7 @@ export default class Index extends wepy.page {
 
   events = {
     'goods-start-event': (current, collection) => {
-      this.starFData.goodsId = this.goodsArray[current].id
+      this.starFData.goodsId = this.pageList[current].id
       this.starFData.current = current
       this.$apply()
       console.log(147, current, collection)

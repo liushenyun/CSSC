@@ -79,6 +79,7 @@ export default class extends wepy.app {
           'more/index',
           'policy/index',
           'about/index',
+          'memberDocument/index',
           'returnGoods/index',
           'exchangeGoods/index',
           'replacementGoods/index',

@@ -350,15 +350,26 @@ const apiPartnerSaveF = (data, fun) => packagePromise((resolve, reject) => {
     ['phone', _params.phone, '电话', 'empty|phone'],
     ['code', _params.code, '验证码', 'empty|verifyCode']
   ]
-  if (data.type == 3) {
+  if (data.type == 3) { // 代购合伙人
     vArr.push(['address', _params.address, '地址', 'empty'])
+    delete _params.inviteId
   }
+
+  if (data.type == 2) { // 高级合伙人
+    vArr.push(['inviteId', _params.inviteId, '邀请人ID', 'empty'])
+    delete _params.address
+  }
+  if (data.type == 1) { // 普通合伙人
+    delete _params.address
+    delete _params.inviteId
+  }
+
   let _Validated = Validate(vArr)
   if (!_Validated) { return }
   request({
     url: apiPartnerSave(),
     method: 'POST',
-    data
+    data: _params
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -410,6 +421,7 @@ const apiPartnerFindSpectatorsF = (data, fun) => packagePromise((resolve, reject
   request({
     url: apiPartnerFindSpectators(),
     method: 'POST',
+    noOutData: true,
     data
   }, fun)
     .then(msg => {
@@ -434,7 +446,7 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
 const apiVipFinanceConfigF = (fun) => packagePromise((resolve, reject) => {
   request({
     url: apiVipFinanceConfig(),
-    method: 'GET'
+    method: 'POST'
   }, fun)
     .then(msg => {
       resolve(msg)

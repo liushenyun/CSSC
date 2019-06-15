@@ -14,8 +14,8 @@
       <view class="hy-inner">
         <image src='../../images/discount_bg1.png'></image>
         <text>家亲会员</text>
-        <view wx:if="{{isPartner}}" class="hy-btn">查看会员特权</view>
-        <view wx:else class="hy-btn" @tap='joinMembersA'>加入会员</view>
+        <view wx:if="{{pageData.userLevel == 0}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
+        <view wx:else @tap='lookMembersWordA' class="hy-btn">查看会员特权</view>
       </view>
     </view>
     <view class="m-partner">
@@ -135,10 +135,15 @@ export default class Mine extends wepy.page {
     joinMembersA() {
       wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
     },
+    lookMembersWordA() {
+      console.log('查兰特权');
+      wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
+    },
     joinPartnerA() {
       if (this.pageData.userType == 0 || this.pageData.userType == -1) {
-        //  wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
-         wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
+         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+      } else {
+        wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
       }
     },
     toMoreA() {
@@ -164,20 +169,11 @@ export default class Mine extends wepy.page {
     apiGetMyHomeDataF(fun).then((result) => {
       this.pageData = result
       let _text
-       switch (result.userType) {
-         case 1:
-           _text = '普通合伙人'
-           break;
-        case 2:
-           _text = '高级合伙人'
-           break;
-        case 3:
-           _text = '代购合伙人'
-           break;
-         default:
-           _text = '立即成为合伙人'
-           break;
-       }
+        if (result.userType == 0) {
+          _text = '立即成为合伙人'
+        } else {
+          _text = '查看合伙人工作台'
+        }
        this.partnerText = _text
        this.$apply()
     }).catch((err) => {

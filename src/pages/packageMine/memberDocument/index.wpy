@@ -1,0 +1,51 @@
+<template>
+  <view class='about-ctner'>
+      <view class="word">
+        会员特权
+        <canvas style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import drawQrcode from 'weapp-qrcode'
+export default class MemberDocument extends wepy.page {
+  config = {
+    // navigationBarBackgroundColor: '#09103b',
+    // navigationBarTextStyle: '#FFF',
+    navigationBarTitleText: '会员特权'
+  };
+  components = {
+  };
+  data = {
+    isRepair: false, // 检修
+    isBad: false
+  };
+  methods = {
+    startA() {
+      console.log('开启')
+    },
+    flashA() {
+      console.log('冲洗')
+    },
+    toFilterA() {
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    }
+  }
+
+  onLoad() {
+    drawQrcode({
+      width: 200,
+      height: 200,
+      canvasId: 'myQrcode',
+      text: '{a: 12}'
+    })
+  }
+
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+
