@@ -30,7 +30,6 @@ export default class Footprint extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
     },
     'buy-event': (index) => {
-      console.log(40, index);
     }
   }
 

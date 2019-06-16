@@ -15,18 +15,12 @@
 // }
 // export default LoadingPage
 
-
-// const LoadingPage = (options) => {
-//   console.log('options', options)
-// }
-
 class LoadingPage {
   constructor() {
 
   }
 
   onShow() {
-    console.log('onShow')
   }
 }
 export default LoadingPage

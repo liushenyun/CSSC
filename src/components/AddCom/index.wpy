@@ -37,7 +37,6 @@ export default class AddCom extends wepy.component {
   onLoad() {
       this.number = this.num
       this.$apply()
-      console.log('item', this.num);
   }
 }
 </script>

@@ -86,7 +86,6 @@ export default class Index extends wepy.page {
       this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
     },
     toSearchA(categoryId) {
-      console.log(81, categoryId)
       wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}`});
     }
   };
@@ -94,14 +93,12 @@ export default class Index extends wepy.page {
   events = {};
 
   apiCategoryByParentFA(fun) {
-    console.log(124)
     apiCategoryByParentF(this.parentId,fun).then(reslut => {
       this.pageList = reslut
       this.subParentId = reslut[0].id
       this.$apply()
       this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
     }).catch(err => {
-      console.log(55, err)
     })
   }
 
@@ -109,9 +106,7 @@ export default class Index extends wepy.page {
     apiCategoryByParentF(this.subParentId,fun).then(reslut => {
       this.subPageList = reslut
       this.$apply()
-      console.log(54)
     }).catch(err => {
-      console.log(55, err)
     })
   }
 
@@ -125,7 +120,6 @@ export default class Index extends wepy.page {
   }
 
   async onLoad() {
-    console.log(123)
     this.apiCategoryGetBannerFA(this.apiCategoryGetBannerFA.bind(this))
     this.apiCategoryByParentFA(this.apiCategoryByParentFA.bind(this))
     this.getSystemInfo();
@@ -133,16 +127,6 @@ export default class Index extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
-    };
-  }
   async onShow() {}
   getSystemInfo() {
     let res = wepy.getSystemInfoSync();

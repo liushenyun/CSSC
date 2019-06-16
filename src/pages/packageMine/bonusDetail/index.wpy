@@ -27,7 +27,6 @@ export default class BonusDetail extends wepy.page {
   methods = {
     choiceA(f) {
       this.isActive = f
-      console.log(35, f)
     }
   }
 }

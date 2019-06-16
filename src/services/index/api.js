@@ -1,13 +1,5 @@
 import { MAIN_DOMAIN } from '../../common/js/config';
 
-console.log(4, MAIN_DOMAIN)
-/**
- * @description 获取可领取积分列表
- * server-developer: 庄钊文
- * api-url: http://confluence.icarbonx.cn/pages/viewpage.action?pageId=11506926
- */
-const apiIsAuth = () => `${MAIN_DOMAIN}/mini-royal-sugar/person-auth/isAuth`
-
 // 分类推荐，查询某个分类的商品
 const apiGoodFindCategoryId = () => `${MAIN_DOMAIN}/api/buy/goods/find_category_id`
 
@@ -26,7 +18,6 @@ const apiGoodsLikePage = () => `${MAIN_DOMAIN}/api/buy/goods/like_page`
 const apiGetHomeData = () => `${MAIN_DOMAIN}/api/home/get_home_data`
 
 export {
-  apiIsAuth,
   apiGoodsList,
   apiGetGoodsDetails,
   apiGetHomeData,

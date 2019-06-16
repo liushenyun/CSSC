@@ -55,14 +55,12 @@ export default class AddressList extends wepy.page {
       let _addressId = item.id
       let pages = getCurrentPages();
       let prevPage = pages[pages.length - 2]; // 上一级页面
-      console.log(_address, _addressId)
       // prevPage.setData({
       //   addressStr: _address,
       //   addressId: _addressId
       // })
       prevPage.data.addressId = _addressId
       this.$wxpage = prevPage;
-      console.log(item)
       this.$apply()
       setTimeout(() => {
         wepy.navigateBack();
@@ -82,7 +80,6 @@ export default class AddressList extends wepy.page {
         addressStr: 'dskjl',
         addressId: ''
       })
-      console.log(prevPage)
       // this.$wxpage = prevPage;
       this.$apply();
     }

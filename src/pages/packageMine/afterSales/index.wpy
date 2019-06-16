@@ -74,11 +74,9 @@ export default class AfterSales extends wepy.page {
     },
     changeCurA(i) {
       this.currentIndex = i
-      console.log(i);
     }
   };
   onLoad(option) {
-    console.log(27, option)
   }
 }
 </script>

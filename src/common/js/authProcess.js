@@ -6,7 +6,6 @@
  * @Last Modified time: 2018-07-16 11:27:28
  */
 
-
 import wepy from 'wepy';
 import { wechatLogin, refreshToken } from '../../services/login/index'
 import { EVENT_QUEUE_NAME } from '../../common/js/config';
@@ -54,7 +53,6 @@ export default class Auth {
           } else {
             wx.getUserInfo({
               success: function (res) {
-                console.log(58, res)
                 _globalData.userInfo = res
                 if (fetchLofin) {
                   _that._webchatLogin(resCode.code, res, resolve, reject)
@@ -79,7 +77,6 @@ export default class Auth {
    * @param {Boolean} isHttp 是否http请求转发
    */
   checkWebchatAuth(flag = true, func = null, isHttp = false) {
-    console.log(83, flag, func, isHttp)
     let _that = this
     if (isHttp) {
       _that._addEvent(func)
@@ -107,7 +104,6 @@ export default class Auth {
    * @param {Object} res
    */
   _setToken(res) {
-    console.log(115, res)
     let { token: access_token } = res
     miniPro.setAccessToken(access_token)
     // miniPro.setRefreshToken(refresh_token)
@@ -145,5 +141,4 @@ export default class Auth {
       reject(false)
     })
   }
-
 }

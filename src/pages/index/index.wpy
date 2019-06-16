@@ -30,7 +30,7 @@
         indicator-color="{{indicatorColor}}"
         indicator-active-color="{{indicatorActiveColor}}"
       >
-        <block wx:for="{{homeBannerVoList}}">
+        <block wx:for="{{homeBannerVoList}}" wx:key='index'>
           <swiper-item>
             <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
           </swiper-item>
@@ -111,7 +111,6 @@
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
 import {
-  apiIsAuthF,
   apiGoodsListF,
   apiGetGoodsDetailsF,
   apiGetHomeDataF,
@@ -125,7 +124,6 @@ import {
 } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
-console.log(INDICATOR_COLOR, INDICATOR_ACTIVE_COLOR);
 
 export default class Index extends wepy.page {
   config = {
@@ -163,7 +161,6 @@ export default class Index extends wepy.page {
     },
     bindfocusInput(e) {
       wepy.navigateTo({ url: '/pages/packageIndex/search/index' });
-      console.log('input输入', e)
     },
     // toGoodsDetail() {
     //   let _goodsId = '20190524190903491861'
@@ -176,7 +173,6 @@ export default class Index extends wepy.page {
     toGoodsDetailA(e) {
       let _goodsId = e.currentTarget.dataset.goodsid
       wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
-      console.log(169, e)
     },
     toClassifyRecom() {
       wepy.navigateTo({ url: `/pages/packageIndex/classifyRecom/index`});
@@ -199,9 +195,7 @@ export default class Index extends wepy.page {
       page: 0,
       keyword: ''
     }, fun).then(msg => {
-      console.log('86', msg)
     }).catch(err => {
-      console.log('88', err)
     });
   }
 
@@ -213,9 +207,7 @@ export default class Index extends wepy.page {
       this.homeTale = homeTale
       this.homeVipGoodsInfoList = homeVipGoodsInfoList
       this.$apply()
-      console.log('86', msg)
     }).catch(err => {
-      console.log('88', err)
     });
   }
 

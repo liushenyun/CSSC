@@ -49,7 +49,6 @@ export default class JoinPartner extends wepy.page {
       this.current = e.detail.current
     },
     joinA() {
-      console.log(this.current);
       let _type = this.partnerArr[this.current].type
       wepy.navigateTo({ url: `/pages/packageMine/joinPartnerGao/index?type=${_type}` });
     }

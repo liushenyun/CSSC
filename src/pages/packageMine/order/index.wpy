@@ -87,7 +87,6 @@ export default class Order extends wepy.page {
       } else if (_action == '4b') {
         wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index` });
       }
-      console.log(item)
     }
   }
   methods = {
@@ -101,10 +100,8 @@ export default class Order extends wepy.page {
       this.pageParams.hasMore = false
       this.pageList = []
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
-      console.log(i);
     },
     loadMore() { // 加载更多
-      console.log(12123);
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
@@ -147,7 +144,6 @@ export default class Order extends wepy.page {
 
   
   onLoad(option) {
-    console.log(27, option.current)
     this.currentIndex = option.current || 0
     this.pageParams.orderStatus = this.orderStatusObj[this.currentIndex]
     this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))

@@ -70,15 +70,11 @@ export default class OrderGoodCom extends wepy.component {
   }
   methods = {
       numAdd() {
-          console.log('numAdd');
       },
       numReduce() {
-          console.log('numReduce');
       },
       bindReplaceInput(e) {
-          console.log(e.detail.value, this.current);
           this.$emit('order-detail-input', e.detail.value, this.current)
-        //   this.item.remarks = e.detail.value
           this.$apply()
       }
   }
@@ -88,7 +84,6 @@ export default class OrderGoodCom extends wepy.component {
       }
   }
   onLoad() {
-      console.log('item', this.item);
   }
 }
 </script>

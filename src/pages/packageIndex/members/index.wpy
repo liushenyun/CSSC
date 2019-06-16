@@ -56,13 +56,11 @@ export default class Members extends wepy.page {
 
   methods = {
     toSearchA() {
-      console.log('搜索');
       //  wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     toCloseWordA() {
     },
     bindfocusInput(e) {
-      console.log('input输入', e)
     }
   }
 
@@ -74,9 +72,7 @@ export default class Members extends wepy.page {
       let { rows } = msg
       this.goodsArray = rows
       this.$apply()
-      console.log('86', msg)
     }).catch(err => {
-      console.log('88', err)
     });
   }
 
@@ -105,7 +101,6 @@ export default class Members extends wepy.page {
       this.starFData.goodsId = this.goodsArray[current].id
       this.starFData.current = current
       this.$apply()
-      console.log(147, current, collection)
       setTimeout(() => {
         if (collection) {
           this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
@@ -131,16 +126,6 @@ export default class Members extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
-    };
-  }
   async onShow() {}
   getSystemInfo() {
     let res = wepy.getSystemInfoSync();

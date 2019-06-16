@@ -77,10 +77,8 @@ export default class SureGoodsCom extends wepy.component {
   }
   methods = {
       numAdd() {
-          console.log('numAdd');
       },
       numReduce() {
-          console.log('numReduce');
       },
       orderBtnA() {
           this.$emit('sale-com-event', {})
@@ -92,7 +90,6 @@ export default class SureGoodsCom extends wepy.component {
       }
   }
   onLoad() {
-      console.log('101----item', this.OrderComIndex);
   }
 }
 </script>

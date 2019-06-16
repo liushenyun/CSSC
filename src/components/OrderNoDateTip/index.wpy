@@ -21,7 +21,6 @@ export default class OrderNODataTip extends wepy.component {
   watch = {
   }
   onLoad() {
-      console.log('item', this.item);
   }
 }
 </script>

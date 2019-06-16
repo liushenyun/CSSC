@@ -69,7 +69,6 @@ export default class JoinPartnerGao extends wepy.page {
   events = {
     clickSendEvent(p) {
       this.apiPartnerPhoneCodeFA(this.apiPartnerPhoneCodeFA.bind(this))
-      console.log(48, p)
     }
   }
   data = {
@@ -115,7 +114,6 @@ export default class JoinPartnerGao extends wepy.page {
       sessionId: this.pageParams.sessionId || 'e8ac4f3089044b9c89768e5de2a9959e',
       code: this.pageParams.code
     }, fun).then((result) => {
-      console.log(118, result)
       miniPro.showAlert({
         title: '提示',
         content: '您的信息已经提交成功，我们会尽快审核',
@@ -156,15 +154,12 @@ export default class JoinPartnerGao extends wepy.page {
 
   methods = {
     nameBindInput(e) {
-      console.log(e.detail.value)
       this.pageParams.name = e.detail.value
     },
     codeBindInput(e) {
-      console.log(e.detail.value)
       this.pageParams.code = e.detail.value
     },
     addressBindInput(e) {
-      console.log(e.detail.value)
       this.pageParams.address = e.detail.value
     },
     telBindInput(e) {
@@ -184,13 +179,11 @@ export default class JoinPartnerGao extends wepy.page {
         success (res) {
           // tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFilePaths
-          console.log(125, tempFilePaths)
         }
       })
     },
     toSaveA() {
       this.apiPartnerSaveFA(this.apiPartnerSaveFA.bind(this))
-      console.log(this.pageParams);
     }
   }
 

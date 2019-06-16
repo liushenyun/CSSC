@@ -136,7 +136,6 @@ export default class Mine extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
     },
     lookMembersWordA() {
-      console.log('查兰特权');
       wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
     },
     joinPartnerA() {
@@ -188,15 +187,6 @@ export default class Mine extends wepy.page {
   async onShow() {}
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题'
-    };
-  }
 }
 </script>
 <style lang="scss" scoped>

@@ -64,7 +64,6 @@ export default class CatItem extends wepy.component {
       }
   }
   onLoad() {
-      console.log('item', this.item.id);
   }
 }
 </script>

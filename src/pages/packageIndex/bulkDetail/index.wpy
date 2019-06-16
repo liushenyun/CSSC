@@ -20,8 +20,31 @@
         </view>
 
         <view class="goods-des-outer">
-          <view><tex>￥</tex><tex></tex>{{firstSpec.price}}</view>
-          <view>{{goodsDetailObj.goodsName || '--'}}</view>
+
+          <view class="tuan-price-outer">
+            <text>￥ {{firstSpec.price}}</text>
+            <text>单买价 ￥{{firstSpec.marketPrice}}</text>
+            <text>已参团{{goodsDetailObj.sellQuantity}}件</text>
+          </view>
+
+          <view class="tuan-des-outer">
+            <text>{{goodsDetailObj.goodsName || '--'}}</text>
+            <text>活动截止日期 {{goodsDetailObj.endTime}}</text>
+          </view>
+
+          <view class="tuan-rule-outer">
+            <view class="tule-tip" @tap='showDetailA'>
+              <view>拼团玩法</view>
+              <view>详细规则</view>
+              <image src='../../../images/unfold.png'></image>
+            </view>
+
+            <view class="rule-detail">
+              <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
+              <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
+              <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
+            </view>
+          </view>
           <!-- <view>3秒拥有水光肌</view> -->
         </view>
         <view class="G-line"></view>
@@ -73,7 +96,7 @@
                   <view @tap="specChoiceA({{index}}, {{item}})" wx:for="{{goodsSpecificationVoList}}" wx:key="index" class="small {{specCurrentIndex == index ? 'active':''}}">{{item.specification}}</view>
                 </view>
               </view>
-              <view class="goods-pop-same goods-color">
+              <view class="goods-pop-same goods-color" wx:if="{{goodsColorVoList.length > 0}}">
                 <view class="goods-pop-title">颜色分类</view>
                 <view class="goods-color-outer">
                     <view @tap="colorChoiceA({{index}}, {{item}})"  wx:for="{{goodsColorVoList}}" wx:key="index" class="small {{colorCurrentIndex == index ? 'active':''}}">{{item.colorName}}</view>
@@ -89,6 +112,27 @@
               
               
           </view>
+      </view>
+
+      <view class="rule-word-outer" wx:if="{{showRuleTip}}">
+        <view class="rule-inner">
+          <view class="r-close" @tap='tipCloseA'>X</view>
+          <view class="r-a">参团流程</view>
+          <view class="r-b">【参团流程】</view>
+          <view class="r-c">
+            <text>1. 原价提交订单</text>
+            <text>2. 参团成功</text>
+            <text>3. 等待发货</text>
+            <text>4. 确认收货</text>
+            <text>5. 退回差价</text>
+          </view>
+          <view class="r-d">【参团详细规则】</view>
+          <view class="r-f"><text>1、参团人数：</text><text>最低1人成团。 </text></view>
+          <view class="r-f"><text>2、参团价格：</text><text>参团人数越多，购买商品越多，价格越低。</text></view>
+          <view class="r-f"><text>3、参团成功：</text><text>商品参团活动结束后，商家就会。 </text></view>
+          <view class="r-f"><text>4、发货时间：</text><text>一个团的周期是7天，商家就会进入发货流程。 </text></view>
+          <view class="r-f"><text>5、退回差价：</text><text>确认收货后，以实际优惠价格交易，系统开始计算返还金额=支付金额-最终售价</text></view>
+        </view>
       </view>
   </view>
 </template>
@@ -130,6 +174,7 @@ export default class BulkDetail extends wepy.page {
     specCurrentIndex: 0,
     colorCurrentIndex: 0,
     goodsColorVoList: [], // 颜色规格
+    groupPurchaseRegulationsList: [],
     firstSpec: {
         id: '--',
         marketPrice: '--',
@@ -138,17 +183,21 @@ export default class BulkDetail extends wepy.page {
     },
     goodsName: '',
     indicatorDots: true,
+    showRuleTip: false,
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    createData: [],
+    createData: {
+      channelId: '0',
+      groupPurchaseActivityId: '',
+      orderDetailBoList: []
+    },
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
   };
   methods = {
     spcTouch() {},
     specConStopA() {},
     specPopA() {
-      console.log(1132)
       this.showGoodsPop = false
     },
     toCartA() {
@@ -164,13 +213,16 @@ export default class BulkDetail extends wepy.page {
       if (this.isWhichFlag == 1) {
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
       } else if (this.isWhichFlag == 2) {
-        this.createData.push({
-          cartId: '',
-          goodsId: this.goodsId,
-          specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
-          colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
-          goodsNumber : this.buyNum
-        })
+        let _data = {
+            cartId: '',
+            goodsId: this.goodsId,
+            specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+            goodsNumber : this.buyNum
+        }
+        if (this.goodsColorVoList.length > 0) {
+          _data.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
+        }
+        this.createData.orderDetailBoList.push(_data)
         this.$apply()
         setTimeout(() => {
           this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
@@ -185,6 +237,12 @@ export default class BulkDetail extends wepy.page {
     buyNowA() {
       this.isWhichFlag = 2
       this.showGoodsPop = true
+    },
+    showDetailA() {
+      this.showRuleTip = true
+    },
+    tipCloseA() {
+      this.showRuleTip = false
     }
   }
 
@@ -224,7 +282,9 @@ export default class BulkDetail extends wepy.page {
       this.goodsSpecificationVoList = goodsSpecificationVoList;
       this.goodsColorVoList = goodsColorVoList;
       let _first = goodsSpecificationVoList[0];
+      this.groupPurchaseRegulationsList = msg.groupPurchaseRegulationsList;
       this.goodsDetailObj = msg;
+      this.createData.groupPurchaseActivityId = msg.groupPurchaseActivityId
       if (_first) {
         this.firstSpec = {
           id: _first.id || '--',
@@ -237,7 +297,6 @@ export default class BulkDetail extends wepy.page {
       WxParse.wxParse('goodsDetail', 'html', goodsDetail, _self, 5);
       this.$apply();
     }).catch(err => {
-      console.log('87', err)
     });
   }
 

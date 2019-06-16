@@ -96,11 +96,23 @@ export default class TaleDetail extends wepy.page {
   }
 
   onLoad(option) {
-    this.taleId = option.taleId || '20190529214340640811'
+    this.taleId = option.taleId
     this.$apply()
     this.apiTaleFindDetailsFA(this.apiTaleFindDetailsFA.bind(this))
-    console.log(37, option)
   }
+
+  onShareAppMessage(res) {
+    let _taleId = this.taleId
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '成氏商城',
+      path: `/pages/packageRecom/taleDetail/index?taleId=${_taleId}`
+    };
+  }
+
 }
 </script>
 <style lang="scss" scoped>

@@ -82,7 +82,6 @@ export default class Index extends wepy.page {
 
   methods = {
     toSearchA() {
-      console.log('搜索');
       this.pageParams.page = 0
       this.pageList = []
       this.getGoodsListA(this.getGoodsListA.bind(this))
@@ -92,10 +91,8 @@ export default class Index extends wepy.page {
     },
     bindInput(e) {
       this.pageParams.keyword = e.detail.value
-      console.log('input输入', e)
     },
     loadMore() { // 加载更多
-      console.log(12123);
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.getGoodsListA(this.getGoodsListA.bind(this))
@@ -115,7 +112,6 @@ export default class Index extends wepy.page {
       this.pageList = this.pageList.concat(rows)
       this.$apply()
     }).catch(err => {
-      console.log('88', err)
     });
   }
 
@@ -144,7 +140,6 @@ export default class Index extends wepy.page {
       this.starFData.goodsId = this.pageList[current].id
       this.starFData.current = current
       this.$apply()
-      console.log(147, current, collection)
       setTimeout(() => {
         if (collection) {
           this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
@@ -166,16 +161,6 @@ export default class Index extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/pages/index/index'
-    };
-  }
   async onShow() {}
 }
 </script>

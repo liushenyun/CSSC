@@ -85,7 +85,6 @@ export default class Index extends wepy.page {
     recomA() {
     },
     loadMore() { // 加载更多
-      console.log(12123);
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.apiGoodFindCategoryIdFA(this.apiGoodFindCategoryIdFA.bind(this))
@@ -99,7 +98,6 @@ export default class Index extends wepy.page {
       this.$apply()
       this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     }).catch(err => {
-      console.log('88', err)
     });
   }
 
@@ -115,7 +113,6 @@ export default class Index extends wepy.page {
       this.pageList = this.pageList.concat(rows)
       this.$apply()
     }).catch(err => {
-      console.log('88', err)
     });
   }
 
@@ -128,16 +125,6 @@ export default class Index extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
-    };
-  }
   async onShow() {}
 }
 </script>

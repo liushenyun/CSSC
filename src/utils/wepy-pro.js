@@ -42,13 +42,10 @@ let proFun = () => {
       title: obj.title || '提示',
       content: obj.content || '',
       success: function(res) {
-        console.log(res)
         if (res.confirm) {
           obj.callback && obj.callback(true)
-          console.log('用户点击确定')
         } else if (res.cancel) {
           obj.callback && obj.callback(false)
-          console.log('用户点击取消')
         }
       }
     });
@@ -56,7 +53,6 @@ let proFun = () => {
 
   // alert
   miniPro.showAlert = ({title, content, confirmText = '确定', success}) => {
-    console.log('name, age', title, content)
     wepy.showModal({
       title,
       content,
@@ -65,10 +61,8 @@ let proFun = () => {
       success: function(res) {
         if (res.confirm) {
           success && success('confirm')
-          console.log('用户点击确定')
         } else if (res.cancel) {
           success && success('cancel')
-          console.log('用户点击取消')
         }
       }
     })
@@ -199,7 +193,6 @@ let proFun = () => {
           let { statusCode, data } = res
           let errorCode = data.code === undefined ? 'none' : Number(data.code)
           let errMsg = data.message
-          console.log('wx,', statusCode, data)
           if (statusCode === 200) {
             if (errorCode == 0) {
               if (options.noOutData) {

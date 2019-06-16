@@ -94,11 +94,9 @@ export default class Index extends wepy.page {
 
   methods = {
     toMsgA() {
-      console.log('去往消息列表');
        wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     bindReplaceInput(e) {
-      console.log('input输入', e)
     },
     toDeviceA() {
       wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
@@ -107,7 +105,6 @@ export default class Index extends wepy.page {
       // 允许从相机和相册扫码
       wx.scanCode({
         success(res) {
-          console.log(res)
         }
       })
     },
@@ -176,7 +173,6 @@ export default class Index extends wepy.page {
       let { rows } = result
       this.pageLikeList = rows
       this.$apply();
-      console.log(173, result);
     }).catch((err) => {
       
     });
@@ -212,7 +208,6 @@ export default class Index extends wepy.page {
       this.$apply()
     },
     'num-change-event': (index, type) => {
-      console.log(index, type)
       this.changeQuantity.id = this.rowsArr[index].id
       this.changeQuantity.type = type
       this.changeQuantity.current = index
@@ -243,16 +238,6 @@ export default class Index extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
-    };
-  }
   async onShow() {}
   getSystemInfo() {
     let res = wepy.getSystemInfoSync();

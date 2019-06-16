@@ -63,12 +63,9 @@ const loginFetch = (data) => packagePromise((resolve, reject) => {
 })
 
 const wechatLogin = (data) => packagePromise((resolve, reject) => {
-  console.log(67, data)
   let _isGettingToken = wepy.getStorageSync('isGettingToken')
-  console.log('_isGettingToken', _isGettingToken)
   if (_isGettingToken) { return }
   wepy.setStorageSync('isGettingToken', true)
-  console.log(71, JSON.parse(data.miniprogramParam))
   let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
   request({
     url: apiWechatLogin(),
@@ -85,12 +82,10 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
     }
   })
     .then(msg => {
-      console.log('请求成1')
       wepy.setStorageSync('isGettingToken', false)
       resolve(msg)
     })
     .catch(err => {
-      console.log('请求成2')
       wepy.setStorageSync('isGettingToken', false)
       reject(err)
     })

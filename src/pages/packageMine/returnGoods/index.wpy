@@ -49,7 +49,6 @@ export default class ReturnGoods extends wepy.page {
   };
   methods = {
     bindPickerChange: function(e) {
-      console.log('e.detail.value', e.detail.value);
       this.reasonIndex = e.detail.value
     },        
     toFilterA() {

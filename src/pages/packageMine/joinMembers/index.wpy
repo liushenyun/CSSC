@@ -43,7 +43,6 @@ export default class JoinMembers extends wepy.page {
     },
     joinA() {
       this.apiVipPayFA(this.apiVipPayFA.bind(this))
-      console.log(this.isActive);
     }
   }
 

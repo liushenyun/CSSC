@@ -48,10 +48,8 @@ export default class OrderCom extends wepy.component {
   }
   methods = {
       numAdd() {
-          console.log('numAdd');
       },
       numReduce() {
-          console.log('numReduce');
       }
   }
   watch = {
@@ -60,7 +58,6 @@ export default class OrderCom extends wepy.component {
       }
   }
   onLoad() {
-      console.log('item', this.item);
   }
 }
 </script>

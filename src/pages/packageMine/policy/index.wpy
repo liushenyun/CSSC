@@ -109,15 +109,6 @@ export default class Policy extends wepy.page {
     isBad: false
   };
   methods = {
-    startA() {
-      console.log('开启')
-    },
-    flashA() {
-      console.log('冲洗')
-    },
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
-    }
   }
 }
 </script>

@@ -22,10 +22,8 @@ export default class Authorize extends wepy.page {
   onGotUserInfo(e) {
     let _auth = Auth.getInstance()
     let { userInfo } = e.detail;
-    console.log(25, e, userInfo)
     if (userInfo) {
       _auth.login(null, true).then(res => {
-        console.log('登录授权成功')
         if (res == true) {
           // wepy.$instance.globalData[EVENT_QUEUE_NAME].toDoEvent()
           wepy.navigateBack({ delta: 1 });

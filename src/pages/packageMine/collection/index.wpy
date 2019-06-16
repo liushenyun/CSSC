@@ -32,7 +32,6 @@ export default class Collection extends wepy.page {
   events = {
     'look-event': function (id) {
       wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
-      console.log(34, id)
     }
   }
 

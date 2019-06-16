@@ -15,7 +15,6 @@ export default class EventQueue {
     this.queue = []
   }
   toDoEvent(){
-    console.log(18, this.queue)
     if( this.queue.length > 0){
         this.queue.forEach(val => {
             val.fun()

@@ -168,7 +168,6 @@ const apiFootFindPageF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 支付模块 => 创建支付订单
 const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
-  console.log(172, data)
   let _list = []
   data.remarksList.forEach(val => {
     if (val.remarks) {
@@ -178,7 +177,6 @@ const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
       })
     }
   })
-  console.log(181, _list)
   request({
     url: apiPayCreate(),
     method: 'POST',

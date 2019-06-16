@@ -54,8 +54,6 @@ export default class SearchItem extends wepy.component {
       }
   }
   onLoad() {
-      console.log(53, this.item);
-      
   }
 }
 </script>

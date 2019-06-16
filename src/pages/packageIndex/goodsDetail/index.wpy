@@ -47,7 +47,7 @@
         <view @tap='addCartA' hover-class='icx-click-hover' class="gb-join">
           加入购物车
         </view>
-        <view @tap='toTuanA' hover-class='icx-click-hover' class="gb-tuan">
+        <view wx:if='{{goodsDetailObj.groupPurchase == 1}}' @tap='toTuanA' hover-class='icx-click-hover' class="gb-tuan">
           团购
         </view>
         <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
@@ -73,7 +73,7 @@
                   <view @tap="specChoiceA({{index}}, {{item}})" wx:for="{{goodsSpecificationVoList}}" wx:key="index" class="small {{specCurrentIndex == index ? 'active':''}}">{{item.specification}}</view>
                 </view>
               </view>
-              <view class="goods-pop-same goods-color">
+              <view class="goods-pop-same goods-color"  wx:if="{{goodsColorVoList.length > 0}}">
                 <view class="goods-pop-title">颜色分类</view>
                 <view class="goods-color-outer">
                     <view @tap="colorChoiceA({{index}}, {{item}})"  wx:for="{{goodsColorVoList}}" wx:key="index" class="small {{colorCurrentIndex == index ? 'active':''}}">{{item.colorName}}</view>
@@ -141,14 +141,16 @@ export default class GoodsDetail extends wepy.page {
     autoplay: true,
     interval: 5000,
     duration: 1000,
-    createData: [],
+    createData: {
+      channelId: '0',
+      orderDetailBoList: []
+    },
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
   };
   methods = {
     spcTouch() {},
     specConStopA() {},
     specPopA() {
-      console.log(1132)
       this.showGoodsPop = false
     },
     toCartA() {
@@ -164,13 +166,16 @@ export default class GoodsDetail extends wepy.page {
       if (this.isWhichFlag == 1) {
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
       } else if (this.isWhichFlag == 2) {
-        this.createData.push({
-          cartId: '',
-          goodsId: this.goodsId,
-          specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
-          colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
-          goodsNumber : this.buyNum
-        })
+        let _data = {
+            cartId: '',
+            goodsId: this.goodsId,
+            specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+            goodsNumber : this.buyNum
+        }
+        if (this.goodsColorVoList.length > 0) {
+          _data.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
+        }
+        this.createData.orderDetailBoList.push(_data)
         this.$apply()
         setTimeout(() => {
           this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
@@ -240,13 +245,23 @@ export default class GoodsDetail extends wepy.page {
       WxParse.wxParse('goodsDetail', 'html', goodsDetail, _self, 5);
       this.$apply();
     }).catch(err => {
-      console.log('87', err)
     });
   }
 
   events = {
       'addComEvent': (p1) => { this.buyNum = p1; this.$apply() }
   };
+  onShareAppMessage(res) {
+    let _goodsId = this.goodsId
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '成氏商城',
+      path: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}`
+    };
+  }
 
   async onLoad(option) {
     this.goodsId = option.goodsId

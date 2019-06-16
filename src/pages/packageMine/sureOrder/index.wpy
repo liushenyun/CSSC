@@ -49,7 +49,6 @@ export default class SureOrder extends wepy.page {
   methods = {
     submitOrderA() {
       this.apiPayCreateA(this.apiPayCreateA.bind(this))
-      console.log(this.orderDetailObj)
     },
     toChoiceAddressA() {
       wepy.navigateTo({ url: `/pages/packageMine/addressList/index` });
@@ -57,7 +56,6 @@ export default class SureOrder extends wepy.page {
   };
   apiFindOrderDetailA(fun) {
     apiFindOrderDetailF(this.orderId, fun).then((result) => {
-      console.log(45, result);
       let { orderChildList } = result
       this.orderDetailArr = orderChildList
       this.orderDetailObj = result
@@ -81,7 +79,6 @@ export default class SureOrder extends wepy.page {
     });
   }
   apiPayCreateA(fun) {
-    console.log(69, this, this.addressStr)
     apiPayCreateF({
       orderId: this.orderDetailObj.id,
       addressId: this.addressId,
@@ -90,7 +87,6 @@ export default class SureOrder extends wepy.page {
       userId: 0
     }, fun).then(msg => {
       let data = msg
-      console.log(73, );
       miniPro.requestPayment(data).then((result) => {
         miniPro.showToast('调用成功')
         setTimeout(() => {
@@ -113,10 +109,9 @@ export default class SureOrder extends wepy.page {
     }
   }
   onLoad(option) {
-    this.orderId = option.orderId || '20190606214057333697';
+    this.orderId = option.orderId
     this.$apply()
     // 20190526145853664473
-    console.log(27, option.orderId)
   }
   onReady() {
     setTimeout(() => {
@@ -137,7 +132,6 @@ export default class SureOrder extends wepy.page {
         }
       }
     })
-    console.log(139, _a);
     this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
   }
 }

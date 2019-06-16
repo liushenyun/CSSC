@@ -24,7 +24,6 @@ export default class authorized extends wepy.component {
       type: Object,
       value: {},
       observer(newVal, oldVal) {
-        console.log('newVal', newVal)
       }
     }
   }
@@ -36,7 +35,6 @@ export default class authorized extends wepy.component {
       let { userInfo } = e.detail;
       this.hide();
       if (userInfo) {
-        console.log(' this.$wxapp', this.$root.$parent.globalData)
         this.$root.$parent.globalData.userInfo = userInfo;
         this.$wxpage.initSet && this.$wxpage.initSet();
       }
@@ -45,7 +43,6 @@ export default class authorized extends wepy.component {
     authCancel() {
       let pages = this.getCurrentPages();
       this.hide();
-      console.log('pages', this.callBack, pages, this.$wxpage, this.$parent)
     }
   }
   show() {

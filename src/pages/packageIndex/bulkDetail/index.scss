@@ -23,19 +23,95 @@ page{
         }
    }
    .goods-des-outer {
-       padding: rpx(20) rpx(46);
-       & view:nth-of-type(1) {
-           color: $color-word-alarm;
-           font-size: $size-six
-       }
-       & view:nth-of-type(2) {
-            font-size: $size-two;
-            margin: rpx(34) 0 rpx(16) 0;
+    //    padding: rpx(20) rpx(46);
+       .tuan-price-outer {
+           padding: rpx(40) rpx(44);
+           background: $color-word-alarm;
+           display: flex;
+           align-items: center;
+           color: #FFF;
+           text:nth-of-type(1) {
+               margin-right: rpx(6);
+               font-size: rpx(34);
+           }
+
+           text:nth-of-type(2) {
+                padding: rpx(6) rpx(10);
+                background: #FFF;
+                color: $color-word-alarm;
+                border-radius: rpx(20);
+                font-size: rpx(20); 
+           }
+
+            text:nth-of-type(3) {
+                font-size: rpx(24);                
+                flex: 1;
+                text-align: right;
+            }
         }
-        & view:nth-of-type(3) {
-            color: $color-word-three;
-            font-size: $size-one
+        .tuan-des-outer {
+            padding: rpx(20) rpx(40);
+            display: flex;
+            align-items: center;
+            text:nth-of-type(1) {
+                font-size: rpx(26);
+                flex: 1;
+            }
+            text:nth-of-type(2) {
+                padding: rpx(8) rpx(6);
+                background: $color-word-alarm;
+                border-radius: rpx(6);
+                color: #FFF;
+            }
         }
+        
+        .tuan-rule-outer {
+            border-top: rpx(10) solid #EEE;
+            border-bottom: rpx(10) solid #EEE;
+            padding: 0 rpx(46);
+            .tule-tip {
+                display: flex;
+                padding: rpx(20) rpx(6);
+                position: relative;
+                @include borderBottomOnePx;
+                align-items: center;
+                view:nth-of-type(1) {
+                    font-size: rpx(24);
+                }
+                view:nth-of-type(2) {
+                    font-size: rpx(20);
+                    color: #666;
+                    flex: 1;
+                    text-align: right;
+                }
+                image {
+                    width: rpx(11);
+                    height: rpx(18);
+                    margin-left: rpx(10);
+                }
+            }
+
+            .rule-detail {
+                padding: rpx(24) 0;
+                min-height: rpx(30);
+                .rule-item {
+                    color: $color-word-alarm;
+                    display: inline-block;
+                    margin-right: rpx(30);
+                    margin-bottom: rpx(10);
+                }
+            }
+
+        }
+
+    //    & view:nth-of-type(2) {
+    //         font-size: $size-two;
+    //         margin: rpx(34) 0 rpx(16) 0;
+    //     }
+    //     & view:nth-of-type(3) {
+    //         color: $color-word-three;
+    //         font-size: $size-one
+    //     }
    }
    .G-line {
        height: rpx(8);
@@ -198,6 +274,63 @@ page{
                 width: 76%;
                 border-radius: rpx(30);
                 margin-left: 12%;
+            }
+        }
+    }
+}
+
+.rule-word-outer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 100;
+    .rule-inner {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: rpx(200);
+        background: #FFF;
+        padding: rpx(28) rpx(48);
+        .r-close {
+            position: absolute;
+            right: rpx(16);
+            top: rpx(10);
+            width: rpx(60);
+            height: rpx(60);
+            line-height: rpx(60);
+            text-align: center;
+        }
+        .r-a {
+            font-size: rpx(26);
+            font-weight: bolder;
+            margin-bottom: rpx(46);
+            text-align: center;
+        }
+        .r-c {
+            text {
+                font-size: rpx(20);
+                margin-right: rpx(8);
+            }
+        }
+        .r-b ,
+        .r-d {
+            font-size: rpx(22);
+            margin-bottom: rpx(14);
+        }
+        .r-d {
+            margin-top: rpx(30);
+        }
+        .r-f {
+            margin-bottom: rpx(20);
+            text {
+                font-size: rpx(20);
+            }
+            text:nth-of-type(1) {
+                font-weight: bolder;
             }
         }
     }

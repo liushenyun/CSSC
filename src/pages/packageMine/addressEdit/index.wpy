@@ -97,7 +97,6 @@ export default class AddressEdit extends wepy.page {
   }
   methods = {
     switchChange(e) {
-      console.log('switch1 发生 change 事件，携带值为', e.detail.value)
       this.addressObj.checked = e.detail.value
     },
     bindPhoneInput(e) {
@@ -107,27 +106,20 @@ export default class AddressEdit extends wepy.page {
        this.addressObj.name = e.detail.value
     },
     bindAddressInput(e) {
-      console.log(108, e);
       this.addressObj.address = e.detail.value
     },
     saveA() {
       // this.apiAddressSetDefaultFA(this.apiAddressSetDefaultFA.bind(this))
-      console.log()
       if (this.addressId) {
         this.apiAddressUpdateA(this.apiAddressUpdateA.bind(this))
       } else {
         this.apiAddressSaveA(this.apiAddressSaveA.bind(this))
       }
-      console.log('save');
     },
     deleteA() {
       this.apiAddressDeleteA(this.apiAddressDeleteA.bind(this))
     },
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
-    },
     bindchange(e) {
-      console.log(169, e)
       const pObject = this.pickerRegionRange[0][e.detail.value[0]]
       const cObject = this.pickerRegionRange[1][e.detail.value[1]]
       const dObject = this.pickerRegionRange[2][e.detail.value[2]]
@@ -135,7 +127,6 @@ export default class AddressEdit extends wepy.page {
       this.pObject = pObject
       this.cObject = cObject
       this.dObject = dObject
-      console.log(135, pObject, cObject, dObject);
       
       if (dObject.id) {
         this.addressObj.cityId = dObject.id
@@ -147,7 +138,6 @@ export default class AddressEdit extends wepy.page {
 
       this.showRegionStr = showRegionStr
       this.$apply();
-      console.log(269, pObject, cObject, dObject, showRegionStr)
     }
   }
 
@@ -181,23 +171,19 @@ export default class AddressEdit extends wepy.page {
         this.addressObj.checked = result.def == 1 ? true : false
         this.showRegionStr = `${result.province} ${result.city} ${result.district}`
         this.$apply()
-      console.log(134, result)
     }).catch((err) => {
       
     });
   }
 
   apiAddressProvinceFA(fun) {
-    console.log(121654)
     apiAddressByParentF(this.parentId, fun).then((result) => {
-      console.log(268, result)
       let _pickerRegionRange = []
       _pickerRegionRange.push(result)
       _pickerRegionRange.push([{ name: '请选择' }])
       _pickerRegionRange.push([{ name: '请选择' }])
       this.pickerRegionRange = _pickerRegionRange
       this.$apply()
-      console.log(268, _pickerRegionRange)
       this.bindcolumnchange({ detail: { column: 0, value: 0 } })
     }).catch((err) => {
       
@@ -216,9 +202,7 @@ export default class AddressEdit extends wepy.page {
   bindcolumnchange(e) {
     const column = e.detail.column
     const index = e.detail.value
-    console.log('eeee:', e)
     const regionObject = this.pickerRegionRange[column][index]
-    console.log('bindcolumnchange', regionObject)
     if (column === 2) {
       this.pickerRegionRange = this.pickerRegionRange
       // this.setData({
@@ -246,7 +230,6 @@ export default class AddressEdit extends wepy.page {
 
    apiAddressCityFA(fun) {
     apiAddressByParentF(this.childrenId, fun).then((result) => {
-      console.log(134, result)
       let column = this.childrenColumn
       this.pickerRegionRange[column + 1] = result
       this.$apply()
@@ -260,13 +243,6 @@ export default class AddressEdit extends wepy.page {
   
 
   apiAddressSaveA(fun) {
-    console.log({
-        phone: this.addressObj.phone,
-        name: this.addressObj.name,
-        cityId: this.addressObj.cityId,
-        address: this.addressObj.address
-    });
-    
     apiAddressSaveF({
         phone: this.addressObj.phone,
         name: this.addressObj.name,
@@ -310,9 +286,7 @@ export default class AddressEdit extends wepy.page {
 
   onLoad(option) {
     this.initRegionPicker() // 初始化省市区选择器
-    console.log(128, option.id);
     this.addressId = option.id
-    
     if (option.id) {
       this.apiAddressFindA(this.apiAddressFindA.bind(this))
     }

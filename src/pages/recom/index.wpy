@@ -72,15 +72,12 @@ export default class Recom extends wepy.page {
 
   methods = {
     toTaleDetailA(taleId) {
-      console.log(57, taleId)
        wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
     },
     loadMore() { // 加载更多
       if (!this.hasMore) return
       this.pageParams.page += 1
       this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
-
-      console.log(63)
     }
   };
 
@@ -107,16 +104,6 @@ export default class Recom extends wepy.page {
   }
   onUnload() {}
   onHide() {}
-  onShareAppMessage(res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target);
-    }
-    return {
-      title: '自定义转发标题',
-      path: '/page/index/index'
-    };
-  }
   async onShow() {}
   getSystemInfo() {
     let res = wepy.getSystemInfoSync();

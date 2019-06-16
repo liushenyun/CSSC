@@ -49,14 +49,12 @@ export default class MemberDetail extends wepy.page {
       page: this.pageParams.page,
       limit: this.pageParams.limit
     }, fun).then((result) => {
-      console.log(53, result);
       
       let { rows, last, pageNumber } = result
       rows.forEach(val => {
         let { userLevel, userType } = val
         let _userLevel = ['普通用户', '月卡用户', '年卡用户'][Number(userLevel)]
         let _userType = ['普通用户', '普通合伙人', '高级合伙人', '代购合伙人'][Number(userType)]
-        console.log(_userLevel, _userLevel);
         if (_userLevel == '普通用户' && _userType == '普通用户') {
           val.typeText = '普通用户'
         } else if (_userLevel == '普通用户' && _userType != '普通用户') {
