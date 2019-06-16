@@ -34,7 +34,7 @@
           <text>合计：</text>
           <text>￥{{totalMoney}}</text>
         </view>
-        <view class='pay-btn' @tap='toSureOrderA'>结算({{createData.length}})</view>
+        <view class='pay-btn' @tap='toSureOrderA'>结算({{createData.orderDetailBoList.length}})</view>
       </view>
     
   </view>
@@ -81,7 +81,9 @@ export default class Index extends wepy.page {
     },
     isAllCkeck: false,
     totalMoney: 0,
-    createData: [],
+    createData: {
+      orderDetailBoList: []
+    },
     delGoosId: '',
     pageParamsLike: {
       page: 0,
@@ -199,7 +201,7 @@ export default class Index extends wepy.page {
             }
           });
           this.totalMoney = _totalMoney
-          this.createData = _createData
+          this.createData.orderDetailBoList = _createData
     }
   }
   events = {
