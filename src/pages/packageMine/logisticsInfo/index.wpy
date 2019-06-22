@@ -32,6 +32,7 @@
 <script>
 import wepy from 'wepy'
 import miniPro from '@/utils/wepy-pro.js';
+import { apiLogisticsInfoF } from '../../../services/mine/index'
 export default class LogisticsInfo extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -41,6 +42,7 @@ export default class LogisticsInfo extends wepy.page {
   components = {
   };
   data = {
+    orderId: ''
   };
   methods = {
     continueBuyA() {
@@ -51,8 +53,20 @@ export default class LogisticsInfo extends wepy.page {
     }
   };
   
+  apiLogisticsInfoFA(fun) {
+    apiLogisticsInfoF(this.orderId, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
   events = {}
-  onLoad() {
+  onLoad(option) {
+    this.orderId = option.id
+    setTimeout(() => {
+      this.apiLogisticsInfoFA(this.apiLogisticsInfoFA.bind(this))
+    }, 10);
+    console.log(56, option);
   }
 }
 </script>

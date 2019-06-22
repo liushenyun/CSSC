@@ -15,6 +15,9 @@ const apiFindOrderDetail = (orderId) => `${MAIN_DOMAIN}/api/buy/order/find_order
 // 订单模块 => 分页查询商品信息
 const apiOrderFindPage = () => `${MAIN_DOMAIN}/api/buy/order/find_page`
 
+// 订单模块 => 查看物流信息
+const apiLogisticsInfo = (id) => `${MAIN_DOMAIN}/api/buy/order/get_logistics_info/${id}`
+
 // 收藏模块 => 删除收藏
 const apiCollectDelete = (id) => `${MAIN_DOMAIN}/api/goods/collection/delete/${id}`
 
@@ -32,6 +35,9 @@ const apiFootFindPage = (id) => `${MAIN_DOMAIN}/api/goods/browse/find_page`
 
 // 支付模块 => 创建支付订单
 const apiPayCreate = (id) => `${MAIN_DOMAIN}/api/pay/create`
+
+// 支付模块 => 商品退款
+const apiRefund = (id) => `${MAIN_DOMAIN}/api/pay/refund/${id}`
 
 // 收货地址模块 => 删除收货地址
 const apiAddressDelete = (id) => `${MAIN_DOMAIN}/api/user/address/delete/${id}`
@@ -93,12 +99,14 @@ export {
   apiCreateOrder,
   apiFindOrderDetail,
   apiOrderFindPage,
+  apiLogisticsInfo,
   apiCollectDelete,
   apiCollectFindPage,
   apiCollectSave,
   apiFootDelete,
   apiFootFindPage,
   apiPayCreate,
+  apiRefund,
   apiAddressDelete,
   apiAddressFind,
   apiAddressByParent,

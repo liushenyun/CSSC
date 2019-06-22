@@ -98,7 +98,8 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiGetMyHomeDataF } from '../../services/mine';
+import { apiGetMyHomeDataF, apiPartnerPayF } from '../../services/mine';
+import miniPro from '../../utils/wepy-pro'
 
 export default class Mine extends wepy.page {
   config = {
@@ -139,11 +140,21 @@ export default class Mine extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
     },
     joinPartnerA() {
-      if (this.pageData.userType == 0 || this.pageData.userType == -1) {
-         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
-      } else {
-        wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
+      let _userType = this.pageData.userType
+      let _payStatus = this.pageData.payStatus
+      let _status = this.pageData.status
+      if (_status == 0) {
+        miniPro.showAlert('审核中')
+      } else if (_status == 2 || _status == -1) {
+        wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
+      } else if (_status == 1) {
+        if (_payStatus == 1) {
+            this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
+          } else {
+            wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
+          }
       }
+      
     },
     toMoreA() {
       wepy.navigateTo({ url: '/pages/packageMine/more/index' });
@@ -164,15 +175,44 @@ export default class Mine extends wepy.page {
 
   events = {};
 
+  apiPartnerPayFA(fun) {
+    apiPartnerPayF(fun).then(msg => {
+      miniPro.requestPayment(msg).then((result) => {
+        miniPro.showToast('支付成功')
+        setTimeout(() => {
+         this.onShow()
+        }, 1500)
+      }).catch((err) => {
+        miniPro.showToast('调用失败')
+        setTimeout(() => {
+          this.onShow()
+        }, 1500)
+      });
+    }).catch(err => {
+
+    })
+  }
+
   apiGetMyHomeDataFA(fun) {
     apiGetMyHomeDataF(fun).then((result) => {
       this.pageData = result
       let _text
-        if (result.userType == 0) {
-          _text = '立即成为合伙人'
-        } else {
+      let _userType = result.userType
+      let _payStatus = result.payStatus
+      let _status = result.status
+      if (_status == 0) {
+        _text = '审核中'
+      } else if(_status == -1) {
+        _text = '立即成为合伙人'
+      } else if (_status == 2) {
+        _text = '不通过（重新申请）'
+      } else if (_status == 1) {
+        if (_payStatus == 1) {
+          _text = '立即支付'
+        } else if (_payStatus == 2 || _payStatus == 0) {
           _text = '查看合伙人工作台'
         }
+      }
        this.partnerText = _text
        this.$apply()
     }).catch((err) => {
@@ -180,11 +220,11 @@ export default class Mine extends wepy.page {
     });
   }
   
-  async onLoad() {
+  async onLoad() {}
+  async onShow() {
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
   }
-  async onShow() {}
   onUnload() {}
   onHide() {}
 }

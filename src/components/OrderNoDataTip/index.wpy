@@ -1,7 +1,7 @@
 <template>
   <view class="order-no-data-ctner">
       <view>
-          <image src='../../images/'></image>
+          <image src='../../images/order_none_icon.png'></image>
           <view class="t-a">赞无相关订单</view>
           <view class="t-b">好东西手慢无</view>
       </view>

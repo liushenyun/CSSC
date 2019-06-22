@@ -24,7 +24,7 @@
     </view>
 
     <view class="order-num-outer">
-        <text>{{OrderComIndex}}共 {{item.goodsCount}} 件 合计:</text>
+        <text>共 {{item.goodsCount}} 件 合计:</text>
         <text>￥{{item.orderAmount}}</text>
     </view>
 
@@ -58,11 +58,11 @@ export default class SureGoodsCom extends wepy.component {
   data = {
       btnObj: {
         '1': [
-            {word: '退款', action: '1a'},
+            // {word: '取消订单', action: '1a'},
             {word: '付款', action: '1b', color: 'sure'}
         ],
         '2': [
-            {word: '提醒发货', action: '2a'},
+            {word: '退款', action: '2a'},
             {word: '查看物流', action: '2b'}
         ],
         '4': [

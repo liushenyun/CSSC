@@ -253,5 +253,5 @@ let proFun = () => {
   }
   return miniPro
 }
-
-export default proFun()
+let _retunrMiniPro = proFun()
+export default _retunrMiniPro

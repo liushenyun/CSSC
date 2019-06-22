@@ -36,7 +36,7 @@
 
 <script>
 import wepy from 'wepy'
-import NoTip from '@/components/OrderNoDateTip/index'
+import NoTip from '@/components/OrderNoDataTip/index'
 import AfterSale from '@/components/AfterSaleCom/index'
 export default class AfterSales extends wepy.page {
   config = {

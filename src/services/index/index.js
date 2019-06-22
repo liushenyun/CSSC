@@ -8,8 +8,9 @@ import {
   apiCategoryList
 } from './api'
 import packagePromise from '../packagePromise'
-import { request } from '../request'
+// import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
+let request = miniPro.request
 
 // 获取商品列表
 const apiGoodsListF = (data, fun) => packagePromise((resolve, reject) => {

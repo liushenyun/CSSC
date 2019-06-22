@@ -11,8 +11,9 @@ import {
   apiCategoryGetBanner
 } from './api'
 import packagePromise from '../packagePromise'
-import { request } from '../request'
+// import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
+let request = miniPro.request
 
 // 文化衍生故事模块 => 删除自己评论
 const apiTaleCommentDeleteF = (id, fun) => packagePromise((resolve, reject) => {

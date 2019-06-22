@@ -2,28 +2,30 @@
 <template>
   <view class="cart-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-      <view class="cart-goods-outer">
-        <view class="cart-goods-has">
-          <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">
-            <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>
-          </repeat>
+      <view class="cart-con-outer">
+        <view class="cart-goods-outer">
+          <view class="cart-goods-has">
+            <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">
+              <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>
+            </repeat>
+          </view>
+          <view class="cart-goods-no" wx:if='{{rowsArr.length < 1}}'>
+            <image src='../../images/shopping.png'></image>
+            <view>空空如也 马上添加</view>
+          </view>
         </view>
-        <view class="cart-goods-no" wx:if='{{rowsArr.length < 1}}'>
-          <image src='../../images/shopping.png'></image>
-          <view>空空如也 马上添加</view>
-        </view>
-      </view>
-      
+        
 
-      <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
-        <view class="cart-like-title">·猜您喜欢·</view>
-        <view class='cat-container'>
-          <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
-            <image src="{{item.goodsIco}}"></image>
+        <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
+          <view class="cart-like-title">·猜您喜欢·</view>
+          <view class='cat-container'>
+            <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
+              <image src="{{item.goodsIco}}"></image>
+            </view>
           </view>
         </view>
       </view>
-
+      
       <view class='cat-bottom'>
         <view class='check-all' @tap='checkAll'>
           <image wx:if= "{{isAllCkeck}}" src='../../images/selected.png' />

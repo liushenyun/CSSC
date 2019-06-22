@@ -6,8 +6,9 @@ import {
   apiCartSave
 } from './api'
 import packagePromise from '../packagePromise'
-import { request } from '../request'
+// import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
+let request = miniPro.request
 
 // 更新购物车数据
 const apiChangeQuantityF = (data, fun) => packagePromise((resolve, reject) => {

@@ -34,13 +34,14 @@
 
 <script>
 import wepy from 'wepy'
-import NoTip from '@/components/OrderNoDateTip/index'
+import NoTip from '@/components/OrderNoDataTip/index'
 import OrderCom from '@/components/OrderGoodCom/index'
 import miniPro from '@/utils/wepy-pro.js'
 import {
   apiOrderFindPageF,
   apiCancelOrderF, // 取消订单
-  apiConfirmOrderF // 确认收货
+  apiConfirmOrderF, // 确认收货
+  apiRefundF // 退款
 } from '../../../services/mine/index'
 export default class Order extends wepy.page {
   config = {
@@ -61,6 +62,7 @@ export default class Order extends wepy.page {
    orderStatusObj: [0, 1, 2, 4, 5], // 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
    pageList: [],
    cancelOrderId: '',
+   orderActionId: '',
    confirmOrderId: '',
    btnClickCurrenIndex: -1,
    pageParams: {
@@ -79,13 +81,17 @@ export default class Order extends wepy.page {
       } else if (_action == "1a") { // 取消订单
         this.cancelOrderId = item.id
         this.apiCancelOrderFA(this.apiCancelOrderFA.bind(this))
-      } else if (_action == '2b' || _action == '5b') { // 查看物流
+      } else if (_action == "2a") { // 退款
+        this.orderActionId = item.id
+        this.apiRefundFA(this.apiCancelOrderFA.bind(this))
+      } else if (_action == '2b' || _action == '5b') { 
         // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == '4c') {
         this.confirmOrderId = item.id
         this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
-      } else if (_action == '4b') {
-        wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index` });
+      } else if (_action == '4b') { // 查看物流
+        console.log(88, item);
+        wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index?id=${item.id}` });
       }
     }
   }
@@ -122,9 +128,18 @@ export default class Order extends wepy.page {
       
     });
   }
+  
+  apiRefundFA(fun) {
+    apiRefundF(this.orderActionId, fun).then((result) => {
+      console.log(134, result);
+    }).catch((err) => {
+      
+    });
+  }
+
   apiCancelOrderFA(fun) {
     apiCancelOrderF(this.cancelOrderId, fun).then((result) => {
-      
+      console.log(142, result);
     }).catch((err) => {
       
     });

@@ -1,11 +1,18 @@
 @import '../../common/css/rpx.scss';
 @import '../../common/css/const.scss';
 @import '../../common/css/mixin.scss';
-page,
+page{
+    height: 100%;
+}
 .cart-ctner{
+    position: relative;
     height: 100%;
     background: #EDEDED;
-    
+    padding-bottom: rpx(102);
+    .cart-con-outer {
+        height: 100%;
+        overflow: auto;
+    }
     .cat-itme-wrap {
         margin-bottom: rpx(8);
     }
@@ -49,7 +56,7 @@ page,
     }
 
     .cat-bottom{
-        position: fixed;
+        position: absolute;
         left: 0;
         bottom: 0;
         height: rpx(100);
@@ -59,6 +66,7 @@ page,
         align-items: center;
         padding: 0 rpx(20);
         font-size: rpx(36);
+        z-index: 20;
         .check-all{
             display: flex;
             align-items: center;

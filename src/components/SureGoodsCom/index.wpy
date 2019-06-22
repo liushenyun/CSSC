@@ -4,7 +4,7 @@
     <view class="order-status-order">
         <text>米兔生活馆1</text>
         <image src='../../images/unfold.png'></image>
-        <text>交易成功</text>
+        <!-- <text>交易成功</text> -->
     </view>
 
     <view class="sure-same-outer goods-outer" wx:for="{{item.orderDetailList}}" wx:key="index" wx:for-item="subItem">

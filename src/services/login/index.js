@@ -1,9 +1,11 @@
 import wepy from 'wepy'
 import { apiHealthStatus, apiGetCode, apiLogin, apiWechatLogin, apiRefreshToken } from './api';
 import packagePromise from '../packagePromise';
-import { request } from '../request';
+// import { request } from '../request';
 import { WECHAT_APP_NAME, PAGE_INIT_SET_NAME, WECHAT_AUTH_BASE, EVENT_QUEUE_NAME } from '../../common/js/config'
+// import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
+let request = miniPro.request
 import Validate from '../Validate';
 import Auth from '../../common/js/authProcess.js';
 

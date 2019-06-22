@@ -6,6 +6,7 @@ import {
   apiCreateOrder,
   apiFindOrderDetail,
   apiOrderFindPage,
+  apiLogisticsInfo,
   apiCollectDelete,
   apiCollectFindPage,
   apiCollectSave,
@@ -14,6 +15,7 @@ import {
   apiFindDefAddress,
   apiFootFindPage,
   apiPayCreate,
+  apiRefund,
   apiAddressDelete,
   apiAddressFind,
   apiAddressFindAll,
@@ -32,8 +34,9 @@ import {
   apiVipPay
 } from './api'
 import packagePromise from '../packagePromise'
-import { request } from '../request'
+// import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
+let request = miniPro.request
 
 // 订单模块 => 取消订单
 const apiCancelOrderF = (id, fun) => packagePromise((resolve, reject) => {
@@ -94,6 +97,18 @@ const apiOrderFindPageF = (data, fun) => packagePromise((resolve, reject) => {
     method: 'POST',
     noOutData: true,
     data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 订单模块 => 查看物流信息
+const apiLogisticsInfoF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiLogisticsInfo(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -189,6 +204,18 @@ const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
       payRemarksList: _list,
       userId: 0
     }
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 支付模块 => 商品退款
+const apiRefundF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiRefund(id),
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -444,7 +471,7 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
 const apiVipFinanceConfigF = (fun) => packagePromise((resolve, reject) => {
   request({
     url: apiVipFinanceConfig(),
-    method: 'POST'
+    method: 'GET'
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -471,12 +498,14 @@ export {
   apiCreateOrderF,
   apiFindOrderDetailF,
   apiOrderFindPageF,
+  apiLogisticsInfoF,
   apiCollectDeleteF,
   apiCollectFindPageF,
   apiCollectSaveF,
   apiFootDeleteF,
   apiFootFindPageF,
   apiPayCreateF,
+  apiRefundF,
   apiAddressDeleteF,
   apiAddressByParentF,
   apiFindDefAddressF,
