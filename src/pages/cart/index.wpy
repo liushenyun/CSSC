@@ -79,7 +79,7 @@ export default class Index extends wepy.page {
     isAllCkeck: false,
     totalMoney: 0,
     createData: {
-      channelId: '0', // 需求确认
+      // channelId: '0', // 需求确认
       orderDetailBoList: []
     },
     delGoosId: '',
