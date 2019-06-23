@@ -32,7 +32,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 38,
+			"current": 39,
 			"list": [
 				{
 					"id": -1,
@@ -308,10 +308,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 39,
 					"name": "查看物流",
 					"pathName": "pages/packageMine/logisticsInfo/index",
-					"query": "",
+					"query": "id=20190607104747101453",
 					"scene": null
 				},
 				{

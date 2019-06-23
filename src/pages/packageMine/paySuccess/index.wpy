@@ -20,11 +20,8 @@
 
 <script>
 import wepy from 'wepy'
-import miniPro from '@/utils/wepy-pro.js';
 export default class PaySuccess extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '完成支付'
   };
   components = {
@@ -39,8 +36,6 @@ export default class PaySuccess extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageMine/order/index` });
     }
   };
-  
-  events = {}
   onLoad() {
   }
 }
@@ -48,4 +43,3 @@ export default class PaySuccess extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

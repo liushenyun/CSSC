@@ -60,4 +60,3 @@ export default class ReturnGoods extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

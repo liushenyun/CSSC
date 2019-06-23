@@ -51,7 +51,6 @@ export default class TaleDetail extends wepy.page {
       } else {
         this.apiTalePatronizeFA(this.apiTalePatronizeFA.bind(this))
       }
-      
     }
   }
 
@@ -60,11 +59,9 @@ export default class TaleDetail extends wepy.page {
     apiTaleFindDetailsF(this.taleId, fun).then((result) => {
       this.taleObj = result
       this.isCollect = result.patronize 
-      WxParse.wxParse('taleDetail', 'html', result.taleContent, _self, 5);
+      WxParse.wxParse('taleDetail', 'html', result.taleContent, _self, 5)
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   apiTalePatronizeFA(fun) {
@@ -73,10 +70,10 @@ export default class TaleDetail extends wepy.page {
     }, fun).then(msg => {
       miniPro.showToast('点赞成功')
       setTimeout(() => {
-          this.isCollect = true
-          this.$apply()
+        this.isCollect = true
+        this.$apply()
       }, 1000);
-    }).catch(err => {
+    }).catch(() => {
       miniPro.showToast('点赞失败')
     })
   }
@@ -87,10 +84,10 @@ export default class TaleDetail extends wepy.page {
     }, fun).then(msg => {
       miniPro.showToast('取消点赞成功')
       setTimeout(() => {
-          this.isCollect = false
-          this.$apply()
+        this.isCollect = false
+        this.$apply()
       }, 1000);
-    }).catch(err => {
+    }).catch(() => {
       miniPro.showToast('取消点赞失败')
     })
   }
@@ -112,10 +109,8 @@ export default class TaleDetail extends wepy.page {
       path: `/pages/packageRecom/taleDetail/index?taleId=${_taleId}`
     };
   }
-
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

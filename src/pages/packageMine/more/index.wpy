@@ -11,28 +11,22 @@
 import wepy from 'wepy'
 export default class More extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '了解更多'
   };
   components = {
   };
-  data = {
-    isRepair: false, // 检修
-    isBad: false
-  };
   methods = {
-    toPolicyA() { 
-      wepy.navigateTo({ url: '/pages/packageMine/policy/index' });
+    toPolicyA() {
+      wepy.navigateTo({ url: '/pages/packageMine/policy/index' })
     },
-    toAboutA() { 
-      wepy.navigateTo({ url: '/pages/packageMine/about/index' });
+    toAboutA() {
+      wepy.navigateTo({ url: '/pages/packageMine/about/index' })
     },
-    toUserAgreementA() { 
-      wepy.navigateTo({ url: '/pages/packageMine/userAgreement/index' });
+    toUserAgreementA() {
+      wepy.navigateTo({ url: '/pages/packageMine/userAgreement/index' })
     },
-    toContactA() { 
-      wepy.navigateTo({ url: '/pages/packageMine/contact/index' });
+    toContactA() {
+      wepy.navigateTo({ url: '/pages/packageMine/contact/index' })
     }
   }
 }

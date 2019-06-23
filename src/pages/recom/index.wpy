@@ -36,43 +36,25 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import {
-  apiTaleCommentDeleteF,
-  apiTaleCommentFindPageF,
-  apiTaleCommentSaveF,
-  apiTaleFindDetailsF,
-  apiTaleFindPageF,
-  apiTalePatronizeF,
-  apiTaleUnpatronizeF
-} from '../../services/classify';
-
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
-import miniPro from '@/utils/wepy-pro.js';
-import { showAlertTips } from '@/utils/feature.js';
+import { apiTaleFindPageF } from '../../services/classify';
+// import miniPro from '@/utils/wepy-pro.js';
 
 export default class Recom extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
     navigationBarTitleText: '推荐'
   };
-  components = {};
-
-  mixins = [];
 
   data = {
     taleArr: [],
-    hasMore:false,
+    hasMore: false,
     pageParams: {
       page: 0
     }
   };
 
-  computed = {};
-
   methods = {
     toTaleDetailA(taleId) {
-       wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
+      wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
     },
     loadMore() { // 加载更多
       if (!this.hasMore) return
@@ -90,25 +72,11 @@ export default class Recom extends wepy.page {
       this.hasMore = !last
       this.taleArr = this.taleArr.concat(rows)
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
-
-  events = {};
 
   async onLoad() {
     this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
-    this.getSystemInfo();
-    this.$apply();
-  }
-  onUnload() {}
-  onHide() {}
-  async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
 </script>

@@ -13,21 +13,13 @@
 import wepy from 'wepy'
 export default class Contact extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '联系我们'
   };
   components = {
   };
-  data = {
-    isRepair: false, // 检修
-    isBad: false
-  };
-  methods = {
-  }
+  data = { };
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

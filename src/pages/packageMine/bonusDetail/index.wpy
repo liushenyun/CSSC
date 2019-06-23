@@ -15,11 +15,7 @@
 import wepy from 'wepy'
 export default class BonusDetail extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '奖金明细'
-  };
-  components = {
   };
   data = {
     isActive: 'm'
@@ -34,4 +30,3 @@ export default class BonusDetail extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

@@ -54,17 +54,10 @@
 import wepy from 'wepy'
 import VerificationCode from '../../../components/verificationCode/index'
 import {
-  apiPartnerPhoneCodeF, // 发送验证码
-  apiPartnerSaveF, // 提交合伙人信息
-  apiPartnerPayF, // 高级合伙人付款
-  apiPartnerFindMoneyPageF, // 合伙人工作台 => 分页查询奖金记录
-  apiPartnerFindSpectatorsF, // 合伙人工作台 => 分页查询我推广的客户
   apiPartnerDataF // 合伙人工作台 => 获取合伙人工作台数据
 } from '../../../services/mine/index'
 export default class JoinPartnerBench extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '合伙人工作台'
   };
   components = {
@@ -105,9 +98,7 @@ export default class JoinPartnerBench extends wepy.page {
       }
       this.userType = userType
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   methods = {
@@ -127,7 +118,6 @@ export default class JoinPartnerBench extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/posters/index' })
     }
   }
-
   onLoad() {
     this.apiPartnerDataFA(this.apiPartnerDataFA.bind(this))
   }
@@ -136,4 +126,3 @@ export default class JoinPartnerBench extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

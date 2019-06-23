@@ -55,16 +55,11 @@ import {
 } from '../../services/mine'
 
 import { apiGoodsLikePageF } from '../../services/index/index'
-
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
-import { showAlertTips } from '@/utils/feature.js';
 import CatItem from '@/components/catItem/index';
 
 export default class Index extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
     navigationBarTitleText: '购物车'
   };
   components = {
@@ -84,6 +79,7 @@ export default class Index extends wepy.page {
     isAllCkeck: false,
     totalMoney: 0,
     createData: {
+      channelId: '0', // 需求确认
       orderDetailBoList: []
     },
     delGoosId: '',
@@ -94,29 +90,9 @@ export default class Index extends wepy.page {
     pageLikeList: []
   };
 
-  computed = {};
-
   methods = {
-    toMsgA() {
-       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
-    },
-    bindReplaceInput(e) {
-    },
-    toDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/device/index' });
-    },
-    toScanAddDeviceA() {
-      // 允许从相机和相册扫码
-      wx.scanCode({
-        success(res) {
-        }
-      })
-    },
-    toNoAddDeviceA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/addDevice/index' });
-    },
     toSureOrderA() {
-       this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
+      this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
     },
     checkAll() {
       this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
@@ -130,9 +106,7 @@ export default class Index extends wepy.page {
     apiCreateOrderF(this.createData, fun).then(msg => {
       let _id = msg.id
       wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
   apiCartFindPageA(fun) {
     let _pageNum = this.pageNum
@@ -145,9 +119,7 @@ export default class Index extends wepy.page {
         return val
       })
       this.$apply()
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
   apiChangeQuantityA(fun) {
     apiChangeQuantityF({
@@ -156,17 +128,13 @@ export default class Index extends wepy.page {
     }, fun).then(msg => {
       this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
       this.$apply()
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
   apiCartDeleteA(fun) {
     apiCartDeleteF(this.delGoosId, fun).then(msg => {
       this.rowsArr.splice(this.changeQuantity.current, 1)
       this.$apply()
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
 
   apiGoodsLikePageFA(fun) {
@@ -177,33 +145,31 @@ export default class Index extends wepy.page {
       let { rows } = result
       this.pageLikeList = rows
       this.$apply();
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   watch = {
     rowsArr (newValue) {
-          let _newValue = newValue
-          this.isAllCkeck = _newValue.every(val => {
-            return val.check
+      let _newValue = newValue
+      this.isAllCkeck = _newValue.every(val => {
+        return val.check
+      })
+      let _totalMoney = 0;
+      let _createData = []
+      _newValue.forEach((val) => {
+        if (val.check) {
+          _totalMoney = (_totalMoney * 1000 + val.price * val.quantity * 1000) / 1000
+          _createData.push({
+            cartId: val.id,
+            goodsId: val.goodsId,
+            specificationId: val.specificationId,
+            colorId: val.colorId,
+            goodsNumber: val.quantity
           })
-          let _totalMoney = 0;
-          let _createData = []
-          _newValue.forEach((val) => {
-            if (val.check) {
-              _totalMoney = (_totalMoney * 1000 + val.price * val.quantity*1000)/1000
-              _createData.push({
-                cartId: val.id,
-                goodsId: val.goodsId,
-                specificationId: val.specificationId,
-                colorId: val.colorId,
-                goodsNumber : val.quantity
-              })
-            }
-          });
-          this.totalMoney = _totalMoney
-          this.createData.orderDetailBoList = _createData
+        }
+      });
+      this.totalMoney = _totalMoney
+      this.createData.orderDetailBoList = _createData
     }
   }
   events = {
@@ -230,23 +196,12 @@ export default class Index extends wepy.page {
           _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
         }
       })
-      
     }
   };
 
   async onLoad() {
     this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
     this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
-    // apiGoodsLikePageFA
-    this.$apply();
-  }
-  onUnload() {}
-  onHide() {}
-  async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
 </script>

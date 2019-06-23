@@ -27,17 +27,13 @@
 import wepy from 'wepy'
 export default class JoinPartner extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '加入合伙人'
   };
-  components = {
-  };
   data = {
-     partnerArr: [
+    partnerArr: [
       { name: '普通合伙人', class: 'p-a', type: 1 },
       { name: '代购合伙人', class: 'p-b', type: 3 },
-      { name: '高级合伙人', class: 'p-c', type: 2  }
+      { name: '高级合伙人', class: 'p-c', type: 2 }
     ],
     autoplay: false,
     interval: 5000,
@@ -58,4 +54,3 @@ export default class JoinPartner extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

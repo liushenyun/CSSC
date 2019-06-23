@@ -29,7 +29,7 @@
     </view>
 
     <view class="order-button-outer">
-        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item.id}}, {{item.parentId}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : ''}}" >
+        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item.id}}, {{item.parentId}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
             {{btnItem.word}}
         </view>
     </view>
@@ -65,6 +65,9 @@ export default class SureGoodsCom extends wepy.component {
             {word: '退款', action: '2a'},
             {word: '查看物流', action: '2b'}
         ],
+        '3': [
+            {word: '订单已经取消', action: '3a', color: 'order-cancel'}
+        ],
         '4': [
             // {word: '延长收货', action: '4a'},
             {word: '查看物流', action: '4b'},
@@ -81,6 +84,8 @@ export default class SureGoodsCom extends wepy.component {
       numReduce() {
       },
       orderBtnA(btnItem, id, parentId) {
+          let _action  = btnItem.action
+          if (_action == '3a') return
           this.$emit('order-btn-event', { id: id, parentId: parentId, ...btnItem }, this.OrderComIndex)
       }
   }

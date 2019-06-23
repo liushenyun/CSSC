@@ -1,137 +1,66 @@
 
 <template>
-  <view class="search-ctner container-same">
-    会员专区
+  <view class="vip-ctner container-same">
+    <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+      <view class="vip-banner-outer"></view>
+      <view class="vip-list-outer">
+        <view class="vip-goods-item" wx:for='{{pageList}}' wx:key='index'>
+          <image src='{{item.goodsIco}}'></image>
+        </view>
+        <view class="no-data-tip" wx:if="{{pageList.length < 1}}">暂无数据</view>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy';
-import Auth from '../../../common/js/authProcess.js';
-import {
-  apiGoodsListF,
-  apiGetGoodsDetailsF
-} from '../../../services/index';
-import {
-  apiCollectDeleteF,
-  apiCollectFindPageF,
-  apiCollectSaveF
-} from '../../../services/mine';
-
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
-import miniPro from '@/utils/wepy-pro.js';
-import { showAlertTips } from '@/utils/feature.js';
-import SearchItem from '@/components/searchItem/index';
+import '../../../common/js/authProcess.js';
+import { apiVIPGoodsListF } from '../../../services/index';
+// import miniPro from '@/utils/wepy-pro.js';
 
 export default class Members extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
     navigationBarTitleText: '会员专区'
   };
-  components = {
-    SearchItem: SearchItem
-  };
-
-  mixins = [];
 
   data = {
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
-    indicatorDots: true,
-    autoplay: true,
-    interval: 5000,
-    duration: 1000,
-    goodsArray: [],
-    starFData: {
-      goodsId: '',
-      current: ''
+    pageList: [],
+    pageParams: {
+      page: 0,
+      limit: 10,
+      orderStatus: 0,
+      hasMore: false
     }
   };
-
-  computed = {};
 
   methods = {
-    toSearchA() {
-      //  wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
-    },
-    toCloseWordA() {
-    },
-    bindfocusInput(e) {
+    loadMore() { // 加载更多
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiVIPGoodsListFA(this.apiVIPGoodsListFA.bind(this))
     }
   }
 
-  getGoodsListA(fun) {
-    apiGoodsListF({
-      page: 0,
-      keyword: ''
-    }, fun).then(msg => {
-      let { rows } = msg
-      this.goodsArray = rows
+  apiVIPGoodsListFA(fun) {
+    apiVIPGoodsListF({
+      page: this.pageParams.page,
+      limit: this.pageParams.limit
+    }, fun).then(result => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
       this.$apply()
-    }).catch(err => {
-    });
+    }).catch(() => { });
   }
-
-  apiCollectSaveA(fun) {
-    apiCollectSaveF({
-      goodsId: this.starFData.goodsId
-    }, fun).then(msg => {
-      this.goodsArray[this.starFData.current].collection = true
-      this.$apply()
-    }).catch(err => {
-      miniPro.showToast('收藏失败')
-    })
-  }
-  
-  apiCollectDeleteA(fun) {
-    apiCollectDeleteF(this.starFData.goodsId, fun).then(msg => {
-      this.goodsArray[this.starFData.current].collection = false
-      this.$apply()
-    }).catch(err => {
-      miniPro.showToast('删除收藏失败')
-    })
-  }
-
-  events = {
-    'goods-start-event': (current, collection) => {
-      this.starFData.goodsId = this.goodsArray[current].id
-      this.starFData.current = current
-      this.$apply()
-      setTimeout(() => {
-        if (collection) {
-          this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
-        } else {
-          this.apiCollectSaveA(this.apiCollectSaveA.bind(this))
-        }
-      }, 10);
-    },
-    'to-goods-event': (goodsId) => {
-      let _goodsId = goodsId || '20190524190903491861'
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
-    }
-  };
 
   async onLoad() {
-    // wepy.navigateTo({
-    //   url: '/pages/packageIndex/NearMachine/index'
-    // })
-    this.getGoodsListA(this.getGoodsListA.bind(this))
-    this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
-    this.getSystemInfo();
-    this.$apply();
+    this.apiVIPGoodsListFA(this.apiVIPGoodsListFA.bind(this))
   }
   onUnload() {}
   onHide() {}
   async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
-  }
 }
 </script>
 <style lang="scss">

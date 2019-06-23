@@ -9,12 +9,7 @@
 import wepy from 'wepy'
 import {
   WECHAT_ACCESS_TOKEN_NAME,
-  // EVENT_QUEUE_NAME,
-  // WECHAT_BIND_TOKEN_NAME,
   TOAST_DURATION
-  // WECHAT_Refresh_TOKEN_NAME,
-  // WECHAT_APP_NAME,
-  // WECHAT_TOKEN_TYPE_NAME
 } from '../common/js/config'
 import Auth from '../common/js/authProcess.js'
 import getErrorText, { REPEAT_GROUP } from './errors'

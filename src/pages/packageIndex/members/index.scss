@@ -4,8 +4,33 @@
 page{
     height: 100%;
 }
-.search-ctner{
+.vip-ctner{
     height: 100%;
-    position: relative;
-    
+    padding: rpx(0) rpx(30) rpx(30) rpx(30);
+}
+.vip-banner-outer {
+    height: rpx(260);
+    background: red;
+    border-radius: rpx(6);
+    margin-bottom: rpx(20);
+}
+.vip-list-outer {
+    height: auto;
+    overflow: hidden;
+    .vip-goods-item {
+        width: 48%;
+        margin-right: 4%;
+        height: rpx(408);
+        background:rgba(244,244,244,1);
+        border-radius: rpx(10);
+        margin-bottom: rpx(22);
+        float: left;
+        image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .vip-goods-item:nth-child(even) {
+        margin-right: 0;
+    }
 }

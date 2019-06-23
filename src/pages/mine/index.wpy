@@ -107,9 +107,6 @@ export default class Mine extends wepy.page {
     navigationBarTextStyle: 'white',
     navigationBarTitleText: '我的'
   };
-  components = {};
-
-  mixins = [];
 
   data = {
     isPartner: false,
@@ -117,14 +114,12 @@ export default class Mine extends wepy.page {
     pageData: {
       userLevel: '', // 用户级别(0:普通用户 1：月卡会员 2：年卡会员)
       userType: '', // 用户类型(0:普通用户 1：普通合伙人 2：高级合伙人 3：代购合伙人)
-      withoutEvaluateOrderCount: '', // 待评价订单数量 
+      withoutEvaluateOrderCount: '', // 待评价订单数量
       withoutPayOrderCount: '', // 待支付订单数量
       withoutReceiveOrderCount: '', // 待收货订单数量
       withoutShippingOrderCount: '' // 待发货订单数量
     }
   };
-
-  computed = {};
 
   methods = {
     toBulkOrderA() {
@@ -140,7 +135,7 @@ export default class Mine extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
     },
     joinPartnerA() {
-      let _userType = this.pageData.userType
+      // let _userType = this.pageData.userType
       let _payStatus = this.pageData.payStatus
       let _status = this.pageData.status
       if (_status == 0) {
@@ -149,20 +144,19 @@ export default class Mine extends wepy.page {
         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
       } else if (_status == 1) {
         if (_payStatus == 1) {
-            this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
-          } else {
-            wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
-          }
+          this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
+        } else {
+          wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
+        }
       }
-      
     },
     toMoreA() {
       wepy.navigateTo({ url: '/pages/packageMine/more/index' });
     },
-     toCollectionA() {
+    toCollectionA() {
       wepy.navigateTo({ url: '/pages/packageMine/collection/index' });
     },
-     toFootprintA() {
+    toFootprintA() {
       wepy.navigateTo({ url: '/pages/packageMine/footprint/index' });
     },
     toAfterSales() {
@@ -173,36 +167,32 @@ export default class Mine extends wepy.page {
     }
   };
 
-  events = {};
-
   apiPartnerPayFA(fun) {
     apiPartnerPayF(fun).then(msg => {
       miniPro.requestPayment(msg).then((result) => {
         miniPro.showToast('支付成功')
         setTimeout(() => {
-         this.onShow()
+          this.onShow()
         }, 1500)
-      }).catch((err) => {
+      }).catch(() => {
         miniPro.showToast('调用失败')
         setTimeout(() => {
           this.onShow()
         }, 1500)
       });
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
 
   apiGetMyHomeDataFA(fun) {
     apiGetMyHomeDataF(fun).then((result) => {
       this.pageData = result
       let _text
-      let _userType = result.userType
+      // let _userType = result.userType
       let _payStatus = result.payStatus
       let _status = result.status
       if (_status == 0) {
         _text = '审核中'
-      } else if(_status == -1) {
+      } else if (_status == -1) {
         _text = '立即成为合伙人'
       } else if (_status == 2) {
         _text = '不通过（重新申请）'
@@ -213,20 +203,15 @@ export default class Mine extends wepy.page {
           _text = '查看合伙人工作台'
         }
       }
-       this.partnerText = _text
-       this.$apply()
-    }).catch((err) => {
-      
-    });
+      this.partnerText = _text
+      this.$apply()
+    }).catch(() => {});
   }
-  
   async onLoad() {}
   async onShow() {
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
   }
-  onUnload() {}
-  onHide() {}
 }
 </script>
 <style lang="scss" scoped>

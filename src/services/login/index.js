@@ -1,5 +1,5 @@
 import wepy from 'wepy'
-import { apiHealthStatus, apiGetCode, apiLogin, apiWechatLogin, apiRefreshToken } from './api';
+import { apiGetCode, apiLogin, apiWechatLogin } from './api';
 import packagePromise from '../packagePromise';
 // import { request } from '../request';
 import { WECHAT_APP_NAME, PAGE_INIT_SET_NAME, WECHAT_AUTH_BASE, EVENT_QUEUE_NAME } from '../../common/js/config'

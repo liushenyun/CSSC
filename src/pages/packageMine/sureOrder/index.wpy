@@ -30,8 +30,6 @@ import { apiFindOrderDetailF, apiPayCreateF, apiFindDefAddressF } from '../../..
 import miniPro from '@/utils/wepy-pro.js';
 export default class SureOrder extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '确认订单'
   };
   components = {
@@ -44,14 +42,14 @@ export default class SureOrder extends wepy.page {
     orderDetailObj: {},
     addressStr: '',
     addressId: '',
-    payRemarksList:[]
+    payRemarksList: []
   };
   methods = {
     submitOrderA() {
       this.apiPayCreateA(this.apiPayCreateA.bind(this))
     },
     toChoiceAddressA() {
-      wepy.navigateTo({ url: `/pages/packageMine/addressList/index` });
+      wepy.navigateTo({ url: `/pages/packageMine/addressList/index` })
     }
   };
   apiFindOrderDetailA(fun) {
@@ -64,9 +62,7 @@ export default class SureOrder extends wepy.page {
         // this.addressId = result.shippingAddressVo.id
       }
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   apiFindDefAddressFA(fun) {
@@ -74,9 +70,7 @@ export default class SureOrder extends wepy.page {
       this.addressStr = `${result.province} ${result.city} ${result.district}`
       this.addressId = result.id
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
   apiPayCreateA(fun) {
     apiPayCreateF({
@@ -92,15 +86,13 @@ export default class SureOrder extends wepy.page {
         setTimeout(() => {
           wepy.navigateTo({ url: `/pages/packageMine/paySuccess/index` })
         }, 1500)
-      }).catch((err) => {
+      }).catch(() => {
         miniPro.showToast('调用失败')
         setTimeout(() => {
           wepy.navigateTo({ url: `/pages/packageMine/payFail/index` })
         }, 1500)
       });
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
   events = {
     'order-detail-input': (value, index) => {
@@ -115,7 +107,7 @@ export default class SureOrder extends wepy.page {
   }
   onReady() {
     setTimeout(() => {
-        this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
+      this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
     }, 30);
   }
   onShow() {
@@ -125,7 +117,7 @@ export default class SureOrder extends wepy.page {
       {flag: true, a: 14}
     ]
     let _a = a.filter(val => {
-      if(val.flag == 11) {
+      if (val.flag == 11) {
         return {
           key: '12',
           value: val.a
@@ -139,4 +131,3 @@ export default class SureOrder extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

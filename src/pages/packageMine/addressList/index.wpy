@@ -23,7 +23,7 @@
           </view>
         </view>
       </view>
-      <button @tap='modifyA'>修改地址</button>
+      <!-- <button @tap='modifyA'>修改地址</button> -->
   </view>
 </template>
 
@@ -32,8 +32,6 @@ import wepy from 'wepy'
 import { apiAddressFindAllF } from '../../../services/mine/index'
 export default class AddressList extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '管理收货地址'
   };
   components = {
@@ -43,22 +41,10 @@ export default class AddressList extends wepy.page {
   };
   methods = {
     checked(item) {
-      // let _list = this.addressList
-      // this.addressList.forEach((val, i) => {
-      //   if (index == i) {
-      //     val.isChecked = true
-      //   } else {
-      //     val.isChecked = false
-      //   }
-      // })
       let _address = `${item.province} ${item.city} ${item.district}`
       let _addressId = item.id
       let pages = getCurrentPages();
       let prevPage = pages[pages.length - 2]; // 上一级页面
-      // prevPage.setData({
-      //   addressStr: _address,
-      //   addressId: _addressId
-      // })
       prevPage.data.addressId = _addressId
       this.$wxpage = prevPage;
       this.$apply()
@@ -92,9 +78,7 @@ export default class AddressList extends wepy.page {
         return val
       })
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
   onLoad() {
     this.apiAddressFindAllA(this.apiAddressFindAllA.bind(this))
@@ -104,4 +88,3 @@ export default class AddressList extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

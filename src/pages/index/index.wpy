@@ -5,9 +5,6 @@
     <scroll-view
       scroll-y
       style="height: 100%;"
-      bindscrolltoupper="upper"
-      bindscrolltolower="lower"
-      bindscroll="scroll"
     >
     
     <view class="ix-input-wrap">
@@ -109,21 +106,16 @@
 
 <script>
 import wepy from 'wepy';
-import Auth from '../../common/js/authProcess.js';
+import '../../common/js/authProcess.js';
 import {
   apiGoodsListF,
-  apiGetGoodsDetailsF,
-  apiGetHomeDataF,
-  
+  apiGetHomeDataF
 } from '../../services/index';
 import {
-  BLOOD_TIP_READED,
-  TIP_GLYCEMIC_TEXT,
   INDICATOR_COLOR,
   INDICATOR_ACTIVE_COLOR
 } from '@/common/js/config';
-import miniPro from '@/utils/wepy-pro.js';
-import { showAlertTips } from '@/utils/feature.js';
+// import miniPro from '@/utils/wepy-pro.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -157,31 +149,27 @@ export default class Index extends wepy.page {
 
   methods = {
     toMsgA() {
-       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
+      wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     bindfocusInput(e) {
       wepy.navigateTo({ url: '/pages/packageIndex/search/index' });
     },
-    // toGoodsDetail() {
-    //   let _goodsId = '20190524190903491861'
-    //   wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
-    // },
     toCategoryDetailA(e) {
       let _categoryId = e.currentTarget.dataset.category
-      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${_categoryId}`});
+      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${_categoryId}` })
     },
     toGoodsDetailA(e) {
       let _goodsId = e.currentTarget.dataset.goodsid
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
     },
     toClassifyRecom() {
-      wepy.navigateTo({ url: `/pages/packageIndex/classifyRecom/index`});
+      wepy.navigateTo({ url: `/pages/packageIndex/classifyRecom/index` });
     },
     toCultureA() {
       wepy.switchTab({ url: '/pages/recom/index' });
     },
     toMembersA() {
-      wepy.navigateTo({ url: `/pages/packageIndex/members/index`});
+      wepy.navigateTo({ url: `/pages/packageIndex/members/index` });
     },
     toTaleA() {
       let _taleId = this.homeTale.taleId
@@ -195,8 +183,7 @@ export default class Index extends wepy.page {
       page: 0,
       keyword: ''
     }, fun).then(msg => {
-    }).catch(err => {
-    });
+    }).catch(() => { });
   }
 
   apiGetHomeDataFA(fun) {
@@ -207,23 +194,12 @@ export default class Index extends wepy.page {
       this.homeTale = homeTale
       this.homeVipGoodsInfoList = homeVipGoodsInfoList
       this.$apply()
-    }).catch(err => {
-    });
+    }).catch(() => { })
   }
-
-  
-
-  events = {};
 
   async onLoad() {
     this.apiGetHomeDataFA(this.apiGetHomeDataFA.bind(this))
-    // this.getGoodsListA(this.getGoodsListA.bind(this))
-    // this.apiGetGoodsDetailsA('20190509153955704421', this.apiGetGoodsDetailsA.bind(this))
-    this.getSystemInfo();
-    this.$apply();
   }
-  onUnload() {}
-  onHide() {}
   onShareAppMessage(res) {
     if (res.from === 'button') {
       // 来自页面内转发按钮
@@ -233,12 +209,6 @@ export default class Index extends wepy.page {
       title: '成氏商城',
       path: '/pages/index/index'
     };
-  }
-  async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
 </script>

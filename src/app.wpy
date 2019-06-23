@@ -12,6 +12,7 @@ page {
 <script>
 import wepy from 'wepy';
 import 'wepy-async-function';
+import './common/js/authProcess.js';
 import EventQueue from './common/js/eventQueue';
 import { EVENT_QUEUE_NAME } from './common/js/config';
 
@@ -157,4 +158,3 @@ export default class extends wepy.app {
   }
 }
 </script>
-

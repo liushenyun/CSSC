@@ -44,25 +44,17 @@
 
 <script>
 import wepy from 'wepy';
-import Auth from '../../common/js/authProcess.js';
+import '../../common/js/authProcess.js';
 import {
   apiCategoryByParentF,
   apiCategoryGetBannerF
 } from '../../services/classify/index'
-
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
-import miniPro from '@/utils/wepy-pro.js';
-import { showAlertTips } from '@/utils/feature.js';
+// import miniPro from '@/utils/wepy-pro.js';
 
 export default class Index extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
     navigationBarTitleText: '分类'
   };
-  components = {};
-
-  mixins = [];
 
   data = {
     parentId: 0,
@@ -73,11 +65,9 @@ export default class Index extends wepy.page {
     bannerObj: {}
   };
 
-  computed = {};
-
   methods = {
     toMsgA() {
-       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
+      wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     classifyA(item, index) {
       if (this.currenIndex == index) return
@@ -86,52 +76,36 @@ export default class Index extends wepy.page {
       this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
     },
     toSearchA(categoryId) {
-      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}`});
+      wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${categoryId}` });
     }
   };
 
-  events = {};
-
   apiCategoryByParentFA(fun) {
-    apiCategoryByParentF(this.parentId,fun).then(reslut => {
+    apiCategoryByParentF(this.parentId, fun).then(reslut => {
       this.pageList = reslut
       this.subParentId = reslut[0].id
       this.$apply()
       this.apiCategoryByParentSubFA(this.apiCategoryByParentSubFA.bind(this))
-    }).catch(err => {
-    })
+    }).catch(() => { })
   }
 
   apiCategoryByParentSubFA(fun) {
-    apiCategoryByParentF(this.subParentId,fun).then(reslut => {
+    apiCategoryByParentF(this.subParentId, fun).then(reslut => {
       this.subPageList = reslut
       this.$apply()
-    }).catch(err => {
-    })
+    }).catch(() => { })
   }
 
   apiCategoryGetBannerFA(fun) {
     apiCategoryGetBannerF(fun).then((result) => {
       this.bannerObj = result
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   async onLoad() {
     this.apiCategoryGetBannerFA(this.apiCategoryGetBannerFA.bind(this))
     this.apiCategoryByParentFA(this.apiCategoryByParentFA.bind(this))
-    this.getSystemInfo();
-    this.$apply();
-  }
-  onUnload() {}
-  onHide() {}
-  async onShow() {}
-  getSystemInfo() {
-    let res = wepy.getSystemInfoSync();
-    let fitRatio = res.windowWidth / 750;
-    this.$apply();
   }
 }
 </script>

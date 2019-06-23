@@ -89,5 +89,8 @@
             color: $color-word-alarm;
             border-color: $color-word-alarm;
         }
+        .order-btn.order-cancel {
+            opacity: 0.8;
+        }
     }
 }

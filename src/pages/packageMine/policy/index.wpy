@@ -98,21 +98,12 @@
 import wepy from 'wepy'
 export default class Policy extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '招商采购政策'
   };
-  components = {
-  };
-  data = {
-    isRepair: false, // 检修
-    isBad: false
-  };
-  methods = {
-  }
+  data = { };
+  methods = { }
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

@@ -17,14 +17,10 @@
 
 <script>
 import wepy from 'wepy'
-import miniPro from '@/utils/wepy-pro.js';
+// import miniPro from '@/utils/wepy-pro.js';
 export default class PayFail extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '支付失败'
-  };
-  components = {
   };
   data = {
   };
@@ -33,16 +29,12 @@ export default class PayFail extends wepy.page {
       wepy.switchTab({ url: `/pages/index/index` })
     },
     checkOrderA() {
-      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` })
     }
   };
-  
-  events = {}
-  onLoad() {
-  }
+  onLoad() { }
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

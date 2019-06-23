@@ -26,13 +26,11 @@ export default class MemberDetail extends wepy.page {
     // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '用户明细'
   };
-  components = {
-  };
   data = {
     pageParams: {
       page: 0,
       limit: 40,
-      hasMore:false
+      hasMore: false
     },
     pageList: []
   };
@@ -49,7 +47,6 @@ export default class MemberDetail extends wepy.page {
       page: this.pageParams.page,
       limit: this.pageParams.limit
     }, fun).then((result) => {
-      
       let { rows, last, pageNumber } = result
       rows.forEach(val => {
         let { userLevel, userType } = val
@@ -62,16 +59,14 @@ export default class MemberDetail extends wepy.page {
         } else if (_userLevel != '普通用户' && _userType == '普通用户') {
           val.typeText = _userLevel
         } else {
-           val.typeText = `${_userLevel}|${_userType}`
+          val.typeText = `${_userLevel}|${_userType}`
         }
       });
       this.pageParams.page = pageNumber
       this.pageParams.hasMore = !last
       this.pageList = this.pageList.concat(rows)
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   onLoad() {
@@ -82,4 +77,3 @@ export default class MemberDetail extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

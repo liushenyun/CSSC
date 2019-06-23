@@ -10,7 +10,7 @@
           duration="{{duration}}"
           current="{{currentIndex}}"
         >
-          <block wx:for="{{topArr}}">
+          <block wx:for="{{topArr}}" wx:key='index'>
             <swiper-item>
               <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
                 <view class="swiper-div-same">
@@ -34,6 +34,7 @@
 
 <script>
 import wepy from 'wepy'
+import '../../../common/js/authProcess.js'
 import NoTip from '@/components/OrderNoDataTip/index'
 import OrderCom from '@/components/OrderGoodCom/index'
 import miniPro from '@/utils/wepy-pro.js'
@@ -45,8 +46,6 @@ import {
 } from '../../../services/mine/index'
 export default class Order extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '我的订单'
   };
   components = {
@@ -54,23 +53,23 @@ export default class Order extends wepy.page {
     OrderCom: OrderCom
   };
   data = {
-   topArr: ['全部', '待付款', '待发货', '待收货', '待评价'],
-   currentIndex: 0,
-   indicatorDots: false,
-   autoplay: false,
-   duration: 100,
-   orderStatusObj: [0, 1, 2, 4, 5], // 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
-   pageList: [],
-   cancelOrderId: '',
-   orderActionId: '',
-   confirmOrderId: '',
-   btnClickCurrenIndex: -1,
-   pageParams: {
-     page: 0,
-     limit: 10,
-     orderStatus: 0,
-     hasMore:false
-   }
+    topArr: ['全部', '待付款', '待发货', '待收货', '待评价'],
+    currentIndex: 0,
+    indicatorDots: false,
+    autoplay: false,
+    duration: 100,
+    orderStatusObj: [0, 1, 2, 4, 5], // 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
+    pageList: [],
+    cancelOrderId: '',
+    orderActionId: '',
+    confirmOrderId: '',
+    btnClickCurrenIndex: -1,
+    pageParams: {
+      page: 0,
+      limit: 10,
+      orderStatus: 0,
+      hasMore:false
+    }
   };
   events = {
     'order-btn-event': (item, index) => {
@@ -83,7 +82,7 @@ export default class Order extends wepy.page {
         this.apiCancelOrderFA(this.apiCancelOrderFA.bind(this))
       } else if (_action == "2a") { // 退款
         this.orderActionId = item.id
-        this.apiRefundFA(this.apiCancelOrderFA.bind(this))
+        this.apiRefundFA(this.apiRefundFA.bind(this))
       } else if (_action == '2b' || _action == '5b') { 
         // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == '4c') {
@@ -131,6 +130,7 @@ export default class Order extends wepy.page {
   
   apiRefundFA(fun) {
     apiRefundF(this.orderActionId, fun).then((result) => {
+      miniPro.showToast('退款成功')
       console.log(134, result);
     }).catch((err) => {
       

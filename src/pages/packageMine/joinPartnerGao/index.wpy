@@ -59,8 +59,6 @@ import {
 import miniPro from '../../../utils/wepy-pro'
 export default class JoinPartnerGao extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '成为合伙人'
   };
   components = {
@@ -99,7 +97,7 @@ export default class JoinPartnerGao extends wepy.page {
       this.pageParams.sessionId = result
       this.$apply()
       miniPro.showToast("短信已发送")
-    }).catch((err) => {
+    }).catch(() => {
       miniPro.showToast("短信发送失败")
     });
   }
@@ -122,15 +120,7 @@ export default class JoinPartnerGao extends wepy.page {
           wepy.switchTab({ url: `/pages/mine/index` })
         }
       })
-      // miniPro.showAlert('提示', '您的信息已经提交成功，我们会尽快审核', '确定', function (flag) {
-      //   wepy.switchTab({ url: `/pages/mine/index` })
-      // })
-      // if (this.pageParams.type == 2) {
-      //   this.apiPartnerPayFA(this.apiPartnerPayFA.bind(this))
-      // }
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   apiPartnerPayFA(fun) {
@@ -140,17 +130,14 @@ export default class JoinPartnerGao extends wepy.page {
         setTimeout(() => {
           wepy.redirectTo({ url: `/pages/packageMine/posters/index` })
         }, 1500)
-      }).catch((err) => {
+      }).catch(() => {
         miniPro.showToast('调用失败')
         setTimeout(() => {
           wepy.navigateTo({ url: `/pages/packageMine/payFail/index` })
         }, 1500)
       });
-    }).catch(err => {
-
-    })
+    }).catch(() => { })
   }
-
 
   methods = {
     nameBindInput(e) {
@@ -186,7 +173,6 @@ export default class JoinPartnerGao extends wepy.page {
       this.apiPartnerSaveFA(this.apiPartnerSaveFA.bind(this))
     }
   }
-
   onLoad(option) {
     this.pageParams.type = option.type
     this.pageParams.typeTitle = this.typeName[option.type]
@@ -196,4 +182,3 @@ export default class JoinPartnerGao extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

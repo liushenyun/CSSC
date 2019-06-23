@@ -22,9 +22,6 @@ export default class Footprint extends wepy.page {
   data = {
     footArr: []
   };
-  methods = {
-    
-  }
   events = {
     'look-event': (id) => {
       wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
@@ -41,21 +38,15 @@ export default class Footprint extends wepy.page {
       let { rows } = result
       this.footArr = rows
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   apiFootDeleteA(fun) {
     apiFootDeleteF('20190509153955704421', fun).then((result) => {
-      
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { })
   }
 
   onLoad() {
-    // this.apiFootDeleteA(this.apiFootDeleteA.bind(this))
     this.apiFootFindPageA(this.apiFootFindPageA.bind(this))
   }
 }
@@ -63,4 +54,3 @@ export default class Footprint extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

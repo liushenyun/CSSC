@@ -37,8 +37,6 @@
 import wepy from 'wepy'
 export default class ReplacementGoods extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '补发商品'
   };
   components = {
@@ -52,7 +50,7 @@ export default class ReplacementGoods extends wepy.page {
       this.reasonIndex = e.detail.value
     },
     toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' })
     }
   }
 }
@@ -60,4 +58,3 @@ export default class ReplacementGoods extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

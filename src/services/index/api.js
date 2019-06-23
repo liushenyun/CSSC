@@ -8,6 +8,10 @@ const apiCategoryList = () => `${MAIN_DOMAIN}/api/buy/goods/get_recommend_catego
 
 // 分页查询商品信息
 const apiGoodsList = () => `${MAIN_DOMAIN}/api/buy/goods/find_page`
+
+// 分页查询会员专区商量信息
+const apiVIPGoodsList = () => `${MAIN_DOMAIN}/api/buy/goods/find_vip_goods_page`
+
 // 获取商品详情
 const apiGetGoodsDetails = (goodsId) => `${MAIN_DOMAIN}/api/buy/goods/get_goods_details/${goodsId}`
 
@@ -19,6 +23,7 @@ const apiGetHomeData = () => `${MAIN_DOMAIN}/api/home/get_home_data`
 
 export {
   apiGoodsList,
+  apiVIPGoodsList,
   apiGetGoodsDetails,
   apiGetHomeData,
   apiGoodsLikePage,

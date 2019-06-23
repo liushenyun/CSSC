@@ -26,8 +26,6 @@ import {
 import miniPro from '../../../utils/wepy-pro'
 export default class JoinMembers extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '加入会员'
   };
   components = {
@@ -50,9 +48,7 @@ export default class JoinMembers extends wepy.page {
     apiVipFinanceConfigF(fun).then((result) => {
       this.pageObj = result
       this.$apply()
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
 
   apiVipPayFA(fun) {
@@ -64,14 +60,11 @@ export default class JoinMembers extends wepy.page {
         setTimeout(() => {
           wepy.switchTab({ url: `/pages/mine/index` })
         }, 1500)
-      }).catch((err) => {
+      }).catch(() => {
         miniPro.showToast('支付失败')
       });
-    }).catch((err) => {
-      
-    });
+    }).catch(() => { });
   }
-
   onLoad() {
     this.apiVipFinanceConfigFA(this.apiVipFinanceConfigFA.bind(this))
   }
@@ -80,4 +73,3 @@ export default class JoinMembers extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-

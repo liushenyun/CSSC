@@ -80,7 +80,12 @@ button.icx-btn-same-cancel{
 .wxParse-p text {
   line-height: 1.6
 }
-
+.no-data-tip {
+  height: rpx(40);
+  line-height: rpx(40);
+  text-align: center;
+  margin-top: rpx(20);
+}
 
 // 滚动条设置
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  

@@ -1,6 +1,7 @@
 import wepy from 'wepy'
 import {
   apiGoodsList,
+  apiVIPGoodsList,
   apiGetGoodsDetails,
   apiGetHomeData,
   apiGoodsLikePage,
@@ -16,6 +17,23 @@ let request = miniPro.request
 const apiGoodsListF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiGoodsList(),
+    method: 'POST',
+    noOutData: true,
+    data: {
+      limit: 20,
+      ...data
+    }
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 分页查询会员专区商量信息
+const apiVIPGoodsListF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiVIPGoodsList(),
     method: 'POST',
     noOutData: true,
     data: {
@@ -95,6 +113,7 @@ const apiCategoryListF = (fun) => packagePromise((resolve, reject) => {
 
 export {
   apiGoodsListF,
+  apiVIPGoodsListF,
   apiGetGoodsDetailsF,
   apiGetHomeDataF,
   apiGoodsLikePageF,

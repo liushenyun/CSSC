@@ -144,7 +144,6 @@
       <view class="word word-sub-title word-b">
         本商城保有删除各类不符合法律政策或不真实的信息内容而无须通知用户的权利。
       </view>
-
   </view>
 </template>
 
@@ -152,21 +151,13 @@
 import wepy from 'wepy'
 export default class UserAgreement extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '用户协议'
   };
   components = {
   };
-  data = {
-    isRepair: false, // 检修
-    isBad: false
-  };
-  methods = {
-  }
+  data = { };
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

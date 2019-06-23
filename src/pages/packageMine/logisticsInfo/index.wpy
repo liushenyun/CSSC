@@ -3,27 +3,41 @@
       <view class="logis-inner">
 
         <view class="logis-status-outer">
-          <view class="logis-goods">
+          <!-- <view class="logis-goods">
             <image src=''></image>
             <view>迪奥唇膏口红</view>
-          </view>
+          </view> -->
           <view class="logis-status">
-            <view>已发货</view>
+            <view>{{topStatus}}</view>
             <view>包裹离目的地越来越近了</view>
           </view>
         </view>
 
         <view class="logis-which-outer">
           <view class="which-one">
-            <view>申通快递</view>
-            <view>官方电话95543</view>
+            <view>{{logsObj.expressCompany}}</view>
+            <view>订单号：{{logsObj.expressNum}}</view>
           </view>
-          <view class="which-two">
+          <!-- <view class="which-two">
             申通快递 39554340001654
-          </view>
+          </view> -->
         </view>
 
-        <view class="logis-info-outer">5</view>
+        <view class="logis-info-outer">
+          <view class="logis-item {{index == 0 ? 'active' : ''}}" wx:for='{{pageList}}' wx:key="index">
+            <view class="point-outer">
+              <view class="point">
+                <view class="point-inner"></view>
+              </view>
+            </view>
+             
+            <view class="logis-a">
+              <text>{{item.status}}</text>
+            </view>
+            <view class="logis-b">{{item.context}}</view>
+            <view class="logis-c">{{item.time}}</view>
+          </view>
+        </view>
         
       </view>
   </view>
@@ -31,18 +45,19 @@
 
 <script>
 import wepy from 'wepy'
-import miniPro from '@/utils/wepy-pro.js';
+// import miniPro from '@/utils/wepy-pro.js';
 import { apiLogisticsInfoF } from '../../../services/mine/index'
 export default class LogisticsInfo extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '查看物流'
   };
   components = {
   };
   data = {
-    orderId: ''
+    orderId: '',
+    logsObj: '',
+    pageList: [],
+    topStatus: '--'
   };
   methods = {
     continueBuyA() {
@@ -52,13 +67,14 @@ export default class LogisticsInfo extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageMine/order/index` });
     }
   };
-  
   apiLogisticsInfoFA(fun) {
     apiLogisticsInfoF(this.orderId, fun).then((result) => {
-      
-    }).catch((err) => {
-      
-    });
+      let _logisticsInfoList = result.logisticsInfoList
+      this.pageList = _logisticsInfoList || []
+      this.logsObj = result
+      this.topStatus = _logisticsInfoList && _logisticsInfoList[0] && _logisticsInfoList[0].context
+      this.$apply()
+    }).catch(() => { });
   }
   events = {}
   onLoad(option) {
@@ -66,11 +82,9 @@ export default class LogisticsInfo extends wepy.page {
     setTimeout(() => {
       this.apiLogisticsInfoFA(this.apiLogisticsInfoFA.bind(this))
     }, 10);
-    console.log(56, option);
   }
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

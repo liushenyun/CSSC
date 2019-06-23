@@ -19,8 +19,6 @@ export default class MemberDocument extends wepy.page {
   components = {
   };
   data = {
-    isRepair: false, // 检修
-    isBad: false
   };
   methods = {
   }
@@ -39,4 +37,3 @@ export default class MemberDocument extends wepy.page {
 <style lang="scss" scoped>
 @import './index'
 </style>
-
