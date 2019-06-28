@@ -2,7 +2,7 @@
 <template>
   <view class="vip-ctner container-same">
     <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-      <view class="vip-banner-outer"></view>
+      <!-- <view class="vip-banner-outer"></view> -->
       <view class="vip-list-outer">
         <view class="vip-goods-item" wx:for='{{pageList}}' wx:key='index'>
           <image src='{{item.goodsIco}}'></image>

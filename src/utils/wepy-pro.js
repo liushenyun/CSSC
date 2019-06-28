@@ -74,32 +74,6 @@ let proFun = () => {
   }
 
   /**
-  * 设置 refresh-token
-  * @param {String} token - refresh-token
-  */
-  // miniPro.setRefreshToken = (toekn) => {
-  //   return wepy.setStorageSync(WECHAT_Refresh_TOKEN_NAME, toekn)
-  // }
-
-  // 获取refresh-token
-  // miniPro.getRefreshToken = () => {
-  //   return wepy.getStorageSync(WECHAT_Refresh_TOKEN_NAME)
-  // }
-
-  /**
-   * 设置 token_type
-   * @param {String} token - token-type
-   */
-  // miniPro.setTokenType = (toekn) => {
-  //   return wepy.setStorageSync(WECHAT_TOKEN_TYPE_NAME, toekn)
-  // }
-
-  // 获取 token_type
-  // miniPro.getTokenType = (toekn) => {
-  //   return wepy.getStorageSync(WECHAT_TOKEN_TYPE_NAME)
-  // }
-
-  /**
    * 设置 BIND_TOKEN
    * @param {String} token - BIND_TOKEN
    */

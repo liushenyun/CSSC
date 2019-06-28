@@ -14,6 +14,8 @@
       <view class="hy-inner">
         <image src='../../images/discount_bg1.png'></image>
         <text>家亲会员</text>
+        <view wx:if="{{pageData.userLevel == 0}}" class="hy-word">立即加入，立享折扣</view>
+        <view wx:else class="hy-word">海量商品，多种优惠</view>
         <view wx:if="{{pageData.userLevel == 0}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
         <view wx:else @tap='lookMembersWordA' class="hy-btn">查看会员特权</view>
       </view>

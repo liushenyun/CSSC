@@ -1,0 +1,41 @@
+<template>
+  <view class='msg-con-ctner'>
+    {{content}}
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import '../../../common/js/authProcess.js';
+import { apiMessageReadF } from '../../../services/index';
+export default class MssageDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '消息详情'
+  };
+  components = {
+  };
+  data = {
+    msgId: '',
+    content: ''
+  };
+  methods = {
+  }
+
+  apiMessageReadFA(fun) {
+    apiMessageReadF({
+      id: this.msgId
+    }, fun).then((result) => {
+      this.content = result.content
+      this.$apply()
+    }).catch(() => {});
+  }
+  onLoad(option) {
+    this.msgId = option.id
+    this.apiMessageReadFA(this.apiMessageReadFA.bind(this))
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>
+

@@ -60,7 +60,7 @@ page{
         height: 100%;
       }
       text,
-      view {
+      .hy-btn {
         font-size: $size-unit;
         height: rpx(38);
         line-height: rpx(38);
@@ -73,13 +73,22 @@ page{
         color: #FFF;
         z-index: 1;
       }
-      view {
+      .hy-btn {
         right: rpx(14);
         background: #FFF;
         color: $color-word-alarm;
         letter-spacing: rpx(1);
         padding: 0 rpx(12);
         border-radius:rpx(19);
+        z-index: 1;
+      }
+      .hy-word {
+        position: absolute;
+        bottom: rpx(58);
+        left: rpx(30);
+        font-size: rpx(32);
+        color: #FFF;
+        letter-spacing: rpx(6);
         z-index: 1;
       }
       .hy-word-wrap {

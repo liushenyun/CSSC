@@ -1,0 +1,12 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.msg-con-ctner{
+    padding: rpx(16) rpx(20);
+    text-indent: 2em;
+    letter-spacing: rpx(2);
+    line-height: 1.6
+}

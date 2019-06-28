@@ -1,6 +1,16 @@
 <template>
   <view class='msg-ctner'>
       <view wx:if="{{pageList.length > 0}}" class="msg-has">
+         <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+            <view class="msg-item" wx:for="{{pageList}}" wx:key='index' @tap="toMsgDetail({{item.id}})">
+              <image class="msg-img-left" src='../../../images/msg_icon.png'></image>
+              <view class="msg-con">
+                <view>{{item.title}}</view>
+                <view>{{item.createTime}}</view>
+              </view>
+              <image class="msg-img-right" src='../../../images/unfold.png'></image>
+            </view>
+         </scroll-view>
       </view>
       <view wx:else class="msg-no">
         <image src='../../../images/msg_cion.png'></image>
@@ -11,19 +21,51 @@
 
 <script>
 import wepy from 'wepy'
+import '../../../common/js/authProcess.js';
+import { apiGetMessageF } from '../../../services/index';
 export default class Index extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '消息列表'
   };
   components = {
   };
   data = {
-    pageList: []
+    pageList: [],
+    pageParams: {
+      page: 0,
+      limit: 10,
+      type: 0,
+      hasMore:false
+    }
   };
   methods = {
-    
+    toMsgDetail(id) {
+       wepy.navigateTo({ url: `/pages/packageIndex/messageDetail/index?id=${id}` });
+    },
+    loadMore() { // 加载更多
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiGetMessageFA(this.apiGetMessageFA.bind(this))
+    }
+  }
+
+  apiGetMessageFA(fun) {
+    apiGetMessageF({
+      page: this.pageParams.page,
+      limit: this.pageParams.limit,
+      type: this.pageParams.type
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
+  onLoad() {
+    this.apiGetMessageFA(this.apiGetMessageFA.bind(this))
   }
 }
 </script>

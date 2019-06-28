@@ -89,7 +89,6 @@ export default class Order extends wepy.page {
         this.confirmOrderId = item.id
         this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
       } else if (_action == '4b') { // 查看物流
-        console.log(88, item);
         wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index?id=${item.id}` });
       }
     }
@@ -131,6 +130,10 @@ export default class Order extends wepy.page {
   apiRefundFA(fun) {
     apiRefundF(this.orderActionId, fun).then((result) => {
       miniPro.showToast('退款成功')
+      setTimeout(() => {
+        this.pageList[this.btnClickCurrenIndex].orderStatus = 3
+        this.$apply()
+      }, 1000);
       console.log(134, result);
     }).catch((err) => {
       

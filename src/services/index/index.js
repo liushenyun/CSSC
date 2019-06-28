@@ -6,7 +6,10 @@ import {
   apiGetHomeData,
   apiGoodsLikePage,
   apiGoodFindCategoryId,
-  apiCategoryList
+  apiCategoryList,
+  apiMessageDelete,
+  apiGetMessage,
+  apiMessageRead
 } from './api'
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
@@ -111,6 +114,48 @@ const apiCategoryListF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+//  消息 => 删除消息
+const apiMessageDeleteF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiMessageDelete(id),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+//  消息 => 分页获取消息
+const apiGetMessageF = (data, fun) => packagePromise((resolve, reject) => {
+  console.log(131, data)
+  request({
+    url: apiGetMessage(),
+    method: 'POST',
+    noOutData: true,
+    data: {
+      limit: 20,
+      ...data
+    }
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+//  消息 => 获取消息内容（阅读消息）
+const apiMessageReadF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiMessageRead(data.id),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiGoodsListF,
   apiVIPGoodsListF,
@@ -118,5 +163,8 @@ export {
   apiGetHomeDataF,
   apiGoodsLikePageF,
   apiGoodFindCategoryIdF,
-  apiCategoryListF
+  apiCategoryListF,
+  apiMessageDeleteF,
+  apiGetMessageF,
+  apiMessageReadF
 }

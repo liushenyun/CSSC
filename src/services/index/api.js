@@ -21,6 +21,15 @@ const apiGoodsLikePage = () => `${MAIN_DOMAIN}/api/buy/goods/like_page`
 // 首页 => 获取首页数据
 const apiGetHomeData = () => `${MAIN_DOMAIN}/api/home/get_home_data`
 
+//  消息 => 删除消息
+const apiMessageDelete = (id) => `${MAIN_DOMAIN}/api/message/delete/${id}`
+
+//  消息 => 分页获取消息
+const apiGetMessage = () => `${MAIN_DOMAIN}/api/message/find_page`
+
+//  消息 => 获取消息内容（阅读消息）
+const apiMessageRead = (messageId) => `${MAIN_DOMAIN}/api/message/read/${messageId}`
+
 export {
   apiGoodsList,
   apiVIPGoodsList,
@@ -28,5 +37,8 @@ export {
   apiGetHomeData,
   apiGoodsLikePage,
   apiGoodFindCategoryId,
-  apiCategoryList
+  apiCategoryList,
+  apiMessageDelete,
+  apiGetMessage,
+  apiMessageRead
 }
