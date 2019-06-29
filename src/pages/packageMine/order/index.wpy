@@ -75,6 +75,7 @@ export default class Order extends wepy.page {
     'order-btn-event': (item, index) => {
       this.btnClickCurrenIndex = index
       let _action = item.action
+      console.log(item, index)
       if (_action == "1b") { // 付款
         wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == "1a") { // 取消订单
@@ -83,12 +84,12 @@ export default class Order extends wepy.page {
       } else if (_action == "2a") { // 退款
         this.orderActionId = item.id
         this.apiRefundFA(this.apiRefundFA.bind(this))
-      } else if (_action == '2b' || _action == '5b') { 
+      } else if (_action == '5b') { 
         // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == '4c') {
         this.confirmOrderId = item.id
         this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
-      } else if (_action == '4b') { // 查看物流
+      } else if (_action == '4b' || _action == '2b') { // 查看物流
         wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index?id=${item.id}` });
       }
     }
