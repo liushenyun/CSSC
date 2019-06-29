@@ -176,10 +176,10 @@ export default class BulkDetail extends wepy.page {
     goodsColorVoList: [], // 颜色规格
     groupPurchaseRegulationsList: [],
     firstSpec: {
-        id: '--',
-        marketPrice: '--',
-        price: '--',
-        specification: '--'
+      id: '--',
+      marketPrice: '--',
+      price: '--',
+      specification: '--'
     },
     goodsName: '',
     indicatorDots: true,
@@ -204,7 +204,7 @@ export default class BulkDetail extends wepy.page {
       wepy.switchTab({ url: '/pages/cart/index' });
     },
     specChoiceA(index, item) {
-       this.specCurrentIndex = index
+      this.specCurrentIndex = index
     },
     colorChoiceA(index, item) {
       this.colorCurrentIndex = index
@@ -214,10 +214,10 @@ export default class BulkDetail extends wepy.page {
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
       } else if (this.isWhichFlag == 2) {
         let _data = {
-            cartId: '',
-            goodsId: this.goodsId,
-            specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
-            goodsNumber : this.buyNum
+          cartId: '',
+          goodsId: this.goodsId,
+          specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+          goodsNumber: this.buyNum
         }
         if (this.goodsColorVoList.length > 0) {
           _data.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
@@ -226,8 +226,7 @@ export default class BulkDetail extends wepy.page {
         this.$apply()
         setTimeout(() => {
           this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
-        }, 10);
-        
+        }, 10)
       }
     },
     addCartA() {
@@ -247,31 +246,26 @@ export default class BulkDetail extends wepy.page {
   }
 
   apiCartSaveA(fun) { // 添加购物车
-    var _self = this
     apiCartSaveF({
-        goodsId: this.goodsId,
-        specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
-        colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
-        quantity: this.buyNum
-      }, fun).then(msg => {
+      goodsId: this.goodsId,
+      specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
+      colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
+      quantity: this.buyNum
+    }, fun).then(msg => {
       setTimeout(() => {
         this.showGoodsPop = false
         this.$apply()
       }, 1500);
       miniPro.showToast('添加成功')
       this.$apply()
-    }).catch(err => {
-
-    })
+    }).catch(() => {})
   }
 
   apiCreateOrderA(fun) {
     apiCreateOrderF(this.createData, fun).then(msg => {
       let _id = msg.id
       wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
-    }).catch(err => {
-
-    })
+    }).catch(() => {})
   }
 
   apiGetGoodsDetailsA(fun) {
@@ -293,15 +287,13 @@ export default class BulkDetail extends wepy.page {
           specification: _first.specification || '--'
         }
       }
-      
       WxParse.wxParse('goodsDetail', 'html', goodsDetail, _self, 5);
       this.$apply();
-    }).catch(err => {
-    });
+    }).catch(() => {});
   }
 
   events = {
-      'addComEvent': (p1) => { this.buyNum = p1; this.$apply() }
+    'addComEvent': (p1) => { this.buyNum = p1; this.$apply() }
   };
 
   async onLoad(option) {
@@ -309,10 +301,21 @@ export default class BulkDetail extends wepy.page {
     this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
     this.$apply();
   }
+
+  onShareAppMessage(res) {
+    let _goodsId = this.goodsId
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '成氏商城',
+      path: `/pages/packageIndex/bulkDetail/index?goodsId=${_goodsId}`
+    };
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import '../../../common/wxParse/wxParse.wxss';
 @import './index'
 </style>
-

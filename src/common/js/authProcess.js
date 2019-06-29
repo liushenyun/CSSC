@@ -7,7 +7,7 @@
  */
 
 import wepy from 'wepy';
-import { wechatLogin, refreshToken } from '../../services/login/index'
+import { wechatLogin, apiPasePhoneF, refreshToken } from '../../services/login/index'
 import { EVENT_QUEUE_NAME } from '../../common/js/config';
 import miniPro from '../../utils/wepy-pro'
 export default class Auth {
@@ -136,6 +136,14 @@ export default class Auth {
     wechatLogin({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
       this._setToken(res)
       resolve(true)
+
+      // apiPasePhoneF({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
+      //   resolve(true)
+      //   // this._toDoEvent()
+      // }).catch(err => {
+      //   reject(false)
+      // })
+
       // this._toDoEvent()
     }).catch(err => {
       reject(false)

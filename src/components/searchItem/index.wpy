@@ -45,7 +45,8 @@ export default class SearchItem extends wepy.component {
         this.$emit('goods-start-event', this.current, _collection)
       },
       toGoodsA() {
-          this.$emit('to-goods-event', this.item.id)
+          console.log(48, this.item);
+          this.$emit('to-goods-event', this.item.id, this.item.groupPurchase)
       }
   }
   watch = {

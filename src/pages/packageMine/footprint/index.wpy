@@ -10,6 +10,7 @@
 import wepy from 'wepy'
 import CatItem from '@/components/FootGoodCom/index';
 import { apiFootFindPageF, apiFootDeleteF } from '../../../services/mine/index'
+import miniPro from '@/utils/wepy-pro.js';
 export default class Footprint extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -23,8 +24,8 @@ export default class Footprint extends wepy.page {
     footArr: []
   };
   events = {
-    'look-event': (id) => {
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
+    'look-event': (id, group) => {
+      miniPro.toGoodsDetail(id, group)
     },
     'buy-event': (index) => {
     }

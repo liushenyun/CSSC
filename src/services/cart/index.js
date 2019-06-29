@@ -35,7 +35,7 @@ const apiCartDeleteF = (goodsId, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 购物车分页查询
+// 购物车分页查询 【分页暂时不做】
 const apiCartFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiCartFindPage(),

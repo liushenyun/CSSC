@@ -73,6 +73,16 @@ let proFun = () => {
     return wepy.setStorageSync(WECHAT_ACCESS_TOKEN_NAME, toekn)
   }
 
+  // 跳转详情页
+  miniPro.toGoodsDetail = (_goodsId, groupFlag = 0) => {
+    console.log(_goodsId, groupFlag);
+    if (groupFlag == 1) {
+      wepy.navigateTo({ url: `/pages/packageIndex/bulkDetail/index?goodsId=${_goodsId}` })
+    } else {
+      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
+    }
+  }
+
   /**
    * 设置 BIND_TOKEN
    * @param {String} token - BIND_TOKEN

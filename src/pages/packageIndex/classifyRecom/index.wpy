@@ -12,7 +12,7 @@
       <view class="clre-con">
         <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
           <view class="clre-con-top">12</view>
-          <view class="clre-goods-outer" wx:for="{{pageList}}" wx:key="index" @tap="toGoodsDetailA({{item.id}})">
+          <view class="clre-goods-outer" wx:for="{{pageList}}" wx:key="index" @tap="toGoodsDetailA({{item}})">
             <view class="clre-l">
               <image src='{{item.goodsIco}}'></image>
             </view>
@@ -78,9 +78,9 @@ export default class Index extends wepy.page {
       this.pageParams.categoryId = item.id
       this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     },
-    toGoodsDetailA(id) {
-      if (!id) return
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}`});
+    toGoodsDetailA(item) {
+      if (!item.id) return
+      miniPro.toGoodsDetail(item.id, item.groupPurchase)
     },
     recomA() {
     },

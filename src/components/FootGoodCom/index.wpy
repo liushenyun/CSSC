@@ -52,7 +52,8 @@ export default class CatItem extends wepy.component {
   }
   methods = {
      toLookA() {
-         this.$emit('look-event', this.item.goodsId)
+         let _group = this.item.groupPurchase || 0
+         this.$emit('look-event', this.item.goodsId, _group)
      },
      toBuyA() {
         this.$emit('buy-event', this.current)

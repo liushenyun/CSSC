@@ -90,7 +90,7 @@ const apiCreateOrderF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 订单模块 => 分页查询商品信息
+// 订单模块 => 分页查询商品信息【分页已做】
 const apiOrderFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiOrderFindPage(),

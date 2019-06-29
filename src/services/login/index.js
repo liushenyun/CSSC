@@ -1,5 +1,5 @@
 import wepy from 'wepy'
-import { apiGetCode, apiLogin, apiWechatLogin } from './api';
+import { apiGetCode, apiLogin, apiWechatLogin, apiPasePhone } from './api';
 import packagePromise from '../packagePromise';
 // import { request } from '../request';
 import { WECHAT_APP_NAME, PAGE_INIT_SET_NAME, WECHAT_AUTH_BASE, EVENT_QUEUE_NAME } from '../../common/js/config'
@@ -69,6 +69,7 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
   if (_isGettingToken) { return }
   wepy.setStorageSync('isGettingToken', true)
   let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
+  console.log(98, JSON.parse(data.miniprogramParam));
   request({
     url: apiWechatLogin(),
     method: 'POST',
@@ -93,8 +94,32 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
     })
 })
 
+const apiPasePhoneF = (data) => packagePromise((resolve, reject) => {
+  let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
+  request({
+    url: apiPasePhone(),
+    method: 'POST',
+    header: {
+      'Authorization': `Basic ${WECHAT_AUTH_BASE}`
+    },
+    data: {
+      code: data.code,
+      signature,
+      rawData,
+      encryptedData,
+      iv: iv
+    }
+  })
+    .then(msg => {
+      console.log(13, msg);
+    })
+    .catch(err => {
+    })
+})
+
 export {
   wechatLogin,
   getCodeFetch,
-  loginFetch
+  loginFetch,
+  apiPasePhoneF
 }

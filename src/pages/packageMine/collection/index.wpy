@@ -10,6 +10,7 @@
 import wepy from 'wepy'
 import CatItem from '@/components/CollectionGoodCom/index';
 import { apiCollectFindPageF } from '../../../services/mine/index'
+import miniPro from '@/utils/wepy-pro.js';
 export default class Collection extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -23,22 +24,19 @@ export default class Collection extends wepy.page {
     item: { check: false, num: 1, name: '彩色甜甜圈牛肉味1' },
     collectionArr: []
   };
-  methods = {
-    // toFilterA() {
-    //   wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
-    // }
-  }
+  methods = {}
 
   events = {
-    'look-event': function (id) {
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
+    'look-event': function (id, group) {
+      miniPro.toGoodsDetail(id, group)
+      // wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${id}` })
     }
   }
 
   apiCollectFindPageA(fun) {
     apiCollectFindPageF({
       page: 1,
-      limit: 80
+      limit: 200
     }, fun).then((result) => {
       let { rows = [] } = result
       this.collectionArr = rows

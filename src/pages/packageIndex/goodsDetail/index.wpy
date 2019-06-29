@@ -47,9 +47,6 @@
         <view @tap='addCartA' hover-class='icx-click-hover' class="gb-join">
           加入购物车
         </view>
-        <view wx:if='{{goodsDetailObj.groupPurchase == 1}}' @tap='toTuanA' hover-class='icx-click-hover' class="gb-tuan">
-          团购
-        </view>
         <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
           立即购买
         </view>
@@ -189,9 +186,6 @@ export default class GoodsDetail extends wepy.page {
     buyNowA() {
       this.isWhichFlag = 2
       this.showGoodsPop = true
-    },
-    toTuanA() {
-      wepy.navigateTo({ url: `/pages/packageIndex/bulkDetail/index?goodsId=${this.goodsId}` })
     }
   }
 

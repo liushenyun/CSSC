@@ -27,7 +27,7 @@ const apiTaleCommentDeleteF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 文化衍生故事模块 => 分页获取某个故事的评论
+// 文化衍生故事模块 => 分页获取某个故事的评论 【分页暂时不做】
 const apiTaleCommentFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiTaleCommentFindPage(),
@@ -71,7 +71,7 @@ const apiTaleFindDetailsF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 文化衍生故事模块 => 分页获取故事列表
+// 文化衍生故事模块 => 分页获取故事列表【分页已做】
 const apiTaleFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiTaleFindPage(),

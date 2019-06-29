@@ -42,7 +42,6 @@ import {
 } from '../../../services/index';
 import {
   apiCollectDeleteF,
-  apiCollectFindPageF,
   apiCollectSaveF
 } from '../../../services/mine';
 
@@ -53,8 +52,6 @@ import SearchItem from '@/components/searchItem/index';
 
 export default class Index extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF'
     navigationBarTitleText: '商品搜索'
   };
   components = {
@@ -85,7 +82,6 @@ export default class Index extends wepy.page {
       this.pageParams.page = 0
       this.pageList = []
       this.getGoodsListA(this.getGoodsListA.bind(this))
-      //  wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },
     toCloseWordA() {
     },
@@ -148,9 +144,10 @@ export default class Index extends wepy.page {
         }
       }, 10);
     },
-    'to-goods-event': (goodsId) => {
-      let _goodsId = goodsId || '20190524190903491861'
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
+    'to-goods-event': (goodsId, groupPurchase) => {
+      let _goodsId = goodsId
+      let _group = groupPurchase
+      miniPro.toGoodsDetail(_goodsId, _group)
     }
   };
 

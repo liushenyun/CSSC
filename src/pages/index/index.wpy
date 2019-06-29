@@ -56,14 +56,14 @@
           <image src='../../images/unfold.png'></image>
         </view>
         <view class="area-inner area-vip">
-          <view data-goodsid="{{homeVipGoodsInfoList[0].goodsId}}" class="area-vip-top" @tap="toGoodsDetailA">
+          <view data-goodsid="{{homeVipGoodsInfoList[0].goodsId}}" data-group="{{homeVipGoodsInfoList[0].groupPurchase}}" class="area-vip-top" @tap="toGoodsDetailA">
             <image src='{{homeVipGoodsInfoList[0].goodsIco}}'></image>
           </view>
           <view class="area-vip-bottom">
-            <view data-goodsid="{{homeVipGoodsInfoList[1].goodsId}}" @tap="toGoodsDetailA" class="vip-bottom-left">
+            <view data-goodsid="{{homeVipGoodsInfoList[1].goodsId}}" data-group="{{homeVipGoodsInfoList[1].groupPurchase}}" @tap="toGoodsDetailA" class="vip-bottom-left">
               <image src='{{homeVipGoodsInfoList[1].goodsIco}}'></image>
             </view>
-            <view data-goodsid="{{homeVipGoodsInfoList[2].goodsId}}" @tap="toGoodsDetailA" class="vip-bottom-right">
+            <view data-goodsid="{{homeVipGoodsInfoList[2].goodsId}}" data-group="{{homeVipGoodsInfoList[2].groupPurchase}}" @tap="toGoodsDetailA" class="vip-bottom-right">
               <image src='{{homeVipGoodsInfoList[2].goodsIco}}'></image>
             </view>
           </view>
@@ -108,14 +108,13 @@
 import wepy from 'wepy';
 import '../../common/js/authProcess.js';
 import {
-  apiGoodsListF,
   apiGetHomeDataF
 } from '../../services/index';
 import {
   INDICATOR_COLOR,
   INDICATOR_ACTIVE_COLOR
 } from '@/common/js/config';
-// import miniPro from '@/utils/wepy-pro.js';
+import miniPro from '@/utils/wepy-pro.js';
 
 export default class Index extends wepy.page {
   config = {
@@ -160,7 +159,8 @@ export default class Index extends wepy.page {
     },
     toGoodsDetailA(e) {
       let _goodsId = e.currentTarget.dataset.goodsid
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` })
+      let _group = e.currentTarget.dataset.group
+      miniPro.toGoodsDetail(_goodsId, _group)
     },
     toClassifyRecom() {
       wepy.navigateTo({ url: `/pages/packageIndex/classifyRecom/index` });
@@ -176,14 +176,6 @@ export default class Index extends wepy.page {
       if (!_taleId) return
       wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${_taleId}` });
     }
-  }
-
-  getGoodsListA(fun) {
-    apiGoodsListF({
-      page: 0,
-      keyword: ''
-    }, fun).then(msg => {
-    }).catch(() => { });
   }
 
   apiGetHomeDataFA(fun) {

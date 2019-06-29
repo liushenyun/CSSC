@@ -41,8 +41,9 @@ export default class TaleDetail extends wepy.page {
   methods = {
     toGoodsDetailA() {
       let _goodsId = this.taleObj.goodsId
+      let _groupPurchase = this.taleObj.groupPurchase
       if (_goodsId) {
-        wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` });
+        miniPro.toGoodsDetail(_goodsId, _groupPurchase)
       }
     },
     toCollectA() {

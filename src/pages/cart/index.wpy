@@ -85,7 +85,7 @@ export default class Index extends wepy.page {
     delGoosId: '',
     pageParamsLike: {
       page: 0,
-      limit: 20
+      limit: 400
     },
     pageLikeList: []
   };
@@ -98,7 +98,7 @@ export default class Index extends wepy.page {
       this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
     },
     toGoodsDetail(item) {
-      wepy.navigateTo({ url: `/pages/packageIndex/goodsDetail/index?goodsId=${item.id}` })
+      miniPro.toGoodsDetail(item.id, item.groupPurchase)
     }
   };
 
