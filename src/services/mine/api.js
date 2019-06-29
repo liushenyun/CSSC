@@ -84,6 +84,9 @@ const apiPartnerFindMoneyPage = () => `${MAIN_DOMAIN}/api/partner/find_award_mon
 // 合伙人工作台 => 分页查询我推广的客户
 const apiPartnerFindSpectators = () => `${MAIN_DOMAIN}/api/partner/find_spectators`
 
+// 合伙人工作台 => 获取奖金类目
+const apiGetMoneyCategory = () => `${MAIN_DOMAIN}/api/partner/get_award_money_category`
+
 // 合伙人工作台 => 获取合伙人工作台数据
 const apiPartnerData = () => `${MAIN_DOMAIN}/api/partner/get_partner_data`
 
@@ -122,6 +125,7 @@ export {
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
+  apiGetMoneyCategory,
   apiPartnerData,
   apiVipFinanceConfig,
   apiVipPay

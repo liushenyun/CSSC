@@ -32,7 +32,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 42,
+			"current": 43,
 			"list": [
 				{
 					"id": -1,
@@ -333,6 +333,12 @@
 					"name": "消息详情",
 					"pathName": "pages/packageIndex/messageDetail/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "奖金类型",
+					"pathName": "pages/packageMine/bonusType/index",
 					"scene": null
 				}
 			]

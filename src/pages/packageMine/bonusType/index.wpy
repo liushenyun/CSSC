@@ -1,0 +1,46 @@
+<template>
+  <view class='bonus-ctner'>
+    <scroll-view scroll-y="true" style="height: 100%;">
+        <view class="bonus-item" wx:for="{{pageList}}" wx:key='index' @tap="toDetail({{item}})">
+          <text class="text-a">{{item.title}}</text>
+          <text wx:if="{{item.type == 0}}" class="text-b">￥{{item.total}}</text>
+          <image src='../../../images/unfold.png'></image>
+        </view>
+      </scroll-view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {
+  apiGetMoneyCategoryF // 合伙人工作台 => 获取合伙人工作台数据
+} from '../../../services/mine/index'
+
+export default class BonusType extends wepy.page {
+  config = {
+    navigationBarTitleText: '奖金类型'
+  };
+  data = {
+    pageList: []
+  };
+  methods = {
+    toDetail(item) {
+      wepy.navigateTo({ url: `/pages/packageMine/bonusDetail/index?type=${item.type}` })
+    }
+  }
+
+  apiGetMoneyCategoryFA(fun) {
+    apiGetMoneyCategoryF(fun).then((result) => {
+      this.pageList = result
+      this.$apply()
+    }).catch(() => {});
+  }
+
+  onLoad() {
+    this.apiGetMoneyCategoryFA(this.apiGetMoneyCategoryFA.bind(this))
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

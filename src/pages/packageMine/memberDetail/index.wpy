@@ -22,8 +22,6 @@ import wepy from 'wepy'
 import {apiPartnerFindSpectatorsF} from '../../../services/mine/index'
 export default class MemberDetail extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '用户明细'
   };
   data = {

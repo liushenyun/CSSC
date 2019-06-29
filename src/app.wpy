@@ -77,6 +77,7 @@ export default class extends wepy.app {
           'joinPartnerBench/index',
           'logisticsInfo/index',
           'memberDetail/index',
+          'bonusType/index',
           'bonusDetail/index',
           'more/index',
           'policy/index',

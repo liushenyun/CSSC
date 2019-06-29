@@ -1,0 +1,28 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.bonus-ctner {
+    height: 100%;
+    padding: rpx(12) rpx(30);
+    .bonus-item {
+        padding: rpx(30) rpx(16);
+        background:linear-gradient(0deg,rgba(255,102,0,1),rgba(253,201,22,1));
+        border-radius: rpx(10);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #FFF;
+        margin-bottom: rpx(20);
+        .text-a {
+            flex: 1
+        }
+        image {
+            width: rpx(11);
+            height: rpx(18);
+            margin-left: rpx(14)
+        }
+    }
+}

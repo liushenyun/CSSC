@@ -1,29 +1,64 @@
 <template>
-  <view class='bonus-ctner'>
-    <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-        <view class="bonus-item"> <text>分享成为签约合伙人(5人)</text> <text>￥8000</text>
+  <view class='bonus-detail-ctner'>
+      <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+        <view class="bonus-item" wx:for="{{pageList}}" wx:key="index">
+          <view class="bonus-item-word-one">
+            <text>{{item.userId}}</text>
+            <text>￥{{item.money}}</text>
+          </view>
+          <view class="bonus-item-word">
+            <text></text>
+            <text>{{item.recordDesc}}</text>
+          </view>
         </view>
-        <view class="bonus-item"> <text>分享成为签约合伙人(5人)</text> <text>￥8000</text>
-        </view>
-        <view class="bonus-item"> <text>分享成为签约合伙人(5人)</text> <text>￥8000</text>
-        </view>
+
+        <view class="list-no-data" wx:if="{{pageList.length == 0}}">暂无数据</view>
       </scroll-view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
+import {
+  apiPartnerFindMoneyPageF // 合伙人工作台 => 获取合伙人工作台数据
+} from '../../../services/mine/index'
+
 export default class BonusDetail extends wepy.page {
   config = {
     navigationBarTitleText: '奖金明细'
   };
   data = {
-    isActive: 'm'
+    pageType: '',
+    pageParams: {
+      page: 0,
+      limit: 40,
+      hasMore: false
+    },
+    pageList: []
   };
   methods = {
-    choiceA(f) {
-      this.isActive = f
+    loadMore() { // 加载更多
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiPartnerFindMoneyPageFA(this.apiPartnerFindMoneyPageFA.bind(this))
     }
+  }
+
+  apiPartnerFindMoneyPageFA(fun) {
+    apiPartnerFindMoneyPageF({
+      type: this.pageType
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch(() => {});
+  }
+
+  onLoad(option) {
+    this.pageType = option.type
+    this.apiPartnerFindMoneyPageFA(this.apiPartnerFindMoneyPageFA.bind(this))
   }
 }
 </script>

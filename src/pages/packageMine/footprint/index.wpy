@@ -34,7 +34,7 @@ export default class Footprint extends wepy.page {
   apiFootFindPageA(fun) {
     apiFootFindPageF({
       page: 0,
-      limit: 20
+      limit: 200
     }, fun).then((result) => {
       let { rows } = result
       this.footArr = rows

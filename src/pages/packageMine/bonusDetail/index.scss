@@ -3,17 +3,39 @@
 @import '../../../common/css/mixin.scss';
 page{
     height: 100%;
+    background: #EEEEEE;
 }
-.bonus-ctner {
+.bonus-detail-ctner {
     height: 100%;
     padding: rpx(12) rpx(30);
+    background: #EEEEEE;
     .bonus-item {
-        padding: rpx(30) rpx(16);
-        background:linear-gradient(0deg,rgba(255,102,0,1),rgba(253,201,22,1));
+        padding: rpx(20) rpx(16);
+        background: #FFF;
         border-radius: rpx(10);
-        display: flex;
-        justify-content: space-between;
-        color: #FFF;
         margin-bottom: rpx(20);
     }
+    .bonus-item-word-one {
+        display: flex;
+        font-size: $size-one;
+        justify-content: space-between;
+        margin-bottom: rpx(20);
+        text:nth-of-type(1) {
+
+        }
+        text:nth-of-type(2) {
+            color: $color-word-alarm
+        }
+    }
+    .bonus-item-word {
+        display: flex;
+        font-size: $size-unit;
+        color: $color-word-three;
+        justify-content: space-between;
+    }
+}
+.list-no-data {
+    text-align: center;
+    color: #999;
+    padding-top: rpx(80);
 }

@@ -100,7 +100,6 @@ const apiPasePhoneF = (data) => packagePromise((resolve, reject) => {
     url: apiPasePhone(),
     method: 'POST',
     header: {
-      'Authorization': `Basic ${WECHAT_AUTH_BASE}`
     },
     data: {
       code: data.code,

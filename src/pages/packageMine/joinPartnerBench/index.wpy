@@ -106,7 +106,7 @@ export default class JoinPartnerBench extends wepy.page {
       this.pageParams.isReadAgreement = !this.pageParams.isReadAgreement
     },
     toMoneyDetail() {
-      wepy.navigateTo({ url: '/pages/packageMine/bonusDetail/index' })
+      wepy.navigateTo({ url: '/pages/packageMine/bonusType/index' })
     },
     toMemberDetail() {
       wepy.navigateTo({ url: '/pages/packageMine/memberDetail/index' })

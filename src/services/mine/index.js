@@ -29,6 +29,7 @@ import {
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
+  apiGetMoneyCategory,
   apiPartnerData,
   apiVipFinanceConfig,
   apiVipPay
@@ -455,6 +456,18 @@ const apiPartnerFindSpectatorsF = (data, fun) => packagePromise((resolve, reject
     .catch(err => reject(err))
 })
 
+// 合伙人工作台 => 获取奖金类目
+const apiGetMoneyCategoryF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetMoneyCategory(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 // 合伙人工作台 => 获取合伙人工作台数据
 const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
   request({
@@ -521,6 +534,7 @@ export {
   apiGetMyHomeDataF,
   apiPartnerFindMoneyPageF,
   apiPartnerFindSpectatorsF,
+  apiGetMoneyCategoryF,
   apiPartnerDataF,
   apiVipFinanceConfigF,
   apiVipPayF

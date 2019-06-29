@@ -35,7 +35,7 @@ export default class Collection extends wepy.page {
 
   apiCollectFindPageA(fun) {
     apiCollectFindPageF({
-      page: 1,
+      page: 0,
       limit: 200
     }, fun).then((result) => {
       let { rows = [] } = result

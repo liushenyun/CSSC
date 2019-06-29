@@ -21,17 +21,6 @@ export default class Auth {
     return _globalData.auth
   }
 
-  // /**
-  //  * 刷新token
-  //  * @param {string} Refresh_Token - 本地存储的access-token
-  //  * @param {function} fun - bind的事件（刷新toekn后需要再次执行的事件，添加到事件队列里）
-  //  */
-  // refreshToken(Refresh_Token, fun = null) {
-  //   this._addEvent(fun)
-  //   refreshToken(Refresh_Token).then(res => {
-  //     this._setToken(res);
-  //   });
-  // }
   /**
    * 登录微信
    * @param {*} userInfo
@@ -136,7 +125,6 @@ export default class Auth {
     wechatLogin({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
       this._setToken(res)
       resolve(true)
-
       // apiPasePhoneF({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
       //   resolve(true)
       //   // this._toDoEvent()
