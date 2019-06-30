@@ -10,7 +10,7 @@ page,
         @include borderBottomOnePx;
         display: flex;
         .input-search{
-            width: rpx(36);
+            width: rpx(46);
             padding-left: rpx(16);
             border-top-left-radius: rpx(24);
             border-bottom-left-radius: rpx(24);
@@ -18,7 +18,7 @@ page,
             display: flex;
             align-items: center;
             image {
-                width: rpx(25);
+                width: rpx(26);
                 height: rpx(26);
             }
         }
