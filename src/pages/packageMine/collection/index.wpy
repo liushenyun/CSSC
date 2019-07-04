@@ -3,6 +3,12 @@
     <repeat for="{{collectionArr}}" key="index" index="index" item="item">
       <CatItem class='cat-itme-wrap' :item="item"></CatItem>
     </repeat>
+    <view class="collection-no" wx:if="{{collectionArr.length == 0}}">
+      <view class="in">
+        <image src='../../../images/clection_icon.png'></image>
+        <view>赞无收藏</view>
+      </view>
+    </view>
   </view>
 </template>
 

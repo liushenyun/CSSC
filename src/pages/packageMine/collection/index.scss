@@ -4,4 +4,26 @@
 page{
 }
 .collection-ctner{
+    .collection-no {
+        height: rpx(356);
+        position: relative;
+        .in {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            text-align: center;
+            image {
+                width: rpx(170);
+                height: rpx(160);
+                display: inline-block;
+            }
+            view {
+                margin-top: rpx(20);
+                font-size: $size-unit;
+                color: $color-word-three;
+            }
+        }
+    }
 }
