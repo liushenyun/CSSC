@@ -32,7 +32,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 43,
+			"current": 44,
 			"list": [
 				{
 					"id": -1,
@@ -315,10 +315,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 40,
 					"name": "提现",
 					"pathName": "pages/packageMine/withdrawal/index",
-					"query": "",
+					"query": "money=100",
 					"scene": null
 				},
 				{
@@ -339,6 +339,14 @@
 					"id": -1,
 					"name": "奖金类型",
 					"pathName": "pages/packageMine/bonusType/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分享页面",
+					"pathName": "pages/packageMine/posters/index",
+					"query": "",
 					"scene": null
 				}
 			]

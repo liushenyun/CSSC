@@ -199,7 +199,7 @@ export default class Index extends wepy.page {
     }
   };
 
-  async onLoad() {
+  async onShow() {
     this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
     this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
   }

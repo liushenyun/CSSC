@@ -142,6 +142,7 @@ export default class GoodsDetail extends wepy.page {
       channelId: '0',
       orderDetailBoList: []
     },
+    colorId: '',
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
   };
   methods = {
@@ -160,7 +161,13 @@ export default class GoodsDetail extends wepy.page {
       this.colorCurrentIndex = index
     },
     goodsSureA() {
+      console.log(this.goodsSpecificationVoList, this.specCurrentIndex, this.goodsSpecificationVoList[this.specCurrentIndex].id)
       if (this.isWhichFlag == 1) {
+        if (this.goodsColorVoList.length > 0) {
+          this.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
+        } else {
+          this.colorId = ''
+        }
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
       } else if (this.isWhichFlag == 2) {
         let _data = {
@@ -190,10 +197,11 @@ export default class GoodsDetail extends wepy.page {
   }
 
   apiCartSaveA(fun) { // 添加购物车
+    console.log()
     apiCartSaveF({
       goodsId: this.goodsId,
       specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
-      colorId: this.goodsColorVoList[this.colorCurrentIndex].id,
+      colorId: this.colorId,
       quantity: this.buyNum
     }, fun).then(msg => {
       setTimeout(() => {

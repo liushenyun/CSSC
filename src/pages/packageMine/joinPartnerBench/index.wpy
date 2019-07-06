@@ -54,8 +54,11 @@
 import wepy from 'wepy'
 import VerificationCode from '../../../components/verificationCode/index'
 import {
-  apiPartnerDataF // 合伙人工作台 => 获取合伙人工作台数据
+  apiPartnerDataF, // 合伙人工作台 => 获取合伙人工作台数据
+  apiPartnerWithdrawalApplyF // 合伙人提现
 } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
+
 export default class JoinPartnerBench extends wepy.page {
   config = {
     navigationBarTitleText: '合伙人工作台'
@@ -112,7 +115,12 @@ export default class JoinPartnerBench extends wepy.page {
       wepy.navigateTo({ url: '/pages/packageMine/memberDetail/index' })
     },
     toWithdrawalA() {
-      wepy.navigateTo({ url: '/pages/packageMine/withdrawal/index' })
+      let _totalAmount = this.partnerData.totalAmount
+      if (_totalAmount == 0) {
+        miniPro.showToast('暂无提现额度')
+        return
+      }
+      wepy.navigateTo({ url: `/pages/packageMine/withdrawal/index?money=${_totalAmount}` })
     },
     toPosterA() {
       wepy.navigateTo({ url: '/pages/packageMine/posters/index' })

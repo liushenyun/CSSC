@@ -4,32 +4,50 @@
         <view class="ot-same ot-a {{currentIndex == index ? 'active':''}}" wx:for='{{topArr}}' wx:key="index" @tap="changeCurA({{index}})">{{item}}</view>
       </view>
       <view class="order-top-con">
-        <swiper
-          indicator-dots="{{indicatorDots}}"
-          autoplay="{{autoplay}}"
-          interval="{{interval}}"
-          duration="{{duration}}"
-          current="{{currentIndex}}"
-        >
-          <block wx:for="{{imgUrls}}">
-            <swiper-item>
-              <view class="swiper-div-same">
-                <view class="order-com">
-                  <AfterSale></AfterSale>
-                </view>
+        <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+          <swiper
+            indicator-dots="{{indicatorDots}}"
+            autoplay="{{autoplay}}"
+            interval="{{interval}}"
+            duration="{{duration}}"
+            current="{{currentIndex}}"
+          >
+            <block wx:for="{{topArr}}">
+              <swiper-item>
+                <view class="swiper-div-same">
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
 
-                <view class="order-com">
-                  <AfterSale></AfterSale>
-                </view>
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
 
-                <view class="order-com">
-                  <AfterSale></AfterSale>
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
+
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
+
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
+
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
+
+                  <view class="order-com">
+                    <AfterSale></AfterSale>
+                  </view>
                 </view>
-              </view>
-              <NoTip></NoTip>
-            </swiper-item>
-          </block>
-        </swiper>
+                <NoTip></NoTip>
+              </swiper-item>
+            </block>
+          </swiper>
+        </scroll-view>
       </view>
   </view>
 </template>
@@ -38,6 +56,7 @@
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDataTip/index'
 import AfterSale from '@/components/AfterSaleCom/index'
+import { apiFindAfterSalesPageF } from '../../../services/mine/index'
 export default class AfterSales extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -59,7 +78,14 @@ export default class AfterSales extends wepy.page {
     indicatorDots: false,
     autoplay: false,
     interval: 5000,
-    duration: 1000
+    duration: 1000,
+    pageList: [],
+    pageParams: { // 1：申请中 0：所有申请记录
+      page: 1,
+      limit: 10,
+      status: 0,
+      hasMore:false
+    }
   };
 
   events = {
@@ -69,14 +95,30 @@ export default class AfterSales extends wepy.page {
   }
 
   methods = {
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
-    },
     changeCurA(i) {
       this.currentIndex = i
+    },
+    loadMore() { // 加载更多
+      if (!this.pageParams.hasMore) return
+      this.pageParams.page += 1
+      this.apiFindAfterSalesPageFA(this.apiOrderFindPageFA.bind(this))
     }
   };
+  apiFindAfterSalesPageFA(fun) {
+    apiFindAfterSalesPageF({
+      page: this.pageParams.page,
+      limit:  this.pageParams.limit,
+      status:  this.pageParams.status
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch((err) => {});
+  }
   onLoad(option) {
+    this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
   }
 }
 </script>

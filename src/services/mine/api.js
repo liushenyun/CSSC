@@ -75,6 +75,9 @@ const apiPartnerSave = () => `${MAIN_DOMAIN}/api/partner/apply/save`
 // 商品售后模块 => 商品售后api
 const apiSales = () => `${MAIN_DOMAIN}/sales/apply`
 
+// 商品售后模块 => 商品分页查询售后记录
+const apiFindAfterSalesPage = () => `${MAIN_DOMAIN}/sales/find_after_sales_page`
+
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeData = () => `${MAIN_DOMAIN}/api/wx/user/get_my_home_data`
 
@@ -89,6 +92,12 @@ const apiGetMoneyCategory = () => `${MAIN_DOMAIN}/api/partner/get_award_money_ca
 
 // 合伙人工作台 => 获取合伙人工作台数据
 const apiPartnerData = () => `${MAIN_DOMAIN}/api/partner/get_partner_data`
+
+// 合伙人工作台 => 上传合伙人头像
+const apiUploadPartnerHead = () => `${MAIN_DOMAIN}/api/partner/upload_partner_head`
+
+// 合伙人工作台 => 合伙人申请提现
+const apiPartnerWithdrawalApply = () => `${MAIN_DOMAIN}/api/partner/withdrawal_apply`
 
 // 会员模块 => 会员费、合伙人申请费用配置
 const apiVipFinanceConfig = () => `${MAIN_DOMAIN}/api/vip/get_finance_config`
@@ -122,11 +131,14 @@ export {
   apiPartnerPay,
   apiPartnerSave,
   apiSales,
+  apiFindAfterSalesPage,
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
   apiGetMoneyCategory,
   apiPartnerData,
+  apiUploadPartnerHead,
   apiVipFinanceConfig,
-  apiVipPay
+  apiVipPay,
+  apiPartnerWithdrawalApply
 }

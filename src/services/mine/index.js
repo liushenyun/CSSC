@@ -26,13 +26,16 @@ import {
   apiPartnerPay,
   apiPartnerSave,
   apiSales,
+  apiFindAfterSalesPage,
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
   apiGetMoneyCategory,
   apiPartnerData,
+  apiUploadPartnerHead,
   apiVipFinanceConfig,
-  apiVipPay
+  apiVipPay,
+  apiPartnerWithdrawalApply
 } from './api'
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
@@ -416,6 +419,20 @@ const apiSalesF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 商品售后模块 => 商品分页查询售后记录
+const apiFindAfterSalesPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFindAfterSalesPage(),
+    method: 'POST',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeDataF = (fun) => packagePromise((resolve, reject) => {
   request({
@@ -480,6 +497,19 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 合伙人工作台 => 获取合伙人工作台数据
+const apiUploadPartnerHeadF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiUploadPartnerHead(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 // 会员模块 => 会员费、合伙人申请费用配置
 const apiVipFinanceConfigF = (fun) => packagePromise((resolve, reject) => {
   request({
@@ -496,6 +526,19 @@ const apiVipFinanceConfigF = (fun) => packagePromise((resolve, reject) => {
 const apiVipPayF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiVipPay(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 合伙人工作台 => 合伙人申请提现
+const apiPartnerWithdrawalApplyF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiPartnerWithdrawalApply(),
     method: 'POST',
     data
   }, fun)
@@ -531,11 +574,15 @@ export {
   apiPartnerPayF,
   apiPartnerSaveF,
   apiSalesF,
+  apiFindAfterSalesPageF,
+  apiFindAfterSalesPage,
   apiGetMyHomeDataF,
   apiPartnerFindMoneyPageF,
   apiPartnerFindSpectatorsF,
   apiGetMoneyCategoryF,
   apiPartnerDataF,
+  apiUploadPartnerHeadF,
   apiVipFinanceConfigF,
-  apiVipPayF
+  apiVipPayF,
+  apiPartnerWithdrawalApplyF
 }

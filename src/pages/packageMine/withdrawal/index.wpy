@@ -2,28 +2,31 @@
   <view class='withdrawal-ctner'>
     <view class="withdrawal-inner">
 
-      <view class="account">
+      <!-- <view class="account">
         <view>到账</view>
         <view>
           <text>微信号：8889999</text>
           <text>72小时内到账(每笔限额最低1万，最高2万元)</text>
         </view>
-      </view>
+      </view> -->
 
       <view class="money-outer">
         <view class="money-title">提现金额</view>
         <view class="money-num">
           <view>￥</view>
-          <input @tap='bindfocusInput' type='number' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入金额" />
+          <input value="{{moneyTi}}" @input="bindinput" type='number' maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入金额" />
         </view>
-        <view class="money-action">
-          <view>可提现金额¥100</view>
-          <view hover-class="icx-click-hover">全部提现</view>
+        <view class="money-action" wx:if="{{!isOver}}">
+          <view>可提现金额 ¥{{moneyTotal}}</view>
+          <view hover-class="icx-click-hover" @tap='tiAllA'>全部提现</view>
+        </view>
+        <view class="money-action is-over" wx:if="{{isOver}}">
+          超过提现金额
         </view>
       </view>
     </view>
 
-    <button hover-class="icx-click-hover" class="icx-btn-same-sure">提现</button>
+    <button hover-class="icx-click-hover" class="icx-btn-same-sure" @tap='toWithdrawalA'>提现</button>
 
   </view>
 </template>
@@ -31,6 +34,9 @@
 <script>
 import wepy from 'wepy'
 import miniPro from '@/utils/wepy-pro.js';
+import {
+  apiPartnerWithdrawalApplyF // 合伙人提现
+} from '../../../services/mine/index'
 export default class Withdrawal extends wepy.page {
   config = {
     navigationBarTitleText: '提现'
@@ -38,22 +44,51 @@ export default class Withdrawal extends wepy.page {
   components = {
   };
   data = {
+    moneyTotal: 0,
+    moneyTi: '',
+    isOver: false
   };
   methods = {
-    continueBuyA() {
-      wepy.switchTab({ url: `/pages/index/index` })
+    bindinput(e) {
+      let _value = Number(e.detail.value)
+      let _tol = Number(this.moneyTotal)
+      if (_tol < _value) {
+        this.isOver = true
+      } else {
+        this.isOver = false
+        this.moneyTi = _value
+      }
     },
-    checkOrderA() {
-      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+    tiAllA() {
+      this.moneyTi = this.moneyTotal
+    },
+    toWithdrawalA() {
+      if (this.isOver) {
+        miniPro.showToast('超过了本次提现金额')
+        return
+      }
+      if (this.moneyTi == '' || this.moneyTi <= 0) {
+        miniPro.showToast('提现金额必须大于等于0')
+        return
+      }
+      this.apiPartnerWithdrawalApplyFA(this.apiPartnerWithdrawalApplyFA.bind(this))
     }
-  };
-  
-  events = {}
-  onLoad() {
+  }
+  apiPartnerWithdrawalApplyFA(fun) {
+    apiPartnerWithdrawalApplyF({
+      withdrawMoney: this.moneyTi
+    }, fun).then((result) => {
+      miniPro.showToast('提现成功')
+    }).catch(() => {
+      miniPro.showToast('提现失败')
+    })
+  }
+  onLoad(option) {
+    let _money = option.money || 0
+    this.moneyTotal = _money
   }
 }
 </script>
 <style lang="scss" scoped>
 @import './index'
 </style>
-

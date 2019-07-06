@@ -162,7 +162,7 @@ page{
             height: auto;
             @include borderBottomOnePx;
             .goods-pop-title {
-                font-size: $size-unit;
+                font-size: $size-one;
                 margin-bottom: rpx(12);
             }
             .goods-outer-same {

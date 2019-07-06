@@ -54,10 +54,19 @@ const apiCartFindPageF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 添加购物车
 const apiCartSaveF = (data, fun) => packagePromise((resolve, reject) => {
+  let _data = {
+    goodsId: data.goodsId,
+    specificationId: data.specificationId,
+    colorId: data.colorId,
+    quantity: data.quantity
+  }
+  if (!_data.colorId) {
+    delete _data.colorId
+  }
   request({
     url: apiCartSave(),
     method: 'POST',
-    data
+    data: _data
   }, fun)
     .then(msg => {
       resolve(msg)
