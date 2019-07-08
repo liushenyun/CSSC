@@ -81,7 +81,7 @@ export default class AfterSales extends wepy.page {
     duration: 1000,
     pageList: [],
     pageParams: { // 1：申请中 0：所有申请记录
-      page: 1,
+      page: 0,
       limit: 10,
       status: 0,
       hasMore:false

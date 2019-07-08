@@ -2,7 +2,6 @@
   <view class='partner-ctner'>
     <view class="partner-swiper-wrap">
       <swiper
-        circular
         autoplay="{{autoplay}}"
         interval="{{interval}}"
         duration="{{duration}}"

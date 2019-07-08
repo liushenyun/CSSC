@@ -22,8 +22,8 @@ page{
         .input-search{
             width: rpx(46);
             padding-left: rpx(16);
-            border-top-left-radius: rpx(24);
-            border-bottom-left-radius: rpx(24);
+            border-top-left-radius: rpx(30);
+            border-bottom-left-radius: rpx(30);
             background: #F6F6F6;
             display: flex;
             align-items: center;
@@ -75,7 +75,7 @@ page{
     
     .ix-goods-wrap{
         height: 100%;
-        padding-top: rpx(134);
+        padding-top: rpx(130);
         scroll-view {
             background: #F7F7F7;
             padding-top: rpx(6);

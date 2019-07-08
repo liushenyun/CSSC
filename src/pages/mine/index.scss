@@ -126,7 +126,7 @@ page{
   }
   .m-order-innder {
     background: #FFF;
-    padding: rpx(22) rpx(21);
+    padding: 0 rpx(21) rpx(22) rpx(21);
     border-radius: rpx(10);
     margin: rpx(30) 0 rpx(16) 0;
     .m-order-title {
@@ -166,7 +166,8 @@ page{
     padding: rpx(46) rpx(22);
     background: #FFF;
     .m-service-title {
-      margin-bottom: rpx(44)
+      margin-bottom: rpx(44);
+      padding-left: rpx(26);
     }
     .m-service-item {
       display: flex;

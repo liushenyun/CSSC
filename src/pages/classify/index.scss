@@ -16,8 +16,8 @@ page,
         .input-search{
             width: rpx(46);
             padding-left: rpx(16);
-            border-top-left-radius: rpx(24);
-            border-bottom-left-radius: rpx(24);
+            border-top-left-radius: rpx(30);
+            border-bottom-left-radius: rpx(30);
             background: #F6F6F6;
             display: flex;
             align-items: center;
@@ -66,7 +66,7 @@ page,
                 margin: rpx(30);
                 font-size: $size-one;
                 line-height: 1.4;
-                border-radius:rpx(18);
+                border-radius:rpx(26);
             }
             .cs-left-item-active {
                 background: $color-word-alarm;
@@ -90,12 +90,15 @@ page,
             }
             .right-list {
                 overflow: hidden;
-                .right-list-item:nth-child(odd) {
-                    margin-right: 4%;
+                .right-list-item {
+                    margin-right: 2%;
+                }
+                .right-list-item:nth-child(3n) {
+                    margin-right: 0;
                 }
                 .right-list-item {
                     text-align:center;
-                    width: 48%;
+                    width: 32%;
                     float: left;
                     margin-bottom: rpx(34);
                     image {

@@ -40,7 +40,7 @@
         </view>
         <view class="gb-cart">
           <button @tap='toCartA' class="icx-btn">
-            <image src='../../../images/cart_light.png'></image>
+            <image src='../../../images/cart_light_sub.png'></image>
             <view>购物车</view>
           </button>
         </view>

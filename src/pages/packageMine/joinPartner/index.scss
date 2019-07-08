@@ -24,7 +24,6 @@ page{
                         top: 50%;
                         transform: translate(-50%, -50%);
                         font-size: rpx(36);
-                        text-shadow:0px 4px 3px rgba(199,60,10,0.63);
                     }
                 }
                 .partner-same {
@@ -37,26 +36,37 @@ page{
                     margin-top: 0;
                 }
                 .p-a {
-                    background: #FFB92B
+                    background: #FFB92B;
+                    text {
+                        text-shadow:0px 4px 3px rgba(225,152,10,0.99);
+                    }
                 }
                 .p-b {
-                    background: #FFA02E
+                    background: #FFA02E;
+                    text {
+                        text-shadow:0px 4px 3px rgba(199,60,10,0.63);
+                    }
                 }
                 .p-c {
-                    background: #363636
+                    background: #363636;
+                    text {
+                        text-shadow:0px 4px 3px rgba(0, 0, 0, 0.63);
+                    }
                 }
             }
         }
     }
     .icx-btn-same-sure {
-        color: #000;
+        color: #FFF;
         margin: rpx(66) 0 rpx(30) 25%;
         width: 50%;
-        height: rpx(62);
-        line-height: rpx(62);
+        height: rpx(70);
+        line-height: rpx(70);
         background:rgba(241,202,150,1);
         border-radius: rpx(30);
         background:linear-gradient(0deg,rgba(255,127,0,1),rgba(255,210,0,1));
+        letter-spacing: rpx(4);
+        font-weight: bolder
     }
     .des {
         letter-spacing: rpx(1);

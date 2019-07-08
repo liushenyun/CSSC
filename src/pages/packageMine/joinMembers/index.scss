@@ -17,8 +17,8 @@ page{
             border-radius: rpx(10);
             overflow: hidden;
             .m-a {
-                font-size: rpx(18);
-                font-weight: 600;
+                font-size: rpx(22);
+                font-weight: bolder;
                 letter-spacing: rpx(1);
                 padding: rpx(40) 0 rpx(34) 0;
             }
@@ -30,7 +30,8 @@ page{
                     font-size: rpx(26);
                 }
                 text:nth-of-type(2) {
-                    font-size: rpx(32);
+                    font-size: rpx(40);
+                    font-weight: bolder
                 }
                 margin-bottom: rpx(26);
             }

@@ -12,8 +12,8 @@ page,
         .input-search{
             width: rpx(46);
             padding-left: rpx(16);
-            border-top-left-radius: rpx(24);
-            border-bottom-left-radius: rpx(24);
+            border-top-left-radius: rpx(30);
+            border-bottom-left-radius: rpx(30);
             background: #F6F6F6;
             display: flex;
             align-items: center;
@@ -62,7 +62,7 @@ page,
                 align-items: center;
                 text:nth-of-type(1) {
                     font-size: rpx(26);
-                    font-weight: 600;
+                    font-weight: bolder;
                     flex: 1;
                 }
                 text:nth-of-type(2) {

@@ -1,14 +1,14 @@
 <template>
-  <view class='more-ctner'>
-     分享页面
-     <button @tap='choiceA'>选择图片</button>
-     <image src='http://tmp/wxa2af042698930ccb.o6zAJs7tC-hkTMSySSJY9MDYP0i8.Kggm9noJNTggac0b6859219130bca74546beb3ef32a7.png'></image>
+  <view class='poster-ctner'>
+     <!-- <button @tap='choiceA'>选择图片</button> -->
+     <image src='{{postUrl}}'></image>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
 import { apiUploadPartnerHeadF } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
 export default class Posters extends wepy.page {
   config = {
     navigationBarTitleText: '分享页面'
@@ -16,11 +16,13 @@ export default class Posters extends wepy.page {
   components = {
   };
   data = {
-    partnerHeadFile: ''
+    partnerHeadFile: '',
+    postUrl: ''
   };
   methods = {
     choiceA() {
       let _this = this
+      const Access_Token = miniPro.getAccessToken()
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
@@ -31,8 +33,24 @@ export default class Posters extends wepy.page {
           _this.partnerHeadFile = tempFilePaths
           _this.$apply()
           setTimeout(() => {
-            _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
+            // _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
           }, 100);
+          wx.uploadFile({
+            url: 'http://mjx-wx.natapp1.cc/api/partner/upload_partner_head', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths,
+            name: 'partnerHeadFile',
+            header: {
+              'Authorization': `${Access_Token}`,
+              'content-type': 'multipart/form-data', // application/json
+            },
+            formData: {
+              // 'user': 'test'
+            },
+            success (res){
+              const data = res.data
+              //do something
+            }
+          })
           console.log(tempFilePaths)
         }
       })
@@ -47,6 +65,10 @@ export default class Posters extends wepy.page {
     }).catch((err) => {
       
     });
+  }
+
+  onLoad(option) {
+    this.postUrl = option.url
   }
 }
 </script>

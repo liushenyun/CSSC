@@ -32,7 +32,8 @@ page{
            color: #FFF;
            text:nth-of-type(1) {
                margin-right: rpx(6);
-               font-size: rpx(34);
+               font-size: $size-six;
+               font-weight: bolder;
            }
 
            text:nth-of-type(2) {
@@ -134,6 +135,7 @@ page{
                 background: #FFF;
                 padding: 0;
                 line-height: 1;
+                border-radius: 0;
                 view {
                     margin-top: rpx(10)
                 }
@@ -145,8 +147,8 @@ page{
            overflow: hidden;
             .icx-btn {
                 image {
-                    width: rpx(27);
-                    height: rpx(31);
+                    width: rpx(32);
+                    height: rpx(32);
                 }
             }
        }
@@ -158,8 +160,8 @@ page{
            @include borderLeftOnePx;
            .icx-btn {
                 image {
-                    width: rpx(34);
-                    height: rpx(33);
+                    width: rpx(32);
+                    height: rpx(32);
                 }
             }
        }
@@ -170,7 +172,7 @@ page{
             border-radius: rpx(10);
             text-align: center;
             line-height: rpx(98);
-            font-weight: 600;
+            font-weight: bolder;
        }
        .gb-join {
             background:rgba(238,238,238,1);

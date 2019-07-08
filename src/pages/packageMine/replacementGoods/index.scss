@@ -49,7 +49,7 @@ page{
                 }
                 text:nth-of-type(1) {
                     font-size: $size-one;
-                    font-weight: 800;
+                    font-weight: bolder;
                 }
                 .picker-outer {
                     flex: 1;
@@ -73,7 +73,7 @@ page{
             border-radius: rpx(10);
             padding: rpx(36) rpx(30);
             view {
-                font-weight:bold;
+                font-weight:bolder;
                 line-height: rpx(28);
                 margin-bottom: rpx(20);
             }

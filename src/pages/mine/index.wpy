@@ -13,7 +13,7 @@
     <view class="m-hy">
       <view class="hy-inner">
         <image src='../../images/discount_bg1.png'></image>
-        <text>家亲会员</text>
+        <text>宗亲会员</text>
         <view wx:if="{{pageData.userLevel == 0}}" class="hy-word">立即加入，立享折扣</view>
         <view wx:else class="hy-word">海量商品，多种优惠</view>
         <view wx:if="{{pageData.userLevel == 0}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
@@ -63,9 +63,14 @@
     <view class="m-service-outer">
       <view class="m-service-title">我的服务</view>
       <view class="m-service-item">
-        <view class="service-a" @tap="toBulkOrderA">
+        <!-- <view class="service-a" @tap="toBulkOrderA">
             <image src='../../images/abulk.png'></image>
             <view>团购订单</view>
+        </view> -->
+
+        <view class="service-e" @tap="toMoreA">
+            <image src='../../images/similar.png'></image>
+            <view>了解更多</view>
         </view>
 
         <view class="service-b" @tap="toAddressListA">
@@ -86,12 +91,12 @@
       </view>
 
 
-      <view class="m-service-item">
+      <!-- <view class="m-service-item">
         <view class="service-e" @tap="toMoreA">
             <image src='../../images/similar.png'></image>
             <view>了解更多</view>
         </view>
-      </view>
+      </view> -->
 
     </view>
   </view>
@@ -195,14 +200,14 @@ export default class Mine extends wepy.page {
       if (_status == 0) {
         _text = '审核中'
       } else if (_status == -1) {
-        _text = '立即成为合伙人'
+        _text = '加入合伙人'
       } else if (_status == 2) {
         _text = '不通过（重新申请）'
       } else if (_status == 1) {
         if (_payStatus == 1) {
           _text = '立即支付'
         } else if (_payStatus == 2 || _payStatus == 0) {
-          _text = '查看合伙人工作台'
+          _text = '我是合伙人'
         }
       }
       this.partnerText = _text

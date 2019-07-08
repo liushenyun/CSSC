@@ -36,7 +36,7 @@
           <text>合计：</text>
           <text>￥{{totalMoney}}</text>
         </view>
-        <view class='pay-btn' @tap='toSureOrderA'>结算({{createData.orderDetailBoList.length}})</view>
+        <view class='pay-btn' @tap='toSureOrderA'>结算（{{createData.orderDetailBoList.length}})</view>
       </view>
     
   </view>

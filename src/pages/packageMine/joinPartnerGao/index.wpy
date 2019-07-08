@@ -78,7 +78,7 @@ export default class JoinPartnerGao extends wepy.page {
       inviteId: '',
       sessionId: '',
       code: '',
-      isReadAgreement: false,
+      isReadAgreement: true,
       typeTitle: ''
     },
     typeName: {
@@ -170,6 +170,10 @@ export default class JoinPartnerGao extends wepy.page {
       })
     },
     toSaveA() {
+      if (!this.pageParams.isReadAgreement) {
+        miniPro.showToast('请先阅读用户协议')
+        return
+      }
       this.apiPartnerSaveFA(this.apiPartnerSaveFA.bind(this))
     }
   }
