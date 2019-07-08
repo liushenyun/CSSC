@@ -37,6 +37,7 @@ export default class AfterSalesAction extends wepy.page {
     AfterSale: AfterSale
   };
   data = {
+    orderId: ''
   };
 
   events = {
@@ -44,16 +45,17 @@ export default class AfterSalesAction extends wepy.page {
 
   methods = {
     toTuiA(i) {
-      wepy.navigateTo({ url: '/pages/packageMine/returnGoods/index' });
+      wepy.navigateTo({ url: `/pages/packageMine/returnGoods/index?id=${this.orderId}` });
     },
-    toHuanA() {
-      wepy.navigateTo({ url: '/pages/packageMine/exchangeGoods/index' });
-    },
+    // toHuanA() {
+    //   wepy.navigateTo({ url: '/pages/packageMine/exchangeGoods/index' });
+    // },
     toBuA() {
-      wepy.navigateTo({ url: '/pages/packageMine/replacementGoods/index' });
+      wepy.navigateTo({ url: `/pages/packageMine/replacementGoods/index?id=${this.orderId}` });
     }
   };
   onLoad(option) {
+    this.orderId = option.id
   }
 }
 </script>

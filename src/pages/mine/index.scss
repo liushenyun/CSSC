@@ -90,6 +90,7 @@ page{
         color: #FFF;
         letter-spacing: rpx(6);
         z-index: 1;
+        font-weight: bolder;
       }
       .hy-word-wrap {
         position: absolute;
@@ -121,6 +122,7 @@ page{
       text {
         font-size: rpx(26);
         color: #FFF;
+        font-weight: bolder;
       }
     }
   }
@@ -137,6 +139,7 @@ page{
       align-items: center;
       text {
         flex: 1;
+        font-weight: bolder;
       }
       image {
         width: rpx(12);
@@ -168,6 +171,7 @@ page{
     .m-service-title {
       margin-bottom: rpx(44);
       padding-left: rpx(26);
+      font-weight: bolder;
     }
     .m-service-item {
       display: flex;

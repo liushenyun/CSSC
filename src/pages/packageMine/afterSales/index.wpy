@@ -11,39 +11,22 @@
             interval="{{interval}}"
             duration="{{duration}}"
             current="{{currentIndex}}"
+            bindchange="intervalChange"
           >
-            <block wx:for="{{topArr}}">
+            <block wx:for="{{topArr}}" wx:key='index'>
               <swiper-item>
-                <view class="swiper-div-same">
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
-
-                  <view class="order-com">
-                    <AfterSale></AfterSale>
-                  </view>
+                <view class="swiper-div-same" wx:if='{{pageList.length > 0}}'>
+                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
+                    <view class="order-com">
+                      <AfterSale :item="subItem" :OrderComIndex="subIndex" :swiperIndex="currentIndex"></AfterSale>
+                    </view>
+                  </repeat>
                 </view>
-                <NoTip></NoTip>
+                <view class="after-no-wrap" wx:else>
+                    <image src=''></image>
+                    <view>暂无数据</view>
+                </view>
+                <!-- <NoTip></NoTip> -->
               </swiper-item>
             </block>
           </swiper>
@@ -54,9 +37,9 @@
 
 <script>
 import wepy from 'wepy'
-import NoTip from '@/components/OrderNoDataTip/index'
+// import NoTip from '@/components/OrderNoDataTip/index'
 import AfterSale from '@/components/AfterSaleCom/index'
-import { apiFindAfterSalesPageF } from '../../../services/mine/index'
+import { apiFindAfterSalesPageF, apiFindCompleteOrderListF } from '../../../services/mine/index'
 export default class AfterSales extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -64,7 +47,7 @@ export default class AfterSales extends wepy.page {
     navigationBarTitleText: '我的售后'
   };
   components = {
-    NoTip: NoTip,
+    // NoTip: NoTip,
     AfterSale: AfterSale
   };
   data = {
@@ -89,21 +72,54 @@ export default class AfterSales extends wepy.page {
   };
 
   events = {
-    'sale-com-event': () => {
-      wepy.navigateTo({ url: '/pages/packageMine/afterSalesAction/index' });
+    'sale-com-event': (item) => {
+      console.log(73, item)
+      let _id = item.id
+      wepy.navigateTo({ url: `/pages/packageMine/afterSalesAction/index?id=${_id}` });
     }
   }
 
   methods = {
+    intervalChange(e) {
+      this.currentIndex = e.detail.current
+      this.fetchA(e.detail.current)
+    },
     changeCurA(i) {
       this.currentIndex = i
+      this.fetchA(i)
     },
+    
     loadMore() { // 加载更多
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.apiFindAfterSalesPageFA(this.apiOrderFindPageFA.bind(this))
     }
   };
+  fetchA(currentIndex) {
+    console.log(currentIndex)
+    this.pageList = [];
+    if (currentIndex == 0) {
+      this.apiFindCompleteOrderListFA(this.apiFindCompleteOrderListFA.bind(this))
+    } else {
+      this.pageParams.page = 0
+      this.pageParams.status = currentIndex == 1 ? 1:0
+      this.pageParams.hasMore = false;
+      this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
+    }
+      console.log(89, currentIndex);
+  }
+  apiFindCompleteOrderListFA(fun) {
+    apiFindCompleteOrderListF(fun).then((result) => {
+      console.log(result)
+      result.push(result[0])
+      result[0].orderDetailList.push(result[0].orderDetailList[0])
+      
+      this.pageList = result
+      this.$apply()
+    }).catch((err) => {
+      
+    });
+  }
   apiFindAfterSalesPageFA(fun) {
     apiFindAfterSalesPageF({
       page: this.pageParams.page,
@@ -113,12 +129,17 @@ export default class AfterSales extends wepy.page {
       let { rows, last, pageNumber } = result
       this.pageParams.page = pageNumber
       this.pageParams.hasMore = !last
-      this.pageList = this.pageList.concat(rows)
+      let _rows = rows.map((val) => {
+        return {orderDetailList: [val]}
+      })
+      this.pageList = this.pageList.concat(_rows)
       this.$apply()
     }).catch((err) => {});
   }
+
   onLoad(option) {
-    this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
+    // this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
+    this.apiFindCompleteOrderListFA(this.apiFindCompleteOrderListFA.bind(this))
   }
 }
 </script>

@@ -146,7 +146,7 @@ export default class Mine extends wepy.page {
       let _payStatus = this.pageData.payStatus
       let _status = this.pageData.status
       if (_status == 0) {
-        miniPro.showAlert('审核中')
+        miniPro.showToast('审核中')
       } else if (_status == 2 || _status == -1) {
         wepy.navigateTo({ url: '/pages/packageMine/joinPartner/index' });
       } else if (_status == 1) {

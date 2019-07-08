@@ -28,11 +28,13 @@
         }
     }
     .goods-outer {
-        display: flex;
-        align-items: center;
-        padding: rpx(10) 0;
         position: relative;
         @include borderBottomOnePx;
+    }
+    .goods-wrap {
+        padding: rpx(10) 0;
+        display: flex;
+        align-items: center;
     }
     .cat-m {
         width: rpx(124);
@@ -62,19 +64,10 @@
             justify-content: space-between;
         }
     }
-    .order-num-outer {
-        height: rpx(20);
-        line-height: rpx(20);
-        font-size: rpx(16);
-        text-align: right;
-        margin: rpx(70) 0 rpx(24) 0;
-        text:nth-of-type(2) {
-            color: $color-word-alarm
-        }
-    }
     .order-button-outer {
         display: flex;
         justify-content: flex-end;
+        padding: rpx(10) 0 rpx(30);
         .order-btn {
             height: rpx(40);
             line-height: rpx(36);

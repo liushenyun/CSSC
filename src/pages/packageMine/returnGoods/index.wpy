@@ -24,10 +24,10 @@
       
        <view class="return-des-outer">
          <view>问题描述</view>
-         <textarea class='icx-input' placeholder-class='icx-placeholder'  bindblur="bindTextAreaBlur" placeholder="请输入问题，描述" />
+         <textarea class='icx-input' placeholder-class='icx-placeholder'  bindinput="bindinput" placeholder="请输入问题，描述" />
        </view>
        <view class="return-btn-outer">
-         <button hover-class='icx-click-hover' class="icx-btn-same-sure">提交</button>
+         <button hover-class='icx-click-hover' @tap='submitA' class="icx-btn-same-sure">提交</button>
        </view>
      </view>
   </view>
@@ -35,6 +35,8 @@
 
 <script>
 import wepy from 'wepy'
+import { apiSalesF } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
 export default class ReturnGoods extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -45,15 +47,41 @@ export default class ReturnGoods extends wepy.page {
   };
   data = {
     reasonArray: ['卖家少发货品', '七天无理由退货', '商品与描述不符合', '数量问题', '卖家发错货'],
-    reasonIndex: 0
+    reasonIndex: 0,
+    pageParams: {
+      orderDetailId: '',
+      afterSalesReason: '卖家少发货品',
+      afterSalesDesc: '',
+      afterSaleType: 1
+    }
   };
   methods = {
     bindPickerChange: function(e) {
-      this.reasonIndex = e.detail.value
+      let _value = e.detail.value
+      this.reasonIndex = _value
+      this.pageParams.afterSalesReason = this.reasonArray[_value]
     },        
-    toFilterA() {
-      wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
+    bindinput(e) {
+      console.log(e);
+      this.pageParams.afterSalesDesc = e.detail.value
+    },
+    submitA() {
+      console.log(this.pageParams)
+      this.apiSalesFA(this.apiSalesFA.bind(this))
     }
+  }
+  apiSalesFA(fun) {
+    apiSalesF(this.pageParams, fun).then((result) => {
+      miniPro.showToast('申请成功');
+      setTimeout(() => {
+        wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+      }, 1000);
+    }).catch((err) => {
+      miniPro.showToast('');
+    });
+  }
+  onLoad(option) {
+    this.pageParams.orderDetailId = option.id
   }
 }
 </script>

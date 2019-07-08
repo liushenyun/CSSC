@@ -73,10 +73,13 @@ const apiPartnerPay = () => `${MAIN_DOMAIN}/api/partner/apply/pay`
 const apiPartnerSave = () => `${MAIN_DOMAIN}/api/partner/apply/save`
 
 // 商品售后模块 => 商品售后api
-const apiSales = () => `${MAIN_DOMAIN}/sales/apply`
+const apiSales = () => `${MAIN_DOMAIN}/api/sales/apply`
 
 // 商品售后模块 => 商品分页查询售后记录
-const apiFindAfterSalesPage = () => `${MAIN_DOMAIN}/sales/find_after_sales_page`
+const apiFindAfterSalesPage = () => `${MAIN_DOMAIN}/api/sales/find_after_sales_page`
+
+// 商品售后模块 => 获取可申请售后的订单
+const apiFindCompleteOrderList = () => `${MAIN_DOMAIN}/api/sales/find_complete_order_list`
 
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeData = () => `${MAIN_DOMAIN}/api/wx/user/get_my_home_data`
@@ -132,6 +135,7 @@ export {
   apiPartnerSave,
   apiSales,
   apiFindAfterSalesPage,
+  apiFindCompleteOrderList,
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,

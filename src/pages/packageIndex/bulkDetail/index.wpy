@@ -38,7 +38,7 @@
               <view>详细规则</view>
               <image src='../../../images/unfold.png'></image>
             </view>
-
+            
             <view class="rule-detail">
               <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
               <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
@@ -48,6 +48,7 @@
           <!-- <view>3秒拥有水光肌</view> -->
         </view>
         <view class="G-line"></view>
+        <view class="bulk-tips">图文详情</view>
         <view class="goods-detail">
           <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
         </view>

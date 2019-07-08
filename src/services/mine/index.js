@@ -27,6 +27,7 @@ import {
   apiPartnerSave,
   apiSales,
   apiFindAfterSalesPage,
+  apiFindCompleteOrderList,
   apiGetMyHomeData,
   apiPartnerFindMoneyPage,
   apiPartnerFindSpectators,
@@ -433,6 +434,19 @@ const apiFindAfterSalesPageF = (data, fun) => packagePromise((resolve, reject) =
     .catch(err => reject(err))
 })
 
+// 商品售后模块 => 获取可申请售后的订单
+const apiFindCompleteOrderListF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFindCompleteOrderList(),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeDataF = (fun) => packagePromise((resolve, reject) => {
   request({
@@ -575,7 +589,7 @@ export {
   apiPartnerSaveF,
   apiSalesF,
   apiFindAfterSalesPageF,
-  apiFindAfterSalesPage,
+  apiFindCompleteOrderListF,
   apiGetMyHomeDataF,
   apiPartnerFindMoneyPageF,
   apiPartnerFindSpectatorsF,

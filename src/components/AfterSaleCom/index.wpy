@@ -8,31 +8,34 @@
     </view>
 
     <view class="goods-outer" wx:for="{{item.orderDetailList}}" wx:key='index' wx:for-item='subItem'>
-        <view class='cat-m'>
-            <image src='{{subItem.goodsIco}}' />
-        </view>
-        <view class="cat-m-t">
-            <view class='goods-name'>
-                <text>{{subItem.goodsName}}</text>
-                <text>￥{{subItem.price}}</text>
+        <view class="goods-wrap">
+            <view class='cat-m'>
+                <image src='{{subItem.goodsIco}}' />
             </view>
-            <view class='goods-des'>
-                <text><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}}</text></text>
-                <text>x{{subItem.goodsNumber}}</text>
+            <view class="cat-m-t">
+                <view class='goods-name'>
+                    <text>{{subItem.goodsName}}</text>
+                    <text>￥{{subItem.price}}</text>
+                </view>
+                <view class='goods-des'>
+                    <text><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}}</text></text>
+                    <text>x{{subItem.goodsNumber}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="order-button-outer">
+            <view @tap="orderBtnA({{subItem}})" class="order-btn order-btn-active" >
+                {{swiperIndex == 0 ? '申请售后':(swiperIndex == 1?'处理中':'')}}
             </view>
         </view>
     </view>
 
-    <view class="order-num-outer">
-        <text>{{OrderComIndex}}共 {{item.goodsCount}} 件 合计:</text>
-        <text>￥{{item.orderAmount}}</text>
-    </view>
 
-    <view class="order-button-outer">
-        <view @tap="orderBtnA" class="order-btn order-btn-active" >
-            退货
+    <!-- <view class="order-button-outer">
+        <view @tap="orderBtnA({{item}})" class="order-btn order-btn-active" >
+            {{swiperIndex == 0 ? '申请售后':(swiperIndex == 1?'处理中':'')}}
         </view>
-    </view>
+    </view> -->
     
   </view>
 </template>
@@ -53,41 +56,39 @@ export default class SureGoodsCom extends wepy.component {
       OrderComIndex: {
           type: [Number, String],
           default: 0
+      },
+      swiperIndex: {
+          type: [Number, String],
+          default: 0
       }
   }
   data = {
       btnObj: {
-        '1': [
+        '0': [
             {word: '退款', action: '1a'},
             {word: '付款', action: '1b', color: 'sure'}
         ],
-        '2': [
+        '1': [
             {word: '提醒发货', action: '2a'},
             {word: '查看物流', action: '2b'}
         ],
-        '4': [
+        '2': [
             {word: '延长收货', action: '4a'},
             {word: '查看物流', action: '4b'},
             {word: '确认收货', action: '4c', color: 'sure'}
-        ],
-        '5': [
-            {word: '最近评论', action: '5c'}
         ]
     }
   }
   methods = {
-      numAdd() {
-      },
-      numReduce() {
-      },
-      orderBtnA() {
-          this.$emit('sale-com-event', {})
+      orderBtnA(item) {
+          if (this.swiperIndex == 0) {
+              this.$emit('sale-com-event', item)
+          }
       }
   }
+  computed = {
+  }
   watch = {
-      item(newVal, oldVal) {
-
-      }
   }
   onLoad() {
   }
