@@ -74,10 +74,11 @@ export default class ReturnGoods extends wepy.page {
     apiSalesF(this.pageParams, fun).then((result) => {
       miniPro.showToast('申请成功');
       setTimeout(() => {
-        wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+        wepy.switchTab({ url: `/pages/mine/index` })
+        // wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
       }, 1000);
     }).catch((err) => {
-      miniPro.showToast('');
+      miniPro.showToast('申请售后失败');
     });
   }
   onLoad(option) {

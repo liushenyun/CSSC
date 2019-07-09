@@ -1,19 +1,38 @@
 <template>
-  <view class='about-ctner'>
-      <view class="word">
-        会员特权
-        <canvas style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
-      </view>
+  <view class='member-ctner'>
+      <view class="mt-wrap">
+        <view class="mt-title-wrap">
+          <view class="mt-title-inner">
+            <view>会员卡</view>
+            <view>特惠尝鲜 超值享受</view>
+          </view>
+        </view>
+
+        <view class="mt-con">
+                <view class="mt-same">
+                  <view class="mt-s">
+                      <image src='../../../images/m_icon_9.png'></image>
+                      <view>全场包邮</view>
+                  </view>
+                  <view class="mt-s">
+                      <image src='../../../images/m_icon_9.png'></image>
+                      <view>全场包邮</view>
+                  </view>
+                  <view class="mt-s">
+                      <image src='../../../images/m_icon_9.png'></image>
+                      <view>全场包邮</view>
+                  </view>
+                </view>
+            </view>
+        </view>
+
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import drawQrcode from 'weapp-qrcode'
 export default class MemberDocument extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '会员特权'
   };
   components = {
@@ -24,12 +43,6 @@ export default class MemberDocument extends wepy.page {
   }
 
   onLoad() {
-    drawQrcode({
-      width: 200,
-      height: 200,
-      canvasId: 'myQrcode',
-      text: '{a: 12}'
-    })
   }
 
 }

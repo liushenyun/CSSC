@@ -13,10 +13,10 @@
     <view class="m-hy">
       <view class="hy-inner">
         <image src='../../images/discount_bg1.png'></image>
-        <text>宗亲会员</text>
-        <view wx:if="{{pageData.userLevel == 0}}" class="hy-word">立即加入，立享折扣</view>
+        <text>{{membersText}}</text>
+        <view wx:if="{{!isMembers}}" class="hy-word">立即加入，立享折扣</view>
         <view wx:else class="hy-word">海量商品，多种优惠</view>
-        <view wx:if="{{pageData.userLevel == 0}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
+        <view wx:if="{{!isMembers}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
         <view wx:else @tap='lookMembersWordA' class="hy-btn">查看会员特权</view>
       </view>
     </view>
@@ -116,7 +116,9 @@ export default class Mine extends wepy.page {
   };
 
   data = {
-    isPartner: false,
+    // isPartner: false,
+    isMembers: false,
+    membersText: '',
     partnerText: '',
     pageData: {
       userLevel: '', // 用户级别(0:普通用户 1：月卡会员 2：年卡会员)
@@ -193,6 +195,24 @@ export default class Mine extends wepy.page {
   apiGetMyHomeDataFA(fun) {
     apiGetMyHomeDataF(fun).then((result) => {
       this.pageData = result
+      let _agnatioVip = result.agnatioVip
+      let _userLevel = result.userLevel
+      let _membersText = ''
+      if (_agnatioVip == 1) {
+        _membersText = '宗亲会员'
+        this.isMembers = true
+      } else if (_userLevel == 1) {
+        _membersText = '月卡会员'
+        this.isMembers = true
+      } else if (_userLevel == 2) {
+        _membersText = '年卡会员'
+        this.isMembers = true
+      } else {
+        _membersText = ''
+        this.isMembers = false
+      }
+      this.membersText = _membersText
+
       let _text
       // let _userType = result.userType
       let _payStatus = result.payStatus
@@ -214,7 +234,6 @@ export default class Mine extends wepy.page {
       this.$apply()
     }).catch(() => {});
   }
-  async onLoad() {}
   async onShow() {
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();

@@ -86,7 +86,6 @@ export default class AfterSales extends wepy.page {
     },
     changeCurA(i) {
       this.currentIndex = i
-      this.fetchA(i)
     },
     
     loadMore() { // 加载更多
@@ -110,10 +109,6 @@ export default class AfterSales extends wepy.page {
   }
   apiFindCompleteOrderListFA(fun) {
     apiFindCompleteOrderListF(fun).then((result) => {
-      console.log(result)
-      result.push(result[0])
-      result[0].orderDetailList.push(result[0].orderDetailList[0])
-      
       this.pageList = result
       this.$apply()
     }).catch((err) => {

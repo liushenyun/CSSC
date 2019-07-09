@@ -36,6 +36,7 @@
 <script>
 import wepy from 'wepy'
 import { apiSalesF } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
 export default class ReplacementGoods extends wepy.page {
   config = {
     navigationBarTitleText: '补发商品'
@@ -69,9 +70,13 @@ export default class ReplacementGoods extends wepy.page {
   }
   apiSalesFA(fun) {
     apiSalesF(this.pageParams, fun).then((result) => {
-      
+      miniPro.showToast('申请成功');
+      setTimeout(() => {
+        wepy.switchTab({ url: `/pages/mine/index` })
+        // wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+      }, 1000);
     }).catch((err) => {
-      
+      miniPro.showToast('申请售后失败');
     });
   }
   onLoad(option) {
