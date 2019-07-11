@@ -41,8 +41,8 @@
             
             <view class="rule-detail">
               <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
-              <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
-              <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text>
+              <!-- <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text> -->
+              <!-- <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} --  {{item.preferentialPrice}}</text> -->
             </view>
           </view>
           <!-- <view>3秒拥有水光肌</view> -->

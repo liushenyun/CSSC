@@ -23,7 +23,7 @@
                   </repeat>
                 </view>
                 <view class="after-no-wrap" wx:else>
-                    <image src=''></image>
+                    <image src='../../../images/sh_no_icon.png'></image>
                     <view>暂无数据</view>
                 </view>
                 <!-- <NoTip></NoTip> -->

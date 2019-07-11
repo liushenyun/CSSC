@@ -40,8 +40,20 @@
       <view class="bench-poster">
         <view class="poster-title">我的推广海报</view>
         <view class="poster-img">
-          <view class="poster-tip">成氏商城，诚实的商城</view>
+          <view class="poster-tip">
+            <text>复制邀请码</text>
+            <text>{{partnerData.userId}}</text>
+            <text>成氏商城，诚实的商城</text>
+          </view>
           <image class="poster-img-bg" src='../../../images/card_by.png'></image>
+          <view class="poster-info-wrap">
+            <view class="img-w" @tap='choiceImgA'>
+              <image class="img-w_a" src="{{headImgParams.imgUrl?headImgParams.imgUrl:'../../../images/logo_b.png'}}"></image>
+              <image class="img-w_b" src='../../../images/m_add_icon.png'></image>
+            </view>
+            <view class="poster-name">{{partnerData.realName}}</view>
+            <view class="poster-type">{{userType}}</view>
+          </view>
         </view>
       </view>
       <view class="bench-btn">
@@ -55,8 +67,10 @@ import wepy from 'wepy'
 import VerificationCode from '../../../components/verificationCode/index'
 import {
   apiPartnerDataF, // 合伙人工作台 => 获取合伙人工作台数据
-  apiPartnerWithdrawalApplyF // 合伙人提现
+  apiPartnerWithdrawalApplyF, // 合伙人提现
+  apiUploadPartnerHeadF
 } from '../../../services/mine/index'
+import { apiUploadPartnerHead } from '../../../services/mine/api'
 import miniPro from '../../../utils/wepy-pro'
 
 export default class JoinPartnerBench extends wepy.page {
@@ -70,7 +84,11 @@ export default class JoinPartnerBench extends wepy.page {
   }
   data = {
     partnerData: {},
-    userType: ''
+    userType: '',
+    headImgParams: {
+      filePath: '',
+      imgUrl: ''
+    }
   };
 
   apiPartnerDataFA(fun) {
@@ -129,7 +147,37 @@ export default class JoinPartnerBench extends wepy.page {
         return
       }
       wepy.navigateTo({ url: `/pages/packageMine/posters/index?url=${_url}` })
+    },
+    
+    choiceImgA() {
+      let _this = this
+      const Access_Token = miniPro.getAccessToken()
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success (res) {
+          // tempFilePath可以作为img标签的src属性显示图片
+          const tempFilePaths = res.tempFilePaths[0]
+          _this.headImgParams.filePath = tempFilePaths
+          _this.$apply()
+          setTimeout(() => {
+            _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
+          }, 100);
+          console.log(tempFilePaths)
+        }
+      })
     }
+  }
+  apiUploadPartnerHeadFA(fun) {
+    apiUploadPartnerHeadF(this.headImgParams.filePath,fun).then((result) => {
+      this.headImgParams.imgUrl = result
+      this.partnerData.promoteQr = result
+      this.$apply()
+      console.log(186, result)
+    }).catch((err) => {
+      
+    });
   }
   onLoad() {
     this.apiPartnerDataFA(this.apiPartnerDataFA.bind(this))

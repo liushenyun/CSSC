@@ -205,7 +205,83 @@ let proFun = () => {
             }, TOAST_DURATION - 1000)
             reject(data)
           } else if (statusCode === 400) {
-            let sss = reject(data)
+            reject(data)
+            // 解决置换token的时候再次返回400 isGettingToken 为true无法再次走登录流程
+            wepy.setStorageSync('isGettingToken', false);
+            if (data.error) {
+              if (data.error === 'invalid_grant' || data.error === 'wechat.code.expire' || data.error === 'wechatToken.time.out') {
+                Auth.getInstance().checkWebchatAuth(true, fun, true)
+              } else if (data.error === 'mobile.bind') {
+                miniPro.showToast('手机号已被占用，无法获取数据');
+              }
+            }
+          } else if (statusCode === 500 && data && data.status == 500) {
+            reject(res.data)
+          } else {
+            miniPro.showToast('加载失败')
+            reject(res)
+          }
+        },
+        fail(err) {
+          // 请求失败 30秒隐藏loading
+          setTimeout(() => { wepy.hideLoading() }, 30 * 1000)
+          reject(err)
+        }
+      })
+    })
+  }
+
+  miniPro.upload = (options, fun) => {
+    let _header = Object.assign({}, options.header)
+    const Access_Token = miniPro.getAccessToken()
+    let haveLoading = options.haveLoading || true
+    return new Promise((resolve, reject) => {
+      if (haveLoading) {
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        })
+      }
+      wepy.uploadFile({
+        url: options.url,
+        filePath: options.filePath,
+        name: 'partnerHeadFile',
+        header: {
+          'Authorization': `${Access_Token}`,
+          'content-type': 'multipart/form-data', // application/json
+          ..._header
+        },
+        formData: {
+          // 'user': 'test'
+        },
+        success(res) {
+          setTimeout(() => { wepy.hideLoading() }, 0)
+          let { statusCode, data } = res
+          console.log(statusCode, JSON.parse(data))
+          data = JSON.parse(data)
+          let errorCode = data.code === undefined ? 'none' : Number(data.code)
+          let errMsg = data.message
+          if (statusCode === 200) {
+            if (errorCode == 0) {
+              if (options.noOutData) {
+                resolve(res.data)
+              } else {
+                resolve(data.data)
+              }
+            } else {
+              miniPro.showToast(errMsg)
+              reject(data)
+            }
+          } else if (statusCode == 401) {
+            Auth.getInstance().checkWebchatAuth(true, fun, true)
+          } else if (statusCode === 403) { // 未绑定需要绑定操作（手机号，验证码）
+            miniPro.showToast('请先登录')
+            setTimeout(() => {
+              wepy.navigateTo({ url: '/pages/login/index' })
+            }, TOAST_DURATION - 1000)
+            reject(data)
+          } else if (statusCode === 400) {
+            reject(data)
             // 解决置换token的时候再次返回400 isGettingToken 为true无法再次走登录流程
             wepy.setStorageSync('isGettingToken', false);
             if (data.error) {

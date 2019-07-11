@@ -137,6 +137,7 @@ page{
        height: rpx(98);
        display: flex;
        background: #FFF;
+       align-items: center;
        .gb-kf,
        .gb-cart {
            display: flex;
@@ -179,7 +180,7 @@ page{
        .gb-join,
        .gb-buy {
             flex: 1;
-            border-radius: rpx(10);
+            border-radius: rpx(40);
             text-align: center;
             line-height: rpx(98);
             font-weight: bolder;
@@ -190,6 +191,8 @@ page{
        .gb-buy {
             background:rgba(255,127,0,1);
             color: #FFF;
+            height: 80%;
+            margin-right: rpx(30);
        }
    }
 }

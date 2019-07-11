@@ -2,6 +2,9 @@
   <view class='poster-ctner'>
      <!-- <button @tap='choiceA'>选择图片</button> -->
      <image src='{{postUrl}}'></image>
+     <view class="share-btn" @tap='shareA'>
+       <button class="icx-clear-after-border" open-type="share">分享</button>
+     </view>
   </view>
 </template>
 
@@ -20,6 +23,9 @@ export default class Posters extends wepy.page {
     postUrl: ''
   };
   methods = {
+    shareA() {
+
+    },
     choiceA() {
       let _this = this
       const Access_Token = miniPro.getAccessToken()
@@ -65,6 +71,18 @@ export default class Posters extends wepy.page {
     }).catch((err) => {
       
     });
+  }
+
+  onShareAppMessage(res) {
+    let postUrl = this.postUrl
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target);
+    }
+    return {
+      title: '成氏商城',
+      path: `/pages/packageMine/posters/index?url=${postUrl}`
+    };
   }
 
   onLoad(option) {

@@ -42,6 +42,7 @@ import packagePromise from '../packagePromise'
 // import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
 let request = miniPro.request
+let upload = miniPro.upload
 
 // 订单模块 => 取消订单
 const apiCancelOrderF = (id, fun) => packagePromise((resolve, reject) => {
@@ -511,12 +512,11 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 合伙人工作台 => 获取合伙人工作台数据
-const apiUploadPartnerHeadF = (data, fun) => packagePromise((resolve, reject) => {
-  request({
+// 合伙人工作台 => 上传合伙人头像
+const apiUploadPartnerHeadF = (filePath, fun) => packagePromise((resolve, reject) => {
+  upload({
     url: apiUploadPartnerHead(),
-    method: 'POST',
-    data
+    filePath
   }, fun)
     .then(msg => {
       resolve(msg)
