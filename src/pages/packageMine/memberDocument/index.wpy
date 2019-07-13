@@ -1,50 +1,134 @@
 <template>
-  <view class='member-ctner'>
-      <view class="mt-wrap">
-        <view class="mt-title-wrap">
-          <view class="mt-title-inner">
-            <view>会员卡</view>
-            <view>特惠尝鲜 超值享受</view>
-          </view>
-        </view>
-
-        <view class="mt-con">
-                <view class="mt-same">
-                  <view class="mt-s">
-                      <image src='../../../images/m_icon_9.png'></image>
-                      <view>全场包邮</view>
-                  </view>
-                  <view class="mt-s">
-                      <image src='../../../images/m_icon_9.png'></image>
-                      <view>全场包邮</view>
-                  </view>
-                  <view class="mt-s">
-                      <image src='../../../images/m_icon_9.png'></image>
-                      <view>全场包邮</view>
-                  </view>
-                </view>
-            </view>
-        </view>
+  <view class='member-doc-ctner'>
+      <!-- <view class="word word-title word-b">入驻条件及流程</view> -->
+      <view class="word word-sub-title word-b">
+        全场包邮：
+      </view>
+      <view class="word">
+        1、超级会员（年卡/月卡）全年可享专属免邮；
+      </view>
+      <view class="word">
+        2、亲友卡会员每月可享5次包邮、试用超级会员可享1次包邮；
+      </view>
+      <view class="word">
+        3、除超级会员外，亲友卡会员和试用超级会员开通当日起即获得包邮机会；
+      </view>
+      <view class="word">
+        4、免邮券可用于非免邮订单的邮费之抵扣，价值10元，部分商品不可用券，以实际结算为准；
+      </view>
+      <view class="word word-sub-title word-b">
+        超级会员价：
+      </view>
+      <view class="word">
+        1、超级会员专享会员日活动并享受专属会员价，可叠加使用优惠券、红包、津贴等优惠，可参与满减、买赠等多商品以商
+  城实际活动运营公告为准；
+      </view>
+      <view class="word">
+        2、不与其它折扣叠加，如红包、店铺优惠券等折扣叠加使用；
+      </view>
+      <view class="word">
+        3、部分商品不享受超级会员价，以实际结算为准；
+      </view>
+      <view class="word word-sub-title word-b">
+        超级闪购：
+      </view>
+      <view class="word">
+        1、超级会员可参与日常超级闪购、活动期间的超级会员专场；
+      </view>
+      <view class="word">
+        2、超级闪购：每天xx点开始抢购（秒杀），超级会员可以超低
+   折扣价购买指定商品，商品数量有限，购完即止；
+      </view>
+      <view class="word">
+        3、每月活动：超级会员每月有不定期的专属活动，为你带来买
+   一赠一等惊喜福利；
+      </view>
+      <view class="word">
+        4、大促专场：大促期间，超级会员专场活动提供多种活动玩法
+  诸如红包雨、满减赠送、H5寻宝等福利"；
+      </view>
+      <view class="word word-sub-title word-b">
+        超级管家：
+      </view>
+      <view class="word">
+        24小时专属客服SVIP（年卡/季卡）正式会员可享，亲友卡、试用期会员不享受在线客服；
+      </view>
+      <view class="word">
+        1、专属客服：专属客服管家，为你优先解惑答疑；
+      </view>
+      <view class="word">
+        2、极速售后：超级会员在退换货时，选择寄回方式为“上门取
+   件”，在快递员反馈成氏商城退回运单号后，优先进入退款
+  换货流程，为你节省商品退回的物流等待时间和收货检测的
+   处理时间。
+      </view>
+      <view class="word word-sub-title word-b">
+        会员专享：
+      </view>
+      <view class="word">
+        1、超级会员专享生日特惠满300享9折，满600享8.8折，满
+  1000享8.5折；
+      </view>
+      <view class="word">
+        2、会员生日前3天平台自动推送提醒并接送商城生日礼包，包
+   括39. 9元选购会员生日专属商城精美商品、专属生日祝福
+  及生日歌、专属生日愿望（有机会获得平台实现你许下的愿
+  望哦）；
+      </view>
+      <view class="word">
+        3、会员生日当天获得商城专属SVIP礼遇：商城专属通道（全
+   场无门槛包邮）、专属超级管家服务。
+      </view>
+      <view class="word word-sub-title word-b">
+        会员专享：
+      </view>
+      <view class="word">
+        "平台将根据用户对商城的影响力和贡献度筛选定期线下活 
+   动：国内外旅游、线下沙龙、组织团建。
+      </view>
+      <view class="word word-sub-title word-b">
+        亲友邀请卡：
+      </view>
+      <view class="word">
+        1、可邀请亲友以xx元/年价格开通亲友卡会员，享受亲友卡会
+  员3大特权；
+      </view>
+      <view class="word">
+        2、一个用户最多可邀请xx位亲友，有效期内续费/到期后重新
+  开通不增加亲友卡数量；
+      </view>
+      <view class="word">
+        3、亲友卡具体规则参看亲友卡详情页（新增亲友卡、亲友卡详
+  情页、该页面跳转详情页入口按钮等）"。
+      </view>
+      <view class="word word-sub-title word-b">
+        会员专享：
+      </view>
+      <view class="word">
+        1、首次开通超级会员年卡即送，4单选1，0元领价值89元智造
+   好物，年卡会员限时福利，任选1件免费带走；
+      </view>
+      <view class="word">
+        2、首次开通超级会员年卡专享第一次在商城内购物返还6%回
+       馈金；
+      </view>
+      <view class="word">
+        3、回馈金以付款金额价格中单个订单金额经系统最优排序的，
+   返还6%至付款账户，或用户可自行选择用于订单的金额抵 
+  扣（最终结算价格-6%）；
+      </view>
 
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-export default class MemberDocument extends wepy.page {
+export default class Policy extends wepy.page {
   config = {
     navigationBarTitleText: '会员特权'
   };
-  components = {
-  };
-  data = {
-  };
-  methods = {
-  }
-
-  onLoad() {
-  }
-
+  data = { };
+  methods = { }
 }
 </script>
 <style lang="scss" scoped>

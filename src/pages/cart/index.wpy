@@ -21,6 +21,8 @@
           <view class='cat-container'>
             <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
               <image src="{{item.goodsIco}}"></image>
+              <view class="cart-l-des">{{item.goodsName}}</view>
+              <view class="cart-l-price">{{item.price}}</view>
             </view>
           </view>
         </view>

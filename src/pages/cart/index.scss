@@ -39,7 +39,7 @@ page{
             overflow: hidden;
             .cat-like-item {
                 width: 49%;
-                height: rpx(446);
+                min-height: rpx(440);
                 margin-bottom: rpx(20);
                 background:#FFF;
                 border-radius:rpx(10);
@@ -47,7 +47,18 @@ page{
                 overflow: hidden;
                 image {
                     width: 100%;
-                    height: 100%;
+                    height: rpx(338);
+                }
+                .cart-l-des {
+                    font-size: $size-one;
+                    margin: rpx(10) 0 rpx(20) 0;
+                    padding-left: rpx(16);
+                }
+                .cart-l-price {
+                    font-size: $size-six;
+                    color: $color-word-alarm;
+                    padding-left: rpx(16);
+                    margin-bottom: rpx(16)
                 }
             }
             .cat-like-item:nth-child(odd) {

@@ -14,6 +14,69 @@
     </view>
     <button @tap='joinA' class="icx-btn-same-sure">立即加入</button>
     <view class="des">· 会员权益相关介绍 ·</view>
+    <view class='doc-title'>特惠尝鲜 超值享受</view>
+
+    <view class="mt-con">
+
+        <view class="mt-same">
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_9.png'></image>
+              <view class="mt-tip-1">全场包邮</view>
+              <view class="mt-tip-2"></view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_2.png'></image>
+              <view class="mt-tip-1">超级会员价</view>
+              <view class="mt-tip-2">9.5折起</view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_3.png'></image>
+              <view class="mt-tip-1">超级闪购</view>
+              <view class="mt-tip-2">限时放价</view>
+          </view>
+        </view>
+
+        <view class="mt-same">
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_1.png'></image>
+              <view class="mt-tip-1">超级管家</view>
+              <view class="mt-tip-2">24小时</view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_5.png'></image>
+              <view class="mt-tip-1">会员专属</view>
+              <view class="mt-tip-2">生日特惠</view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_4.png'></image>
+              <view class="mt-tip-1">会员PLUS</view>
+              <view class="mt-tip-2">专属活动</view>
+          </view>
+        </view>
+
+        <view class="mt-same">
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_8.png'></image>
+              <view class="mt-tip-1">亲友邀请</view>
+              <view class="mt-tip-2"></view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_6.png'></image>
+              <view class="mt-tip-1">会员专享</view>
+              <view class="mt-tip-2">首开超级会员即送</view>
+          </view>
+          <view class="mt-s" @tap='toDocA'>
+              <image src='../../../images/m_icon_8.png'></image>
+              <view class="mt-tip-1">敬请期待</view>
+              <view class="mt-tip-2">更多权益</view>
+          </view>
+        </view>
+    </view>
+
+    <view class="doc-b">
+      <image @tap='toDocA' src='../../../images/m_icon_10.png'></image>
+    </view>
+
   </view>
 </template>
 
@@ -41,6 +104,9 @@ export default class JoinMembers extends wepy.page {
     },
     joinA() {
       this.apiVipPayFA(this.apiVipPayFA.bind(this))
+    },
+    toDocA() {
+      wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
     }
   }
 

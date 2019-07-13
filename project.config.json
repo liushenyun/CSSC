@@ -343,10 +343,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 44,
 					"name": "分享页面",
 					"pathName": "pages/packageMine/posters/index",
-					"query": "",
+					"query": "url=https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/poster/87a5cfac91e543878a5df76406e85f69.jpg",
 					"scene": null
 				}
 			]

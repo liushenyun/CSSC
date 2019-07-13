@@ -70,4 +70,48 @@ page{
         font-size: rpx(22);
         color:rgba(51,51,51,1)
     }
+    .doc-title {
+        text-align: center;
+        color: #6E4E30;
+        margin: rpx(20) 0 rpx(26) 0;
+        font-size: rpx(22);
+    }
+    .mt-con {
+        padding: rpx(20) rpx(100);
+        .mt-same {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: rpx(30);
+        }
+        .mt-s {
+            text-align: center;
+            image {
+                width: rpx(68);
+                height: rpx(68);
+                display: inline-block;
+            }
+            view {
+                text-align: center;
+            }
+            .mt-tip-1 {
+                font-size: rpx(22);
+                color: $color-word-one;
+                margin: rpx(8) 0 rpx(6) 0;
+            }
+            .mt-tip-2 {
+                font-size: rpx(20);
+                color: $color-word-three
+            }
+        }
+    }
+
+    .doc-b {
+        text-align: center;
+        margin-top: rpx(20);
+        image {
+            display: inline-block;
+            width: rpx(335);
+            height: rpx(229);
+        }
+    }
 }
