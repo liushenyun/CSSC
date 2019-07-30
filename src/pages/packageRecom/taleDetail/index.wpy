@@ -69,27 +69,27 @@ export default class TaleDetail extends wepy.page {
     apiTalePatronizeF({
       id: this.taleObj.id
     }, fun).then(msg => {
-      miniPro.showToast('点赞成功')
+      miniPro.showToast('收藏成功')
       setTimeout(() => {
         this.isCollect = true
         this.$apply()
       }, 1000);
     }).catch(() => {
-      miniPro.showToast('点赞失败')
+      miniPro.showToast('收藏失败')
     })
   }
 
-  apiTaleUnpatronizeFA(fun) { // 取消点赞
+  apiTaleUnpatronizeFA(fun) { // 取消收藏
     apiTaleUnpatronizeF({
       id: this.taleObj.id
     }, fun).then(msg => {
-      miniPro.showToast('取消点赞成功')
+      miniPro.showToast('取消收藏成功')
       setTimeout(() => {
         this.isCollect = false
         this.$apply()
       }, 1000);
     }).catch(() => {
-      miniPro.showToast('取消点赞失败')
+      miniPro.showToast('取消收藏失败')
     })
   }
 

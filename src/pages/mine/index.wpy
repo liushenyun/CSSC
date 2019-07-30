@@ -234,9 +234,15 @@ export default class Mine extends wepy.page {
       this.$apply()
     }).catch(() => {});
   }
-  async onShow() {
+  onLoad(option) {
+    // pages/mine/index?qrScene=channel#1000
+    wepy.$instance.globalData.qrScene = option.qrScene || ''
+  }
+  async onShow(option) {
+    console.log(option)
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
+    console.log(wepy.$instance.globalData)
   }
 }
 </script>

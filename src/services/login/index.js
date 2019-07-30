@@ -70,6 +70,8 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
   wepy.setStorageSync('isGettingToken', true)
   let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
   console.log(98, JSON.parse(data.miniprogramParam));
+  console.log(wepy.$instance.globalData)
+  let qrScene = wepy.$instance.globalData.qrScene
   request({
     url: apiWechatLogin(),
     method: 'POST',
@@ -81,7 +83,8 @@ const wechatLogin = (data) => packagePromise((resolve, reject) => {
       signature,
       rawData,
       encryptedData,
-      iv: iv
+      iv: iv,
+      qrScene
     }
   })
     .then(msg => {

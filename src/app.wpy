@@ -144,7 +144,8 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    [EVENT_QUEUE_NAME]: new EventQueue()
+    [EVENT_QUEUE_NAME]: new EventQueue(),
+    qrScene: '' // 推荐人id
   };
 
   constructor() {

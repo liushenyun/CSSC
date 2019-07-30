@@ -53,6 +53,15 @@ page{
                     font-size: $size-one;
                     margin: rpx(10) 0 rpx(20) 0;
                     padding-left: rpx(16);
+                    height: rpx(60);
+                    line-height: 1.2;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    word-wrap: break-word;
+
                 }
                 .cart-l-price {
                     font-size: $size-six;

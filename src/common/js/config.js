@@ -21,22 +21,19 @@ const DEBOUNCE_TIME = 300 // debounce time
 const APP_MINI_SKY_ID = `mall_mini_sky_id` // 天窗id
 const BANNER_VERSION = 'v1' // banner 版本
 const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
-const MAIN_DOMAIN = 'http://mjx-wx.natapp1.cc' // 测试域名
+// const MAIN_DOMAIN = 'http://mjx-wx.natapp1.cc' // 测试域名
+const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名
 // const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
-// const MAIN_API_DOMAIN = 'https://mainapi.icarbonx.com'
-// const API_DOMAIN = 'https://api.icarbonx.com'
-// const EMI_DOMAIN = 'https://eim.icarbonx.com'
+
 const WBVIEW_PAGE_URL = '/pages/webview/index'
 const WECHAT_ACCESS_TOKEN_NAME = `${BASE_NAME}_Access_TOKEN` // access_token存储名字
-// const WECHAT_Refresh_TOKEN_NAME = `${BASE_NAME}_Refresh_TOKEN` // Refresh_TOKEN存储名字
-// const WECHAT_TOKEN_TYPE_NAME = `${BASE_NAME}_TOKEN_TYPE` // TOKEN_TYPE存储名字
-// const WECHAT_BIND_TOKEN_NAME = `${BASE_NAME}_BIND_TOKEN` // BIND_TOKEN 绑定token 403登录页面时候使用
+
 const APP_REFRESH_API = `${BASE_NAME}_Refresh_Api` // 需要刷新接口 options
 const PAGE_INIT_SET_NAME = 'initSet' // 页面page   initSet 名字
 const EVENT_QUEUE_NAME = 'eventQueue'
-// 血糖特有
+
 const BLOOD_TIP_READED = 'BLOOD_TIP_READED'
-// 弹出框解释说明
+
 const TIP_GLYCEMIC_TEXT = 'GlycemicText' // 用餐升糖
 const INDICATOR_COLOR = '#999'
 const INDICATOR_ACTIVE_COLOR = '#FFF'
