@@ -9,6 +9,7 @@
           autoplay="{{autoplay}}"
           duration="{{duration}}"
           current="{{currentIndex}}"
+          bindchange="intervalChange"
         >
           <block wx:for="{{topArr}}" wx:key='index'>
             <swiper-item>
@@ -98,13 +99,16 @@ export default class Order extends wepy.page {
     toFilterA() {
       wepy.navigateTo({ url: '/pages/packageIndex/filter/index' });
     },
-    changeCurA(i) {
-      this.currentIndex = i;
-      this.pageParams.orderStatus = this.orderStatusObj[i]
+    intervalChange(e) {
+      this.currentIndex = e.detail.current
+      this.pageParams.orderStatus = this.orderStatusObj[e.detail.current]
       this.pageParams.page = 0
       this.pageParams.hasMore = false
       this.pageList = []
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
+    },
+    changeCurA(i) {
+      this.currentIndex = i;
     },
     loadMore() { // 加载更多
       if (!this.pageParams.hasMore) return
