@@ -33,6 +33,7 @@ export default class Posters extends wepy.page {
       wepy.openSetting({
         success(settingdata) {
           _this.isShowOpen = false
+          _this.$apply()
           if (settingdata.authSetting['scope.writePhotosAlbum']) {
             _this.downLoadA()
           } else {
@@ -46,7 +47,6 @@ export default class Posters extends wepy.page {
       //获取相册授权
       wx.getSetting({
         success(res) {
-          console.log(res.authSetting['scope.writePhotosAlbum'])
           if (!res.authSetting['scope.writePhotosAlbum']) {
             wx.authorize({
               scope:'scope.writePhotosAlbum',
@@ -112,10 +112,10 @@ export default class Posters extends wepy.page {
           fail: function (err) {
             if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
               _this.isShowOpen = true
+              _this.$apply()
             }
           },
           complete(res){
-            console.log(res);
           }
         })
       }
@@ -135,7 +135,6 @@ export default class Posters extends wepy.page {
     let postUrl = this.postUrl
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      console.log(res.target);
     }
     return {
       title: '成氏商城',

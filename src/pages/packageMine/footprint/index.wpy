@@ -6,7 +6,7 @@
     <view class="collection-no" wx:if="{{footArr.length == 0}}">
       <view class="in">
         <image src='../../../images/foot_icon.png'></image>
-        <view>赞无足迹</view>
+        <view>暂无足迹</view>
       </view>
     </view>
   </view>

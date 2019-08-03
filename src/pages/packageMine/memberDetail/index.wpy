@@ -49,7 +49,7 @@ export default class MemberDetail extends wepy.page {
       rows.forEach(val => {
         let { userLevel, userType } = val
         let _userLevel = ['普通用户', '月卡用户', '年卡用户'][Number(userLevel)]
-        let _userType = ['普通用户', '普通合伙人', '高级合伙人', '代购合伙人'][Number(userType)]
+        let _userType = ['普通用户', '分享者', '合伙人', '真成掮客'][Number(userType)]
         if (_userLevel == '普通用户' && _userType == '普通用户') {
           val.typeText = '普通用户'
         } else if (_userLevel == '普通用户' && _userType != '普通用户') {

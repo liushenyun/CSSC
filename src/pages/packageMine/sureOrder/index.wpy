@@ -69,6 +69,8 @@ export default class SureOrder extends wepy.page {
     apiFindDefAddressF(fun).then((result) => {
       this.addressStr = `${result.province} ${result.city} ${result.district}`
       this.addressId = result.id
+      wepy.$instance.globalData.addressObj.addressStr = ''
+      wepy.$instance.globalData.addressObj.addressId = ''
       this.$apply()
     }).catch(() => { });
   }
@@ -103,28 +105,20 @@ export default class SureOrder extends wepy.page {
   onLoad(option) {
     this.orderId = option.orderId
     this.$apply()
-    // 20190526145853664473
-  }
-  onReady() {
     setTimeout(() => {
       this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
     }, 30);
-  }
-  onShow() {
-    let a = [
-      {flag: true, a: 12},
-      {flag: false, a: 13},
-      {flag: true, a: 14}
-    ]
-    let _a = a.filter(val => {
-      if (val.flag == 11) {
-        return {
-          key: '12',
-          value: val.a
-        }
-      }
-    })
     this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
+    // 20190526145853664473
+  }
+  
+  onShow() {
+    let { addressStr, addressId } = wepy.$instance.globalData.addressObj
+    if (addressId) {
+      this.addressStr = addressStr
+      this.addressId = addressId
+    } 
+    // this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
   }
 }
 </script>

@@ -73,7 +73,6 @@ export default class AfterSales extends wepy.page {
 
   events = {
     'sale-com-event': (item) => {
-      console.log(73, item)
       let _id = item.id
       wepy.navigateTo({ url: `/pages/packageMine/afterSalesAction/index?id=${_id}` });
     }
@@ -95,7 +94,6 @@ export default class AfterSales extends wepy.page {
     }
   };
   fetchA(currentIndex) {
-    console.log(currentIndex)
     this.pageList = [];
     if (currentIndex == 0) {
       this.apiFindCompleteOrderListFA(this.apiFindCompleteOrderListFA.bind(this))
@@ -105,7 +103,6 @@ export default class AfterSales extends wepy.page {
       this.pageParams.hasMore = false;
       this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
     }
-      console.log(89, currentIndex);
   }
   apiFindCompleteOrderListFA(fun) {
     apiFindCompleteOrderListF(fun).then((result) => {

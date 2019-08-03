@@ -60,11 +60,9 @@ export default class ReplacementGoods extends wepy.page {
       this.pageParams.afterSalesReason = this.reasonArray[_value]
     },
     bindinput(e) {
-      console.log(e);
       this.pageParams.afterSalesDesc = e.detail.value
     },
     submitA() {
-      console.log(this.pageParams)
       this.apiSalesFA(this.apiSalesFA.bind(this))
     }
   }

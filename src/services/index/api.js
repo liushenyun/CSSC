@@ -15,6 +15,9 @@ const apiVIPGoodsList = () => `${MAIN_DOMAIN}/api/buy/goods/find_vip_goods_page`
 // 获取商品详情
 const apiGetGoodsDetails = (goodsId) => `${MAIN_DOMAIN}/api/buy/goods/get_goods_details/${goodsId}`
 
+// 获取商品分享图片
+const apiGetGoodsShare = (goodsId) => `${MAIN_DOMAIN}/api/buy/goods/get_goods_details_share/${goodsId}`
+
 // 猜你喜欢，分页获取商品信息
 const apiGoodsLikePage = () => `${MAIN_DOMAIN}/api/buy/goods/like_page`
 
@@ -34,6 +37,7 @@ export {
   apiGoodsList,
   apiVIPGoodsList,
   apiGetGoodsDetails,
+  apiGetGoodsShare,
   apiGetHomeData,
   apiGoodsLikePage,
   apiGoodFindCategoryId,

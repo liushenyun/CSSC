@@ -1,0 +1,134 @@
+<template>
+  <view class='partner-doc-ctner'>
+      <!-- <view class="word word-title word-b">入驻条件及流程</view> -->
+      <view class="word word-sub-title word-b">
+        分享者：
+      </view>
+      <view class="word">
+        分享者可通过推荐注册和分享商品获得相应平台权益。任何用户都可免费成为分享者，用户通过手机实名认证即可成为分享者并将获得平台唯一的分享者号码标识。
+      </view>
+
+      <view class="word word-sub-title word-b">
+        真成掮客：
+      </view>
+      <view class="word">
+        真诚掮客是平台代购者身份，以村组为一个单位，可为实际生活周边的用户在平台内代购商品，已解决特定用户群体平台购物需求。会员通过手机实名认证后，向平台申请，平台经过线下核实后给与相应的身份认证。真成掮客可获得相应平台权益。
+      </view>
+
+      <view class="word word-sub-title word-b">
+        合伙人：
+      </view>
+      <view class="word">
+        用户通过平台分享者、真成掮客或合伙人推荐成为合伙人，经平台审核后支付相应合伙人费用即可成为合伙人，合伙人享受平台线上收益及公司整体收益分享权益。
+      </view>
+
+      <view class="word word-sub-title word-b">
+        订单奖励：
+      </view>
+      <view class="word">
+        1、适用人群：分享者 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、分享者分享下线用户成功购买商品时，下线可享0.5%返利；
+      </view>
+      <view class="word">
+        3、真成掮客分享下线用户成功购买商品时，真成掮客可享0.8%返利，下线可享0.5%返利；
+      </view>
+      <view class="word">
+        4、合伙人分享下线用户成功购买商品时，下线可享1%返利。
+      </view>
+
+      <view class="word word-sub-title word-b">
+        注册奖励：
+      </view>
+      <view class="word">
+        1、适用人群：普通推荐人 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、商城用户成为（分享者/真成掮客/合伙人），推荐发展下线注册用户可得奖励金；
+      </view>
+      <view class="word">
+        3、成功推荐一人成为商城的注册用户时，推荐者可享受每一位新用户1元的奖励金，多分享多得，上不封顶。
+      </view>
+
+
+      <view class="word word-sub-title word-b">
+        首单奖励：
+      </view>
+      <view class="word">
+        1、适用人群：分享者 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、分享者分享下线用户首笔订单为非促销订单时，分享者可得奖励金5元/单；
+      </view>
+      <view class="word">
+        3、真成掮客分享下线用户首笔订单为非促销订单时，真成掮客可得奖励金5元/单；
+      </view>
+      <view class="word">
+        4、合伙人分享下线用户首笔订单为非促销订单时，合伙人可得奖励金10元/单。
+      </view>
+
+
+      <view class="word word-sub-title word-b">
+        月卡奖励：
+      </view>
+      <view class="word">
+        1、适用人群：分享者 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、分享者/真成掮客/合伙人推荐其下线成为首次月卡会员，可得奖励金3元。
+      </view>
+
+
+      <view class="word word-sub-title word-b">
+        年卡奖励：
+      </view>
+      <view class="word">
+        1、适用人群：分享者 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、分享者推荐其下线用户成为商城年卡会员，分享者可得奖励金30元/人；
+      </view>
+      <view class="word">
+        3、真成掮客推荐其下线用户成为商城年卡会员，真成掮客可得奖励金30元/人；
+      </view>
+      <view class="word">
+        4、合伙人推荐其下线用户成为商城年卡会员，合伙人可得奖励金49元/人。
+      </view>
+
+
+      <view class="word word-sub-title word-b">
+        平台分红：
+      </view>
+      <view class="word">
+        1、适用人群：分享者 / 真成掮客 / 合伙人；
+      </view>
+      <view class="word">
+        2、分享者分享其下线用户成为合伙人，分享者可得奖励金1000元/人；
+      </view>
+      <view class="word">
+        3、真成掮客分享其下线用户成为合伙人，真成掮客可得奖励金1000元/人；
+      </view>
+      <view class="word">
+        4、合伙人分享其下线用户成为合伙人，合伙人可得奖励金2000元/人；
+      </view>
+      <view class="word">
+        5、成为合伙人可最高享受成氏商城（深圳）深圳有限公司年分红总额度的5%，由合伙人团队均分。
+      </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Policy extends wepy.page {
+  config = {
+    navigationBarTitleText: '合伙人特权'
+  };
+  data = { };
+  methods = { }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

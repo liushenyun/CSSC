@@ -45,7 +45,6 @@ export default class SearchItem extends wepy.component {
         this.$emit('goods-start-event', this.current, _collection)
       },
       toGoodsA() {
-          console.log(48, this.item);
           this.$emit('to-goods-event', this.item.id, this.item.groupPurchase)
       }
   }
@@ -60,5 +59,62 @@ export default class SearchItem extends wepy.component {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss'
+// @import './index.scss'
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.cat-item-ctner{
+    padding: rpx(30) rpx(20);
+    background: #FFF;
+    display: flex;
+    align-items: center;
+    margin-bottom: rpx(8);
+    .cat-m{
+        width: rpx(124);
+        height: rpx(124);
+        margin: 0 rpx(26) 0 rpx(16);
+        image{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .cat-m-t {
+        flex: 1;
+        .goods-name{
+            font-size: rpx(32);
+            color: $color-word-one;
+        }
+        .goods-des{
+            font-size: rpx(20);
+            color: $color-word-three;
+            margin: rpx(16) 0 rpx(20) 0;
+        }
+        .goods-num {
+            font-size: rpx(16);
+            color: $color-word-alarm;
+            margin: rpx(26) 0 rpx(16) 0;
+            // margin-bottom: rpx(10);
+        }
+        .goods-pri{
+            font-size: rpx(20);
+            color: $color-word-one;
+            text:nth-of-type(2) {
+                color: $color-word-three;
+                font-size:  rpx(16);
+                text-decoration: line-through;
+            }
+        }
+    }
+    .cat-r{
+        text-align: left;
+        width: rpx(50);
+        height: rpx(124);
+        line-height: rpx(124);
+        .star {
+           width: rpx(27);
+           height: rpx(27);
+           vertical-align: bottom;
+        }
+    }
+}
 </style>

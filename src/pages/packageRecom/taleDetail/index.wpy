@@ -103,7 +103,6 @@ export default class TaleDetail extends wepy.page {
     let _taleId = this.taleId
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      console.log(res.target);
     }
     return {
       title: '成氏商城',

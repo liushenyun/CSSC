@@ -11,7 +11,9 @@
       </view>
       <view class="clre-con">
         <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-          <view class="clre-con-top">12</view>
+          <view class="clre-con-top">
+            <image src='{{categoryIco}}'></image>
+          </view>
           <view class="clre-goods-outer" wx:for="{{pageList}}" wx:key="index" @tap="toGoodsDetailA({{item}})">
             <view class="clre-l">
               <image src='{{item.goodsIco}}'></image>
@@ -21,8 +23,8 @@
               <view>
               </view>
               <view>
-                <text>{{item.commentNumber}}人推荐</text>
-                <image src='../../../images/recom_icon.png' @tap='recomA'></image>
+                <text>{{item.collectionNumber}}人推荐</text>
+                <!-- <image src='../../../images/recom_icon.png' @tap.stop='recomA'></image> -->
               </view>
             </view>
           </view>
@@ -60,6 +62,7 @@ export default class Index extends wepy.page {
     classArr: [],
     pageList: [],
     classIndex: 0,
+    categoryIco: '',
     pageParams: {
      page: 0,
      limit:  20,
@@ -76,14 +79,16 @@ export default class Index extends wepy.page {
       this.pageParams.page = 0
       this.classIndex = index
       this.pageParams.categoryId = item.id
+      this.pageList = []
+      this.categoryIco = item.categoryIco
       this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     },
     toGoodsDetailA(item) {
       if (!item.id) return
       miniPro.toGoodsDetail(item.id, item.groupPurchase)
     },
-    recomA() {
-    },
+    // recomA() {
+    // },
     loadMore() { // 加载更多
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
@@ -95,6 +100,7 @@ export default class Index extends wepy.page {
     apiCategoryListF(fun).then(msg => {
       this.classArr = msg
       this.pageParams.categoryId = msg[0].id
+      this.categoryIco = msg[0].categoryIco
       this.$apply()
       this.apiGoodFindCategoryIdFA(this.apiCategoryListFA.bind(this))
     }).catch(err => {

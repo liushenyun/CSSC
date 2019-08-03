@@ -11,13 +11,13 @@
       </view>
     </view>
     <view class="m-hy">
-      <view class="hy-inner">
+      <view class="hy-inner" @tap='membersA'>
         <image src='../../images/discount_bg1.png'></image>
         <text>{{membersText}}</text>
-        <view wx:if="{{!isMembers}}" class="hy-word">立即加入，立享折扣</view>
+        <view wx:if="{{isMembers}}" class="hy-word">立即加入，立享折扣</view>
         <view wx:else class="hy-word">海量商品，多种优惠</view>
-        <view wx:if="{{!isMembers}}" class="hy-btn" @tap='joinMembersA'>加入会员</view>
-        <view wx:else @tap='lookMembersWordA' class="hy-btn">查看会员特权</view>
+        <view wx:if="{{!isMembers}}" class="hy-btn">加入会员</view>
+        <view wx:else class="hy-btn">查看会员特权</view>
       </view>
     </view>
     <view class="m-partner">
@@ -28,8 +28,9 @@
     </view>
     <view class="m-order-outer">
       <view class="m-order-innder">
-        <view class="m-order-title" @tap="toOrderTapA('0')">
+        <view class="m-order-title m-order-title-order" @tap="toOrderTapA('0')">
           <text>我的订单</text>
+          <text>查看全部订单</text>
           <image src='../../images/unfold.png'></image>
         </view>
         <view class="m-order-item">
@@ -137,11 +138,12 @@ export default class Mine extends wepy.page {
     toAddressListA() {
       wepy.navigateTo({ url: '/pages/packageMine/addressList/index' });
     },
-    joinMembersA() {
-      wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
-    },
-    lookMembersWordA() {
-      wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
+    membersA() {
+      if (this.isMembers) {
+        wepy.navigateTo({ url: '/pages/packageMine/memberDocument/index' });
+      } else {
+        wepy.navigateTo({ url: '/pages/packageMine/joinMembers/index' });
+      }
     },
     joinPartnerA() {
       // let _userType = this.pageData.userType
@@ -212,7 +214,7 @@ export default class Mine extends wepy.page {
         this.isMembers = false
       }
       this.membersText = _membersText
-
+      
       let _text
       // let _userType = result.userType
       let _payStatus = result.payStatus
@@ -239,10 +241,8 @@ export default class Mine extends wepy.page {
     wepy.$instance.globalData.qrScene = option.qrScene || ''
   }
   async onShow(option) {
-    console.log(option)
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
-    console.log(wepy.$instance.globalData)
   }
 }
 </script>

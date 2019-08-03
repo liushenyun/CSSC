@@ -48,7 +48,7 @@
           <!-- <view>3秒拥有水光肌</view> -->
         </view>
         <view class="G-line"></view>
-        <view class="bulk-tips">图文详情</view>
+        <!-- <view class="bulk-tips">图文详情</view> -->
         <view class="goods-detail">
           <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
         </view>
@@ -307,7 +307,6 @@ export default class BulkDetail extends wepy.page {
     let _goodsId = this.goodsId
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      console.log(res.target);
     }
     return {
       title: '成氏商城',

@@ -20,11 +20,51 @@
         </view>
 
         <view class="goods-des-outer">
-          <view><tex>￥</tex><tex></tex>{{firstSpec.price}}</view>
-          <view>{{goodsDetailObj.goodsName || '--'}}</view>
-          <!-- <view>3秒拥有水光肌</view> -->
+          <view class="price-outer">
+            <view class="price-a">
+              <view class="price-a-t">
+                <text class="price-1">￥ {{firstSpec.price}}</text>
+                <text class="price-2">￥ {{firstSpec.vipPrice}}</text>
+                <image src='../../../images/vip_icon.gif'></image>
+              </view>
+              <view class="price-a-b">
+                <text>￥ {{firstSpec.marketPrice}}</text>
+              </view>
+            </view>
+            <view class="price-b" @tap='toCollectA'>
+              <image wx:if="{{isCollect}}" src='../../../images/start_on.png'></image>
+              <image wx:else src='../../../images/start_off.png'></image>
+              
+              <view>收藏</view>
+            </view>
+            <view wx:if="{{!!shareObj.goodShareImg}}" class="price-c" @tap='toShareA'>
+              <image src='../../../images/vip_zhuanfa.png'></image>
+              <view>分享</view>
+            </view>
+            <!-- <text class="price-1">￥</text><text class="price-1">{{firstSpec.price}}</text>
+            <text class="price-2">￥</text><text class="price-2">{{firstSpec.vipPrice}}</text> -->
+          </view>
+          <view class="desc-outer">
+            <text>{{goodsDetailObj.goodsName || '--'}}</text>
+            <text>已售{{goodsDetailObj.buyNumber}}件</text>
+          </view>
+          <view class="desc-sub-outer">{{goodsDetailObj.goodsDescription}}</view>
         </view>
+
         <view class="G-line"></view>
+
+        <view class="member-outer" wx:if="{{!isMember}}">
+          <view class="member-bg">
+            <text class="word">现开通会员，立省100元</text>
+            <view class="btn" @tap='toJoinMemberA'>
+              <text>立即开通</text>
+              <image src='../../../images/unfold.png'></image>
+            </view>
+          </view>
+        </view>
+
+        <view class="G-line" wx:if="{{!isMember}}"></view>
+
         <view class="goods-detail">
           <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
         </view>
@@ -59,7 +99,8 @@
                   <image src="{{goodsDetailObj.goodsIco}}"></image>
                 </view>
                 <view class="des-r">
-                    <view>￥{{goodsSpecificationVoList[specCurrentIndex].price}}</view>
+                    <view wx:if="{{isMember}}">￥{{goodsSpecificationVoList[specCurrentIndex].vipPrice}}</view>
+                    <view wx:else>￥{{goodsSpecificationVoList[specCurrentIndex].price}}</view>
                     <view>库存{{goodsDetailObj.leavingsQuantity}}件</view>
                     <view>{{goodsDetailObj.goodsName }}</view>
                 </view>
@@ -87,6 +128,40 @@
               
           </view>
       </view>
+
+      <!-- 分享弹框 -->
+      <view class="share-outer" wx:if="{{shareObj.isShowSharePop}}">
+          <view class="share-inner">
+            <view class="share-img-con">
+              <image src="{{shareObj.goodShareUrl}}"></image>
+            </view>
+            <view class="share-btn-wrap">
+              <view class="sure-btns">
+                <view class="btn">
+                  <button class="icx-clear-after-border" open-type="share">
+                      <image src='../../../images/we_icon.png'></image>
+                      <view>微信</view>
+                  </button>
+                </view>
+                <view class="btn" @tap='saveA'>
+                  <image src='../../../images/save_icon.png'></image>
+                  <view>保存</view>
+                </view>
+              </view>
+              <view class="cancel-btn" @tap='cancelShareA'>取消分享</view>
+              <view class="open-btn-wrap" wx:if="{{shareObj.isShowOpen}}">
+                <button class="icx-btn-same-sure" bindtap="openSetting">打开设置页，获取相机权限</button>
+              </view>
+            </view>
+
+            
+
+          </view>
+      </view>
+
+
+      
+
   </view>
 </template>
 
@@ -94,18 +169,21 @@
 import wepy from 'wepy'
 import miniPro from '../../../utils/wepy-pro'
 import {
-  apiGetGoodsDetailsF
+  apiGetGoodsDetailsF,
+  apiGetGoodsShareF
 } from '../../../services/index'
 import {
   apiCartSaveF
 } from '../../../services/cart'
 
 import {
+  apiCollectDeleteF,
+  apiCollectSaveF,
   apiCreateOrderF
 } from '../../../services/mine'
 
 import WxParse from '../../../common/wxParse/wxParse.js'
-import AddCom from '@/components/AddCom/index';
+import AddCom from '@/components/AddCom/index'
 
 export default class GoodsDetail extends wepy.page {
   config = {
@@ -127,11 +205,21 @@ export default class GoodsDetail extends wepy.page {
     specCurrentIndex: 0,
     colorCurrentIndex: 0,
     goodsColorVoList: [], // 颜色规格
+    isCollect: false,
+    isMember: false,
+    shareObj: {
+      goodShareImg: '',
+      // goodShareUrl: 'https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/share/20190605151323725725/b368c29c2692422fbbe22df23010c0fa.png',
+      goodShareUrl: '',
+      isShowSharePop: false,
+      isShowOpen: false
+    },
     firstSpec: {
       id: '--',
       marketPrice: '--',
       price: '--',
-      specification: '--'
+      specification: '--',
+      vipPrice: '--'
     },
     goodsName: '',
     indicatorDots: true,
@@ -157,11 +245,61 @@ export default class GoodsDetail extends wepy.page {
     specChoiceA(index, item) {
       this.specCurrentIndex = index
     },
+    toJoinMemberA() {
+      wepy.navigateTo({ url: `/pages/packageMine/joinMembers/index` });
+    },
+    saveA() {
+      let _this = this
+      //获取相册授权
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.authorize({
+              scope:'scope.writePhotosAlbum',
+              success() {
+                _this.downLoadA()
+              },
+              fail() {
+                _this.downLoadA()
+              }
+            })
+          } else {
+            _this.downLoadA()
+          }
+        }
+      })
+    },
+    openSetting() {
+      let _this = this
+      wepy.openSetting({
+        success(settingdata) {
+          _this.shareObj.isShowOpen = false
+          _this.$apply()
+          if (settingdata.authSetting['scope.writePhotosAlbum']) {
+            _this.downLoadA()
+          } else {
+            miniPro.showToast('获取权限失败，无法保存')
+          }
+        }
+      })
+    },
+    cancelShareA() {
+      this.shareObj.isShowSharePop = false
+    },
     colorChoiceA(index, item) {
       this.colorCurrentIndex = index
     },
+    toCollectA() {
+      if (this.isCollect) {
+          this.apiCollectDeleteA(this.apiCollectDeleteA.bind(this))
+      } else {
+        this.apiCollectSaveA(this.apiCollectSaveA.bind(this))
+      }
+    },
+    toShareA() {
+      this.apiGetGoodsShareFA(this.apiGetGoodsShareFA.bind(this))
+    },
     goodsSureA() {
-      console.log(this.goodsSpecificationVoList, this.specCurrentIndex, this.goodsSpecificationVoList[this.specCurrentIndex].id)
       if (this.isWhichFlag == 1) {
         if (this.goodsColorVoList.length > 0) {
           this.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
@@ -196,8 +334,36 @@ export default class GoodsDetail extends wepy.page {
     }
   }
 
+
+  downLoadA() {
+    var _this = this
+    wepy.downloadFile({
+      url: _this.shareObj.goodShareUrl,
+      success: function (res) {
+        //图片保存到本地
+        wepy.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: function (data) {
+            miniPro.showToast('保存成功');
+            setTimeout(() => {
+              _this.shareObj.isShowSharePop = false;
+              _this.$apply()
+            }, 800)
+          },
+          fail: function (err) {
+            if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              _this.shareObj.isShowOpen = true
+              _this.$apply()
+            }
+          },
+          complete(res){
+          }
+        })
+      }
+    })
+  }
+
   apiCartSaveA(fun) { // 添加购物车
-    console.log()
     apiCartSaveF({
       goodsId: this.goodsId,
       specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
@@ -220,24 +386,68 @@ export default class GoodsDetail extends wepy.page {
     }).catch(() => { })
   }
 
+  apiCollectSaveA(fun) {
+    apiCollectSaveF({
+      goodsId: this.goodsId
+    }, fun).then(msg => {
+      miniPro.showToast('收藏成功')
+      setTimeout(() => {
+        this.isCollect = true
+        this.$apply()
+      }, 1000);
+    }).catch(err => {
+      miniPro.showToast('收藏失败')
+    })
+  }
+  
+  apiCollectDeleteA(fun) {
+    apiCollectDeleteF(this.goodsId, fun).then(msg => {
+      miniPro.showToast('取消收藏成功')
+      setTimeout(() => {
+        this.isCollect = false
+        this.$apply()
+      }, 1000);
+    }).catch(err => {
+      miniPro.showToast('删除收藏失败')
+    })
+  }
+
   apiGetGoodsDetailsA(fun) {
     var _self = this
     apiGetGoodsDetailsF(_self.goodsId, fun).then(msg => {
-      let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList, goodsColorVoList } = msg;
+      let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList, goodsColorVoList, goodShareImg, collection, userLevel } = msg;
       this.bannerArr = goodsBannerVoList;
       this.goodsSpecificationVoList = goodsSpecificationVoList;
       this.goodsColorVoList = goodsColorVoList;
       let _first = goodsSpecificationVoList[0];
       this.goodsDetailObj = msg;
+      this.shareObj.goodShareImg = goodShareImg
+      this.isCollect = collection
+      //  wx:if="{{userLevel == 1 || userLevel == 2}"
+      if (userLevel == 1 || userLevel == 2) {
+        this.isMember = true
+      } else {
+        this.isMember = false
+      }
       if (_first) {
         this.firstSpec = {
           id: _first.id || '--',
           marketPrice: _first.marketPrice || '--',
           price: _first.price || '--',
-          specification: _first.specification || '--'
+          specification: _first.specification || '--',
+          vipPrice: _first.vipPrice || '--'
         }
       }
       WxParse.wxParse('goodsDetail', 'html', goodsDetail, _self, 5);
+      this.$apply();
+    }).catch(() => { });
+  }
+
+  apiGetGoodsShareFA(fun) {
+    var _self = this
+    apiGetGoodsShareF(_self.goodsId, fun).then(msg => {
+      this.shareObj.isShowSharePop = true
+      this.shareObj.goodShareUrl = msg
       this.$apply();
     }).catch(() => { });
   }
@@ -249,11 +459,11 @@ export default class GoodsDetail extends wepy.page {
     let _goodsId = this.goodsId
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      console.log(res.target);
     }
     return {
       title: '成氏商城',
-      path: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}`
+      path: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}`,
+      imageUrl: this.shareObj.goodShareUrl
     };
   }
 
@@ -261,6 +471,10 @@ export default class GoodsDetail extends wepy.page {
     this.goodsId = option.goodsId
     this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
     this.$apply();
+  }
+
+  onShow() {
+    this.createData.orderDetailBoList = []
   }
 }
 </script>

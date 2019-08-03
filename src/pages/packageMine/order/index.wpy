@@ -76,7 +76,6 @@ export default class Order extends wepy.page {
     'order-btn-event': (item, index) => {
       this.btnClickCurrenIndex = index
       let _action = item.action
-      console.log(item, index)
       if (_action == "1b") { // 付款
         wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == "1a") { // 取消订单
@@ -139,7 +138,6 @@ export default class Order extends wepy.page {
         this.pageList[this.btnClickCurrenIndex].orderStatus = 3
         this.$apply()
       }, 1000);
-      console.log(134, result);
     }).catch((err) => {
       
     });
@@ -147,7 +145,6 @@ export default class Order extends wepy.page {
 
   apiCancelOrderFA(fun) {
     apiCancelOrderF(this.cancelOrderId, fun).then((result) => {
-      console.log(142, result);
     }).catch((err) => {
       
     });

@@ -41,12 +41,10 @@ export default class AddressList extends wepy.page {
   };
   methods = {
     checked(item) {
-      let _address = `${item.province} ${item.city} ${item.district}`
+      let _address = `${item.province} ${item.city} ${item.district} ${item.address}`
       let _addressId = item.id
-      let pages = getCurrentPages();
-      let prevPage = pages[pages.length - 2]; // 上一级页面
-      prevPage.data.addressId = _addressId
-      this.$wxpage = prevPage;
+      wepy.$instance.globalData.addressObj.addressStr = _address
+      wepy.$instance.globalData.addressObj.addressId = _addressId
       this.$apply()
       setTimeout(() => {
         wepy.navigateBack();

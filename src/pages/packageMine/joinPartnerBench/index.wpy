@@ -41,14 +41,14 @@
         <view class="poster-title">我的推广海报</view>
         <view class="poster-img">
           <view class="poster-tip">
-            <text>复制邀请码</text>
+            <text>邀请码</text>
             <text>{{partnerData.userId}}</text>
             <text>成氏商城，诚实的商城</text>
           </view>
           <image class="poster-img-bg" src='../../../images/card_by.png'></image>
           <view class="poster-info-wrap">
-            <view class="img-w" @tap='choiceImgA'>
-              <image class="img-w_a" src="{{headImgParams.imgUrl?headImgParams.imgUrl:'../../../images/logo_b.png'}}"></image>
+            <view class="img-w">
+              <image class="img-w_a"  @tap='choiceImgA' src="{{headImgParams.imgUrl?headImgParams.imgUrl:'../../../images/logo_b.png'}}"></image>
               <image class="img-w_b" src='../../../images/m_add_icon.png'></image>
             </view>
             <view class="poster-name">{{partnerData.realName}}</view>
@@ -102,16 +102,17 @@ export default class JoinPartnerBench extends wepy.page {
           withdrawAmount (number, optional): 已提现金额
        */
       this.partnerData = result
+      this.headImgParams.imgUrl = result.headImage
       let userType = ''
       switch (result.userType) {
         case 1:
-          userType = '普通合伙人'
+          userType = '分享者'
           break;
         case 2:
-          userType = '高级合伙人'
+          userType = '合伙人'
           break;
         case 3:
-          userType = '代购合伙人'
+          userType = '真成掮客'
           break;
         default:
           userType = '---'
@@ -164,17 +165,16 @@ export default class JoinPartnerBench extends wepy.page {
           setTimeout(() => {
             _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
           }, 100);
-          console.log(tempFilePaths)
         }
       })
     }
   }
   apiUploadPartnerHeadFA(fun) {
     apiUploadPartnerHeadF(this.headImgParams.filePath,fun).then((result) => {
-      this.headImgParams.imgUrl = result
-      this.partnerData.promoteQr = result
+      console.log(result)
+      this.headImgParams.imgUrl = result.headImage
+      this.partnerData.promoteQr = result.poster
       this.$apply()
-      console.log(186, result)
     }).catch((err) => {
       
     });

@@ -6,7 +6,7 @@
     <view class="collection-no" wx:if="{{collectionArr.length == 0}}">
       <view class="in">
         <image src='../../../images/clection_icon.png'></image>
-        <view>赞无收藏</view>
+        <view>暂无收藏</view>
       </view>
     </view>
   </view>
