@@ -33,6 +33,7 @@ import {
   apiPartnerFindSpectators,
   apiGetMoneyCategory,
   apiPartnerData,
+  apiGetPartnerPoster,
   apiUploadPartnerHead,
   apiVipFinanceConfig,
   apiVipPay,
@@ -512,6 +513,19 @@ const apiPartnerDataF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// apiGetPartnerPoster
+// // 合伙人工作台 => 获取合伙人海报
+const apiGetPartnerPosterF = (fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetPartnerPoster(),
+    method: 'POST'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 // 合伙人工作台 => 上传合伙人头像
 const apiUploadPartnerHeadF = (filePath, fun) => packagePromise((resolve, reject) => {
   upload({
@@ -595,6 +609,7 @@ export {
   apiPartnerFindSpectatorsF,
   apiGetMoneyCategoryF,
   apiPartnerDataF,
+  apiGetPartnerPosterF,
   apiUploadPartnerHeadF,
   apiVipFinanceConfigF,
   apiVipPayF,

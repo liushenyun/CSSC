@@ -96,6 +96,9 @@ const apiGetMoneyCategory = () => `${MAIN_DOMAIN}/api/partner/get_award_money_ca
 // 合伙人工作台 => 获取合伙人工作台数据
 const apiPartnerData = () => `${MAIN_DOMAIN}/api/partner/get_partner_data`
 
+// 合伙人工作台 => 获取合伙人海报
+const apiGetPartnerPoster = () => `${MAIN_DOMAIN}/api/partner/get_partner_poster`
+
 // 合伙人工作台 => 上传合伙人头像
 const apiUploadPartnerHead = () => `${MAIN_DOMAIN}/api/partner/upload_partner_head`
 
@@ -141,6 +144,7 @@ export {
   apiPartnerFindSpectators,
   apiGetMoneyCategory,
   apiPartnerData,
+  apiGetPartnerPoster,
   apiUploadPartnerHead,
   apiVipFinanceConfig,
   apiVipPay,

@@ -62,8 +62,8 @@ export default class SureGoodsCom extends wepy.component {
             {word: '付款', action: '1b', color: 'sure'}
         ],
         '2': [
-            {word: '退款', action: '2a'},
-            {word: '查看物流', action: '2b'}
+            {word: '退款', action: '2a'}
+            // {word: '查看物流', action: '2b'}
         ],
         '3': [
             {word: '订单已经取消', action: '3a', color: 'order-cancel'}

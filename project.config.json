@@ -22,7 +22,7 @@
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"libVersion": "2.8.0",
+	"libVersion": "2.7.7",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 45,
+			"current": 44,
 			"list": [
 				{
 					"id": -1,
@@ -354,12 +354,12 @@
 					"id": 44,
 					"name": "分享页面",
 					"pathName": "pages/packageMine/posters/index",
-					"query": "url=https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/poster/87a5cfac91e543878a5df76406e85f69.jpg",
+					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/packageMine/partnerDocument/index",
+					"id": 45,
+					"name": "合伙人协议",
 					"pathName": "pages/packageMine/partnerDocument/index",
 					"query": "合伙人特权",
 					"scene": null

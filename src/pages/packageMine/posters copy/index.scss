@@ -1,0 +1,73 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.poster-ctner {
+    height: 100%;
+    position: relative;
+    image {
+        width: 100%;
+        height: 100%;
+    }
+    .save-btn {
+        position: absolute;
+        bottom: 12%;
+        right: 0;
+        width: rpx(70);
+        height: rpx(70);
+        line-height: rpx(70);
+        background:rgba(255,127,0,1);
+        text-align: center;
+        color: #FFF;
+        font-size: rpx(22);
+        z-index: 10;
+        border-radius: 50%;
+    }
+    .share-btn {
+        position: absolute;
+        bottom: 20%;
+        right: 0;
+        border-radius: 50%;
+        width: rpx(70);
+        height: rpx(70);
+        background:rgba(255,127,0,1);
+        text-align: center;
+        color: #FFF;
+        font-size: rpx(22);
+        z-index: 10;
+        button {
+            width: rpx(70);
+            height: rpx(70);
+            line-height: rpx(70);
+            border-radius: 50%;
+            border: 0 solid red;
+            background:rgba(255,127,0,1);
+            color: #FFF;
+            font-size: rpx(22);
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+    }
+    .open-btn-wrap {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        z-index: 20;
+        background: rgba(0,0,0,0.4);
+        .icx-btn-same-sure {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            // background: #FFF;
+            // color: #333;
+            // transform: translate(-50%, -50%);
+            // width: 30%;
+        }
+    }
+}

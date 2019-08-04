@@ -1,20 +1,37 @@
 <template>
   <view class='poster-ctner'>
-     <!-- <button @tap='choiceA'>选择图片</button> -->
-     <image src='{{postUrl}}'></image>
-     <view class="share-btn">
-       <button class="icx-clear-after-border" open-type="share">分享</button>
-     </view>
-     <view class="save-btn" @tap='saveA'>保存</view>
-     <view class="open-btn-wrap" wx:if="{{isShowOpen}}">
-       <button class="icx-btn-same-sure" bindtap="openSetting">打开设置页，获取相机权限</button>
-     </view>
+     <view class="share-outer">
+          <view class="share-inner">
+            <view class="share-img-con">
+              <image src="{{shareObj.shareUrl}}"></image>
+            </view>
+            <view class="share-btn-wrap">
+              <view class="sure-btns">
+                <view class="btn">
+                  <button class="icx-clear-after-border" open-type="share">
+                      <image src='../../../images/we_icon.png'></image>
+                      <view>微信</view>
+                  </button>
+                </view>
+                <view class="btn" @tap='saveA'>
+                  <image src='../../../images/save_icon.png'></image>
+                  <view>保存</view>
+                </view>
+              </view>
+              <view class="cancel-btn" @tap='cancelShareA'>取消分享</view>
+              <view class="open-btn-wrap" wx:if="{{shareObj.isShowOpen}}">
+                <button class="icx-btn-same-sure" bindtap="openSetting">打开设置页，获取相机权限</button>
+              </view>
+            </view>
+          </view>
+      </view>
+
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-import { apiUploadPartnerHeadF } from '../../../services/mine/index'
+import { apiUploadPartnerHeadF, apiGetPartnerPosterF } from '../../../services/mine/index'
 import miniPro from '../../../utils/wepy-pro'
 export default class Posters extends wepy.page {
   config = {
@@ -23,16 +40,22 @@ export default class Posters extends wepy.page {
   components = {
   };
   data = {
-    partnerHeadFile: '',
-    postUrl: '',
-    isShowOpen: false
+    shareObj: {
+      shareUrl: '',
+      isShowSharePop: false,
+      isShowOpen: false,
+      scenne: ''
+    },
   };
   methods = {
+    cancelShareA() {
+      wepy.navigateBack({ delta: 1 });//返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+    },
     openSetting() {
       let _this = this
       wepy.openSetting({
         success(settingdata) {
-          _this.isShowOpen = false
+          _this.shareObj.isShowOpen = false
           _this.$apply()
           if (settingdata.authSetting['scope.writePhotosAlbum']) {
             _this.downLoadA()
@@ -44,6 +67,10 @@ export default class Posters extends wepy.page {
     },
     saveA() {
       let _this = this
+      if (!_this.shareObj.shareUrl) {
+        miniPro.showToast('无法保存')
+        return
+      }
       //获取相册授权
       wx.getSetting({
         success(res) {
@@ -62,46 +89,12 @@ export default class Posters extends wepy.page {
           }
         }
       })
-    },
-    choiceA() {
-      let _this = this
-      const Access_Token = miniPro.getAccessToken()
-      wx.chooseImage({
-        count: 1,
-        sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
-        success (res) {
-          // tempFilePath可以作为img标签的src属性显示图片
-          const tempFilePaths = res.tempFilePaths[0]
-          _this.partnerHeadFile = tempFilePaths
-          _this.$apply()
-          setTimeout(() => {
-            // _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
-          }, 100);
-          wx.uploadFile({
-            url: 'http://mjx-wx.natapp1.cc/api/partner/upload_partner_head', //仅为示例，非真实的接口地址
-            filePath: tempFilePaths,
-            name: 'partnerHeadFile',
-            header: {
-              'Authorization': `${Access_Token}`,
-              'content-type': 'multipart/form-data', // application/json
-            },
-            formData: {
-              // 'user': 'test'
-            },
-            success (res){
-              const data = res.data
-              //do something
-            }
-          })
-        }
-      })
     }
   }
   downLoadA() {
     var _this = this
     wepy.downloadFile({
-      url: _this.postUrl,
+      url: _this.shareObj.shareUrl,
       success: function (res) {
         //图片保存到本地
         wepy.saveImageToPhotosAlbum({
@@ -111,7 +104,7 @@ export default class Posters extends wepy.page {
           },
           fail: function (err) {
             if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
-              _this.isShowOpen = true
+              _this.shareObj.isShowOpen = true
               _this.$apply()
             }
           },
@@ -121,29 +114,30 @@ export default class Posters extends wepy.page {
       }
     })
   }
-  apiUploadPartnerHeadFA(fun) {
-    apiUploadPartnerHeadF({
-      partnerHeadFile: this.partnerHeadFile
-    }, fun).then((result) => {
-      
+
+  apiGetPartnerPosterFA() {
+    apiGetPartnerPosterF().then((result) => {
+      this.shareObj.shareUrl = result.poster
+      this.shareObj.scenne = result.scenne
+      this.$apply()
     }).catch((err) => {
-      
     });
   }
-
   onShareAppMessage(res) {
-    let postUrl = this.postUrl
+    let scenne = this.shareObj.scenne
     if (res.from === 'button') {
       // 来自页面内转发按钮
     }
     return {
       title: '成氏商城',
-      path: `/pages/packageMine/posters/index?url=${postUrl}`
+      // path: `/pages/packageMine/posters/index?url=${postUrl}`,
+      path: `/pages/mine/index?qrScene=${scenne}`,
+      imageUrl: this.shareObj.shareUrl
     };
   }
 
   onLoad(option) {
-    this.postUrl = option.url
+    this.apiGetPartnerPosterFA(this.apiGetPartnerPosterFA.bind(this))
   }
 }
 </script>

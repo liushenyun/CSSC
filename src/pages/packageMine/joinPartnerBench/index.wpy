@@ -51,8 +51,14 @@
               <image class="img-w_a"  @tap='choiceImgA' src="{{headImgParams.imgUrl?headImgParams.imgUrl:'../../../images/logo_b.png'}}"></image>
               <image class="img-w_b" src='../../../images/m_add_icon.png'></image>
             </view>
-            <view class="poster-name">{{partnerData.realName}}</view>
-            <view class="poster-type">{{userType}}</view>
+            <view class="poster-name">
+              <view>{{partnerData.realName}}</view>
+              <view>我是{{userType}}</view>
+            </view>
+            <view class="poster-btn" @tap='toPartnerDoc'>
+                <view>我的身份权益</view>
+                <image src='../../../images/qy_btn_icon.png'></image>
+            </view>
           </view>
         </view>
       </view>
@@ -142,14 +148,11 @@ export default class JoinPartnerBench extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageMine/withdrawal/index?money=${_totalAmount}` })
     },
     toPosterA() {
-      let _url = this.partnerData.promoteQr
-      if (!_url) {
-        miniPro.showToast('暂时无法生成海报')
-        return
-      }
-      wepy.navigateTo({ url: `/pages/packageMine/posters/index?url=${_url}` })
+      wepy.navigateTo({ url: `/pages/packageMine/posters/index` })
     },
-    
+    toPartnerDoc() {
+      wepy.navigateTo({ url: '/pages/packageMine/partnerDocument/index' });
+    },
     choiceImgA() {
       let _this = this
       const Access_Token = miniPro.getAccessToken()
@@ -173,7 +176,6 @@ export default class JoinPartnerBench extends wepy.page {
     apiUploadPartnerHeadF(this.headImgParams.filePath,fun).then((result) => {
       console.log(result)
       this.headImgParams.imgUrl = result.headImage
-      this.partnerData.promoteQr = result.poster
       this.$apply()
     }).catch((err) => {
       

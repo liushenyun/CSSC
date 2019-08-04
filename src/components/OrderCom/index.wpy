@@ -37,9 +37,6 @@ export default class OrderCom extends wepy.component {
               orderNum: '201807300075686898989',
               orderType: 'finish',
               content: [
-                  {url: '', title: '彩色甜甜圈牛肉味', num: 2, price: 89},
-                  {url: '', title: '彩色甜甜圈牛肉味12', num: 1, price: 25},
-                  {url: '', title: '彩色甜甜圈牛肉味12', num: 1, price: 25}
               ]
           }
       }

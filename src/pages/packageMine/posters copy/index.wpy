@@ -1,0 +1,152 @@
+<template>
+  <view class='poster-ctner'>
+     <!-- <button @tap='choiceA'>选择图片</button> -->
+     <image src='{{postUrl}}'></image>
+     <view class="share-btn">
+       <button class="icx-clear-after-border" open-type="share">分享</button>
+     </view>
+     <view class="save-btn" @tap='saveA'>保存</view>
+     <view class="open-btn-wrap" wx:if="{{isShowOpen}}">
+       <button class="icx-btn-same-sure" bindtap="openSetting">打开设置页，获取相机权限</button>
+     </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { apiUploadPartnerHeadF } from '../../../services/mine/index'
+import miniPro from '../../../utils/wepy-pro'
+export default class Posters extends wepy.page {
+  config = {
+    navigationBarTitleText: '分享页面'
+  };
+  components = {
+  };
+  data = {
+    partnerHeadFile: '',
+    postUrl: '',
+    isShowOpen: false
+  };
+  methods = {
+    openSetting() {
+      let _this = this
+      wepy.openSetting({
+        success(settingdata) {
+          _this.isShowOpen = false
+          _this.$apply()
+          if (settingdata.authSetting['scope.writePhotosAlbum']) {
+            _this.downLoadA()
+          } else {
+            miniPro.showToast('获取权限失败，无法保存')
+          }
+        }
+      })
+    },
+    saveA() {
+      let _this = this
+      //获取相册授权
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.authorize({
+              scope:'scope.writePhotosAlbum',
+              success() {
+                _this.downLoadA()
+              },
+              fail() {
+                _this.downLoadA()
+              }
+            })
+          } else {
+            _this.downLoadA()
+          }
+        }
+      })
+    },
+    choiceA() {
+      let _this = this
+      const Access_Token = miniPro.getAccessToken()
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success (res) {
+          // tempFilePath可以作为img标签的src属性显示图片
+          const tempFilePaths = res.tempFilePaths[0]
+          _this.partnerHeadFile = tempFilePaths
+          _this.$apply()
+          setTimeout(() => {
+            // _this.apiUploadPartnerHeadFA(_this.apiUploadPartnerHeadFA.bind(this))
+          }, 100);
+          wx.uploadFile({
+            url: 'http://mjx-wx.natapp1.cc/api/partner/upload_partner_head', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths,
+            name: 'partnerHeadFile',
+            header: {
+              'Authorization': `${Access_Token}`,
+              'content-type': 'multipart/form-data', // application/json
+            },
+            formData: {
+              // 'user': 'test'
+            },
+            success (res){
+              const data = res.data
+              //do something
+            }
+          })
+        }
+      })
+    }
+  }
+  downLoadA() {
+    var _this = this
+    wepy.downloadFile({
+      url: _this.postUrl,
+      success: function (res) {
+        //图片保存到本地
+        wepy.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: function (data) {
+            miniPro.showToast('保存成功')
+          },
+          fail: function (err) {
+            if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              _this.isShowOpen = true
+              _this.$apply()
+            }
+          },
+          complete(res){
+          }
+        })
+      }
+    })
+  }
+  apiUploadPartnerHeadFA(fun) {
+    apiUploadPartnerHeadF({
+      partnerHeadFile: this.partnerHeadFile
+    }, fun).then((result) => {
+      
+    }).catch((err) => {
+      
+    });
+  }
+
+  onShareAppMessage(res) {
+    let postUrl = this.postUrl
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+    }
+    return {
+      title: '成氏商城',
+      path: `/pages/packageMine/posters/index?url=${postUrl}`
+    };
+  }
+
+  onLoad(option) {
+    this.postUrl = option.url
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

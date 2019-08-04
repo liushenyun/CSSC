@@ -6,7 +6,7 @@
     <view class="cat-m-t">
         <view class='goods-name'>{{item.goodsName}}</view>
         <!-- <view class='goods-des'>颜色：{{item.goodsName}}</view> -->
-        <view class='goods-num'>仅剩{{item.leavingsQuantity}}件</view>
+        <view class='goods-num'>仅剩{{item.surplus}}件</view>
         <view class='goods-pri'>
             <text>￥{{item.price || '--'}}</text>
             <!-- <text>￥358</text> -->
