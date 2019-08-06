@@ -26,6 +26,7 @@
         <text>{{partnerText}}</text>
       </view>
     </view>
+    <!-- <button @tap='scanA'>扫一扫</button> -->
     <view class="m-order-outer">
       <view class="m-order-innder">
         <view class="m-order-title m-order-title-order" @tap="toOrderTapA('0')">
@@ -132,6 +133,12 @@ export default class Mine extends wepy.page {
   };
 
   methods = {
+    scanA() {
+      wx.scanCode({
+        success: (res) => {
+        console.log(res)
+      }})
+    },
     toBulkOrderA() {
       wepy.navigateTo({ url: '/pages/packageMine/bulkOrder/index' });
     },
@@ -238,7 +245,7 @@ export default class Mine extends wepy.page {
   }
   onLoad(option) {
     // pages/mine/index?qrScene=channel#1000
-    wepy.$instance.globalData.qrScene = option.qrScene || ''
+    wepy.$instance.globalData.qrScene = option.scene || ''
   }
   async onShow(option) {
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))

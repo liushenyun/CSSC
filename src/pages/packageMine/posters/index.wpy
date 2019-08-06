@@ -131,7 +131,7 @@ export default class Posters extends wepy.page {
     return {
       title: '成氏商城',
       // path: `/pages/packageMine/posters/index?url=${postUrl}`,
-      path: `/pages/mine/index?qrScene=${scenne}`,
+      path: `/pages/mine/index?scene=${scenne}`,
       imageUrl: this.shareObj.shareUrl
     };
   }

@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 44,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -74,7 +74,7 @@
 					"id": 4,
 					"name": "我的",
 					"pathName": "pages/mine/index",
-					"query": "qrScene=channel#1000",
+					"query": "scene=channel#1000",
 					"scene": null
 				},
 				{
@@ -151,7 +151,7 @@
 					"id": 15,
 					"name": "商品详情",
 					"pathName": "pages/packageIndex/goodsDetail/index",
-					"query": "goodsId=20190605151323725725",
+					"query": "goodsId=20190605151323725725&c=100",
 					"scene": null
 				},
 				{

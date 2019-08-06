@@ -460,6 +460,7 @@ export default class GoodsDetail extends wepy.page {
     if (res.from === 'button') {
       // 来自页面内转发按钮
     }
+    // /pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}&scene=c#1000@g#1000
     return {
       title: '成氏商城',
       path: `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}`,
@@ -468,8 +469,10 @@ export default class GoodsDetail extends wepy.page {
   }
 
   async onLoad(option) {
+    console.log(option)
     this.goodsId = option.goodsId
     this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
+    wepy.$instance.globalData.qrScene = option.scene || ''
     this.$apply();
   }
 
