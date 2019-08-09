@@ -3,6 +3,7 @@ import {
   apiGoodsList,
   apiVIPGoodsList,
   apiGetGoodsDetails,
+  apiGetGoodsIdByShare,
   apiGetGoodsShare,
   apiGetHomeData,
   apiGoodsLikePage,
@@ -55,6 +56,18 @@ const apiVIPGoodsListF = (data, fun) => packagePromise((resolve, reject) => {
 const apiGetGoodsDetailsF = (goodsId, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiGetGoodsDetails(goodsId),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 根据scene获取商品ID
+const apiGetGoodsIdByShareF = (shareId, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetGoodsIdByShare(shareId),
     method: 'GET'
   }, fun)
     .then(msg => {
@@ -172,6 +185,7 @@ export {
   apiGoodsListF,
   apiVIPGoodsListF,
   apiGetGoodsDetailsF,
+  apiGetGoodsIdByShareF,
   apiGetGoodsShareF,
   apiGetHomeDataF,
   apiGoodsLikePageF,

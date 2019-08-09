@@ -28,7 +28,7 @@
         indicator-active-color="{{indicatorActiveColor}}"
       >
         <block wx:for="{{homeBannerVoList}}" wx:key='index'>
-          <swiper-item>
+          <swiper-item @tap='swiperA({{item}})'>
             <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
           </swiper-item>
         </block>
@@ -147,6 +147,12 @@ export default class Index extends wepy.page {
   computed = {};
 
   methods = {
+    swiperA(item) {
+      let { link } = item
+      if (link) {
+        miniPro.toGoodsDetail(link)
+      }
+    },
     toMsgA() {
       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },

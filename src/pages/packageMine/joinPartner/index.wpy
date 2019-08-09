@@ -98,8 +98,8 @@ export default class JoinPartner extends wepy.page {
   };
   data = {
     partnerArr: [
-      { name: '分享者', class: 'p-a', type: 1 },
       { name: '真成掮客', class: 'p-b', type: 3 },
+      { name: '分享者', class: 'p-a', type: 1 },
       { name: '合伙人', class: 'p-c', type: 2 }
     ],
     autoplay: false,

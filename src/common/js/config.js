@@ -22,8 +22,8 @@ const APP_MINI_SKY_ID = `mall_mini_sky_id` // 天窗id
 const BANNER_VERSION = 'v1' // banner 版本
 const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
 // const MAIN_DOMAIN = 'http://mjx-wx.natapp1.cc' // 测试域名
-// const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
-const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
+const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
+// const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
 
 const WBVIEW_PAGE_URL = '/pages/webview/index'
 const WECHAT_ACCESS_TOKEN_NAME = `${BASE_NAME}_Access_TOKEN` // access_token存储名字

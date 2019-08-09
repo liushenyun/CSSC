@@ -170,6 +170,7 @@ import wepy from 'wepy'
 import miniPro from '../../../utils/wepy-pro'
 import {
   apiGetGoodsDetailsF,
+  apiGetGoodsIdByShareF,
   apiGetGoodsShareF
 } from '../../../services/index'
 import {
@@ -198,6 +199,7 @@ export default class GoodsDetail extends wepy.page {
     isWhichFlag: '', // 1:加入购物车 2：立即购买
     showGoodsPop: false,
     goodsId: '',
+    shareScene: '',
     buyNum: 1,
     goodsDetailObj: {},
     bannerArr: [],
@@ -412,6 +414,16 @@ export default class GoodsDetail extends wepy.page {
     })
   }
 
+  apiGetGoodsIdByShareFA(fun) {
+    var _self = this
+    apiGetGoodsIdByShareF(_self.shareScene).then((result) => {
+      _self.goodsId = result.goodsId
+      _self.$apply();
+      setTimeout(() => {
+        _self.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
+      }, 10);
+    }).catch(() => {});
+  }
   apiGetGoodsDetailsA(fun) {
     var _self = this
     apiGetGoodsDetailsF(_self.goodsId, fun).then(msg => {
@@ -469,11 +481,25 @@ export default class GoodsDetail extends wepy.page {
   }
 
   async onLoad(option) {
+    // `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` // 有"goodsId"字段 前端页面跳转
+    // `/pages/packageIndex/goodsDetail/index?scene=${_goodsId}` // 有"scene" 分享页面跳转 => 请求接口获取商品ID
     console.log(option)
-    this.goodsId = option.goodsId
-    this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
-    wepy.$instance.globalData.qrScene = option.scene || ''
-    this.$apply();
+    // 【参数】例子1：goodsId=20190605151323725725
+    // 【参数】例子2：scene=20190605151323725725
+
+    let scene = option.scene
+    if (scene) {
+      this.shareScene = scene
+      wepy.$instance.globalData.qrScene = option.scene || ''
+      this.$apply();
+      setTimeout(() => {
+        this.apiGetGoodsIdByShareFA(this.apiGetGoodsIdByShareFA.bind(this))
+      }, 10);
+    } else {
+      this.goodsId = option.goodsId
+      this.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
+      this.$apply();
+    }
   }
 
   onShow() {

@@ -26,7 +26,7 @@
         <text>{{partnerText}}</text>
       </view>
     </view>
-    <!-- <button @tap='scanA'>扫一扫</button> -->
+    <button @tap='scanA'>扫一扫</button>
     <view class="m-order-outer">
       <view class="m-order-innder">
         <view class="m-order-title m-order-title-order" @tap="toOrderTapA('0')">
@@ -208,7 +208,7 @@ export default class Mine extends wepy.page {
       let _userLevel = result.userLevel
       let _membersText = ''
       if (_agnatioVip == 1) {
-        _membersText = '宗亲会员'
+        _membersText = '专属会员'
         this.isMembers = true
       } else if (_userLevel == 1) {
         _membersText = '月卡会员'

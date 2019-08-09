@@ -5,7 +5,7 @@
       <!-- <view class="vip-banner-outer"></view> -->
       <view class="vip-list-outer">
         <view class="vip-goods-item" wx:for='{{pageList}}' wx:key='index'>
-          <image src='{{item.goodsIco}}'></image>
+          <image @tap='toGoodsDetailA({{item}})' src='{{item.goodsIco}}'></image>
         </view>
         <view class="no-data-tip" wx:if="{{pageList.length < 1}}">暂无数据</view>
       </view>
@@ -17,7 +17,7 @@
 import wepy from 'wepy';
 import '../../../common/js/authProcess.js';
 import { apiVIPGoodsListF } from '../../../services/index';
-// import miniPro from '@/utils/wepy-pro.js';
+import miniPro from '@/utils/wepy-pro.js';
 
 export default class Members extends wepy.page {
   config = {
@@ -39,6 +39,12 @@ export default class Members extends wepy.page {
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.apiVIPGoodsListFA(this.apiVIPGoodsListFA.bind(this))
+    },
+    toGoodsDetailA(item) {
+      let { id } = item
+      if (id) {
+        miniPro.toGoodsDetail(id)
+      }
     }
   }
 
