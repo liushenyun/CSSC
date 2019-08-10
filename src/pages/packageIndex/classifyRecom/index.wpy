@@ -42,7 +42,6 @@ import {
   apiCategoryListF
 } from '../../../services/index';
 
-import { BLOOD_TIP_READED, TIP_GLYCEMIC_TEXT } from '@/common/js/config';
 import miniPro from '@/utils/wepy-pro.js';
 import { showAlertTips } from '@/utils/feature.js';
 import SearchItem from '@/components/searchItem/index';

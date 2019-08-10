@@ -416,8 +416,10 @@ export default class GoodsDetail extends wepy.page {
 
   apiGetGoodsIdByShareFA(fun) {
     var _self = this
-    apiGetGoodsIdByShareF(_self.shareScene).then((result) => {
-      _self.goodsId = result.goodsId
+    apiGetGoodsIdByShareF({
+      shareId: _self.shareScene
+    }, fun).then((result) => {
+      _self.goodsId = result
       _self.$apply();
       setTimeout(() => {
         _self.apiGetGoodsDetailsA(this.apiGetGoodsDetailsA.bind(this))
@@ -483,14 +485,13 @@ export default class GoodsDetail extends wepy.page {
   async onLoad(option) {
     // `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` // 有"goodsId"字段 前端页面跳转
     // `/pages/packageIndex/goodsDetail/index?scene=${_goodsId}` // 有"scene" 分享页面跳转 => 请求接口获取商品ID
-    console.log(option)
     // 【参数】例子1：goodsId=20190605151323725725
-    // 【参数】例子2：scene=20190605151323725725
+    // 【参数】例子2：scene=c#10045@s#10076
 
     let scene = option.scene
     if (scene) {
       this.shareScene = scene
-      wepy.$instance.globalData.qrScene = option.scene || ''
+      wepy.$instance.globalData.qrScene = scene || ''
       this.$apply();
       setTimeout(() => {
         this.apiGetGoodsIdByShareFA(this.apiGetGoodsIdByShareFA.bind(this))

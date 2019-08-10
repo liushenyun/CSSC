@@ -65,10 +65,11 @@ const apiGetGoodsDetailsF = (goodsId, fun) => packagePromise((resolve, reject) =
 })
 
 // 根据scene获取商品ID
-const apiGetGoodsIdByShareF = (shareId, fun) => packagePromise((resolve, reject) => {
+const apiGetGoodsIdByShareF = (data, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiGetGoodsIdByShare(shareId),
-    method: 'GET'
+    url: apiGetGoodsIdByShare(),
+    method: 'POST',
+    data
   }, fun)
     .then(msg => {
       resolve(msg)

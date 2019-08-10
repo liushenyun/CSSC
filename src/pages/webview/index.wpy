@@ -27,6 +27,8 @@ export default class WebView extends wepy.page {
     } else {
       this.url = _url;
     }
+
+    console.log(';;;', this.url)
   }
 }
 </script>

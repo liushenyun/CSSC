@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -151,7 +151,7 @@
 					"id": 15,
 					"name": "商品详情",
 					"pathName": "pages/packageIndex/goodsDetail/index",
-					"query": "goodsId=20190605151323725725",
+					"query": "scene=c#10045@s#10076",
 					"scene": null
 				},
 				{

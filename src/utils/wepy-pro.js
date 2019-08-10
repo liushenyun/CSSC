@@ -12,9 +12,9 @@ import {
   TOAST_DURATION
 } from '../common/js/config'
 import Auth from '../common/js/authProcess.js'
-import getErrorText, { REPEAT_GROUP } from './errors'
-console.log('REPEAT_GROUP', REPEAT_GROUP)
-console.log('errors', getErrorText(REPEAT_GROUP))
+// import getErrorText, { REPEAT_GROUP } from './errors'
+// console.log('REPEAT_GROUP', REPEAT_GROUP)
+// console.log('errors', getErrorText(REPEAT_GROUP))
 let proFun = () => {
   let miniPro = {} // 挂载一些函数
 
@@ -75,7 +75,6 @@ let proFun = () => {
 
   // 跳转详情页
   miniPro.toGoodsDetail = (_goodsId, groupFlag = 0) => {
-    console.log(_goodsId, groupFlag);
     if (groupFlag == 1) {
       wepy.navigateTo({ url: `/pages/packageIndex/bulkDetail/index?goodsId=${_goodsId}` })
     } else {
@@ -83,21 +82,10 @@ let proFun = () => {
     }
   }
 
-  /**
-   * 设置 BIND_TOKEN
-   * @param {String} token - BIND_TOKEN
-   */
-  // miniPro.setBindToken = (toekn) => {
-  //   return wepy.setStorageSync(WECHAT_BIND_TOKEN_NAME, toekn)
-  // }
-
-  /**
-   * 设置 BIND_TOKEN
-   * @param {String} token - BIND_TOKEN
-   */
-  // miniPro.getBindToken = () => {
-  //   return wepy.getStorageSync(WECHAT_BIND_TOKEN_NAME)
-  // }
+  // 跳转webview
+  miniPro.toWebView = (url) => {
+    wepy.navigateTo({ url: `/pages/webview/index?url=${url}` });
+  }
 
   /**
    * 成功后延时操作
@@ -257,7 +245,6 @@ let proFun = () => {
         success(res) {
           setTimeout(() => { wepy.hideLoading() }, 0)
           let { statusCode, data } = res
-          console.log(statusCode, JSON.parse(data))
           data = JSON.parse(data)
           let errorCode = data.code === undefined ? 'none' : Number(data.code)
           let errMsg = data.message

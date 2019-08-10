@@ -22,8 +22,8 @@ const APP_MINI_SKY_ID = `mall_mini_sky_id` // 天窗id
 const BANNER_VERSION = 'v1' // banner 版本
 const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
 // const MAIN_DOMAIN = 'http://mjx-wx.natapp1.cc' // 测试域名
-const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
-// const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
+// const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
+const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
 
 const WBVIEW_PAGE_URL = '/pages/webview/index'
 const WECHAT_ACCESS_TOKEN_NAME = `${BASE_NAME}_Access_TOKEN` // access_token存储名字
@@ -32,9 +32,7 @@ const APP_REFRESH_API = `${BASE_NAME}_Refresh_Api` // 需要刷新接口 options
 const PAGE_INIT_SET_NAME = 'initSet' // 页面page   initSet 名字
 const EVENT_QUEUE_NAME = 'eventQueue'
 
-const BLOOD_TIP_READED = 'BLOOD_TIP_READED'
-
-const TIP_GLYCEMIC_TEXT = 'GlycemicText' // 用餐升糖
+const TIP_GLYCEMIC_TEXT = 'GlycemicText'
 const INDICATOR_COLOR = '#999'
 const INDICATOR_ACTIVE_COLOR = '#FFF'
 
@@ -45,20 +43,13 @@ export {
   BANNER_VERSION,
   GOODS_TOPIC_APP_ID,
   MAIN_DOMAIN,
-  // MAIN_API_DOMAIN,
   WBVIEW_PAGE_URL,
   WECHAT_APP_NAME,
   WECHAT_AUTH_BASE,
-  // API_DOMAIN,
-  // EMI_DOMAIN,
   WECHAT_ACCESS_TOKEN_NAME,
-  // WECHAT_Refresh_TOKEN_NAME,
-  // WECHAT_BIND_TOKEN_NAME,
   APP_REFRESH_API,
   PAGE_INIT_SET_NAME,
-  // WECHAT_TOKEN_TYPE_NAME,
   EVENT_QUEUE_NAME,
-  BLOOD_TIP_READED,
   TIP_GLYCEMIC_TEXT,
   INDICATOR_COLOR,
   INDICATOR_ACTIVE_COLOR

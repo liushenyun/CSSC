@@ -26,7 +26,8 @@
         <text>{{partnerText}}</text>
       </view>
     </view>
-    <button @tap='scanA'>扫一扫</button>
+    <!-- <button @tap='scanA'>扫一扫</button> -->
+    <!-- <button @tap='jumpH5A'>跳转H5页面</button> -->
     <view class="m-order-outer">
       <view class="m-order-innder">
         <view class="m-order-title m-order-title-order" @tap="toOrderTapA('0')">
@@ -138,6 +139,16 @@ export default class Mine extends wepy.page {
         success: (res) => {
         console.log(res)
       }})
+    },
+    jumpH5A() {
+      
+      // http://testweixin.51vip.biz/home
+      // let url = 'http://testweixin.51vip.biz/index'
+      // let url = 'https://www.chengmall.cn/index.html'
+      let url = 'https://www.baidu.com/'
+      // let url = 'https://developers.weixin.qq.com/miniprogram/dev/component/web-view.html'
+      // wepy.navigateTo({ url: `/pages/webview/index?url=${url}` });
+      miniPro.toWebView(url)
     },
     toBulkOrderA() {
       wepy.navigateTo({ url: '/pages/packageMine/bulkOrder/index' });
