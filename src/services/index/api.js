@@ -36,6 +36,9 @@ const apiGetMessage = () => `${MAIN_DOMAIN}/api/message/find_page`
 //  消息 => 获取消息内容（阅读消息）
 const apiMessageRead = (messageId) => `${MAIN_DOMAIN}/api/message/read/${messageId}`
 
+//  会员兑奖
+const apiVipExchange = () => `${MAIN_DOMAIN}/api/wx/user/vip/exchange`
+
 export {
   apiGoodsList,
   apiVIPGoodsList,
@@ -48,5 +51,6 @@ export {
   apiCategoryList,
   apiMessageDelete,
   apiGetMessage,
-  apiMessageRead
+  apiMessageRead,
+  apiVipExchange
 }

@@ -148,9 +148,16 @@ export default class Index extends wepy.page {
 
   methods = {
     swiperA(item) {
-      let { link } = item
+      // linkType: 1-商品详情；2-H5; 3-抽奖活动
+      let { link, linkType } = item
       if (link) {
-        miniPro.toGoodsDetail(link)
+         if (linkType == 1) {
+          miniPro.toGoodsDetail(link)
+        } else if (linkType == 2) {
+          miniPro.toWebView(link)
+        } else if (linkType == 3) {
+          wepy.navigateTo({ url: link });
+        }
       }
     },
     toMsgA() {

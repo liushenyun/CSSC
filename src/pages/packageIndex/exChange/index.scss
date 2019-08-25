@@ -1,0 +1,55 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.exchange-ctner{
+    height: 100%;
+    width: 100%;
+    background:linear-gradient(-45deg,rgba(254,205,82,1) 0%,rgba(247,117,52,1) 37%,rgba(255,163,62,1) 100%);
+    padding: rpx(60) rpx(30);
+    overflow: hidden;
+  .code-con {
+    background: #FFF;
+    width: 100%;
+    border-radius: rpx(20);
+    padding: rpx(109) rpx(16);
+    text-align: center;
+    letter-spacing: rpx(10);
+  }
+  .code-title1 {
+    font-size: rpx(48);
+    font-weight: bolder;
+    color:rgb(59, 50, 50);
+  }
+  .code-input {
+    width: 100%;
+    height: rpx(100);
+    line-height: rpx(100);
+    padding: 0 rpx(20);
+    border: rpx(1) solid rgba(77, 77, 77, 0.1);
+    font-size: rpx(36);
+    margin: rpx(74) 0 rpx(108) 0;
+    border-radius: rpx(10);
+  }
+  .code-btn {
+    width: 70%;
+    margin-left: 15%;
+    height: rpx(100);
+    line-height: rpx(100);
+    background:linear-gradient(-45deg,rgba(247,141,69,1) 0%,rgba(253,161,59,1) 52%,rgba(248,142,69,1) 100%);
+    border-radius: rpx(25);
+    text-align: center;
+    color:rgba(255,255,255,1);
+    font-size: rpx(36);
+    font-weight: bolder;
+    letter-spacing: rpx(12);
+  }
+  .code-title2 {
+    margin-top: rpx(24);
+    font-size: rpx(26);
+    color:rgba(102,102,102,1);
+  }
+  
+}

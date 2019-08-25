@@ -11,7 +11,8 @@ import {
   apiCategoryList,
   apiMessageDelete,
   apiGetMessage,
-  apiMessageRead
+  apiMessageRead,
+  apiVipExchange
 } from './api'
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
@@ -182,6 +183,19 @@ const apiMessageReadF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+//  会员兑奖
+const apiVipExchangeF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiVipExchange(),
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
 export {
   apiGoodsListF,
   apiVIPGoodsListF,
@@ -194,5 +208,6 @@ export {
   apiCategoryListF,
   apiMessageDeleteF,
   apiGetMessageF,
-  apiMessageReadF
+  apiMessageReadF,
+  apiVipExchangeF
 }

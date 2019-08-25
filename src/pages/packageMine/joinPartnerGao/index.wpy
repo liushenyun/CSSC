@@ -71,7 +71,7 @@ export default class JoinPartnerGao extends wepy.page {
   }
   data = {
     pageParams: {
-      phoneNum: '13828758660',
+      phoneNum: '',
       type: '', // 类型（1：普通合伙人 2：高级合伙人 3：代购合伙人)
       name: '',
       address: '',
