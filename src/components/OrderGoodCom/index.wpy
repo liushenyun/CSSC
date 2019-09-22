@@ -3,6 +3,7 @@
 
     <view class="order-status-order">
         <text>{{item.companyName}}</text>
+        <text>订单号：{{item.id}}</text>
         <!-- <image src='../../images/unfold.png'></image>
         <text>交易成功</text> -->
     </view>

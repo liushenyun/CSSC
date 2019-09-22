@@ -253,13 +253,18 @@ page{
         .goods-pop-same {
             position: relative;
             padding: rpx(16) rpx(44) rpx(18) rpx(44);
-            height: auto;
+            // height: auto;
+            min-height: rpx(10);
             @include borderBottomOnePx;
             .goods-pop-title {
                 font-size: $size-one;
                 margin-bottom: rpx(12);
             }
             .goods-outer-same {
+                overflow: hidden;
+            }
+            .goods-color-outer {
+                height: auto;
                 overflow: hidden;
             }
             .small {

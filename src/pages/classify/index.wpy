@@ -26,7 +26,7 @@
             <scroll-view scroll-y="true" style="height: 100%;width: 100%">
               <view class='right-con-outer'>
                 <view class='right-banner'>
-                  <image src='{{bannerObj.bannerPath}}'></image>
+                  <image @tap='toRightBannerA({{bannerObj}})' src='{{bannerObj.bannerPath}}'></image>
                 </view>
                 <view class='right-list'>
                   <view class='right-list-item'  wx:for='{{subPageList}}' wx:key='index' @tap="toSearchA({{item.id}})">
@@ -45,6 +45,7 @@
 <script>
 import wepy from 'wepy';
 import '../../common/js/authProcess.js';
+import miniPro from '@/utils/wepy-pro.js';
 import {
   apiCategoryByParentF,
   apiCategoryGetBannerF
@@ -66,6 +67,19 @@ export default class Index extends wepy.page {
   };
 
   methods = {
+    toRightBannerA(item) {
+      // linkType: 1-商品详情；2-H5; 3-抽奖活动
+      let { link, linkType } = item
+      if (link) {
+         if (linkType == 1) {
+          miniPro.toGoodsDetail(link)
+        } else if (linkType == 2) {
+          miniPro.toWebView(link)
+        } else if (linkType == 3) {
+          wepy.navigateTo({ url: link });
+        }
+      }
+    },
     toMsgA() {
       wepy.navigateTo({ url: '/pages/packageIndex/message/index' });
     },

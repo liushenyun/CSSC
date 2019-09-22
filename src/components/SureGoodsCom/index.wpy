@@ -2,7 +2,7 @@
   <view class="cat-item-ctner">
 
     <view class="order-status-order">
-        <text>米兔生活馆1</text>
+        <text>{{item.companyName}}</text>
         <image src='../../images/unfold.png'></image>
         <!-- <text>交易成功</text> -->
     </view>
