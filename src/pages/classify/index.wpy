@@ -2,7 +2,7 @@
 <template>
   <view class="classify-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-      
+
       <view class="ix-input-wrap">
         <view class="input-search" @tap="toSearchA(0)">
           <image src='../../images/nav_button_search_default.png' />
@@ -12,7 +12,7 @@
           <image src='../../images/nav_button_message_default.png' />
         </view>
       </view>
-      
+
       <view class="cs-scroll-outer">
         <view class="cs-scroll-inner">
           <view class="cs-left">

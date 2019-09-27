@@ -10,10 +10,11 @@
               duration="{{duration}}"
               indicator-color='#999'
               indicator-active-color='#FFF'
-              circular = 'true'>
-              <block wx:for="{{bannerArr}}" wx:key="indx">
+              circular = 'false'
+              style="height: {{sysWidth}}px;line-height: {{sysWidth}}px;">
+              <block wx:for="{{bannerArr}}" wx:key="indx" wx:for-index="index" data-index="{{index}}">
                 <swiper-item>
-                  <image src="{{item.bannerPath}}" class="slide-image" width="355" height="150" />
+                    <image src="{{item.bannerPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>
                 </swiper-item>
               </block>
           </swiper>
@@ -34,7 +35,7 @@
             <view class="price-b" @tap='toCollectA'>
               <image wx:if="{{isCollect}}" src='../../../images/start_on.png'></image>
               <image wx:else src='../../../images/start_off.png'></image>
-              
+
               <view>收藏</view>
             </view>
             <view wx:if="{{!!shareObj.goodShareImg}}" class="price-c" @tap='toShareA'>
@@ -70,7 +71,7 @@
         </view>
       </view>
 
-      
+
       <view class="goods-bottom">
         <view class="gb-kf">
           <button class="icx-btn" open-type="contact">
@@ -124,8 +125,8 @@
               <view class="goods-pop-same goods-buy-btn">
                 <button @tap='goodsSureA' class="icx-btn-same-sure">确定</button>
               </view>
-              
-              
+
+
           </view>
       </view>
 
@@ -154,13 +155,13 @@
               </view>
             </view>
 
-            
+
 
           </view>
       </view>
 
 
-      
+
 
   </view>
 </template>
@@ -224,7 +225,7 @@ export default class GoodsDetail extends wepy.page {
       vipPrice: '--'
     },
     goodsName: '',
-    indicatorDots: true,
+    indicatorDots: false, //轮播图面板 圆点是否显示
     autoplay: true,
     interval: 5000,
     duration: 1000,
@@ -233,9 +234,20 @@ export default class GoodsDetail extends wepy.page {
       orderDetailBoList: []
     },
     colorId: '',
-    wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>"
+    wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>",
+    sysWidth: wx.getSystemInfoSync().windowWidth,
   };
   methods = {
+    imgF(e){
+      let h = e.detail.height;
+      let w = e.detail.width;
+      let i = e.target.dataset.index;
+      if(w == h){
+        this.bannerArr[i].style = "dynamic-img";
+      }else{
+        this.bannerArr[i].style = "";
+      }
+    },
     spcTouch() {},
     specConStopA() {},
     specPopA() {
@@ -401,7 +413,7 @@ export default class GoodsDetail extends wepy.page {
       miniPro.showToast('收藏失败')
     })
   }
-  
+
   apiCollectDeleteA(fun) {
     apiCollectDeleteF(this.goodsId, fun).then(msg => {
       miniPro.showToast('取消收藏成功')
@@ -430,7 +442,12 @@ export default class GoodsDetail extends wepy.page {
     var _self = this
     apiGetGoodsDetailsF(_self.goodsId, fun).then(msg => {
       let { goodsDetail, goodsBannerVoList, goodsSpecificationVoList, goodsColorVoList, goodShareImg, collection, userLevel } = msg;
-      this.bannerArr = goodsBannerVoList;
+      let banners = [];
+      for(let i in goodsBannerVoList){
+        goodsBannerVoList[i].style = "";
+        banners.push(goodsBannerVoList[i]);
+      }
+      this.bannerArr = banners;
       this.goodsSpecificationVoList = goodsSpecificationVoList;
       this.goodsColorVoList = goodsColorVoList;
       let _first = goodsSpecificationVoList[0];
@@ -487,6 +504,26 @@ export default class GoodsDetail extends wepy.page {
     // `/pages/packageIndex/goodsDetail/index?scene=${_goodsId}` // 有"scene" 分享页面跳转 => 请求接口获取商品ID
     // 【参数】例子1：goodsId=20190605151323725725
     // 【参数】例子2：scene=c#10045@s#10076
+    // let query = wx.createSelectorQuery()
+    // let queryString = query.select(".slide-image");
+    // let queryNode = query.selectAll(queryString)
+    // queryNode.fields({
+    //   id:false,//是否返回节点id
+    //   rect:fasle,//是否返回节点布局位置
+    //   dataset: true,//返回数据集
+    //   size: true,//返回宽高
+    //   scrollOffset: true,//返回 scrollLeft,scrollTop
+    //   properties: ['scrollX', 'scrollY'],//监听属性名
+    //   computedStyle: ['margin', 'backgroundColor']//此处返回指定要返回的样式名
+    // }, function(res) {
+    //   console.log(res)
+    // })
+
+
+
+    //
+    // let dom = query.select("slide-image");
+    // console.log(queryNode)
 
     let scene = option.scene
     if (scene) {
