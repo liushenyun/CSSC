@@ -14,7 +14,7 @@
         >
           <block wx:for="{{bannerList}}" wx:key="indx">
             <swiper-item>
-              <image src="{{item.bannerPath}}" class="slide-image" width="750" height="750" />
+              <image src="{{item.imgPath}}" class="slide-image" width="750" height="750" />
             </swiper-item>
           </block>
         </swiper>
@@ -24,20 +24,19 @@
 
         <view class="tuan-price-outer">
           <text>{{info.groupNumber}}人团</text>
-          <text>￥{{info.groupPrice}}</text> <!--{{firstSpec.price}}-->
+          <text>￥{{info.groupPrice}}</text>
           <text>￥{{info.originalPrice}}</text>
-          <view class="right-index">
+          <view class="right-index"  wx:if="{{ day !==0 && hours !== 0 }}">
             <view class="rightText">
               <text>距离结束仅剩</text>
               <br>
-              <text>{{groupList.endTime}}</text>
+              <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
             </view>
           </view>
 
         </view>
 
         <view class="tuan-des-outer">
-<!--          <text>{{goodsDetailObj.goodsName || '&#45;&#45;'}}</text>-->
           <text>【{{info.groupNumber}}人团】{{info.goodsName}}</text>
             <text>{{info.groupPrice}}元/个</text>
           <view class="already-number">
@@ -46,30 +45,27 @@
         </view>
 
         <view class="tuan-rule-outer">
-          <view class="tule-tip" @tap='showDetailA'>
+          <view class="tule-tip" bindtap="toShowModal">
             <view>他们正在开团，点击直接参与</view>
-            <view bindtap="toShowModal">查看更多</view>
+            <view>查看更多</view>
             <image src='../../../images/unfold.png'></image>
           </view>
-
           <view class="rule-detail">
-<!--            <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} &#45;&#45;  {{item.preferentialPrice}}</text>-->
-            <view class="content-index">
+            <view class="content-index" wx:for="{{groupList}}" wx:key="groupIndex">
               <view class="V1">
-                <image src="../../../images/discount_bg2.png" alt=""></image>
-                <text>我的昵称</text>
+                <image src="{{item.headImage}}" alt=""></image>
+                <text>{{item.nickName}}</text>
               </view>
               <view  class="V2">
                  <view  class="right-content">
                   <view>差一人成团</view>
                   <veiw class="time-content">
                     <text>剩余时间：</text>
-                    <text>20:02:06</text>
+                    <text>{{item.endTime}}</text>
                   </veiw>
                 </view>
                 <image src="../../../images/gocan.png" alt=""  @tap='goDelegation'></image>
               </view>
-
             </view>
             <view class="content-index">
               <view class="V1">
@@ -95,15 +91,15 @@
       <view class="G-line"></view>
       <!-- <view class="bulk-tips">图文详情</view> -->
       <view class="goods-detail">
-        <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
+        <template is="wxParse" data="{{wxParseData:Detail.nodes}}"/>
       </view>
     </view>
 
 
     <view class="goods-bottom">
       <view class="gb-kf">
-        <button class="icx-btn" open-type="contact"  @tap="goHome">
-          <image src='../../../images/main.png'></image>
+        <button class="icx-btn"  >
+          <image src='../../../images/main.png' @tap.stop="goHome"></image>
           <view>首页</view>
         </button>
       </view>
@@ -176,44 +172,15 @@ export default class Info extends wepy.page {
       autoplay: true,
       interval: 5000,
       duration: 1000,
-      createData: {
-        channelId: '0',
-        groupPurchaseActivityId: '',
-        orderDetailBoList: []
-      },
-      wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>",
-      info:[
-        // "goodsSales": 2,
-        // "isJoin": false,
-        // "originalPrice": 0.03,
-        // "groupPrice": 1,
-        // "groupList": [
-        //   {
-        //     "lackNumber": 9,
-        //     "nickName": "时间问题",
-        //     "headImage": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.comhttps://wx.qlogo.cn/mmopen/vi_32/cEPQLMV2d4Uk1rzLJpEoDBaomz8mMiaHhjYxB7Gicib5FO9Y01CD0cRNjkCXI11Pl4Spdev72JOl2lVOUsFWAx7kw/132",
-        //     "endTime": "2019-10-31 00:00:00",
-        //     "id": "asdqwdqw"
-        //   },
-        //   {
-        //     "lackNumber": 9,
-        //     "nickName": "时间问题",
-        //     "headImage": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.comhttps://wx.qlogo.cn/mmopen/vi_32/cEPQLMV2d4Uk1rzLJpEoDBaomz8mMiaHhjYxB7Gicib5FO9Y01CD0cRNjkCXI11Pl4Spdev72JOl2lVOUsFWAx7kw/132",
-        //     "endTime": "2019-10-31 00:00:00",
-        //     "id": "qfqfqwfwf"
-        //   }
-        // ],
-        // "groupNumber": 10,
-        // "goodsName": "华为笔记本",
-        // "banners": [
-        //   {
-        //     "imgPath": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/banner/be7c7dc2268246eeba98dc12c899c27d.png"
-        //   }
-        // ],
-        // "goodsDetail": "<p><img src=\"https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/60ce015554e4435f856410038ea2b6b8.jpg\" title=\"t01308925339681ebfc.jpg\"></p><p><img src=\"https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/68aa90715c6a4e758b82b64aa1887712.jpg\" title=\"t017f293d45b45a6101.jpg\"></p><p><br></p>"
-      ],
+      info:[],
       bannerList:[],
-      groupList:[]
+      groupList:[],
+      wxData: "",
+      endTimeCountdown:"",
+      day:'',  // 设定天，存在这个变量
+      hours: '', // 设定小时，存在这个变量
+      minutes: '', // 设定分，存在这个变量
+      seconds: '' // 设定秒，存在这个变量
     };
     methods = {
       toShowModal(e) { //这里开始
@@ -227,26 +194,81 @@ export default class Info extends wepy.page {
       },
       goHome() {
         wepy.navigateTo({ url: `/pages/index/index` })
-      },
-      buyNowA(){
-        wepy.navigateTo({url:`/pages/groupBuy/ConfirmOrder/index`})
       }
-    }
+    };
     apiGetGroupBuyInfoA(fun) {
       let indexId = this.indexId
       let _this = this
       apiGetGroupBuyInfoF(indexId, fun).then(msg => {
         _this.info = msg;
         _this.groupList = msg.groupList;
+        console.log("groupList")
+        console.log(msg.groupList)
+        console.log("banners")
+        console.log(msg.banners)
         _this.bannerList = msg.banners;
+        let goodsDetail = msg.goodsDetail    //goodsDetail 后台返回的数据源
+        WxParse.wxParse('Detail', 'html', goodsDetail, _this, 5); //Detail表示绑定的字段 放到html处
+
+        _this.endTimeCountdown = msg.endTime
+
+
       }).catch(() => {
       });
     }
     onLoad(option) {
-      this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 比如id忘记传，就会防止取到undefined  自动传后面的0
-      this.apiGetGroupBuyInfoA()  //this.apiGetGroupBuyInfoA.bind(this)
+      this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 防止id忘记传 取到undefined  自动传后面的0
+      this.apiGetGroupBuyInfoA(this.apiGetGroupBuyInfoA.bind(this))  //this.apiGetGroupBuyInfoA.bind(this)
     }
-  }
+    onShow(){
+      this.startTimer();
+    };
+    startTimer(){
+      let _this = this
+      let interval = setInterval(function(){
+        let date = new Date();
+        let seperator1 = "-";
+        let seperator2 = ":";
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        let hours1 = date.getHours();
+        let minutes1 = date.getMinutes();
+        let seconds1 = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        let currentdate = year + seperator1 + month + seperator1 + strDate + " " +  hours1 + seperator2 + minutes1 + seperator2 + seconds1; //日期格式转化为 YYYY-MM-DD 00:00:00
+        let start = currentdate; //当前时间
+        let end = _this.endTimeCountdown; //返回的数据 时间
+        // console.log("start" + start)
+        // console.log("end" + end)
+        let startTime = new Date(start).getTime()
+        let endTime = new Date(end).getTime()
+        let difference = endTime - startTime; //求出两个时间差的时间戳
+        let day = Math.floor(difference / (1000 * 60 * 60 * 24)); //天
+        let hours = Math.floor(difference / (1000 * 60 * 60)) % 24; //小时
+        let minutes = Math.floor(difference / (1000 * 60)) % 60; //分钟
+        let seconds = Math.floor(difference / 1000) % 60; //秒
+        if (seconds >= 0 && seconds <= 9) {
+          seconds = "0" + seconds;
+        }
+        if (day == 0 && hours == 0) {
+          clearInterval(interval);
+        }
+
+        _this.setData({  //调用setData()才能触发页面渲染  同步
+          day:day,
+          hours: hours,
+          minutes: minutes,
+          seconds: seconds
+        });
+      }, 1000);
+  };
+  };
 </script>
 <style lang="scss" scoped>
   @import '../../../common/wxParse/wxParse.wxss';
