@@ -1,0 +1,305 @@
+
+<template>
+  <view class="top">
+    <view class="T1-one-div">
+      <view class="left">
+        <view>
+          <image src='../../../images/dai.png'></image>
+          <text>待成团</text>
+        </view>
+<!--        <view>-->
+<!--          <image src='../../../images/cancle.png'></image>-->
+<!--          <text>已取消</text>-->
+<!--        </view>-->
+<!--        <view>-->
+<!--          <image src='../../../images/gou.png'></image>-->
+<!--          <text>已完成</text>-->
+<!--        </view>-->
+
+      </view>
+      <view class="right">
+        <view class="right-content">
+          <view>
+            <text>3人团</text>
+            <view></view>
+            <text>还差2人</text>
+          </view>
+          <view>组团剩余时间： 23:02:06</view>
+        </view>
+        <view class="right-div">
+          <view class="right-1">
+            <text>3人团</text>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+  <view class="cart-ctner container-same">
+    <wxs src="../../../utils/filter.wxs" module="tools"></wxs>
+
+      <view class="cart-con-outer">
+        <view class="cart-goods-outer">
+          <view class="T1">
+<!--            <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">-->
+<!--              <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>-->
+<!--            </repeat>-->
+            <view class="T1-one-div">
+              <view class="">
+                <image src='../../../images/shopping.png'></image>
+                <view class="center-text">
+                  <view>口红挖额发哇哦</view>
+                  <view>1支装</view>
+                  <view>
+                    <text>￥258</text>
+                    <text>￥377</text>
+                  </view>
+                </view>
+              </view>
+              <view>
+                <view>
+                  <image src="../../../images/tuoyuan.png"></image>
+                  <text>3人团</text>
+                </view>
+              </view>
+            </view>
+            <view class="T1-two-div">
+              <view class="one">
+                <view>订单金额</view>
+                <view>￥360.00</view>
+              </view>
+              <view class="two">
+                <view>订单创建时间：</view>
+                <view>
+                  <text style="margin-right: 10rpx">2019/10/12 </text>
+                  <text>11:23:00</text>
+                </view>
+              </view>
+              <view class="three">
+                <view>订单号：</view>
+                <view>20191012112300154</view>
+              </view>
+            </view>
+            <view></view>
+          </view>
+
+        </view>
+
+      </view>
+  </view>
+  <view class="bottom">
+    <view class="btn">
+      <view  bindtap="toShowModal">取消订单</view>
+      <view>邀请好友</view>
+
+      <view>重新购买</view>
+      <view>再次购买</view>
+    </view>
+  </view>
+
+  <!--custom Modal   查看更多弹框-->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}"></view>
+  <view wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="header">
+        <view>·温馨提示·</view>
+      </view>
+      <view class="content-index-bottom">
+        <view class="v-index">
+          <view class="V1">
+            您有一个未成团商品，邀请好友
+          </view>
+          <view  class="V2">
+            参团才能大大提高成团率哦！
+          </view>
+        </view>
+      </view>
+      <view class="bottom">
+        <view @tap="hideModal">关闭</view>
+        <view>邀请好友</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Auth from '../../../common/js/authProcess.js';
+  import {
+    apiCartFindPageF,
+    apiChangeQuantityF,
+    apiCartDeleteF
+  } from '../../../services/cart';
+  import {
+    apiCreateOrderF
+  } from '../../../services/mine'
+
+  import { apiGoodsLikePageF } from '../../../services/index/index'
+  import miniPro from '@/utils/wepy-pro.js';
+  import CatItem from '@/components/catItem/index';
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '待成团订单详情'
+    };
+    components = {
+      CatItem: CatItem
+    };
+
+    mixins = [];
+
+    data = {
+      showModal:false,
+
+      pageNum: 0,
+      rowsArr: [],
+      changeQuantity: {
+        id: '',
+        type: '',
+        current: -1
+      },
+      isAllCkeck: false,
+      totalMoney: 0,
+      createData: {
+        // channelId: '0', // 需求确认
+        orderDetailBoList: []
+      },
+      delGoosId: '',
+      pageParamsLike: {
+        page: 0,
+        limit: 400
+      },
+      pageLikeList: []
+    };
+
+    methods = {
+      toShowModal(e) { //这里开始
+        this.showModal = true
+      },
+      hideModal(){
+        this.showModal = false
+      },
+      //这里结束
+      goConfirm(){
+        wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index` })
+      },
+
+
+      toSureOrderA() {
+        this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
+      },
+      checkAll() {
+        this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
+      },
+      toGoodsDetail(item) {
+        miniPro.toGoodsDetail(item.id, item.groupPurchase)
+      }
+    };
+
+    apiCreateOrderA(fun) {
+      apiCreateOrderF(this.createData, fun).then(msg => {
+        let _id = msg.id
+        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
+      }).catch(() => { })
+    }
+    apiCartFindPageA(fun) {
+      let _pageNum = this.pageNum
+      apiCartFindPageF({
+        page: _pageNum
+      }, fun).then(msg => {
+        let { rows } = msg
+        this.rowsArr = rows.map((val) => {
+          val.check = false
+          return val
+        })
+        this.$apply()
+      }).catch(() => { })
+    }
+    apiChangeQuantityA(fun) {
+      apiChangeQuantityF({
+        id: this.changeQuantity.id,
+        type: this.changeQuantity.type
+      }, fun).then(msg => {
+        this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
+        this.$apply()
+      }).catch(() => { })
+    }
+    apiCartDeleteA(fun) {
+      apiCartDeleteF(this.delGoosId, fun).then(msg => {
+        this.rowsArr.splice(this.changeQuantity.current, 1)
+        this.$apply()
+      }).catch(() => { })
+    }
+
+    apiGoodsLikePageFA(fun) {
+      apiGoodsLikePageF({
+        page: this.pageParamsLike.page,
+        limit: this.pageParamsLike.limit
+      }, fun).then((result) => {
+        let { rows } = result
+        this.pageLikeList = rows
+        this.$apply();
+      }).catch(() => { });
+    }
+
+    watch = {
+      rowsArr (newValue) {
+        let _newValue = newValue
+        this.isAllCkeck = _newValue.every(val => {
+          return val.check
+        })
+        let _totalMoney = 0;
+        let _createData = []
+        _newValue.forEach((val) => {
+          if (val.check) {
+            _totalMoney = (_totalMoney * 1000 + val.price * val.quantity * 1000) / 1000
+            _createData.push({
+              cartId: val.id,
+              goodsId: val.goodsId,
+              specificationId: val.specificationId,
+              colorId: val.colorId,
+              goodsNumber: val.quantity
+            })
+          }
+        });
+        this.totalMoney = _totalMoney
+        this.createData.orderDetailBoList = _createData
+      }
+    }
+    events = {
+      'calt-item-check': (index, check) => {
+        this.rowsArr[index].check = check
+        this.$apply()
+      },
+      'num-change-event': (index, type) => {
+        this.changeQuantity.id = this.rowsArr[index].id
+        this.changeQuantity.type = type
+        this.changeQuantity.current = index
+        this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
+        this.$apply()
+      },
+      'calt-item-del': (index) => {
+        let _self = this
+        miniPro.showConfirm({
+          title: '提示',
+          content: '确实删除次商品？',
+          callback(flag) {
+            if (!flag) return
+            _self.changeQuantity.current = index
+            _self.delGoosId = _self.rowsArr[index].id
+            _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
+          }
+        })
+      }
+    };
+
+    async onShow() {
+      this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
+      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
+    }
+  }
+</script>
+<style lang="scss">
+  @import './index.scss';
+</style>

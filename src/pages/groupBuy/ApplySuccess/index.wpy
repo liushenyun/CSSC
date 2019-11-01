@@ -1,0 +1,260 @@
+
+<template>
+  <view class="cart-ctner container-same">
+    <wxs src="../../../utils/filter.wxs" module="tools"></wxs>
+
+    <view class="cart-con-outer">
+      <view class="cart-goods-outer">
+        <view class="T1">
+          <!--            <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">-->
+          <!--              <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>-->
+          <!--            </repeat>-->
+          <view class="T1-one-div">
+            <view class="">
+              <image src='../../../images/shopping.png'></image>
+              <view class="center-text">
+                <view>口红挖额发哇哦</view>
+                <view>1支装</view>
+                <view>
+                  <text>￥258</text>
+                  <text>￥377</text>
+                </view>
+              </view>
+            </view>
+            <view>
+              <view>
+                <image src="../../../images/tuoyuan.png"></image>
+                <text>3人团</text>
+              </view>
+            </view>
+          </view>
+          <view class="T1-two-div">
+            <view>
+              <image src='../../../images/tuoyuan.png'></image>
+              <view>团长</view>
+            </view>
+            <view>
+              <image src='../../../images/background.png'></image>
+              <view>团长</view>
+            </view>
+            <view>
+              <image src='../../../images/que1.png'></image>
+              <view>团长</view>
+            </view>
+            <view>
+              <image src='../../../images/background.png'></image>
+              <view>团长</view>
+            </view>
+            <view>
+              <image src='../../../images/add1.png'></image>
+              <view>还差一人</view>
+            </view>
+          </view>
+          <view></view>
+        </view>
+        <view class="T2">
+          <view @tap="goConfirm">
+            <image src='../../../images/Yao.png'></image>
+            <text>邀请好友参团</text>
+            <text style="margin-left:15rpx">23:59:12</text>
+            <text>后结束</text>
+          </view>
+          <view>
+            <image src='../../../images/zhuyi.png'></image>
+            <text>分享到2个微信群,成功率高达95%</text>
+          </view>
+
+        </view>
+        <!--          <view class="cart-goods-no" wx:if='{{rowsArr.length < 1}}'>-->
+        <!--            <image src='../../../images/shopping.png'></image>-->
+        <!--            <view>空空如也 马上添加</view>-->
+        <!--          </view>-->
+      </view>
+
+
+      <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
+        <view class="cart-like-title">·猜您喜欢·</view>
+        <view class='cat-container'>
+          <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
+            <image src="{{item.goodsIco}}"></image>
+            <view class="cart-l-des">{{item.goodsName}}</view>
+            <view class="cart-l-price">￥{{item.price}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Auth from '../../../common/js/authProcess.js';
+  import {
+    apiCartFindPageF,
+    apiChangeQuantityF,
+    apiCartDeleteF
+  } from '../../../services/cart';
+  import {
+    apiCreateOrderF
+  } from '../../../services/mine'
+
+  import { apiGoodsLikePageF } from '../../../services/index/index'
+  import miniPro from '@/utils/wepy-pro.js';
+  import CatItem from '@/components/catItem/index';
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '支付成功'
+    };
+    components = {
+      CatItem: CatItem
+    };
+
+    mixins = [];
+
+    data = {
+      pageNum: 0,
+      rowsArr: [],
+      changeQuantity: {
+        id: '',
+        type: '',
+        current: -1
+      },
+      isAllCkeck: false,
+      totalMoney: 0,
+      createData: {
+        // channelId: '0', // 需求确认
+        orderDetailBoList: []
+      },
+      delGoosId: '',
+      pageParamsLike: {
+        page: 0,
+        limit: 400
+      },
+      pageLikeList: []
+    };
+
+    methods = {
+      goConfirm(){
+        wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index` })
+      },
+
+
+      toSureOrderA() {
+        this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
+      },
+      checkAll() {
+        this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
+      },
+      toGoodsDetail(item) {
+        miniPro.toGoodsDetail(item.id, item.groupPurchase)
+      }
+    };
+
+    apiCreateOrderA(fun) {
+      apiCreateOrderF(this.createData, fun).then(msg => {
+        let _id = msg.id
+        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
+      }).catch(() => { })
+    }
+    apiCartFindPageA(fun) {
+      let _pageNum = this.pageNum
+      apiCartFindPageF({
+        page: _pageNum
+      }, fun).then(msg => {
+        let { rows } = msg
+        this.rowsArr = rows.map((val) => {
+          val.check = false
+          return val
+        })
+        this.$apply()
+      }).catch(() => { })
+    }
+    apiChangeQuantityA(fun) {
+      apiChangeQuantityF({
+        id: this.changeQuantity.id,
+        type: this.changeQuantity.type
+      }, fun).then(msg => {
+        this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
+        this.$apply()
+      }).catch(() => { })
+    }
+    apiCartDeleteA(fun) {
+      apiCartDeleteF(this.delGoosId, fun).then(msg => {
+        this.rowsArr.splice(this.changeQuantity.current, 1)
+        this.$apply()
+      }).catch(() => { })
+    }
+
+    apiGoodsLikePageFA(fun) {
+      apiGoodsLikePageF({
+        page: this.pageParamsLike.page,
+        limit: this.pageParamsLike.limit
+      }, fun).then((result) => {
+        let { rows } = result
+        this.pageLikeList = rows
+        this.$apply();
+      }).catch(() => { });
+    }
+
+    watch = {
+      rowsArr (newValue) {
+        let _newValue = newValue
+        this.isAllCkeck = _newValue.every(val => {
+          return val.check
+        })
+        let _totalMoney = 0;
+        let _createData = []
+        _newValue.forEach((val) => {
+          if (val.check) {
+            _totalMoney = (_totalMoney * 1000 + val.price * val.quantity * 1000) / 1000
+            _createData.push({
+              cartId: val.id,
+              goodsId: val.goodsId,
+              specificationId: val.specificationId,
+              colorId: val.colorId,
+              goodsNumber: val.quantity
+            })
+          }
+        });
+        this.totalMoney = _totalMoney
+        this.createData.orderDetailBoList = _createData
+      }
+    }
+    events = {
+      'calt-item-check': (index, check) => {
+        this.rowsArr[index].check = check
+        this.$apply()
+      },
+      'num-change-event': (index, type) => {
+        this.changeQuantity.id = this.rowsArr[index].id
+        this.changeQuantity.type = type
+        this.changeQuantity.current = index
+        this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
+        this.$apply()
+      },
+      'calt-item-del': (index) => {
+        let _self = this
+        miniPro.showConfirm({
+          title: '提示',
+          content: '确实删除次商品？',
+          callback(flag) {
+            if (!flag) return
+            _self.changeQuantity.current = index
+            _self.delGoosId = _self.rowsArr[index].id
+            _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
+          }
+        })
+      }
+    };
+
+    async onShow() {
+      this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
+      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
+    }
+  }
+</script>
+<style lang="scss">
+  @import './index.scss';
+</style>

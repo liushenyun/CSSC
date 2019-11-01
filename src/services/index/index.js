@@ -12,12 +12,15 @@ import {
   apiMessageDelete,
   apiGetMessage,
   apiMessageRead,
-  apiVipExchange
+  apiVipExchange,
+  apiGroupBuy,
+  apiGetGroupBuyInfo
 } from './api'
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
 let request = miniPro.request
+
 
 // 获取商品列表 【分页已做】
 const apiGoodsListF = (data, fun) => packagePromise((resolve, reject) => {
@@ -196,6 +199,33 @@ const apiVipExchangeF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 新增 团购页 列表数据
+const apiGroupBuyF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGroupBuy(),
+    method: 'GET',
+    noOutData: true,  //如果分页  加这个标志设置为true  数据结构
+    data
+  }, fun)
+    .then(msg => {
+      console.log(msg)
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 获取团购页商品详情
+const apiGetGroupBuyInfoF = (indexId, fun) => packagePromise((resolve, reject) => {
+  console.log(indexId)
+  request({
+    url: apiGetGroupBuyInfo(indexId),
+    method: 'GET'
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
 export {
   apiGoodsListF,
   apiVIPGoodsListF,
@@ -209,5 +239,7 @@ export {
   apiMessageDeleteF,
   apiGetMessageF,
   apiMessageReadF,
-  apiVipExchangeF
+  apiVipExchangeF,
+  apiGroupBuyF,
+  apiGetGroupBuyInfoF
 }

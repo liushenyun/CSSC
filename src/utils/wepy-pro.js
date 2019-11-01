@@ -1,7 +1,7 @@
 /*
  * @description: 请求接口和一个全局函数（所有项目均可使用）
  * @Author: iconbonx-mini
- * @Date: 2018-06-29 10:39:42 
+ * @Date: 2018-06-29 10:39:42
  * @Last Modified by: icarbonx-mini
  * @Last Modified time: 2018-08-15 14:14:08
  */

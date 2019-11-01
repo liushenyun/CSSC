@@ -14,7 +14,7 @@
             <view>空空如也 马上添加</view>
           </view>
         </view>
-        
+
 
         <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
           <view class="cart-like-title">·猜您喜欢·</view>
@@ -27,7 +27,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class='cat-bottom'>
         <view class='check-all' @tap='checkAll'>
           <image wx:if= "{{isAllCkeck}}" src='../../images/selected.png' />
@@ -40,7 +40,7 @@
         </view>
         <view class='pay-btn' @tap='toSureOrderA'>结算（{{createData.orderDetailBoList.length}})</view>
       </view>
-    
+
   </view>
 </template>
 

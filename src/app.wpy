@@ -28,6 +28,7 @@ export default class extends wepy.app {
       'pages/login/index',
       'pages/authorize/index',
       'pages/webview/index'
+      // 'pages/groupBuy/index'
     ],
     window: {
       // backgroundTextStyle: 'light',
@@ -103,6 +104,17 @@ export default class extends wepy.app {
           'sureOrder/index',
           'posters/index',
           'withdrawal/index'
+        ]
+      },
+      {
+        root: 'pages/groupBuy',   //团购页
+        pages: [
+          'index/index',
+          'Info/index',
+          'OnekeyDelegation/index',
+          'ConfirmOrder/index',
+          'ApplySuccess/index',
+          'OrderInfo/index'
         ]
       }
     ],

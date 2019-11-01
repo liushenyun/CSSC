@@ -1,0 +1,146 @@
+
+<template>
+  <view class="index-ctner container-same">
+    <wxs src="../../../utils/filter.wxs" module="tools"></wxs>
+    <view class="ix-input-wrap">
+      <view class="input-search" @tap='bindfocusInput'>
+        <image src='../../../images/nav_button_search_default.png' />
+      </view>
+      <input  maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
+      <view class="input-msg" @tap="toMsgA">
+        <image src='../../../images/nav_button_message_default.png' />
+      </view>
+    </view>
+    <view class="indexList">
+      <scroll-view scroll-y="true" style="height:100vh" @scrolltolower="loadMore">
+        <view class="content" @tap="toMsgA({{item.id}})" wx:for="{{ListArr}}" wx:key="index">
+          <view class="img">
+            <image src="{{item.goodsIcon}}"/>
+            <view class="bg-text">
+              <text>{{item.groupNumber}}人团</text>
+              <image src='../../../images/yu.png' />
+            </view>
+          </view>
+          <view class="C1">
+            <text>{{item.goodsName}}</text>
+          </view>
+          <view class="C2">
+            <text>￥{{item.groupPrice}}</text>
+            <text>￥{{item.originalPrice}}</text>
+          </view>
+          <view class="C3">
+            <text>已团{{item.goodsSales}}件</text>
+            <image src='../../../images/gopin.png' />
+          </view>
+        </view>
+      </scroll-view>
+
+
+
+      </view>
+
+
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import '../../../common/js/authProcess.js';
+  import {
+    apiGroupBuyF
+  } from '../../../services/index';
+  import {
+    INDICATOR_COLOR,
+    INDICATOR_ACTIVE_COLOR
+  } from '@/common/js/config';
+  import miniPro from '@/utils/wepy-pro.js';
+
+  export default class Index extends wepy.page {
+    config = {
+      // navigationBarBackgroundColor: '#09103b',
+      // navigationBarTextStyle: '#FFF'
+      navigationBarTitleText: '成氏商城拼团'
+    };
+    components = {};
+
+    mixins = [];
+
+    data = {
+      pageParams: {
+        offset: 0,
+        limit:  6,
+        hasMore:false
+      },
+      ListArr:[],
+      scrollH:'',
+      imgUrls: [
+        'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+        'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+        'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+      ],
+      indicatorDots: true
+    };
+
+    computed = {};
+
+    methods = {
+      // toCategoryDetailA(e) {
+      //   let _categoryId = e.currentTarget.dataset.category
+      //   wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${_categoryId}` })
+      // }
+      toMsgA(id) {
+        let _indexId = id;
+        wepy.navigateTo({ url: `/pages/groupBuy/Info/index?indexId=${_indexId}` })
+      },
+      loadMore() { // 加载更多
+        let offset = this.pageParams.offset;
+        if(offset == 0){
+           offset = this.pageParams.limit;
+        }else{
+           offset = offset + this.pageParams.limit;
+        }
+        this.pageParams.offset = offset;
+        this.apiGetGroupBuyDataFA(this.apiGetGroupBuyDataFA.bind(this))
+      }
+    }
+
+    apiGetGroupBuyDataFA(fun) {
+      let params = {
+        limit:this.pageParams.limit,
+        offset:this.pageParams.offset
+      }
+      apiGroupBuyF(params, fun).then(result => {
+        // this.ListArr = result.rows;
+        let { rows, last, pageNumber } = result
+        this.pageParams.hasMore = !last
+        this.ListArr = this.ListArr.concat(rows)
+        this.$apply()
+      }).catch(() => { })
+    }
+    async onLoad() {
+      this.apiGetGroupBuyDataFA(this.apiGetGroupBuyDataFA.bind(this));  //this.apiGetHomeDataFA.bind(this)
+      var self = this;
+      wx.getSystemInfo({
+        success: function(res) {
+          let scrollH = res.windowHeight;
+          self.setData({
+            scrollH:scrollH
+          });
+        }
+      });
+    }
+    onShareAppMessage(res) {
+      if (res.from === 'button') {
+        // 来自页面内转发按钮
+      }
+      return {
+        title: '成氏商城',
+        path: '/pages/index/index'
+      };
+    }
+  }
+</script>
+<style lang="scss">
+  @import './index.scss';
+</style>

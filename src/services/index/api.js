@@ -1,4 +1,5 @@
 import { MAIN_DOMAIN } from '../../common/js/config';
+// import index from 'wepy-eslint/src';
 
 // 分类推荐，查询某个分类的商品
 const apiGoodFindCategoryId = () => `${MAIN_DOMAIN}/api/buy/goods/find_category_id`
@@ -39,6 +40,11 @@ const apiMessageRead = (messageId) => `${MAIN_DOMAIN}/api/message/read/${message
 //  会员兑奖
 const apiVipExchange = () => `${MAIN_DOMAIN}/api/wx/user/vip/exchange`
 
+// 新增 团购页 列表数据
+const apiGroupBuy = () => `${MAIN_DOMAIN}/api/group/purchase/list`
+
+// 团购页 详情数据
+const apiGetGroupBuyInfo = (indexId) => `${MAIN_DOMAIN}/api/group/purchase/info?id=${indexId}`
 export {
   apiGoodsList,
   apiVIPGoodsList,
@@ -52,5 +58,7 @@ export {
   apiMessageDelete,
   apiGetMessage,
   apiMessageRead,
-  apiVipExchange
+  apiVipExchange,
+  apiGroupBuy,
+  apiGetGroupBuyInfo
 }

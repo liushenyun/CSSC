@@ -1,0 +1,147 @@
+<template>
+  <view class='address-list-ctner'>
+    <view class="addl-new" @tap="toAddressA">
+      <view class="A1">
+        <view class="addl-one">
+          <image src='../../../images/location_a.png'></image>
+          <text>收货地址</text>
+          <image src='../../../images/unfold.png'></image>
+        </view>
+        <view class="addl-two">收货地址 收货地址 收货地址 收货地址 收货地址</view>
+      </view>
+      <view class="A2">
+        <view class="index">
+          <view class="I1-index">
+            <view class="I1">
+              <image src='../../../images/123.png'></image>
+            </view>
+            <view class="I1-text">
+              <view class="I1-div">
+                <view>
+                  <view>选择商品</view>
+                  <view>开团/参团</view>
+                </view>
+                <view>
+                  <view>邀请好友</view>
+                  <view>好友参团</view>
+                </view>
+                <view>
+                  <view>人满成团</view>
+                  <view>等待收货</view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="I2">
+            <view class="T1-one-div">
+              <view class="">
+                <image src='../../../images/shopping.png'></image>
+                <view class="center-text">
+                  <view>口红挖额发哇哦</view>
+                  <view>1支装</view>
+                  <view>
+                    <text>￥258</text>
+                    <text>￥377</text>
+                  </view>
+                </view>
+              </view>
+              <view>
+                <view>
+                  <image src="../../../images/tuoyuan.png"></image>
+                  <text>3人团</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="addl-list-outer">
+        <view hover-class='icx-click-hover' class="addl-list-item" wx:for="{{addressList}}" wx:key="index" @tap="checked({{item}})">
+          <view class="addl-list-word">
+            <view>
+              <image src="../../../images/WX.png"></image>
+              <text>微信支付</text>
+            </view>
+          </view>
+          <view class="addl-edit"  @tap.stop="toAddressEditA({{item.id}})">
+            <image class="addl-img-b" src='../../../images/WX-right.png'></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="addl-list-outer-bottom">   <!--底部div-->
+    <view hover-class='icx-click-hover' class="addl-list-item" wx:for="{{addressList}}" wx:key="index" @tap="checked({{item}})">
+      <view class="addl-list-word">
+        <view>
+          <text>实付款</text>
+          <text>￥258.00</text>
+        </view>
+      </view>
+      <view class="addl-edit"  @tap="toAddressEditA">
+        立即支付
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { apiAddressFindAllF } from '../../../services/mine/index'
+  export default class AddressList extends wepy.page {
+    config = {
+      navigationBarTitleText: '确定订单'
+    };
+    components = {
+    };
+    data = {
+      addressList: []
+    };
+    methods = {
+      checked(item) {
+        let _address = `${item.province} ${item.city} ${item.district} ${item.address}`
+        let _addressId = item.id
+        wepy.$instance.globalData.addressObj.addressStr = _address
+        wepy.$instance.globalData.addressObj.addressId = _addressId
+        this.$apply()
+        setTimeout(() => {
+          wepy.navigateBack();
+        }, 300);
+      },
+      toAddressEditA(id) {
+        wepy.navigateTo({ url: `/pages/groupBuy/ApplySuccess/index` });
+      },
+      toAddressA() {
+        wepy.navigateTo({ url: `/pages/packageMine/addressEdit/index` });
+      },
+      modifyA() {
+        let pages = getCurrentPages();
+        let prevPage = pages[pages.length - 2]; // 上一级页面
+        prevPage.addressStr = '45456'
+        prevPage.setData({
+          addressStr: 'dskjl',
+          addressId: ''
+        })
+        // this.$wxpage = prevPage;
+        this.$apply();
+      }
+    }
+    apiAddressFindAllA(fun) {
+      apiAddressFindAllF(fun).then((result) => {
+        // let { rows } = result
+        this.addressList = result.map(val => {
+          val.isChecked = val.def == 1 ? true : false
+          return val
+        })
+        this.$apply()
+      }).catch(() => { });
+    }
+    onLoad() {
+      this.apiAddressFindAllA(this.apiAddressFindAllA.bind(this))
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  @import './index'
+</style>

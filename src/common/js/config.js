@@ -1,7 +1,7 @@
 /*
  * 项目配置（每个小程序项目都必须用到）
- * @Author: icarbonx-mini 
- * @Date: 2018-06-29 11:10:20 
+ * @Author: icarbonx-mini
+ * @Date: 2018-06-29 11:10:20
  * @Last Modified by: icarbonx-mini
  * @Last Modified time: 2018-07-05 18:27:081
  */
@@ -23,9 +23,9 @@ const BANNER_VERSION = 'v1' // banner 版本
 const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
 // http://wisf54.natappfree.cc
 // const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
-// const MAIN_DOMAIN = 'http://192.168.7.200:8080' // 测试域名[ok]
 // const MAIN_DOMAIN = 'http://wisf54.natappfree.cc' // 测试域名[ok]
-const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
+const MAIN_DOMAIN = 'http://192.168.7.199:8086' // 测试域名[ok]
+// const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
 
 const WBVIEW_PAGE_URL = '/pages/webview/index'
 const WECHAT_ACCESS_TOKEN_NAME = `${BASE_NAME}_Access_TOKEN` // access_token存储名字

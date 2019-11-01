@@ -6,7 +6,7 @@
       scroll-y
       style="height: 100%;"
     >
-    
+
     <view class="ix-input-wrap">
       <view class="input-search" @tap='bindfocusInput'>
         <image src='../../images/nav_button_search_default.png' />
@@ -83,7 +83,7 @@
             <image src='{{homeGoodsCategoryList[0].categoryIco}}'></image>
             </view>
             <view class="area-classify-bottom">
-              <view data-category="{{homeGoodsCategoryList[1].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-left">
+              <view data-category="{{homeGoodsCategoryList[1].categoryId}}" @tap="toGroupBuy" class="classify-bottom-left">
                 <image src='{{homeGoodsCategoryList[1].categoryIco}}'></image>
               </view>
               <view data-category="{{homeGoodsCategoryList[2].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-mid">
@@ -100,7 +100,6 @@
     </view>
 
   </scroll-view>
-
   </view>
 </template>
 
@@ -188,6 +187,9 @@ export default class Index extends wepy.page {
       let _taleId = this.homeTale.taleId
       if (!_taleId) return
       wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${_taleId}` });
+    },
+    toGroupBuy() {
+      wepy.navigateTo({ url: `/pages/groupBuy/index/index` });
     }
   }
 

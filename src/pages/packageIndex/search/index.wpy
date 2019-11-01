@@ -28,7 +28,7 @@
             </repeat>
         </scroll-view>
       </view>
-    
+
 
   </view>
 </template>
@@ -120,7 +120,7 @@ export default class Index extends wepy.page {
       miniPro.showToast('收藏失败')
     })
   }
-  
+
   apiCollectDeleteA(fun) {
     apiCollectDeleteF(this.starFData.goodsId, fun).then(msg => {
       this.pageList[this.starFData.current].collection = false
@@ -152,6 +152,7 @@ export default class Index extends wepy.page {
 
   async onLoad(option) {
     this.pageParams.categoryId = option.categoryId || 0
+
     this.getGoodsListA(this.getGoodsListA.bind(this))
     this.$apply();
   }

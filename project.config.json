@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -369,6 +369,42 @@
 					"id": -1,
 					"name": "月卡兑换页面",
 					"pathName": "pages/packageIndex/exChange/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "团购页",
+					"pathName": "pages/groupBuy/index/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼团详情",
+					"pathName": "pages/groupBuy/Info/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "一键参团",
+					"pathName": "pages/groupBuy/OnekeyDelegation/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "确定订单",
+					"pathName": "pages/groupBuy/ConfirmOrder/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "支付成功",
+					"pathName": "pages/groupBuy/ApplySuccess/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "待成团订单详情",
+					"pathName": "pages/groupBuy/OrderInfo/index",
 					"scene": null
 				}
 			]

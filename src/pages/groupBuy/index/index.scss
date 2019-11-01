@@ -1,0 +1,145 @@
+@import '../../../common/css/rpx';
+@import '../../../common/css/const';
+@import '../../../common/css/mixin';
+page,
+.index-ctner{
+    height: 100%;
+    background:rgba(245,245,245,1);
+  .ix-input-wrap{
+    position: relative;
+    padding: rpx(12) rpx(45);
+    @include borderBottomOnePx;
+    display: flex;
+    .input-search{
+      width: rpx(46);
+      padding-left: rpx(16);
+      border-top-left-radius: rpx(30);
+      border-bottom-left-radius: rpx(30);
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      image {
+        width: rpx(26);
+        height: rpx(26);
+      }
+    }
+    input {
+      flex: 1;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      background: #FFFFFF;
+    }
+    .input-msg {
+      width: rpx(28);
+      display: flex;
+      align-items: center;
+      margin-left: rpx(18);
+      image {
+        width: rpx(27);
+        height: rpx(25);
+      }
+    }
+  }
+}
+.indexList{
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+  margin-left: rpx(20);
+
+  .content{
+      margin: rpx(15);
+    display: inline-block;
+
+    background: #FFFFFF;
+    border-bottom-left-radius: rpx(15);
+    border-bottom-right-radius: rpx(10);
+      .img{
+        width: rpx(328);
+        height: rpx(330);
+        position: relative;
+        image:nth-of-type(1){
+          width: 100%;
+          height: 100%;
+        }
+        .bg-text{
+          position: absolute;
+          left: 0;
+          height: rpx(43);
+          width: rpx(115);
+          top: 0;
+          text{
+            position: absolute;
+            top: rpx(23);
+            left: rpx(14);
+            font-size: rpx(25);
+            font-weight: bold;
+            color: #FFFFFF;
+          }
+          image{
+            width: 100%;
+            height: 100%;
+            margin-top: rpx(18);
+          }
+        }
+
+      }
+      .C1{
+        color: #000000;
+        font-weight: bold;
+        font-size: rpx(26);
+        line-height: rpx(50);
+        margin-left: rpx(18);
+
+        overflow: hidden; //文本超出 省略号代替
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: rpx(320);//文本超出 省略号代替
+
+        text{
+          letter-spacing: rpx(8);
+        }
+      }
+      .C2{
+        margin-left: rpx(18);
+        line-height: rpx(30);
+        text:nth-of-type(1){
+          color: #FF7F00;
+          font-size: rpx(35);
+          font-weight: bold;
+        }
+        text:nth-of-type(2){
+          //color: #FF7F00;
+          //font-size: rpx(25);
+          //font-weight: bold;
+          text-decoration: line-through;
+          margin-left: rpx(15);
+          font-size: rpx(20);
+          color: #666666;
+        }
+
+      }
+      .C3{
+        font-size:20px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        color:rgba(255,127,0,1);
+        line-height:23px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        text{
+          margin-left: rpx(18);
+        }
+        image{
+          width: rpx(120);
+          height: rpx(37);
+          text-align: right;
+        }
+      }
+
+    }
+  }
+
+
+

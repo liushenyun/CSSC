@@ -30,7 +30,7 @@
           </view>
         </scroll-view>
       </view>
-     
+
   </view>
 </template>
 
@@ -126,7 +126,7 @@ export default class Index extends wepy.page {
   async onLoad() {
     this.$apply();
     this.apiCategoryListFA(this.apiCategoryListFA.bind(this))
-    
+
   }
   onUnload() {}
   onHide() {}

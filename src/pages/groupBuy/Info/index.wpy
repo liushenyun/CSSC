@@ -1,0 +1,252 @@
+<template>
+  <view class='goods-detail-ctner'>
+    <import src="../../../common/wxParse/wxParse.wxml"/>
+    <view class="goods-con-outer">
+      <view class="goods-banner">
+        <swiper
+          indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}"
+          interval="{{interval}}"
+          duration="{{duration}}"
+          indicator-color='#999'
+          indicator-active-color='#FFF'
+          circular = 'true'
+        >
+          <block wx:for="{{bannerList}}" wx:key="indx">
+            <swiper-item>
+              <image src="{{item.bannerPath}}" class="slide-image" width="750" height="750" />
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+
+      <view class="goods-des-outer">
+
+        <view class="tuan-price-outer">
+          <text>{{info.groupNumber}}人团</text>
+          <text>￥{{info.groupPrice}}</text> <!--{{firstSpec.price}}-->
+          <text>￥{{info.originalPrice}}</text>
+          <view class="right-index">
+            <view class="rightText">
+              <text>距离结束仅剩</text>
+              <br>
+              <text>{{groupList.endTime}}</text>
+            </view>
+          </view>
+
+        </view>
+
+        <view class="tuan-des-outer">
+<!--          <text>{{goodsDetailObj.goodsName || '&#45;&#45;'}}</text>-->
+          <text>【{{info.groupNumber}}人团】{{info.goodsName}}</text>
+            <text>{{info.groupPrice}}元/个</text>
+          <view class="already-number">
+            <text>已团{{info.goodsSales}}件</text>
+          </view>
+        </view>
+
+        <view class="tuan-rule-outer">
+          <view class="tule-tip" @tap='showDetailA'>
+            <view>他们正在开团，点击直接参与</view>
+            <view bindtap="toShowModal">查看更多</view>
+            <image src='../../../images/unfold.png'></image>
+          </view>
+
+          <view class="rule-detail">
+<!--            <text class="rule-item" wx:for="{{groupPurchaseRegulationsList}}" wx:key="index">满{{item.boundary}}{{goodsDetailObj.unit}} &#45;&#45;  {{item.preferentialPrice}}</text>-->
+            <view class="content-index">
+              <view class="V1">
+                <image src="../../../images/discount_bg2.png" alt=""></image>
+                <text>我的昵称</text>
+              </view>
+              <view  class="V2">
+                 <view  class="right-content">
+                  <view>差一人成团</view>
+                  <veiw class="time-content">
+                    <text>剩余时间：</text>
+                    <text>20:02:06</text>
+                  </veiw>
+                </view>
+                <image src="../../../images/gocan.png" alt=""  @tap='goDelegation'></image>
+              </view>
+
+            </view>
+            <view class="content-index">
+              <view class="V1">
+                <image src="../../../images/discount_bg2.png" alt=""></image>
+                <text>我的昵称</text>
+              </view>
+              <view  class="V2">
+                <view  class="right-content">
+                  <view>差一人成团</view>
+                  <veiw class="time-content">
+                    <text>剩余时间：</text>
+                    <text>20:02:06</text>
+                  </veiw>
+                </view>
+                <image src="../../../images/gocan.png" alt=""></image>
+              </view>
+
+            </view>
+          </view>
+        </view>
+
+      </view>
+      <view class="G-line"></view>
+      <!-- <view class="bulk-tips">图文详情</view> -->
+      <view class="goods-detail">
+        <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}"/>
+      </view>
+    </view>
+
+
+    <view class="goods-bottom">
+      <view class="gb-kf">
+        <button class="icx-btn" open-type="contact"  @tap="goHome">
+          <image src='../../../images/main.png'></image>
+          <view>首页</view>
+        </button>
+      </view>
+      <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
+        <text>￥</text>
+        <text>一键开团</text>
+        <text>（单买价</text>
+        <text>￥308</text>
+        <text>）</text>
+      </view>
+
+      <!--custom Modal   查看更多弹框-->
+      <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}"></view>
+      <view wx:if="{{showModal}}">
+        <view class="modal-content">
+          <view class="header">
+            <view>·正在开团·</view>
+            <image src="../../../images/close.png" @tap="hideModal"></image>
+          </view>
+          <view class="content-index-bottom"  wx:for="{{groupList}}" wx:key="groupIndex">
+            <view class="V1">
+              <image src="{{item.headImage}}" alt=""></image>
+              <text>{{item.nickName}}</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>{{item.endTime}}</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+
+          <view class="bottom">
+            <view>最多显示10团</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+
+
+  </view>
+
+
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    apiGetGroupBuyInfoF
+  } from '../../../services/index'
+
+  import WxParse from '../../../common/wxParse/wxParse.js'
+
+export default class Info extends wepy.page {
+    config = {
+      navigationBarTitleText: '拼团详情'
+    };
+    components = {
+    };
+    data = {
+      showModal:false,
+      goodsName: '',
+      indicatorDots: true,
+      showRuleTip: false,
+      autoplay: true,
+      interval: 5000,
+      duration: 1000,
+      createData: {
+        channelId: '0',
+        groupPurchaseActivityId: '',
+        orderDetailBoList: []
+      },
+      wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>",
+      info:[
+        // "goodsSales": 2,
+        // "isJoin": false,
+        // "originalPrice": 0.03,
+        // "groupPrice": 1,
+        // "groupList": [
+        //   {
+        //     "lackNumber": 9,
+        //     "nickName": "时间问题",
+        //     "headImage": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.comhttps://wx.qlogo.cn/mmopen/vi_32/cEPQLMV2d4Uk1rzLJpEoDBaomz8mMiaHhjYxB7Gicib5FO9Y01CD0cRNjkCXI11Pl4Spdev72JOl2lVOUsFWAx7kw/132",
+        //     "endTime": "2019-10-31 00:00:00",
+        //     "id": "asdqwdqw"
+        //   },
+        //   {
+        //     "lackNumber": 9,
+        //     "nickName": "时间问题",
+        //     "headImage": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.comhttps://wx.qlogo.cn/mmopen/vi_32/cEPQLMV2d4Uk1rzLJpEoDBaomz8mMiaHhjYxB7Gicib5FO9Y01CD0cRNjkCXI11Pl4Spdev72JOl2lVOUsFWAx7kw/132",
+        //     "endTime": "2019-10-31 00:00:00",
+        //     "id": "qfqfqwfwf"
+        //   }
+        // ],
+        // "groupNumber": 10,
+        // "goodsName": "华为笔记本",
+        // "banners": [
+        //   {
+        //     "imgPath": "https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/banner/be7c7dc2268246eeba98dc12c899c27d.png"
+        //   }
+        // ],
+        // "goodsDetail": "<p><img src=\"https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/60ce015554e4435f856410038ea2b6b8.jpg\" title=\"t01308925339681ebfc.jpg\"></p><p><img src=\"https://csmall-test-1259120104.cos.ap-guangzhou.myqcloud.com/goods/68aa90715c6a4e758b82b64aa1887712.jpg\" title=\"t017f293d45b45a6101.jpg\"></p><p><br></p>"
+      ],
+      bannerList:[],
+      groupList:[]
+    };
+    methods = {
+      toShowModal(e) { //这里开始
+        this.showModal = true
+      },
+      hideModal() {
+        this.showModal = false
+      },
+      goDelegation() {
+        wepy.navigateTo({ url: `/pages/groupBuy/OnekeyDelegation/index` })
+      },
+      goHome() {
+        wepy.navigateTo({ url: `/pages/index/index` })
+      }
+      //这里结束
+    }
+    apiGetGroupBuyInfoA(fun) {
+      let indexId = this.indexId
+      let _this = this
+      apiGetGroupBuyInfoF(indexId, fun).then(msg => {
+        _this.info = msg;
+        _this.groupList = msg.groupList;
+        _this.bannerList = msg.banners;
+      }).catch(() => {
+      });
+    }
+    onLoad(option) {
+      this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 比如id忘记传，就会防止取到undefined  自动传后面的0
+      this.apiGetGroupBuyInfoA()  //this.apiGetGroupBuyInfoA.bind(this)
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  @import '../../../common/wxParse/wxParse.wxss';
+  @import './index';
+</style>
