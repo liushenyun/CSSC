@@ -58,48 +58,14 @@
               </view>
               <view  class="V2">
                  <view  class="right-content">
-                  <view>差一人成团</view>
+                  <view>差{{item.lackNumber}}人成团</view>
                   <veiw class="time-content">
                     <text>剩余时间：</text>
-                    <text>{{item.endTime}}</text>
+                    <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
                   </veiw>
                 </view>
                 <image src="../../../images/gocan.png" alt=""  @tap='goDelegation'></image>
               </view>
-            </view>
-            <view class="content-index">
-              <view class="V1">
-                <image src="../../../images/discount_bg2.png" alt=""></image>
-                <text>我的昵称</text>
-              </view>
-              <view  class="V2">
-                <view  class="right-content">
-                  <view>差一人成团</view>
-                  <veiw class="time-content">
-                    <text>剩余时间：</text>
-                    <text>20:02:06</text>
-                  </veiw>
-                </view>
-                <image src="../../../images/gocan.png" alt=""></image>
-              </view>
-
-            </view>
-            <view class="content-index">
-              <view class="V1">
-                <image src="../../../images/discount_bg2.png" alt=""></image>
-                <text>我的昵称</text>
-              </view>
-              <view  class="V2">
-                <view  class="right-content">
-                  <view>差一人成团</view>
-                  <veiw class="time-content">
-                    <text>剩余时间：</text>
-                    <text>20:02:06</text>
-                  </veiw>
-                </view>
-                <image src="../../../images/gocan.png" alt=""></image>
-              </view>
-
             </view>
           </view>
         </view>
@@ -112,7 +78,6 @@
       </view>
     </view>
 
-
     <view class="goods-bottom">
       <view class="gb-kf">
         <button class="icx-btn"  >
@@ -121,10 +86,10 @@
         </button>
       </view>
       <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
-        <text>￥</text>
+        <text>￥{{info.groupPrice}}</text>
         <text>一键开团</text>
         <text>（单买价</text>
-        <text>￥308</text>
+        <text>￥{{info.originalPrice}}</text>
         <text>）</text>
       </view>
 
@@ -136,7 +101,7 @@
             <view>·正在开团·</view>
             <image src="../../../images/close.png" @tap="hideModal"></image>
           </view>
-          <view class="content-index-bottom"  wx:for="{{groupList}}" wx:key="groupIndex">
+          <view class="content-index-bottom"  wx:for="{{groupListMore}}" wx:key="groupIndex">
             <view class="V1">
               <image src="{{item.headImage}}" alt=""></image>
               <text>{{item.nickName}}</text>
@@ -145,157 +110,7 @@
               <view  class="right-content">
                 <veiw class="time-content">
                   <text>剩余时间：</text>
-                  <text>{{item.endTime}}</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
-            </view>
-          </view>
-          <view class="content-index-bottom">
-            <view class="V1">
-              <image src="../../../images/discount_bg2.png" alt=""></image>
-              <text>我的昵称</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>0天 3:03:06</text>
+                  <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
                 </veiw>
               </view>
               <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
@@ -321,7 +136,7 @@
   import {
     apiGetGroupBuyInfoF
   } from '../../../services/index'
-
+  import countDown from '../../../utils/date';
   import WxParse from '../../../common/wxParse/wxParse.js'
 
 export default class Info extends wepy.page {
@@ -341,6 +156,7 @@ export default class Info extends wepy.page {
       info:[],
       bannerList:[],
       groupList:[],
+      groupListMore: [],
       wxData: "",
       endTimeCountdown:"",
       day:'',  // 设定天，存在这个变量
@@ -367,18 +183,20 @@ export default class Info extends wepy.page {
       let _this = this
       apiGetGroupBuyInfoF(indexId, fun).then(msg => {
         _this.info = msg;
-        _this.groupList = msg.groupList;
-        console.log("groupList")
-        console.log(msg.groupList)
-        console.log("banners")
-        console.log(msg.banners)
+        for(let x in msg.groupList){
+          if(x <= 1){
+            _this.groupList[x] = msg.groupList[0];
+          }
+          if(x <= 10){
+            _this.groupListMore[x] = msg.groupList[0];
+          }
+        }
         _this.bannerList = msg.banners;
+        _this.endTimeCountdown = msg.endTime;
         let goodsDetail = msg.goodsDetail    //goodsDetail 后台返回的数据源
         WxParse.wxParse('Detail', 'html', goodsDetail, _this, 5); //Detail表示绑定的字段 放到html处
-
-        _this.endTimeCountdown = msg.endTime
-
-
+        this.$apply();
+        this.startTimer()
       }).catch(() => {
       });
     }
@@ -386,58 +204,22 @@ export default class Info extends wepy.page {
       this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 防止id忘记传 取到undefined  自动传后面的0
       this.apiGetGroupBuyInfoA(this.apiGetGroupBuyInfoA.bind(this))  //this.apiGetGroupBuyInfoA.bind(this)
     }
-    onShow(){
-      this.startTimer();
-    };
     startTimer(){
-      let _this = this
-      let interval = setInterval(function(){
-        let date = new Date();
-        let seperator1 = "-";
-        let seperator2 = ":";
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let strDate = date.getDate();
-        let hours1 = date.getHours();
-        let minutes1 = date.getMinutes();
-        let seconds1 = date.getSeconds();
-        if (month >= 1 && month <= 9) {
-          month = "0" + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = "0" + strDate;
-        }
-        let currentdate = year + seperator1 + month + seperator1 + strDate + " " +  hours1 + seperator2 + minutes1 + seperator2 + seconds1; //日期格式转化为 YYYY-MM-DD 00:00:00
-        let start = currentdate; //当前时间
-        let end = _this.endTimeCountdown; //返回的数据 时间
-        // console.log("start" + start)
-        // console.log("end" + end)
-        let startTime = new Date(start).getTime()
-        let endTime = new Date(end).getTime()
-        let difference = endTime - startTime; //求出两个时间差的时间戳
-        let day = Math.floor(difference / (1000 * 60 * 60 * 24)); //天
-        let hours = Math.floor(difference / (1000 * 60 * 60)) % 24; //小时
-        let minutes = Math.floor(difference / (1000 * 60)) % 60; //分钟
-        let seconds = Math.floor(difference / 1000) % 60; //秒
-        if (minutes >= 0 && minutes <= 9) {
-          minutes = "0" + minutes;
-        }
-        if (seconds >= 0 && seconds <= 9) {
-          seconds = "0" + seconds;
-        }
-
-        if (day == 0 && hours == 0) {
-          clearInterval(interval);
-        }
-
+      let _this = this;
+      let end = _this.endTimeCountdown
+      console.log(end);
+      countDown(end,function(result) {
         _this.setData({  //调用setData()才能触发页面渲染  同步
-          day:day,
-          hours: hours,
-          minutes: minutes,
-          seconds: seconds
+          day:result.day,
+          hours: result.hour,
+          minutes: result.minute,
+          seconds: result.second
         });
-      }, 1000);
-  };
+      })
+    };
+    buyNowA(){
+      wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=0&activityId=` + this.indexId })
+    };
   };
 </script>
 <style lang="scss" scoped>
