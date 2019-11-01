@@ -140,6 +140,13 @@ page{
             margin-top: rpx(-5);
           }
         }
+        .share-button{
+          background:#FF7F00;
+          color: #fff;
+        }
+        .share-button::after {
+          border: 0;
+        }
 
 
       }

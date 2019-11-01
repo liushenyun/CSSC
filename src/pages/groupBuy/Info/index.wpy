@@ -227,8 +227,10 @@ export default class Info extends wepy.page {
       },
       goHome() {
         wepy.navigateTo({ url: `/pages/index/index` })
+      },
+      buyNowA(){
+        wepy.navigateTo({url:`/pages/groupBuy/ConfirmOrder/index`})
       }
-      //这里结束
     }
     apiGetGroupBuyInfoA(fun) {
       let indexId = this.indexId

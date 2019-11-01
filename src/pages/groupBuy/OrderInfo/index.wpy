@@ -3,35 +3,38 @@
   <view class="top">
     <view class="T1-one-div">
       <view class="left">
-        <view>
-          <image src='../../../images/dai.png'></image>
-          <text>待成团</text>
+
+        <view wx:if="{{status == 2 || orderStatus == 3}}">
+          <image src='../../../images/cancle.png'></image>
+          <text>已取消</text>
         </view>
-<!--        <view>-->
-<!--          <image src='../../../images/cancle.png'></image>-->
-<!--          <text>已取消</text>-->
-<!--        </view>-->
-<!--        <view>-->
-<!--          <image src='../../../images/gou.png'></image>-->
-<!--          <text>已完成</text>-->
-<!--        </view>-->
+        <view wx:else>
+          <view wx:if="{{success == 0}}">
+            <image src='../../../images/dai.png'></image>
+            <text>待成团</text>
+          </view>
+          <view wx:if="{{success == 1}}">
+            <image src='../../../images/gou.png'></image>
+            <text>已完成</text>
+          </view>
+
+        </view>
 
       </view>
       <view class="right">
-        <view class="right-content">
+        <view class="right-content" wx:if="{{success == 0 && orderStatus != 3 }}">
           <view>
-            <text>3人团</text>
+            <text>{{groupNumber}}人团</text>
             <view></view>
-            <text>还差2人</text>
+            <text>还差{{groupNumber - groups}}人</text>
           </view>
-          <view>组团剩余时间： 23:02:06</view>
+          <view>组团剩余时间： {{surplus}}</view>
         </view>
-        <view class="right-div">
+        <view class="right-div" wx:else>
           <view class="right-1">
-            <text>3人团</text>
+            <text>{{groupNumber}}人团</text>
           </view>
         </view>
-
       </view>
     </view>
 
@@ -42,59 +45,57 @@
       <view class="cart-con-outer">
         <view class="cart-goods-outer">
           <view class="T1">
-<!--            <repeat for="{{rowsArr}}" key="{{item.id}}" index="index" item="item">-->
-<!--              <CatItem class='cat-itme-wrap' :item="item" :current="index"></CatItem>-->
-<!--            </repeat>-->
             <view class="T1-one-div">
               <view class="">
-                <image src='../../../images/shopping.png'></image>
+                <image src='{{goodsIcon}}'></image>
                 <view class="center-text">
-                  <view>口红挖额发哇哦</view>
-                  <view>1支装</view>
+                  <view>{{goodsName}}</view>
+                  <view>{{goodsSpecification}}</view>
                   <view>
-                    <text>￥258</text>
-                    <text>￥377</text>
+                    <text>￥{{groupPrice}}</text>
+                    <text>￥{{originalPrice}}</text>
                   </view>
                 </view>
               </view>
               <view>
                 <view>
                   <image src="../../../images/tuoyuan.png"></image>
-                  <text>3人团</text>
+                  <text>{{groupNumber}}人团</text>
                 </view>
               </view>
             </view>
             <view class="T1-two-div">
               <view class="one">
                 <view>订单金额</view>
-                <view>￥360.00</view>
+                <view>￥{{orderAmount}}</view>
               </view>
               <view class="two">
-                <view>订单创建时间：</view>
-                <view>
-                  <text style="margin-right: 10rpx">2019/10/12 </text>
-                  <text>11:23:00</text>
-                </view>
+                  <view wx:if="{{orderStatus == 3}}">订单取消时间：</view>
+                  <view wx:else>订单创建时间：</view>
+                  <view wx:if="{{orderStatus == 3}}">
+                    <text style="margin-right: 10rpx">{{orderCancelTime}}</text>
+                  </view>
+                  <view wx:else>
+                    <text style="margin-right: 10rpx">{{orderCreateTime}}</text>
+                  </view>
               </view>
               <view class="three">
                 <view>订单号：</view>
-                <view>20191012112300154</view>
+                <view>{{orderNumber}}</view>
               </view>
             </view>
             <view></view>
           </view>
-
         </view>
-
       </view>
   </view>
   <view class="bottom">
     <view class="btn">
-      <view  bindtap="toShowModal">取消订单</view>
-      <view>邀请好友</view>
+      <view  bindtap="orderCancel" wx:if="{{orderStatus == 2}}">取消订单</view>
+      <button open-type='share' class="share-button">邀请好友</button>
 
-      <view>重新购买</view>
-      <view>再次购买</view>
+      <view wx:if="{{status == 2}}" @tap="buyAgain">重新购买</view>
+      <view wx:else @tap="buyAgain">再次购买</view>
     </view>
   </view>
 
@@ -116,8 +117,8 @@
         </view>
       </view>
       <view class="bottom">
-        <view @tap="hideModal">关闭</view>
-        <view>邀请好友</view>
+        <view >关闭</view>
+        <button open-type='share' class="share-button">邀请好友</button>
       </view>
     </view>
   </view>
@@ -125,178 +126,116 @@
 
 <script>
   import wepy from 'wepy';
-  import Auth from '../../../common/js/authProcess.js';
+  import { apiBuyOrderInfoF,apiPurchaseShareInfoF } from '../../../services/index/index';
   import {
-    apiCartFindPageF,
-    apiChangeQuantityF,
-    apiCartDeleteF
-  } from '../../../services/cart';
-  import {
-    apiCreateOrderF
-  } from '../../../services/mine'
-
-  import { apiGoodsLikePageF } from '../../../services/index/index'
-  import miniPro from '@/utils/wepy-pro.js';
-  import CatItem from '@/components/catItem/index';
+    apiRefundF // 退款
+  } from '../../../services/mine/index'
+  import countDown from '@/utils/date.js';
+  import miniPro from '@/utils/wepy-pro.js'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '待成团订单详情'
     };
     components = {
-      CatItem: CatItem
     };
-
     mixins = [];
-
     data = {
-      showModal:false,
-
-      pageNum: 0,
-      rowsArr: [],
-      changeQuantity: {
-        id: '',
-        type: '',
-        current: -1
-      },
-      isAllCkeck: false,
-      totalMoney: 0,
-      createData: {
-        // channelId: '0', // 需求确认
-        orderDetailBoList: []
-      },
-      delGoosId: '',
-      pageParamsLike: {
-        page: 0,
-        limit: 400
-      },
-      pageLikeList: []
+      orderChildId: '',
+      activityGroupId: "",
+      goodsIcon: "",
+      goodsName: "",
+      groupNumber: '',
+      groupPrice: '',
+      groups: '',
+      orderAmount: '',
+      orderCreateTime: "",
+      orderCancelTime: "",
+      orderNumber: "",
+      originalPrice: 1,
+      success: '',
+      status: '',
+      surplus: '',
+      endTime: '',
+      activityId: '',
+      orderStatus: '',
+      shareInfo: {}
     };
 
     methods = {
-      toShowModal(e) { //这里开始
-        this.showModal = true
-      },
-      hideModal(){
-        this.showModal = false
-      },
-      //这里结束
-      goConfirm(){
-        wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index` })
-      },
-
-
-      toSureOrderA() {
-        this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
-      },
-      checkAll() {
-        this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
-      },
-      toGoodsDetail(item) {
-        miniPro.toGoodsDetail(item.id, item.groupPurchase)
-      }
     };
-
-    apiCreateOrderA(fun) {
-      apiCreateOrderF(this.createData, fun).then(msg => {
-        let _id = msg.id
-        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
-      }).catch(() => { })
-    }
-    apiCartFindPageA(fun) {
-      let _pageNum = this.pageNum
-      apiCartFindPageF({
-        page: _pageNum
-      }, fun).then(msg => {
-        let { rows } = msg
-        this.rowsArr = rows.map((val) => {
-          val.check = false
-          return val
-        })
-        this.$apply()
-      }).catch(() => { })
-    }
-    apiChangeQuantityA(fun) {
-      apiChangeQuantityF({
-        id: this.changeQuantity.id,
-        type: this.changeQuantity.type
-      }, fun).then(msg => {
-        this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
-        this.$apply()
-      }).catch(() => { })
-    }
-    apiCartDeleteA(fun) {
-      apiCartDeleteF(this.delGoosId, fun).then(msg => {
-        this.rowsArr.splice(this.changeQuantity.current, 1)
-        this.$apply()
-      }).catch(() => { })
-    }
-
-    apiGoodsLikePageFA(fun) {
-      apiGoodsLikePageF({
-        page: this.pageParamsLike.page,
-        limit: this.pageParamsLike.limit
-      }, fun).then((result) => {
-        let { rows } = result
-        this.pageLikeList = rows
-        this.$apply();
-      }).catch(() => { });
-    }
 
     watch = {
-      rowsArr (newValue) {
-        let _newValue = newValue
-        this.isAllCkeck = _newValue.every(val => {
-          return val.check
-        })
-        let _totalMoney = 0;
-        let _createData = []
-        _newValue.forEach((val) => {
-          if (val.check) {
-            _totalMoney = (_totalMoney * 1000 + val.price * val.quantity * 1000) / 1000
-            _createData.push({
-              cartId: val.id,
-              goodsId: val.goodsId,
-              specificationId: val.specificationId,
-              colorId: val.colorId,
-              goodsNumber: val.quantity
-            })
-          }
-        });
-        this.totalMoney = _totalMoney
-        this.createData.orderDetailBoList = _createData
-      }
     }
     events = {
-      'calt-item-check': (index, check) => {
-        this.rowsArr[index].check = check
-        this.$apply()
-      },
-      'num-change-event': (index, type) => {
-        this.changeQuantity.id = this.rowsArr[index].id
-        this.changeQuantity.type = type
-        this.changeQuantity.current = index
-        this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
-        this.$apply()
-      },
-      'calt-item-del': (index) => {
-        let _self = this
-        miniPro.showConfirm({
-          title: '提示',
-          content: '确实删除次商品？',
-          callback(flag) {
-            if (!flag) return
-            _self.changeQuantity.current = index
-            _self.delGoosId = _self.rowsArr[index].id
-            _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
-          }
-        })
-      }
     };
 
-    async onShow() {
-      this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
-      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
+    getOrderInfo(fun){
+      let param = {
+        orderChildId: this.orderChildId
+      };
+      apiBuyOrderInfoF(param,fun).then((result) => {
+          this.activityGroupId = result.activityGroupId;
+          this.goodsIcon = result.goodsIcon;
+          this.goodsName = result.goodsName;
+          this.groupNumber = result.groupNumber;
+          this.groupPrice = result.groupPrice;
+          this.groups = result.groups;
+          this.orderAmount = result.orderAmount;
+          this.orderCreateTime = result.orderCreateTime;
+          this.orderCancelTime = result.orderCancelTime;
+          this.orderNumber = result.orderNumber;
+          this.originalPrice = result.originalPrice;
+          this.success = result.success;
+          this.status = result.status;
+          this.endTime = result.endTime;
+          this.activityId = result.activityId;
+          this.orderStatus = result.orderStatus;
+          this.endTimeCountDown();
+          this.getShareInfo(this.getShareInfo.bind(this))
+          this.$apply()
+      }).catch(() => { })
+    }
+    endTimeCountDown(){
+      let t = this;
+      console.log(this.endTime);
+      countDown(this.endTime,function(result) {
+        t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second
+        t.$apply()
+      });
+    };
+    onShareAppMessage(res) {
+      return {
+        title: this.shareInfo.title,
+        path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
+        imageUrl: this.shareInfo.imageUrl
+      }
+    };
+    buyAgain(){
+      wepy.navigateTo({url:`/pages/groupBuy/Info/index?indexId=`+this.activityId})
+    };
+    getShareInfo(fun){
+      let param = {
+        groupId: this.activityGroupId
+      };
+      apiPurchaseShareInfoF(param,fun).then((result)=> {
+        this.shareInfo.title = result.shareTitle;
+        this.shareInfo.imageUrl = result.shareImageUrl;
+        this.shareInfo.shareParam = result.shareParam;
+      }).catch(()=>{})
+    };
+    orderCancel(){
+       this.apiRefund(this.apiRefund.bind(this));
+    };
+    apiRefund(fun){
+      let id = this.orderChildId;
+      apiRefundF(id, fun).then((result) => {
+        miniPro.showToast('退款成功')
+      }).catch((err) => {});
+    };
+    onLoad(options) {
+      this.orderChildId = options.orderChildId;
+      this.getOrderInfo(this.getOrderInfo.bind(this));
     }
   }
 </script>

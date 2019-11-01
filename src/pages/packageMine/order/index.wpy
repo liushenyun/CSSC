@@ -17,15 +17,14 @@
                 <view class="swiper-div-same">
                   <!-- <repeat for="{{pageList}}" wx:key="index" wx:for-index="subIndex" wx:for-item="subItem"> -->
                   <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
-                    <view class="order-com">
+                    <view class="order-com" @tap="toOrderInfo({{subItem}})">
                       <OrderCom :item="subItem" :OrderComIndex="subIndex"></OrderCom>
                     </view>
                   </repeat>
-                  
                   <NoTip wx:if="{{pageList.length == 0}}"></NoTip>
                 </view>
               </scroll-view>
-              
+
             </swiper-item>
           </block>
         </swiper>
@@ -74,17 +73,23 @@ export default class Order extends wepy.page {
   };
   events = {
     'order-btn-event': (item, index) => {
+      console.log(item);
+      let groupPurchaseActivityId = item.groupPurchaseActivityId;
       this.btnClickCurrenIndex = index
       let _action = item.action
       if (_action == "1b") { // 付款
-        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
+        if(groupPurchaseActivityId){
+          wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?orderId=${item.parentId}` });
+        }else{
+          wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
+        }
       } else if (_action == "1a") { // 取消订单
         this.cancelOrderId = item.id
         this.apiCancelOrderFA(this.apiCancelOrderFA.bind(this))
       } else if (_action == "2a") { // 退款
         this.orderActionId = item.id
         this.apiRefundFA(this.apiRefundFA.bind(this))
-      } else if (_action == '5b') { 
+      } else if (_action == '5b') {
         // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
       } else if (_action == '4c') {
         this.confirmOrderId = item.id
@@ -113,6 +118,15 @@ export default class Order extends wepy.page {
       if (!this.pageParams.hasMore) return
       this.pageParams.page += 1
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
+    },
+    toOrderInfo (e){
+      console.log(e);
+      if (e.orderStatus == 3 || e.orderStatus == 2){
+        let groupPurchaseActivityId = e.groupPurchaseActivityId;
+        if (groupPurchaseActivityId){
+          wepy.navigateTo({ url: `/pages/groupBuy/OrderInfo/index?orderChildId=${e.id}` });
+        }
+      }
     }
   };
   apiOrderFindPageFA(fun) {
@@ -127,10 +141,10 @@ export default class Order extends wepy.page {
       this.pageList = this.pageList.concat(rows)
       this.$apply()
     }).catch((err) => {
-      
+
     });
   }
-  
+
   apiRefundFA(fun) {
     apiRefundF(this.orderActionId, fun).then((result) => {
       miniPro.showToast('退款成功')
@@ -139,14 +153,14 @@ export default class Order extends wepy.page {
         this.$apply()
       }, 1000);
     }).catch((err) => {
-      
+
     });
   }
 
   apiCancelOrderFA(fun) {
     apiCancelOrderF(this.cancelOrderId, fun).then((result) => {
     }).catch((err) => {
-      
+
     });
   }
 
@@ -158,11 +172,11 @@ export default class Order extends wepy.page {
         this.$apply()
       }, 1000)
     }).catch((err) => {
-      
+
     });
   }
 
-  
+
   onLoad(option) {
     this.currentIndex = option.current || 0
     this.pageParams.orderStatus = this.orderStatusObj[this.currentIndex]

@@ -30,11 +30,11 @@
     </view>
 
     <view class="order-button-outer">
-        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item.id}}, {{item.parentId}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
+        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
             {{btnItem.word}}
         </view>
     </view>
-    
+
   </view>
 </template>
 
@@ -84,10 +84,14 @@ export default class SureGoodsCom extends wepy.component {
       },
       numReduce() {
       },
-      orderBtnA(btnItem, id, parentId) {
+      orderBtnA(btnItem, item) {
+        let param = {
+          ...item,
+          ...btnItem
+        }
           let _action  = btnItem.action
           if (_action == '3a') return
-          this.$emit('order-btn-event', { id: id, parentId: parentId, ...btnItem }, this.OrderComIndex)
+          this.$emit('order-btn-event', param, this.OrderComIndex)
       }
   }
   watch = {

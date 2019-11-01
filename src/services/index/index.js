@@ -14,8 +14,13 @@ import {
   apiMessageRead,
   apiVipExchange,
   apiGroupBuy,
-  apiGetGroupBuyInfo
-} from './api'
+  apiGetGroupBuyInfo,
+  apiPurchaseGetOrderInfo,
+  apiPurchaseOrderPay,
+  apiPurchaseOrderPaySuccess,
+  apiPurchaseShareInfo,
+  apiBuyOrderInfo
+} from './api';
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
 import miniPro from '../../utils/wepy-pro'
@@ -199,6 +204,7 @@ const apiVipExchangeF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+/**=================== 团购start =================================*/
 // 新增 团购页 列表数据
 const apiGroupBuyF = (data, fun) => packagePromise((resolve, reject) => {
   request({
@@ -225,7 +231,80 @@ const apiGetGroupBuyInfoF = (indexId, fun) => packagePromise((resolve, reject) =
       resolve(msg)
     })
     .catch(err => reject(err))
-})
+});
+
+// 获取订单信息
+const apiPurchaseGetOrderInfoF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiPurchaseGetOrderInfo();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+// 支付
+const apiPurchaseOrderPayF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiPurchaseOrderPay();
+  request({
+    url: url,
+    method: 'POST',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+// 支付成功
+const apiPurchaseOrderPaySuccessF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiPurchaseOrderPaySuccess();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+// 分享
+const apiPurchaseShareInfoF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiPurchaseShareInfo();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+// 获取订单信息
+const apiBuyOrderInfoF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiBuyOrderInfo();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+/**=================== 团购end =================================*/
+
 export {
   apiGoodsListF,
   apiVIPGoodsListF,
@@ -241,5 +320,10 @@ export {
   apiMessageReadF,
   apiVipExchangeF,
   apiGroupBuyF,
-  apiGetGroupBuyInfoF
+  apiGetGroupBuyInfoF,
+  apiPurchaseGetOrderInfoF,
+  apiPurchaseOrderPayF,
+  apiPurchaseOrderPaySuccessF,
+  apiPurchaseShareInfoF,
+  apiBuyOrderInfoF
 }

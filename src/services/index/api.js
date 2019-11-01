@@ -40,11 +40,30 @@ const apiMessageRead = (messageId) => `${MAIN_DOMAIN}/api/message/read/${message
 //  会员兑奖
 const apiVipExchange = () => `${MAIN_DOMAIN}/api/wx/user/vip/exchange`
 
+/**========================= 团购start =================================*/
 // 新增 团购页 列表数据
 const apiGroupBuy = () => `${MAIN_DOMAIN}/api/group/purchase/list`
 
 // 团购页 详情数据
 const apiGetGroupBuyInfo = (indexId) => `${MAIN_DOMAIN}/api/group/purchase/info?id=${indexId}`
+
+// 获取订单信息
+const apiPurchaseGetOrderInfo = () => `${MAIN_DOMAIN}/api/group/purchase/prepare`
+
+//支付
+const apiPurchaseOrderPay = () => `${MAIN_DOMAIN}/api/group/purchase/pay`
+
+//支付成功
+const apiPurchaseOrderPaySuccess = () => `${MAIN_DOMAIN}/api/group/purchase/pay/success`
+
+//分享信息
+const apiPurchaseShareInfo = () => `${MAIN_DOMAIN}/api/group/purchase/share`
+
+//获取订单信息
+const apiBuyOrderInfo = () => `${MAIN_DOMAIN}/api/buy/order/info`
+
+/**========================= 团购end =================================*/
+
 export {
   apiGoodsList,
   apiVIPGoodsList,
@@ -60,5 +79,10 @@ export {
   apiMessageRead,
   apiVipExchange,
   apiGroupBuy,
-  apiGetGroupBuyInfo
+  apiGetGroupBuyInfo,
+  apiPurchaseGetOrderInfo,
+  apiPurchaseOrderPay,
+  apiPurchaseOrderPaySuccess,
+  apiPurchaseShareInfo,
+  apiBuyOrderInfo
 }

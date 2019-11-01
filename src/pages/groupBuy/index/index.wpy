@@ -50,11 +50,6 @@
   import {
     apiGroupBuyF
   } from '../../../services/index';
-  import {
-    INDICATOR_COLOR,
-    INDICATOR_ACTIVE_COLOR
-  } from '@/common/js/config';
-  import miniPro from '@/utils/wepy-pro.js';
 
   export default class Index extends wepy.page {
     config = {
@@ -107,8 +102,8 @@
 
     apiGetGroupBuyDataFA(fun) {
       let params = {
-        limit:this.pageParams.limit,
-        offset:this.pageParams.offset
+        limit: this.pageParams.limit,
+        offset: this.pageParams.offset
       }
       apiGroupBuyF(params, fun).then(result => {
         // this.ListArr = result.rows;
