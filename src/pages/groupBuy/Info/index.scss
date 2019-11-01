@@ -156,6 +156,7 @@ page{
               height: rpx(43);
             }
             .right-content{
+              overflow: hidden;
               margin-right: rpx(15);
               view:nth-of-type(1){
                 padding-bottom: rpx(12);
@@ -446,14 +447,14 @@ page{
   margin: -180rpx 70rpx;
 }
 .modal-content {
-  background: red;
   position: fixed;
   top: 30%;
   left: 0;
   z-index: 9500;
   width: 608rpx;
   height: 62%;
-  overflow: hidden;
+  overflow: scroll;
+  overflow-x: hidden;
   //padding: 120rpx 50rpx 50rpx;
   background: #fff;
   margin: -180rpx 70rpx;
@@ -531,11 +532,10 @@ page{
   }
   .bottom{
     padding-bottom:15rpx;
-    display: flex;
-    justify-content: center;
+    text-align: center;
     color: #666666;
-    position: absolute;
     bottom: 0;
+    position: absolute;
     width: 100%;
     background: white;
   }

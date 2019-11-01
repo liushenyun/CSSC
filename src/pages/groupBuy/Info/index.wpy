@@ -84,6 +84,23 @@
               </view>
 
             </view>
+            <view class="content-index">
+              <view class="V1">
+                <image src="../../../images/discount_bg2.png" alt=""></image>
+                <text>我的昵称</text>
+              </view>
+              <view  class="V2">
+                <view  class="right-content">
+                  <view>差一人成团</view>
+                  <veiw class="time-content">
+                    <text>剩余时间：</text>
+                    <text>20:02:06</text>
+                  </veiw>
+                </view>
+                <image src="../../../images/gocan.png" alt=""></image>
+              </view>
+
+            </view>
           </view>
         </view>
 
@@ -134,7 +151,156 @@
               <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
             </view>
           </view>
-
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
+          <view class="content-index-bottom">
+            <view class="V1">
+              <image src="../../../images/discount_bg2.png" alt=""></image>
+              <text>我的昵称</text>
+            </view>
+            <view  class="V2">
+              <view  class="right-content">
+                <veiw class="time-content">
+                  <text>剩余时间：</text>
+                  <text>0天 3:03:06</text>
+                </veiw>
+              </view>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+            </view>
+          </view>
           <view class="bottom">
             <view>最多显示10团</view>
           </view>
@@ -253,9 +419,13 @@ export default class Info extends wepy.page {
         let hours = Math.floor(difference / (1000 * 60 * 60)) % 24; //小时
         let minutes = Math.floor(difference / (1000 * 60)) % 60; //分钟
         let seconds = Math.floor(difference / 1000) % 60; //秒
+        if (minutes >= 0 && minutes <= 9) {
+          minutes = "0" + minutes;
+        }
         if (seconds >= 0 && seconds <= 9) {
           seconds = "0" + seconds;
         }
+
         if (day == 0 && hours == 0) {
           clearInterval(interval);
         }
