@@ -7,7 +7,7 @@
         <image src='../../../images/nav_button_search_default.png' />
       </view>
       <input  maxlength='200' class='icx-input' placeholder-class='icx-placeholder' placeholder="请输入商品" />
-      <view class="input-msg" @tap="toMsgA">
+      <view class="input-msg">
         <image src='../../../images/nav_button_message_default.png' />
       </view>
     </view>

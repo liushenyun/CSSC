@@ -26,7 +26,7 @@
           <text>{{info.groupNumber}}人团</text>
           <text>￥{{info.groupPrice}}</text>
           <text>￥{{info.originalPrice}}</text>
-          <view class="right-index">
+          <view class="right-index"  wx:if="{{ day !==0 && hours !== 0 }}">
             <view class="rightText">
               <text>距离结束仅剩</text>
               <br>
@@ -177,6 +177,7 @@ export default class Info extends wepy.page {
       groupList:[],
       wxData: "",
       endTimeCountdown:"",
+      day:'',  // 设定天，存在这个变量
       hours: '', // 设定小时，存在这个变量
       minutes: '', // 设定分，存在这个变量
       seconds: '' // 设定秒，存在这个变量
@@ -218,27 +219,9 @@ export default class Info extends wepy.page {
     onLoad(option) {
       this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 防止id忘记传 取到undefined  自动传后面的0
       this.apiGetGroupBuyInfoA(this.apiGetGroupBuyInfoA.bind(this))  //this.apiGetGroupBuyInfoA.bind(this)
-      let date = new Date();
-      let seperator1 = "-";
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let strDate = date.getDate();
-
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      let seconds = date.getSeconds();
-
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;a
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      let currentdate = year + seperator1 + month + seperator1 + strDate + hours + minutes + seconds; //日期格式转化为 YYYY-MM-DD
-      console.log(currentdate);
     }
     onShow(){
-      this.startTimer(1000);
+      this.startTimer();
     };
     startTimer(){
       let _this = this
@@ -261,6 +244,8 @@ export default class Info extends wepy.page {
         let currentdate = year + seperator1 + month + seperator1 + strDate + " " +  hours1 + seperator2 + minutes1 + seperator2 + seconds1; //日期格式转化为 YYYY-MM-DD 00:00:00
         let start = currentdate; //当前时间
         let end = _this.endTimeCountdown; //返回的数据 时间
+        // console.log("start" + start)
+        // console.log("end" + end)
         let startTime = new Date(start).getTime()
         let endTime = new Date(end).getTime()
         let difference = endTime - startTime; //求出两个时间差的时间戳
@@ -268,12 +253,13 @@ export default class Info extends wepy.page {
         let hours = Math.floor(difference / (1000 * 60 * 60)) % 24; //小时
         let minutes = Math.floor(difference / (1000 * 60)) % 60; //分钟
         let seconds = Math.floor(difference / 1000) % 60; //秒
-        if (day = 0 && hours <= 0) {
-          clearInterval(interval);  //活动结束清除定时器
-
-        } else {
-          console.log("倒计时...")
+        if (seconds >= 0 && seconds <= 9) {
+          seconds = "0" + seconds;
         }
+        if (day == 0 && hours == 0) {
+          clearInterval(interval);
+        }
+
         _this.setData({  //调用setData()才能触发页面渲染  同步
           day:day,
           hours: hours,
