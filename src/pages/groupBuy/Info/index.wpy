@@ -11,13 +11,15 @@
           indicator-color='#999'
           indicator-active-color='#FFF'
           circular = 'true'
-        >
-          <block wx:for="{{bannerList}}" wx:key="indx">
+          style="height: {{sysWidth}}px;line-height: {{sysWidth}}px;">
+          <block wx:for="{{bannerList}}"   wx:key="indx" wx:for-index="index" data-index="{{index}}">
             <swiper-item>
-              <image src="{{item.imgPath}}" class="slide-image" width="750" height="750" />
+              <image src="{{item.imgPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>
             </swiper-item>
           </block>
         </swiper>
+
+
       </view>
 
       <view class="goods-des-outer">
@@ -83,7 +85,6 @@
         <button class="icx-btn"  >
           <image src='../../../images/main.png' @tap.stop="goHome"></image>
           <view>首页</view>
-          {{day}}
         </button>
       </view>
       <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
@@ -117,12 +118,16 @@
               <image src="../../../images/gocan.png" alt=""   @tap='goDelegation({{item}})'></image>
             </view>
           </view>
+
           <view class="bottom">
             <view>最多显示10团</view>
           </view>
         </view>
       </view>
     </view>
+
+
+
   </view>
 
 
@@ -144,6 +149,7 @@ export default class Info extends wepy.page {
     components = {
     };
     data = {
+      sysWidth: wx.getSystemInfoSync().windowWidth,
       showModal:false,
       goodsName: '',
       indicatorDots: true,
@@ -164,6 +170,16 @@ export default class Info extends wepy.page {
       timeText: ''
     };
     methods = {
+      imgF(e){
+        let h = e.detail.height;
+        let w = e.detail.width;
+        let i = e.target.dataset.index;
+        if(w == h){
+          this.bannerList[i].style = "dynamic-img";
+        }else{
+          this.bannerList[i].style = "";
+        }
+      },
       toShowModal(e) { //这里开始
         this.showModal = true
       },

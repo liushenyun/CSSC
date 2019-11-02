@@ -1,8 +1,9 @@
-
+import miniPro from '@/utils/wepy-pro.js';
 function countDown(endDate,cb){
   let endTime = new Date(endDate);
-  if(!endTime){
-    throw '结束时间不能为空'
+  if(!endDate){
+    miniPro.showToast('结束时间不能为空');
+    return
   }
   setInterval(function () {
     let timeNow = new Date();  // 获取当前时间
