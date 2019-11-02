@@ -5,6 +5,8 @@ page,
 .index-ctner{
     height: 100%;
     background:rgba(245,245,245,1);
+  overflow-x: hidden;
+  overflow-y: hidden;
   .ix-input-wrap{
     position: relative;
     padding: rpx(12) rpx(45);

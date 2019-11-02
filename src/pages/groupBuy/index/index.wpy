@@ -127,7 +127,7 @@
     }
     onShareAppMessage(res) {
       if (res.from === 'button') {
-        // 来自页面内转发按钮ewaf
+        // 来自页面内转发按钮
       }
       return {
         title: '成氏商城',

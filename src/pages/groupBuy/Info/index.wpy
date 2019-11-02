@@ -11,13 +11,15 @@
           indicator-color='#999'
           indicator-active-color='#FFF'
           circular = 'true'
-        >
-          <block wx:for="{{bannerList}}" wx:key="indx">
+          style="height: {{sysWidth}}px;line-height: {{sysWidth}}px;">
+          <block wx:for="{{bannerList}}"   wx:key="indx" wx:for-index="index" data-index="{{index}}">
             <swiper-item>
-              <image src="{{item.imgPath}}" class="slide-image" width="750" height="750" />
+              <image src="{{item.imgPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>
             </swiper-item>
           </block>
         </swiper>
+
+
       </view>
 
       <view class="goods-des-outer">
@@ -60,8 +62,8 @@
                  <view  class="right-content">
                   <view>差{{item.lackNumber}}人成团</view>
                   <veiw class="time-content">
-                    <text>剩余时间：</text>
-                    <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
+                    <view>剩余时间：</view>
+                    <view>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</view>
                   </veiw>
                 </view>
                 <image src="../../../images/gocan.png" alt=""  @tap='goDelegation'></image>
@@ -101,21 +103,24 @@
             <view>·正在开团·</view>
             <image src="../../../images/close.png" @tap="hideModal"></image>
           </view>
-          <view class="content-index-bottom"  wx:for="{{groupListMore}}" wx:key="groupIndex">
-            <view class="V1">
-              <image src="{{item.headImage}}" alt=""></image>
-              <text>{{item.nickName}}</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
-                </veiw>
+          <view class="all-bottom">
+            <view class="content-index-bottom"  wx:for="{{groupListMore}}" wx:key="groupIndex">
+              <view class="V1">
+                <image src="{{item.headImage}}" alt=""></image>
+                <text>{{item.nickName}}</text>
               </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+              <view  class="V2">
+                <view  class="right-content">
+                  <veiw class="time-content">
+                    <text>剩余时间：</text>
+                    <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
+                  </veiw>
+                </view>
+                <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+              </view>
             </view>
           </view>
+
           <view class="bottom">
             <view>最多显示10团</view>
           </view>
@@ -146,6 +151,7 @@ export default class Info extends wepy.page {
     components = {
     };
     data = {
+      sysWidth: wx.getSystemInfoSync().windowWidth,
       showModal:false,
       goodsName: '',
       indicatorDots: true,
@@ -165,6 +171,16 @@ export default class Info extends wepy.page {
       seconds: '' // 设定秒，存在这个变量
     };
     methods = {
+      imgF(e){
+        let h = e.detail.height;
+        let w = e.detail.width;
+        let i = e.target.dataset.index;
+        if(w == h){
+          this.bannerList[i].style = "dynamic-img";
+        }else{
+          this.bannerList[i].style = "";
+        }
+      },
       toShowModal(e) { //这里开始
         this.showModal = true
       },
@@ -207,7 +223,7 @@ export default class Info extends wepy.page {
     startTimer(){
       let _this = this;
       let end = _this.endTimeCountdown
-      console.log(end);
+      console.log("end" + end);
       countDown(end,function(result) {
         _this.setData({  //调用setData()才能触发页面渲染  同步
           day:result.day,

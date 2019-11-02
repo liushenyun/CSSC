@@ -14,11 +14,13 @@ page{
     overflow: auto;
   }
   .goods-banner {
-    height: rpx(750);
     swiper,
     swiper-item,
     swiper-item image {
       width: 100%;
+      vertical-align: middle;
+    }
+    .dynamic-img{
       height: 100%;
     }
   }
@@ -126,6 +128,9 @@ page{
 
       .rule-detail {
         min-height: rpx(200);
+        view:nth-of-type(2){
+          border-bottom: none !important;
+        }
         .content-index{
           min-height: rpx(100);
           display: flex;
@@ -162,11 +167,16 @@ page{
                 padding-bottom: rpx(12);
               }
               .time-content{
-                text:nth-of-type(1){
+                display: flex;
+                width: rpx(280);
+                view:nth-of-type(1){
                   color:#666666;
+                  width: rpx(120);
                 }
-                text:nth-of-type(2){
+                view:nth-of-type(2){
                   color:#FF7F00;
+                  width: rpx(160);
+
                 }
               }
             }
@@ -478,55 +488,60 @@ page{
       right: 20rpx;
     }
   }
-  .content-index-bottom{
-    min-height: rpx(100);
-    display: flex;
-    border-bottom: 1px solid #E8E8E8;
-    width: 608rpx;
-    margin-left: rpx(5);
-    .V1{
+  .all-bottom{
+    height: 82%;
+    overflow: auto;
+    overflow-x: hidden;
+    .content-index-bottom{
+      min-height: rpx(100);
       display: flex;
-      align-items: center;
-      color: #333333;
-      font-size: rpx(22);
-      image{
-        width: rpx(76);
-        height: rpx(76);
-        border-radius: 50%;
-      }
-      text{
-        margin-left: rpx(10);
-      }
-    }
-    .V2{
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      color: #333333;
-      font-size: rpx(22);
-      image{
-        width: rpx(116);
-        height: rpx(43);
-      }
-      .right-content{
+      border-bottom: 1px solid #E8E8E8;
+      width: 608rpx;
+      margin-left: rpx(5);
+      .V1{
         display: flex;
-        margin-right: rpx(15);
-        view:nth-of-type(1){
-          padding-bottom: rpx(12);
+        align-items: center;
+        color: #333333;
+        font-size: rpx(22);
+        image{
+          width: rpx(76);
+          height: rpx(76);
+          border-radius: 50%;
         }
-        .time-content{
-          overflow: hidden;
-          text:nth-of-type(1){
-            color:#666666;
-          }
-          text:nth-of-type(2){
-            color:#FF7F00;
-          }
+        text{
+          margin-left: rpx(10);
         }
       }
-      image{
-        margin-right: rpx(20);
+      .V2{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #333333;
+        font-size: rpx(22);
+        image{
+          width: rpx(116);
+          height: rpx(43);
+        }
+        .right-content{
+          display: flex;
+          margin-right: rpx(15);
+          view:nth-of-type(1){
+            padding-bottom: rpx(12);
+          }
+          .time-content{
+            overflow: hidden;
+            text:nth-of-type(1){
+              color:#666666;
+            }
+            text:nth-of-type(2){
+              color:#FF7F00;
+            }
+          }
+        }
+        image{
+          margin-right: rpx(20);
+        }
       }
     }
   }
@@ -538,6 +553,9 @@ page{
     position: absolute;
     width: 100%;
     background: white;
+    view{
+      overflow: hidden;
+    }
   }
 }
 /* 自定义模态框 end */
