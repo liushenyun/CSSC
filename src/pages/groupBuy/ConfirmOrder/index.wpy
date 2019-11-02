@@ -99,8 +99,9 @@
     };
     data = {
       activityId: '20191031150527115140',
-      createFlag: 1,
+      createFlag: '',
       orderMasterId: '',
+      groupId: '',
       groupUserDetailId: '',
       orderInfo: {
         goodsIcon: "",
@@ -126,16 +127,20 @@
         }
         let payParam = {
           activityId: this.activityId,
-          addressId: this.addressInfo.id,
-          orderMasterId: this.orderMasterId,
-          groupUserDetailId: this.groupUserDetailId
+          addressId: this.addressInfo.id
         };
+        if (this.orderMasterId) {
+          payParam['orderMasterId'] = this.orderMasterId;
+        }
+        if (this.groupUserDetailId) {
+          payParam['groupUserDetailId'] = this.groupUserDetailId;
+        }
         apiPurchaseOrderPayF(payParam, fun).then(msg => {
           let data = msg
           miniPro.requestPayment(data).then((result) => {
             miniPro.showToast('调用成功')
             setTimeout(() => {
-              wepy.navigateTo({ url: `pages/groupBuy/ApplySuccess/index?orderId=` + this.orderMasterId })
+              wepy.navigateTo({ url: `/pages/groupBuy/ApplySuccess/index?orderId=` + msg.orderMasterId })
             }, 1500)
           }).catch(() => {
             miniPro.showToast('调用失败')
@@ -157,15 +162,23 @@
         this.$apply()
       }).catch(() => { });
     };
-    init (orderId,fun) {
-      if(orderId){
-        this.orderMasterId = orderId;
+    init (fun) {
+      let param = {};
+      if (this.orderMasterId) {
+        param['orderMasterId'] = this.orderMasterId
       }
-      let param = {
-        'activityId': this.activityId,
-        'createFlag': this.createFlag,
-        'orderMasterId': orderId
-      };
+      if (this.groupId) {
+        param['groupId'] = this.groupId
+      }
+      if (this.activityId) {
+        param['activityId'] = this.activityId
+      }
+      if (this.createFlag) {
+        param['createFlag'] = this.createFlag
+      }
+      if (this.shareId) {
+        param['shareId'] = this.shareId
+      }
       apiPurchaseGetOrderInfoF(param,fun).then((result) => {
         this.orderInfo = {
           goodsIcon: result.goodsIcon,
@@ -188,7 +201,12 @@
       }).catch(() => { })
     }
     onLoad(options) {
-      this.init(options.orderId);
+      this.orderMasterId = options.orderId;
+      this.createFlag = options.createFlag;
+      this.groupId = options.groupId;
+      this.shareId = options.shareId;
+      this.activityId = options.activityId;
+      this.init(this.init.bind(this));
     }
     onShow() {
       let { addressStr, addressId } = wepy.$instance.globalData.addressObj;

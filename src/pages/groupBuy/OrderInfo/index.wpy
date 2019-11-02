@@ -91,10 +91,15 @@
   </view>
   <view class="bottom">
     <view class="btn">
-      <view  bindtap="orderCancel" wx:if="{{orderStatus == 2}}">取消订单</view>
-      <button open-type='share' class="share-button">邀请好友</button>
-
-      <view wx:if="{{status == 2}}" @tap="buyAgain">重新购买</view>
+<!--      <view  bindtap="orderCancel" wx:if="{{orderStatus == 2 && success != 1}}">取消订单</view>-->
+<!--      <button open-type='share'  wx:if="{{success != 1}}" class="share-button">邀请好友</button>-->
+<!--      <view wx:if="{{status == 2}}" @tap="buyAgain">重新购买</view>-->
+<!--      <view wx:else @tap="buyAgain">再次购买</view>-->
+      <view class="cancel" wx:if="{{orderStatus == 2 && success != 1}}" bindtap="orderCancel">取消订单</view>
+      <view wx:if="{{success != 1}}">
+        <button open-type='share' class="share-button">邀请好友</button>
+      </view>
+      <view wx:if="{{status == 2}}"  @tap="buyAgain">重新购买</view>
       <view wx:else @tap="buyAgain">再次购买</view>
     </view>
   </view>
@@ -117,8 +122,10 @@
         </view>
       </view>
       <view class="bottom">
-        <view >关闭</view>
-        <button open-type='share' class="share-button">邀请好友</button>
+        <view @tap="close">关闭</view>
+        <view>
+          <button open-type='share' class="share-button">邀请好友</button>
+        </view>
       </view>
     </view>
   </view>
@@ -159,7 +166,8 @@
       endTime: '',
       activityId: '',
       orderStatus: '',
-      shareInfo: {}
+      shareInfo: {},
+      showModal: false
     };
 
     methods = {
@@ -198,7 +206,6 @@
     }
     endTimeCountDown(){
       let t = this;
-      console.log(this.endTime);
       countDown(this.endTime,function(result) {
         t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second
         t.$apply()
@@ -225,12 +232,19 @@
       }).catch(()=>{})
     };
     orderCancel(){
-       this.apiRefund(this.apiRefund.bind(this));
+      this.showModal = true;
+      this.$apply()
+       // this.apiRefund(this.apiRefund.bind(this));
     };
+    close(){
+      this.showModal = false
+      this.$apply();
+    }
     apiRefund(fun){
       let id = this.orderChildId;
       apiRefundF(id, fun).then((result) => {
-        miniPro.showToast('退款成功')
+        // miniPro.showToast('退款成功')
+
       }).catch((err) => {});
     };
     onLoad(options) {

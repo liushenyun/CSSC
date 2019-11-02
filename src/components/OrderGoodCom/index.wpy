@@ -30,7 +30,7 @@
     </view>
 
     <view class="order-button-outer">
-        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" @tap="orderBtnA({{btnItem}}, {{item}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
+        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" catchtap="orderBtnA({{btnItem}}, {{item}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
             {{btnItem.word}}
         </view>
     </view>

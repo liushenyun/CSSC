@@ -30,7 +30,7 @@
             <view class="rightText">
               <text>距离结束仅剩</text>
               <br>
-              <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
+              <text>{{timeText}}</text>
             </view>
           </view>
 
@@ -61,10 +61,10 @@
                   <view>差{{item.lackNumber}}人成团</view>
                   <veiw class="time-content">
                     <text>剩余时间：</text>
-                    <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
+                    <text>{{timeText}}</text>
                   </veiw>
                 </view>
-                <image src="../../../images/gocan.png" alt=""  @tap='goDelegation'></image>
+                <image src="../../../images/gocan.png" alt=""  @tap='goDelegation({{item}})'></image>
               </view>
             </view>
           </view>
@@ -83,6 +83,7 @@
         <button class="icx-btn"  >
           <image src='../../../images/main.png' @tap.stop="goHome"></image>
           <view>首页</view>
+          {{day}}
         </button>
       </view>
       <view @tap='buyNowA' hover-class='icx-click-hover' class="gb-buy">
@@ -110,10 +111,10 @@
               <view  class="right-content">
                 <veiw class="time-content">
                   <text>剩余时间：</text>
-                  <text>{{day}} 天 {{hours}}:{{  minutes }}:{{seconds }}</text>
+                  <text>{{timeText}}</text>
                 </veiw>
               </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation'></image>
+              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation({{item}})'></image>
             </view>
           </view>
           <view class="bottom">
@@ -122,9 +123,6 @@
         </view>
       </view>
     </view>
-
-
-
   </view>
 
 
@@ -162,7 +160,8 @@ export default class Info extends wepy.page {
       day:'',  // 设定天，存在这个变量
       hours: '', // 设定小时，存在这个变量
       minutes: '', // 设定分，存在这个变量
-      seconds: '' // 设定秒，存在这个变量
+      seconds: '', // 设定秒，存在这个变量
+      timeText: ''
     };
     methods = {
       toShowModal(e) { //这里开始
@@ -171,8 +170,8 @@ export default class Info extends wepy.page {
       hideModal() {
         this.showModal = false
       },
-      goDelegation() {
-        wepy.navigateTo({ url: `/pages/groupBuy/OnekeyDelegation/index` })
+      goDelegation(e) {
+        wepy.navigateTo({ url: `/pages/groupBuy/OnekeyDelegation/index?groupId=` + e.groupId})
       },
       goHome() {
         wepy.navigateTo({ url: `/pages/index/index` })
@@ -193,11 +192,12 @@ export default class Info extends wepy.page {
         }
         _this.bannerList = msg.banners;
         _this.endTimeCountdown = msg.endTime;
+        this.startTimer()
         let goodsDetail = msg.goodsDetail    //goodsDetail 后台返回的数据源
         WxParse.wxParse('Detail', 'html', goodsDetail, _this, 5); //Detail表示绑定的字段 放到html处
         this.$apply();
-        this.startTimer()
       }).catch(() => {
+        wepy.navigateTo({ url: `/pages/groupBuy/index/index`})
       });
     }
     onLoad(option) {
@@ -207,18 +207,18 @@ export default class Info extends wepy.page {
     startTimer(){
       let _this = this;
       let end = _this.endTimeCountdown
-      console.log(end);
       countDown(end,function(result) {
-        _this.setData({  //调用setData()才能触发页面渲染  同步
-          day:result.day,
-          hours: result.hour,
-          minutes: result.minute,
-          seconds: result.second
-        });
+        let timeText = result.day + "天" + result.hour + ":" + result.minute + ":" + result.second;
+        _this.timeText = timeText;
+        _this.$apply();
+        // _this.setData({  //调用setData()才能触发页面渲染  同步
+        //   day: result.day,
+        // });
       })
     };
     buyNowA(){
-      wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=0&activityId=` + this.indexId })
+      let id = this.indexId;
+      wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=1&activityId=` + id })
     };
   };
 </script>

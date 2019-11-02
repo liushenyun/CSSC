@@ -69,11 +69,12 @@ export default class Order extends wepy.page {
       limit: 10,
       orderStatus: 0,
       hasMore:false
-    }
+    },
+    currentItem: ''
   };
   events = {
     'order-btn-event': (item, index) => {
-      console.log(item);
+      this.currentItem = item;
       let groupPurchaseActivityId = item.groupPurchaseActivityId;
       this.btnClickCurrenIndex = index
       let _action = item.action

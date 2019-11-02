@@ -11,41 +11,44 @@
 <!--            </repeat>-->
             <view class="T1-one-div">
               <view class="">
-                <image src='../../../images/shopping.png'></image>
+                <image src='{{goodsIcon}}'></image>
                 <view class="center-text">
-                  <view>口红挖额发哇哦</view>
-                  <view>1支装</view>
+                  <view>{{goodsName}}</view>
+                  <view>{{goodsSpecification}}</view>
                   <view>
-                    <text>￥258</text>
-                    <text>￥377</text>
+                    <text>￥{{groupPrice}}</text>
+                    <text>￥{{originalPrice}}</text>
                   </view>
                 </view>
               </view>
               <view>
                 <view>
                   <image src="../../../images/tuoyuan.png"></image>
-                  <text>3人团</text>
+                  <text>{{groupNumber}}人团</text>
                 </view>
               </view>
             </view>
             <view class="T1-two-div">
-              <view>
-                <image src='../../../images/shopping.png'></image>
-                <view>团长</view>
+              <view wx:for="{{groupList}}" wx:key="index">
+                <image src='{{item.headImage}}'></image>
+                <view>{{item.nickName}}</view>
               </view>
-              <view>
-                <image src='../../../images/shopping.png'></image>
-                <view>团长</view>
-              </view>
-              <view>
+              <view wx:v-if="{{surplus > 0}}">
                 <image src='../../../images/add1.png'></image>
-                <view>还差一人</view>
+                <view>还差{{surplus}}人</view>
               </view>
             </view>
             <view></view>
           </view>
           <view class="T2">
-            <view @tap="goConfirm">一键参团</view>
+            <view wx:if="{{isJoin}}">
+              <button open-type='share' class="share-button">
+                <text>邀请好友参团</text>
+              </button>
+            </view>
+            <view @tap="goConfirm" wx:else>
+              一键参团
+            </view>
             <view>
               <image src='../../../images/zhuyi.png'></image>
               <text>如何拼团</text>
@@ -56,10 +59,6 @@
             <image src='../../../images/jianBoth.png'></image>
             <view>3.达到拼团人数,系统开始发货</view>
           </view>
-<!--          <view class="cart-goods-no" wx:if='{{rowsArr.length < 1}}'>-->
-<!--            <image src='../../../images/shopping.png'></image>-->
-<!--            <view>空空如也 马上添加</view>-->
-<!--          </view>-->
         </view>
 
 
@@ -80,19 +79,10 @@
 
 <script>
   import wepy from 'wepy';
-  import Auth from '../../../common/js/authProcess.js';
-  import {
-    apiCartFindPageF,
-    apiChangeQuantityF,
-    apiCartDeleteF
-  } from '../../../services/cart';
-  import {
-    apiCreateOrderF
-  } from '../../../services/mine'
-
-  import { apiGoodsLikePageF } from '../../../services/index/index'
+  import { apiGoodsLikePageF,apiGroupInfoF,apiPurchaseShareInfoF } from '../../../services/index/index'
   import miniPro from '@/utils/wepy-pro.js';
   import CatItem from '@/components/catItem/index';
+  import jsonFormat from '../../../utils/jsonUtil';
 
   export default class Index extends wepy.page {
     config = {
@@ -101,83 +91,41 @@
     components = {
       CatItem: CatItem
     };
-
     mixins = [];
-
     data = {
-      pageNum: 0,
-      rowsArr: [],
-      changeQuantity: {
-        id: '',
-        type: '',
-        current: -1
-      },
-      isAllCkeck: false,
-      totalMoney: 0,
-      createData: {
-        // channelId: '0', // 需求确认
-        orderDetailBoList: []
-      },
-      delGoosId: '',
       pageParamsLike: {
         page: 0,
         limit: 400
       },
-      pageLikeList: []
+      pageLikeList: [],
+      goodsIcon: '',
+      goodsName: '',
+      groupPrice: '',
+      originalPrice: '',
+      goodsSpecification: '',
+      groupNumber: '',
+      surplus: '',
+      groupList: [],
+      groupId: null,
+      shareId: null,
+      shareInfo: {},
+      isJoin: false
     };
 
     methods = {
       goConfirm(){
-        wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index` })
-      },
-
-
-      toSureOrderA() {
-        this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
-      },
-      checkAll() {
-        this.rowsArr.forEach(val => val.check = !this.isAllCkeck)
+        let param = {
+          groupId: this.groupId,
+          createFlag: '0',
+          shareId: this.shareId
+        };
+        let query = jsonFormat.kv(param);
+        wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?` + query})
       },
       toGoodsDetail(item) {
         miniPro.toGoodsDetail(item.id, item.groupPurchase)
       }
     };
-
-    apiCreateOrderA(fun) {
-      apiCreateOrderF(this.createData, fun).then(msg => {
-        let _id = msg.id
-        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
-      }).catch(() => { })
-    }
-    apiCartFindPageA(fun) {
-      let _pageNum = this.pageNum
-      apiCartFindPageF({
-        page: _pageNum
-      }, fun).then(msg => {
-        let { rows } = msg
-        this.rowsArr = rows.map((val) => {
-          val.check = false
-          return val
-        })
-        this.$apply()
-      }).catch(() => { })
-    }
-    apiChangeQuantityA(fun) {
-      apiChangeQuantityF({
-        id: this.changeQuantity.id,
-        type: this.changeQuantity.type
-      }, fun).then(msg => {
-        this.rowsArr[this.changeQuantity.current].quantity = msg.quantity
-        this.$apply()
-      }).catch(() => { })
-    }
-    apiCartDeleteA(fun) {
-      apiCartDeleteF(this.delGoosId, fun).then(msg => {
-        this.rowsArr.splice(this.changeQuantity.current, 1)
-        this.$apply()
-      }).catch(() => { })
-    }
-
     apiGoodsLikePageFA(fun) {
       apiGoodsLikePageF({
         page: this.pageParamsLike.page,
@@ -187,61 +135,66 @@
         this.pageLikeList = rows
         this.$apply();
       }).catch(() => { });
-    }
-
-    watch = {
-      rowsArr (newValue) {
-        let _newValue = newValue
-        this.isAllCkeck = _newValue.every(val => {
-          return val.check
-        })
-        let _totalMoney = 0;
-        let _createData = []
-        _newValue.forEach((val) => {
-          if (val.check) {
-            _totalMoney = (_totalMoney * 1000 + val.price * val.quantity * 1000) / 1000
-            _createData.push({
-              cartId: val.id,
-              goodsId: val.goodsId,
-              specificationId: val.specificationId,
-              colorId: val.colorId,
-              goodsNumber: val.quantity
-            })
-          }
-        });
-        this.totalMoney = _totalMoney
-        this.createData.orderDetailBoList = _createData
+    };
+    getGroupInfo(fun){
+      let param = {};
+      if (this.groupId) {
+        param['groupId'] = this.groupId;
       }
-    }
-    events = {
-      'calt-item-check': (index, check) => {
-        this.rowsArr[index].check = check
-        this.$apply()
-      },
-      'num-change-event': (index, type) => {
-        this.changeQuantity.id = this.rowsArr[index].id
-        this.changeQuantity.type = type
-        this.changeQuantity.current = index
-        this.apiChangeQuantityA(this.apiChangeQuantityA.bind(this))
-        this.$apply()
-      },
-      'calt-item-del': (index) => {
-        let _self = this
-        miniPro.showConfirm({
-          title: '提示',
-          content: '确实删除次商品？',
-          callback(flag) {
-            if (!flag) return
-            _self.changeQuantity.current = index
-            _self.delGoosId = _self.rowsArr[index].id
-            _self.apiCartDeleteA(_self.apiCartDeleteA.bind(_self))
+      if (this.shareId) {
+        param['shareId'] = this.shareId;
+      }
+      apiGroupInfoF(param,fun).then((result) => {
+        this.goodsIcon = result.goodsIcon;
+        this.goodsName = result.goodsName;
+        this.groupPrice = result.groupPrice;
+        this.originalPrice = result.originalPrice;
+        this.groupNumber = result.groupNumber;
+        this.surplus = result.surplus;
+        this.groupId = result.groupId;
+        this.isJoin = result.isJoin;
+        let groups = [];
+        if(result.details.length > 0){
+          for(let x in result.details){
+            groups[x] = result.details[x];
           }
-        })
+        }
+        this.groupList = groups;
+        this.$apply();
+        this.getPurchaseShareInfo(this.getPurchaseShareInfo.bind(this));
+      }).catch(() => { })
+    };
+    getPurchaseShareInfo(fun){
+      let param = {
+        groupId: this.groupId
+      };
+      apiPurchaseShareInfoF(param,fun).then((result)=> {
+        this.shareInfo.title = result.shareTitle;
+        this.shareInfo.imageUrl = result.shareImageUrl;
+        this.shareInfo.shareParam = result.shareParam;
+        this.$apply();
+      }).catch(()=>{})
+    };
+    onShareAppMessage(res) {
+      return {
+        title: this.shareInfo.title,
+        path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
+        imageUrl: this.shareInfo.imageUrl
       }
     };
+    watch = {
+    }
+    events = {
+    };
 
-    async onShow() {
-      this.apiCartFindPageA(this.apiCartFindPageA.bind(this))
+    onLoad(options) {
+      if (options.groupId) {
+        this.groupId = options.groupId;
+      }
+      if (options.shareId) {
+        this.shareId = options.shareId;
+      }
+      this.getGroupInfo(this.apiGoodsLikePageFA.bind(this));
       this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
     }
   }

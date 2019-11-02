@@ -48,7 +48,8 @@
   import wepy from 'wepy';
   import '../../../common/js/authProcess.js';
   import {
-    apiGroupBuyF
+    apiGroupBuyF,
+    apiGroupPermissionF
   } from '../../../services/index';
 
   export default class Index extends wepy.page {
@@ -69,24 +70,18 @@
       },
       ListArr:[],
       scrollH:'',
-      imgUrls: [
-        'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-        'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-        'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-      ],
-      indicatorDots: true
+      imgUrls: [],
+      indicatorDots: true,
+      currentId: ''
     };
 
     computed = {};
 
     methods = {
-      // toCategoryDetailA(e) {
-      //   let _categoryId = e.currentTarget.dataset.category
-      //   wepy.navigateTo({ url: `/pages/packageIndex/search/index?categoryId=${_categoryId}` })
-      // }
       toMsgA(id) {
-        let _indexId = id;
-        wepy.navigateTo({ url: `/pages/groupBuy/Info/index?indexId=${_indexId}` })
+        this.currentId = id;
+        this.$apply()
+        this.apiGroupPermission(this.apiGroupPermission.bind(this));
       },
       loadMore() { // 加载更多
         let offset = this.pageParams.offset;
@@ -98,7 +93,17 @@
         this.pageParams.offset = offset;
         this.apiGetGroupBuyDataFA(this.apiGetGroupBuyDataFA.bind(this))
       }
-    }
+    };
+    apiGroupPermission(fun){
+      let param = {
+        id: this.currentId
+      };
+      apiGroupPermissionF(param,fun).then((result)=>{
+        wepy.navigateTo({ url: `/pages/groupBuy/Info/index?indexId=` + this.currentId })
+      }).catch(()=>{
+
+      });
+    };
 
     apiGetGroupBuyDataFA(fun) {
       let params = {

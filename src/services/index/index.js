@@ -19,7 +19,9 @@ import {
   apiPurchaseOrderPay,
   apiPurchaseOrderPaySuccess,
   apiPurchaseShareInfo,
-  apiBuyOrderInfo
+  apiBuyOrderInfo,
+  apiGroupInfo,
+  apiGroupPermission
 } from './api';
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
@@ -303,6 +305,34 @@ const apiBuyOrderInfoF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 });
 
+// 获取团购信息
+const apiGroupInfoF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiGroupInfo();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+// 获取权限
+const apiGroupPermissionF = (data, fun) => packagePromise((resolve, reject) => {
+  let url = apiGroupPermission();
+  request({
+    url: url,
+    method: 'GET',
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
 /**=================== 团购end =================================*/
 
 export {
@@ -325,5 +355,7 @@ export {
   apiPurchaseOrderPayF,
   apiPurchaseOrderPaySuccessF,
   apiPurchaseShareInfoF,
-  apiBuyOrderInfoF
+  apiBuyOrderInfoF,
+  apiGroupInfoF,
+  apiGroupPermissionF
 }

@@ -105,6 +105,15 @@ page{
           text-align: center;
         }
         text-align: center;
+        .share-button{
+          background:#FF7F00;
+          color: #fff;
+          border-radius:rpx(31);
+          padding: 0;
+        }
+        .share-button::after {
+          border: 0;
+        }
         view:nth-of-type(1){
           margin: rpx(15) auto;
           display: flex;

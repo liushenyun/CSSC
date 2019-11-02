@@ -62,6 +62,12 @@ const apiPurchaseShareInfo = () => `${MAIN_DOMAIN}/api/group/purchase/share`
 //获取订单信息
 const apiBuyOrderInfo = () => `${MAIN_DOMAIN}/api/buy/order/info`
 
+//获取团购信息
+const apiGroupInfo = () => `${MAIN_DOMAIN}/api/group/purchase/group/info`
+
+//获取权限
+const apiGroupPermission = () => `${MAIN_DOMAIN}/api/group/purchase/permission`
+
 /**========================= 团购end =================================*/
 
 export {
@@ -84,5 +90,7 @@ export {
   apiPurchaseOrderPay,
   apiPurchaseOrderPaySuccess,
   apiPurchaseShareInfo,
-  apiBuyOrderInfo
+  apiBuyOrderInfo,
+  apiGroupInfo,
+  apiGroupPermission
 }

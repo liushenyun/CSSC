@@ -31,13 +31,17 @@
           <view class="T1-two-div">
             <view wx:for="{{groupInfo.list}}" wx:key="index">
               <image src='{{item.headImg}}'></image>
-              <view v-if="item.leaderFlag == 1">团长</view>
+              <view wx:if="item.leaderFlag == 1">团长</view>
+            </view>
+            <view wx:if="{{surplusMember > 0}}">
+              <image src='../../../images/add1.png'></image>
+              <view>还差{{surplusMember}}人</view>
             </view>
           </view>
           <view></view>
         </view>
         <view class="T2">
-          <view>
+          <view wx:if="{{surplusMember > 0}}">
             <button open-type='share' class="share-button">
               <image src='../../../images/Yao.png'></image>
               <text>邀请好友参团</text>
@@ -45,9 +49,15 @@
               <text>后结束</text>
             </button>
           </view>
-          <view>
-              <image src='../../../images/zhuyi.png'></image>
-              <text>分享到2个微信群,成功率高达95%</text>
+          <view wx:else @tap="toOrderList">
+            <button  class="share-button">
+              <text>拼团已成功查看详情</text>
+            </button>
+          </view>
+
+          <view wx:if="{{surplusMember > 0}}">
+            <image src='../../../images/zhuyi.png'></image>
+            <text>分享到2个微信群,成功率高达95%</text>
           </view>
 
         </view>
@@ -82,7 +92,7 @@
   } from '../../../services/index/index'
   import miniPro from '@/utils/wepy-pro.js';
   import CatItem from '@/components/catItem/index';
-  import date from '@/utils/date.js'
+  import countDown from '@/utils/date.js'
 
   export default class Index extends wepy.page {
     config = {
@@ -117,7 +127,8 @@
         id: ''
       },
       surplus: '',
-      endTime: ''
+      endTime: '',
+      surplusMember: ''
     };
 
     methods = {
@@ -147,12 +158,12 @@
         this.shareInfo.title = result.shareTitle;
         this.shareInfo.imageUrl = result.shareImageUrl;
         this.shareInfo.param = result.shareParam;
-        this.endTimeCountDown()
+        this.surplusMember = result.groupNumber - result.groups.length;
         this.$apply();
+        this.endTimeCountDown()
       }).catch(() => {})
     };
     onShareAppMessage(res) {
-      console.log(this.shareInfo)
       return {
         title: this.shareInfo.title,
         path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
@@ -161,19 +172,21 @@
     };
     endTimeCountDown(){
       let t = this;
-      date.countDown(this.endTime,function(result) {
-        console.log(result)
+      countDown(this.endTime,function(result) {
         t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second
         t.$apply()
       });
+    };
+    toOrderList(){
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` })
     }
     watch = {
     }
     events = {
     };
     onLoad(options){
-      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
       this.orderId = options.orderId
+      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
       this.init(this.init.bind(this));
     }
   }
