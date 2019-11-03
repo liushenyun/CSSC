@@ -96,7 +96,7 @@ page,
         overflow: hidden; //文本超出 省略号代替
         text-overflow: ellipsis;
         white-space: nowrap;
-        width: rpx(320);//文本超出 省略号代替
+        width: rpx(300);//文本超出 省略号代替
 
         text{
           letter-spacing: rpx(8);
@@ -139,9 +139,10 @@ page,
           text-align: right;
         }
       }
-
     }
   }
+
+
 
 
 
