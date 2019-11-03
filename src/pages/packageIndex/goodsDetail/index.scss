@@ -82,7 +82,7 @@ page{
        .desc-outer {
            display: flex;
            margin: rpx(48) 0 rpx(10) 0;
-
+          padding-top: rpx(10);
          text:nth-of-type(1) {
                 font-size: $size-three;
                 font-weight: bolder;
