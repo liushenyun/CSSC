@@ -1,8 +1,9 @@
 <template>
   <view class='goods-detail-ctner'>
     <import src="../../../common/wxParse/wxParse.wxml"/>
+
     <view class="goods-con-outer">
-      <view class="goods-banner">
+      <view class="goods-banner"  style="height: {{Hei}};line-height: {{Hei}}">
         <swiper
           indicator-dots="{{indicatorDots}}"
           autoplay="{{autoplay}}"
@@ -11,15 +12,14 @@
           indicator-color='#999'
           indicator-active-color='#FFF'
           circular = 'true'
-          style="height: {{sysWidth}}px;line-height: {{sysWidth}}px;">
+          style='height:100%' >
           <block wx:for="{{bannerList}}"   wx:key="indx" wx:for-index="index" data-index="{{index}}">
-            <swiper-item>
-              <image src="{{item.imgPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>
+            <swiper-item style="height: 100%; display: flex;align-items: center">
+<!--              <image src="{{item.bannerPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>-->
+              <image src="{{item.bannerPath}}" style="width: 100%;" class="{{item.isSquare ? 'active' : ''}}"/>
             </swiper-item>
           </block>
         </swiper>
-
-
       </view>
 
       <view class="goods-des-outer">
@@ -81,9 +81,9 @@
     </view>
 
     <view class="goods-bottom">
-      <view class="gb-kf">
-        <button class="icx-btn"  >
-          <image src='../../../images/main.png' @tap.stop="goHome"></image>
+      <view class="gb-kf" @tap="goHome">
+        <button class="icx-btn">
+          <image src='../../../images/main.png'></image>
           <view>首页</view>
         </button>
       </view>
@@ -149,10 +149,11 @@ export default class Info extends wepy.page {
     components = {
     };
     data = {
-      sysWidth: wx.getSystemInfoSync().windowWidth,
+      // sysWidth: wx.getSystemInfoSync().windowWidth,
+      Hei:"",
       showModal:false,
       goodsName: '',
-      indicatorDots: true,
+      indicatorDots: false,
       showRuleTip: false,
       autoplay: true,
       interval: 5000,
@@ -169,17 +170,9 @@ export default class Info extends wepy.page {
       seconds: '', // 设定秒，存在这个变量
       timeText: ''
     };
+
     methods = {
-      imgF(e){
-        let h = e.detail.height;
-        let w = e.detail.width;
-        let i = e.target.dataset.index;
-        if(w == h){
-          this.bannerList[i].style = "dynamic-img";
-        }else{
-          this.bannerList[i].style = "";
-        }
-      },
+
       toShowModal(e) { //这里开始
         this.showModal = true
       },
@@ -188,10 +181,8 @@ export default class Info extends wepy.page {
       },
       goDelegation(e) {
         wepy.navigateTo({ url: `/pages/groupBuy/OnekeyDelegation/index?groupId=` + e.groupId})
-      },
-      goHome() {
-        wepy.navigateTo({ url: `/pages/index/index` })
       }
+
     };
     apiGetGroupBuyInfoA(fun) {
       let indexId = this.indexId
@@ -216,9 +207,19 @@ export default class Info extends wepy.page {
         wepy.navigateTo({ url: `/pages/groupBuy/index/index`})
       });
     }
+  imgH(e){
+    var winWid = wx.getSystemInfoSync().windowWidth;//获取当前屏幕的宽度
+    console.log(winWid)
+    // var imgh=e.detail.height;
+    // var imgw=e.detail.width;
+    // var swiperH= winWid*imgh/imgw + "px"//等比设置swiper的高度。  即 屏幕宽度 / swiper高度 = 图片宽度 / 图片高度    ==》swiper高度 = 屏幕宽度 * 图片高度 / 图片宽度
+    this.Hei = winWid + "px";
+    this.$apply();
+  };
     onLoad(option) {
-      this.indexId = option.indexId || 0   //拿到地址栏的参数值     || 0表示短路或 防止id忘记传 取到undefined  自动传后面的0
-      this.apiGetGroupBuyInfoA(this.apiGetGroupBuyInfoA.bind(this))  //this.apiGetGroupBuyInfoA.bind(this)
+      this.indexId = option.indexId || 0
+      this.apiGetGroupBuyInfoA(this.apiGetGroupBuyInfoA.bind(this))
+      this.imgH();
     }
     startTimer(){
       let _this = this;
@@ -227,15 +228,15 @@ export default class Info extends wepy.page {
         let timeText = result.day + "天" + result.hour + ":" + result.minute + ":" + result.second;
         _this.timeText = timeText;
         _this.$apply();
-        // _this.setData({  //调用setData()才能触发页面渲染  同步
-        //   day: result.day,
-        // });
       })
     };
     buyNowA(){
       let id = this.indexId;
       wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=1&activityId=` + id })
     };
+    goHome() {
+      wx.switchTab({ url: `/pages/index/index` })
+    }
   };
 </script>
 <style lang="scss" scoped>

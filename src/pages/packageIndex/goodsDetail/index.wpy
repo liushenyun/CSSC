@@ -2,22 +2,23 @@
   <view class='goods-detail-ctner'>
     <import src="../../../common/wxParse/wxParse.wxml"/>
       <view class="goods-con-outer">
-          <view class="goods-banner">
-          <swiper
+          <view class="goods-banner" style="height: {{Hei}};line-height: {{Hei}}">
+            <swiper
               indicator-dots="{{indicatorDots}}"
               autoplay="{{autoplay}}"
               interval="{{interval}}"
               duration="{{duration}}"
               indicator-color='#999'
               indicator-active-color='#FFF'
-              circular = 'false'
-              style="height: {{sysWidth}}px;line-height: {{sysWidth}}px;">
-              <block wx:for="{{bannerArr}}" wx:key="indx" wx:for-index="index" data-index="{{index}}">
-                <swiper-item>
-                    <image src="{{item.bannerPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>
+              circular = 'true'
+              style='height:100%' >
+              <block wx:for="{{bannerArr}}"   wx:key="indx" wx:for-index="index" data-index="{{index}}">
+                <swiper-item style="height: 100%; display: flex;align-items: center">
+                  <!--              <image src="{{item.bannerPath}}" class="slide-image {{item.style}}" data-index="{{index}}"  bindload="imgF"/>-->
+                  <image src="{{item.bannerPath}}" style="width: 100%;" class="{{item.isSquare ? 'active' : ''}}"/>
                 </swiper-item>
               </block>
-          </swiper>
+            </swiper>
         </view>
 
         <view class="goods-des-outer">
@@ -197,6 +198,7 @@ export default class GoodsDetail extends wepy.page {
     AddCom: AddCom
   };
   data = {
+    Hei:"",
     isWhichFlag: '', // 1:加入购物车 2：立即购买
     showGoodsPop: false,
     goodsId: '',
@@ -237,17 +239,9 @@ export default class GoodsDetail extends wepy.page {
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>",
     sysWidth: wx.getSystemInfoSync().windowWidth,
   };
+
+
   methods = {
-    imgF(e){
-      let h = e.detail.height;
-      let w = e.detail.width;
-      let i = e.target.dataset.index;
-      if(w == h){
-        this.bannerArr[i].style = "dynamic-img";
-      }else{
-        this.bannerArr[i].style = "";
-      }
-    },
     spcTouch() {},
     specConStopA() {},
     specPopA() {
@@ -498,8 +492,17 @@ export default class GoodsDetail extends wepy.page {
       imageUrl: this.shareObj.goodShareUrl
     };
   }
-
+  imgH(e){
+    var winWid = wx.getSystemInfoSync().windowWidth;//获取当前屏幕的宽度
+    console.log(winWid)
+    // var imgh=e.detail.height;
+    // var imgw=e.detail.width;
+    // var swiperH= winWid*imgh/imgw + "px"//等比设置swiper的高度。  即 屏幕宽度 / swiper高度 = 图片宽度 / 图片高度    ==》swiper高度 = 屏幕宽度 * 图片高度 / 图片宽度
+    this.Hei = winWid + "px";
+    this.$apply();
+  };
   async onLoad(option) {
+    this.imgH();
     // `/pages/packageIndex/goodsDetail/index?goodsId=${_goodsId}` // 有"goodsId"字段 前端页面跳转
     // `/pages/packageIndex/goodsDetail/index?scene=${_goodsId}` // 有"scene" 分享页面跳转 => 请求接口获取商品ID
     // 【参数】例子1：goodsId=20190605151323725725

@@ -24,7 +24,7 @@ const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
 // http://wisf54.natappfree.cc
 // const MAIN_DOMAIN = 'http://testweixin.51vip.biz' // 测试域名[ok]
 // const MAIN_DOMAIN = 'http://wisf54.natappfree.cc' // 测试域名[ok]
-const MAIN_DOMAIN = 'http://192.168.7.200:8086' // 测试域名[ok]
+const MAIN_DOMAIN = 'http://192.168.7.200:8080' // 测试域名[ok]
 // const MAIN_DOMAIN = 'https://www.chengmall.cn' // 正式域名
 
 const WBVIEW_PAGE_URL = '/pages/webview/index'

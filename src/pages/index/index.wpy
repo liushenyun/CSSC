@@ -70,6 +70,18 @@
         </view>
       </view>
 
+      <view class="goods-area-same">
+        <view class="area-title" @tap='toActivity'>
+          <text></text>
+          <text>更多</text>
+          <image src='../../images/unfold.png'></image>
+        </view>
+        <view class="activity-container">
+          <view wx:for="{{activities}}" @tap="toActivity({{item}})">
+            <image src='{{item.img}}'></image>
+          </view>
+        </view>
+      </view>
 
 
       <view class="goods-area-same">
@@ -140,7 +152,29 @@ export default class Index extends wepy.page {
     homeBannerVoList: [], // 首页banner
     homeGoodsCategoryList: [], // 分类推荐
     homeTale: [], // 文化衍生区
-    homeVipGoodsInfoList: [] // 会员专区
+    homeVipGoodsInfoList: [], // 会员专区
+    activities: [
+      {
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.png',
+        id: '',
+        type: ''
+      },
+      {
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/2.png',
+        id: '',
+        type: ''
+      },
+      {
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/3.png',
+        id: '',
+        type: ''
+      },
+      {
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/4.png',
+        id: '',
+        type: ''
+      },
+    ]
   };
 
   computed = {};
@@ -204,6 +238,13 @@ export default class Index extends wepy.page {
     }).catch(() => { })
   }
 
+  toActivity(item){
+    let param = "";
+    if(item){
+      param = "?activityId=" + item.id + "&type=" + item.type
+    }
+    wepy.navigateTo({ url: `/pages/groupBuy/index/index` + param });
+  };
   async onLoad() {
     this.apiGetHomeDataFA(this.apiGetHomeDataFA.bind(this))
   }
