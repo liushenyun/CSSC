@@ -155,22 +155,22 @@ export default class Index extends wepy.page {
     homeVipGoodsInfoList: [], // 会员专区
     activities: [
       {
-        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.png',
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.jpg',
         id: '',
         type: ''
       },
       {
-        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/2.png',
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/2.jpg',
         id: '',
         type: ''
       },
       {
-        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/3.png',
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/3.jpg',
         id: '',
         type: ''
       },
       {
-        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/4.png',
+        img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/4.jpg',
         id: '',
         type: ''
       },
