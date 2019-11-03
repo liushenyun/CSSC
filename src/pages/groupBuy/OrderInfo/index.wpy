@@ -167,7 +167,8 @@
       activityId: '',
       orderStatus: '',
       shareInfo: {},
-      showModal: false
+      showModal: false,
+      internal: ''
     };
 
     methods = {
@@ -208,6 +209,7 @@
       let t = this;
       countDown(this.endTime,function(result) {
         t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second
+        t.internal = result.internal;
         t.$apply()
       });
     };
@@ -250,6 +252,9 @@
     onLoad(options) {
       this.orderChildId = options.orderChildId;
       this.getOrderInfo(this.getOrderInfo.bind(this));
+    };
+    onUpload(){
+      clearInterval(this.internal)
     }
   }
 </script>

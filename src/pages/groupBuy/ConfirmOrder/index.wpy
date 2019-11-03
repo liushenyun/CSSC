@@ -89,7 +89,9 @@
 <script>
   import wepy from 'wepy'
   import { apiFindDefAddressF } from '../../../services/mine/index'
-  import { apiPurchaseGetOrderInfoF,apiPurchaseOrderPayF } from '../../../services/index/index'
+  import {
+    apiPurchaseGetOrderInfoF,
+    apiPurchaseOrderPayF } from '../../../services/index/index'
   import miniPro from '@/utils/wepy-pro.js';
   export default class AddressList extends wepy.page {
     config = {
@@ -121,7 +123,7 @@
         wepy.navigateTo({ url: `/pages/packageMine/addressList/index` });
       },
       pay(fun) {
-        if(!this.addressInfo.id){
+        if (!this.addressInfo.id) {
           miniPro.showToast('请选择地址');
           return;
         }
@@ -151,12 +153,12 @@
         }).catch(() => { });
       }
     };
-    getDefaultAddress(fun){
+    getDefaultAddress(fun) {
       apiFindDefAddressF(fun).then((result) => {
         if (result) {
           this.addressInfo = {
             id: result.id,
-            str : result.province + result.city + result.district + result.address
+            str: result.province + result.city + result.district + result.address
           };
         }
         this.$apply()
@@ -179,7 +181,7 @@
       if (this.shareId) {
         param['shareId'] = this.shareId
       }
-      apiPurchaseGetOrderInfoF(param,fun).then((result) => {
+      apiPurchaseGetOrderInfoF(param , fun).then((result) => {
         this.orderInfo = {
           goodsIcon: result.goodsIcon,
           goodsName: result.goodsName,
@@ -189,12 +191,12 @@
           originalPrice: result.originalPrice,
         };
         this.groupUserDetailId = result.groupUserDetailId;
-        if(result.addressId){
+        if (result.addressId){
           this.addressInfo = {
             str: result.addressStr,
             id: result.addressId
           }
-        }else{
+        } else {
           this.getDefaultAddress()
         }
         this.$apply()

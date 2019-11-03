@@ -59,7 +59,7 @@
 				},
 				{
 					"id": -1,
-					"name": "老成推荐",
+					"name": "成+",
 					"pathName": "pages/recom/index",
 					"query": "",
 					"scene": null
@@ -404,14 +404,14 @@
 					"id": 51,
 					"name": "支付成功",
 					"pathName": "pages/groupBuy/ApplySuccess/index",
-					"query": "orderId=20191101160509355122",
+					"query": "orderId=20191102164435241800",
 					"scene": null
 				},
 				{
 					"id": 52,
 					"name": "待成团订单详情",
 					"pathName": "pages/groupBuy/OrderInfo/index",
-					"query": "orderMasterId=20191101160509355122",
+					"query": "orderChildId=20191102164435241521",
 					"scene": null
 				}
 			]

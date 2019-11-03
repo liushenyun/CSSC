@@ -167,7 +167,8 @@ export default class Info extends wepy.page {
       hours: '', // 设定小时，存在这个变量
       minutes: '', // 设定分，存在这个变量
       seconds: '', // 设定秒，存在这个变量
-      timeText: ''
+      timeText: '',
+      timeOut: ''
     };
     methods = {
       imgF(e){
@@ -224,18 +225,24 @@ export default class Info extends wepy.page {
       let _this = this;
       let end = _this.endTimeCountdown
       countDown(end,function(result) {
-        let timeText = result.day + "天" + result.hour + ":" + result.minute + ":" + result.second;
-        _this.timeText = timeText;
-        _this.$apply();
-        // _this.setData({  //调用setData()才能触发页面渲染  同步
-        //   day: result.day,
-        // });
-      })
+          let timeText = result.day + "天" + result.hour + ":" + result.minute + ":" + result.second;
+          _this.timeText = timeText;
+          _this.timeOut = result.interval;
+          _this.$apply();
+          // _this.setData({  //调用setData()才能触发页面渲染  同步
+          //   day: result.day,
+          // });
+        })
     };
     buyNowA(){
       let id = this.indexId;
       wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=1&activityId=` + id })
     };
+    onUnload(){
+      console.log("tuichu")
+      console.log(this.timeOut);
+      clearInterval(this.timeOut);
+    }
   };
 </script>
 <style lang="scss" scoped>

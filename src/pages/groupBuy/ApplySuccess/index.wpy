@@ -128,7 +128,8 @@
       },
       surplus: '',
       endTime: '',
-      surplusMember: ''
+      surplusMember: '',
+      internal: ''
     };
 
     methods = {
@@ -173,7 +174,8 @@
     endTimeCountDown(){
       let t = this;
       countDown(this.endTime,function(result) {
-        t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second
+        t.surplus = result.day + "：" + result.hour + "：" + result.minute + "：" + result.second;
+        t.internal = result.internal;
         t.$apply()
       });
     };
@@ -188,6 +190,9 @@
       this.orderId = options.orderId
       this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
       this.init(this.init.bind(this));
+    };
+    onUnload(){
+      clearInterval(this.internal);
     }
   }
 </script>

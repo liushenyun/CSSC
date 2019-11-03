@@ -5,12 +5,12 @@ function countDown(endDate,cb){
     miniPro.showToast('结束时间不能为空');
     return
   }
-  setInterval(function () {
+  let interval = setInterval(function () {
     let timeNow = new Date();  // 获取当前时间
     timeNow = timeNow.getTime();
     let timeDistance = endTime - timeNow;  // 结束时间减去当前时间
     if (timeDistance <= 0) {
-      clearInterval(this);
+      clearInterval(interval);
       return
     }
     let intDay, intHour, intMinute, intSecond;
@@ -36,7 +36,8 @@ function countDown(endDate,cb){
       day: intDay,
       hour: intHour,
       minute: intMinute,
-      second: intSecond
+      second: intSecond,
+      interval: interval
     };
     cb(result)
   }, 1000)
