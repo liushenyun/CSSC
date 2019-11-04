@@ -29,9 +29,10 @@
         <text>￥{{item.orderAmount}}</text>
     </view>
 
+    <view style="float:left;" wx:if="{{item.groupPurchaseActivityId}}">团购</view>
     <view class="order-button-outer">
         <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" catchtap="orderBtnA({{btnItem}}, {{item}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
-            {{btnItem.word}}
+          {{btnItem.word}}
         </view>
     </view>
 
@@ -77,7 +78,7 @@ export default class SureGoodsCom extends wepy.component {
         '5': [
             {word: '评论', action: '5c'}
         ]
-    }
+    },
   }
   methods = {
       numAdd() {

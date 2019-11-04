@@ -41,12 +41,18 @@
             <view></view>
           </view>
           <view class="T2">
-            <view wx:if="{{isJoin}}">
+            <view wx:if="{{isJoin && success}}">
+              <text>拼团已成功，请等待发货</text>
+            </view>
+            <view wx:if="{{isJoin && !success}}">
               <button open-type='share' class="share-button">
                 <text>邀请好友参团</text>
               </button>
             </view>
-            <view @tap="goConfirm" wx:else>
+            <view wx:if="{{!isJoin && success}}">
+                <text>拼团已结束</text>
+            </view>
+            <view @tap="goConfirm" wx:if="{{!isJoin && !success}}">
               一键参团
             </view>
             <view>
@@ -109,7 +115,8 @@
       groupId: null,
       shareId: null,
       shareInfo: {},
-      isJoin: false
+      isJoin: false,
+      options: {}
     };
 
     methods = {
@@ -120,6 +127,7 @@
           shareId: this.shareId
         };
         let query = jsonFormat.kv(param);
+        console.log(query);
         wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?` + query})
       },
       toGoodsDetail(item) {
@@ -160,6 +168,7 @@
           }
         }
         this.groupList = groups;
+        this.success = result.success;
         this.$apply();
         this.getPurchaseShareInfo(this.getPurchaseShareInfo.bind(this));
       }).catch(() => { })
@@ -176,6 +185,7 @@
       }).catch(()=>{})
     };
     onShareAppMessage(res) {
+      console.log(this.shareInfo)
       return {
         title: this.shareInfo.title,
         path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
@@ -194,6 +204,7 @@
       if (options.shareId) {
         this.shareId = options.shareId;
       }
+      this.options = options;
       this.getGroupInfo(this.apiGoodsLikePageFA.bind(this));
       this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
     }

@@ -95,7 +95,7 @@
             <image src='{{homeGoodsCategoryList[0].categoryIco}}'></image>
             </view>
             <view class="area-classify-bottom">
-              <view data-category="{{homeGoodsCategoryList[1].categoryId}}" @tap="toGroupBuy" class="classify-bottom-left">
+              <view data-category="{{homeGoodsCategoryList[1].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-left">
                 <image src='{{homeGoodsCategoryList[1].categoryIco}}'></image>
               </view>
               <view data-category="{{homeGoodsCategoryList[2].categoryId}}" @tap="toCategoryDetailA" class="classify-bottom-mid">

@@ -136,7 +136,7 @@ export default class extends wepy.app {
         },
         {
           pagePath: 'pages/recom/index',
-          text: '         成+',
+          text: '成+',
           // iconPath: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.png',
           iconPath: './images/logo.jpg',
           selectedIconPath: './images/logo_new.png'

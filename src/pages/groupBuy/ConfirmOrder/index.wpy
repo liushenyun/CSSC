@@ -100,7 +100,7 @@
     components = {
     };
     data = {
-      activityId: '20191031150527115140',
+      activityId: '',
       createFlag: '',
       orderMasterId: '',
       groupId: '',
@@ -137,6 +137,7 @@
         if (this.groupUserDetailId) {
           payParam['groupUserDetailId'] = this.groupUserDetailId;
         }
+        console.log(payParam);
         apiPurchaseOrderPayF(payParam, fun).then(msg => {
           let data = msg
           miniPro.requestPayment(data).then((result) => {
@@ -182,6 +183,7 @@
         param['shareId'] = this.shareId
       }
       apiPurchaseGetOrderInfoF(param , fun).then((result) => {
+        console.log(result)
         this.orderInfo = {
           goodsIcon: result.goodsIcon,
           goodsName: result.goodsName,
@@ -199,10 +201,12 @@
         } else {
           this.getDefaultAddress()
         }
+        this.activityId = result.activityId;
         this.$apply()
       }).catch(() => { })
     }
     onLoad(options) {
+      console.log(options)
       this.orderMasterId = options.orderId;
       this.createFlag = options.createFlag;
       this.groupId = options.groupId;

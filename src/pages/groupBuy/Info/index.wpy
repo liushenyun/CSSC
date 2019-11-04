@@ -1,7 +1,6 @@
 <template>
   <view class='goods-detail-ctner'>
     <import src="../../../common/wxParse/wxParse.wxml"/>
-
     <view class="goods-con-outer">
       <view class="goods-banner"  style="height: {{Hei}};line-height: {{Hei}}">
         <swiper
@@ -168,7 +167,8 @@ export default class Info extends wepy.page {
       minutes: '', // 设定分，存在这个变量
       seconds: '', // 设定秒，存在这个变量
       timeText: '',
-      timeOut: ''
+      timeOut: '',
+      Hei:''
     };
 
     methods = {
@@ -191,10 +191,10 @@ export default class Info extends wepy.page {
         _this.info = msg;
         for(let x in msg.groupList){
           if(x <= 1){
-            _this.groupList[x] = msg.groupList[0];
+            _this.groupList[x] = msg.groupList[x];
           }
           if(x <= 10){
-            _this.groupListMore[x] = msg.groupList[0];
+            _this.groupListMore[x] = msg.groupList[x];
           }
         }
         _this.bannerList = msg.banners;
@@ -236,6 +236,7 @@ export default class Info extends wepy.page {
     };
     buyNowA(){
       let id = this.indexId;
+      console.log(id)
       wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=1&activityId=` + id })
     };
     goHome() {
