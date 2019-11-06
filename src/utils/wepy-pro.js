@@ -172,17 +172,8 @@ let proFun = () => {
               reject(data)
             }
 
-            // if (errorCode === 0 || errorCode === 'none' || errorCode === -5) {
-            //   resolve(res.data)
-            // } else if (errorCode === 1000 || errorCode === 999) {
-            //   if (Refresh_Token) { // 有Refresh_Token置換token，无走授权流程
-            //     Auth.getInstance().refreshToken(Refresh_Token, fun);
-            //   } else {
-            //     Auth.getInstance().checkWebchatAuth(true, fun, true)
-            //   }
-            //   reject(data)
-            // }
           } else if (statusCode == 401) {
+            wepy.setStorageSync('isGettingToken', false)
             Auth.getInstance().checkWebchatAuth(true, fun, true)
           } else if (statusCode === 403) { // 未绑定需要绑定操作（手机号，验证码）
             // wepy.setStorageSync(WECHAT_ACCESS_TOKEN_NAME, res.data.token)
@@ -260,6 +251,7 @@ let proFun = () => {
               reject(data)
             }
           } else if (statusCode == 401) {
+            wepy.setStorageSync('isGettingToken', false)
             Auth.getInstance().checkWebchatAuth(true, fun, true)
           } else if (statusCode === 403) { // 未绑定需要绑定操作（手机号，验证码）
             miniPro.showToast('请先登录')

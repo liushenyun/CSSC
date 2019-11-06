@@ -146,17 +146,20 @@ page,
             //display: flex;
             //flex-flow: row wrap;
             //justify-content: space-between;
-            height: auto;
             height: rpx(300);
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            flex-flow: row wrap;
+
           }
           .activity-container view{
-            width: 45%;
-            margin: rpx(10);
+            width: 49%;
             height: rpx(140);
-            display: inline-block;
             image{
               width: 100%;
               height: 100%;
+              border-radius: rpx(10);
             }
           }
 

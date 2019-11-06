@@ -94,42 +94,45 @@
         <text>）</text>
       </view>
 
-      <!--custom Modal   查看更多弹框-->
-      <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}"></view>
-      <view wx:if="{{showModal}}">
-        <view class="modal-content">
-          <view class="header">
-            <view>·正在开团·</view>
-            <image src="../../../images/close.png" @tap="hideModal"></image>
-          </view>
-          <view class="content-index-bottom"  wx:for="{{groupListMore}}" wx:key="groupIndex">
-            <view class="V1">
-              <image src="{{item.headImage}}" alt=""></image>
-              <text>{{item.nickName}}</text>
-            </view>
-            <view  class="V2">
-              <view  class="right-content">
-                <veiw class="time-content">
-                  <text>剩余时间：</text>
-                  <text>{{timeText}}</text>
-                </veiw>
-              </view>
-              <image src="../../../images/gocan.png" alt=""   @tap='goDelegation({{item}})'></image>
-            </view>
-          </view>
 
-          <view class="bottom">
-            <view>最多显示10团</view>
-          </view>
-        </view>
-      </view>
+
     </view>
 
 
 
   </view>
 
+  <!--custom Modal   查看更多弹框-->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
 
+  </view>
+  <view wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="header">
+        <view>·正在开团·</view>
+        <image src="../../../images/close.png" @tap="hideModal"></image>
+      </view>
+      <view class="content-index-bottom"  wx:for="{{groupListMore}}" wx:key="groupIndex">
+        <view class="V3">
+          <image src="{{item.headImage}}" alt=""></image>
+          <text>{{item.nickName}}</text>
+        </view>
+        <view  class="V4">
+          <view  class="right-content">
+            <veiw class="time-content">
+              <text>剩余时间：</text>
+              <text>{{timeText}}</text>
+            </veiw>
+          </view>
+          <image src="../../../images/gocan.png" alt=""   @tap='goDelegation({{item}})'></image>
+        </view>
+      </view>
+
+      <view class="bottom">
+        <view>最多显示10团</view>
+      </view>
+    </view>
+  </view>
 
 </template>
 
@@ -140,7 +143,7 @@
   } from '../../../services/index'
   import countDown from '../../../utils/date';
   import WxParse from '../../../common/wxParse/wxParse.js'
-
+  import miniPro from '@/utils/wepy-pro.js';
 export default class Info extends wepy.page {
     config = {
       navigationBarTitleText: '拼团详情'
@@ -209,7 +212,6 @@ export default class Info extends wepy.page {
     }
   imgH(e){
     var winWid = wx.getSystemInfoSync().windowWidth;//获取当前屏幕的宽度
-    console.log(winWid)
     // var imgh=e.detail.height;
     // var imgw=e.detail.width;
     // var swiperH= winWid*imgh/imgw + "px"//等比设置swiper的高度。  即 屏幕宽度 / swiper高度 = 图片宽度 / 图片高度    ==》swiper高度 = 屏幕宽度 * 图片高度 / 图片宽度
@@ -223,20 +225,17 @@ export default class Info extends wepy.page {
     }
     startTimer(){
       let _this = this;
-      let end = _this.endTimeCountdown
+      let end = _this.endTimeCountdown  //后端返回的结束时间
       countDown(end,function(result) {
           let timeText = result.day + "天" + result.hour + ":" + result.minute + ":" + result.second;
           _this.timeText = timeText;
           _this.timeOut = result.interval;
           _this.$apply();
-          // _this.setData({  //调用setData()才能触发页面渲染  同步
-          //   day: result.day,
-          // });
+
         })
     };
     buyNowA(){
       let id = this.indexId;
-      console.log(id)
       wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?createFlag=1&activityId=` + id })
     };
     goHome() {

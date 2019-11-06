@@ -66,7 +66,10 @@ const loginFetch = (data) => packagePromise((resolve, reject) => {
 
 const wechatLogin = (data) => packagePromise((resolve, reject) => {
   let _isGettingToken = wepy.getStorageSync('isGettingToken')
-  if (_isGettingToken) { return }
+  if (_isGettingToken) {
+
+    return
+  }
   wepy.setStorageSync('isGettingToken', true)
   let { signature, rawData, encryptedData, iv } = JSON.parse(data.miniprogramParam)
   let qrScene = wepy.$instance.globalData.qrScene

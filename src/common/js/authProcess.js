@@ -1,7 +1,7 @@
 /*
  * @description wechat 授权流程
- * @Author: icarbonx-mini 
- * @Date: 2018-06-29 11:08:45 
+ * @Author: icarbonx-mini
+ * @Date: 2018-06-29 11:08:45
  * @Last Modified by: icarbonx-mini
  * @Last Modified time: 2018-07-16 11:27:28
  */
@@ -32,6 +32,7 @@ export default class Auth {
     return new Promise((resolve, reject) => {
       wx.login({
         success(resCode) {
+          console.log("resCodeuserInfo" + userInfo)
           if (userInfo) {
             _globalData.userInfo = userInfo.userInfo
             if (fetchLofin) {
@@ -42,7 +43,9 @@ export default class Auth {
           } else {
             wx.getUserInfo({
               success: function (res) {
+                console.log("res")
                 _globalData.userInfo = res
+                console.log("fetchLofin" + fetchLofin)
                 if (fetchLofin) {
                   _that._webchatLogin(resCode.code, res, resolve, reject)
                 } else {
@@ -73,8 +76,10 @@ export default class Auth {
     return new Promise((resolve) => {
       wx.getSetting({
         success: function (res) {
-          if (res.authSetting['scope.userInfo']) { // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          let userInfo = res.authSetting['scope.userInfo'];
+          if (userInfo) { // 已经授权，可以直接调用 getUserInfo 获取头像昵称
             resolve(true)
+            console.log("flag" + flag)
             if (flag) {
               _that.login(null, flag)
             }
@@ -115,15 +120,17 @@ export default class Auth {
   }
 
   /**
-   * 
-   * @param {*} code 
-   * @param {*} userInfo 
-   * @param {*} resolve 
-   * @param {*} reject 
+   *
+   * @param {*} code
+   * @param {*} userInfo
+   * @param {*} resolve
+   * @param {*} reject
    */
   _webchatLogin(code, userInfo, resolve, reject) {
     wechatLogin({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
       this._setToken(res)
+      console.log("settokenRES")
+      console.log(res)
       resolve(true)
       // apiPasePhoneF({ code: code, miniprogramParam: JSON.stringify(userInfo) }).then(res => {
       //   resolve(true)

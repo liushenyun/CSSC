@@ -127,7 +127,6 @@
           shareId: this.shareId
         };
         let query = jsonFormat.kv(param);
-        console.log(query);
         wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?` + query})
       },
       toGoodsDetail(item) {
@@ -185,7 +184,6 @@
       }).catch(()=>{})
     };
     onShareAppMessage(res) {
-      console.log(this.shareInfo)
       return {
         title: this.shareInfo.title,
         path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
@@ -198,14 +196,14 @@
     };
 
     onLoad(options) {
+      console.log(options);
       if (options.groupId) {
         this.groupId = options.groupId;
       }
       if (options.shareId) {
         this.shareId = options.shareId;
       }
-      this.options = options;
-      this.getGroupInfo(this.apiGoodsLikePageFA.bind(this));
+      this.getGroupInfo(this.getGroupInfo.bind(this));
       this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
     }
   }
