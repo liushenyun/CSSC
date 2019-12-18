@@ -3,10 +3,11 @@
     <view class='auth-logo auth-same'>
       <image src='../../images/logo_b.png'></image>
     </view>
-    <view class='autn-name auth-same'>微信授权页面</view>
+    <view class='autn-name auth-same'>授权页面</view>
     <view class='auth-description auth-same'>申请获取你的公开信息（昵称、头像等）</view>
     <view class='auth-btn auth-same'>
-      <button class="btn icx-clear-after-border" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">微信授权</button>
+      <button class="btn icx-clear-after-border"  lang="zh_CN" @tap="cancelUserInfo">取消授权</button>
+      <button class="btn icx-clear-after-border" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">确定授权</button>
     </view>
   </view>
 </template>
@@ -18,7 +19,14 @@ import Auth from '../../common/js/authProcess.js';
 import { refreshToken } from '../../services/login'
 import { EVENT_QUEUE_NAME } from '../../common/js/config'
 export default class Authorize extends wepy.page {
-  methods = {};
+  methods = {
+    cancelUserInfo(){
+      miniPro.showToast("本次取消授权无法查看更多内容哦！")
+      setTimeout(() => {
+        wepy.switchTab({ url: '/pages/index/index' });
+      },1500)
+    }
+  };
   onGotUserInfo(e) {
     let _auth = Auth.getInstance()
     let { userInfo } = e.detail;

@@ -5,6 +5,9 @@
 page{
   height: 100%;
 }
+.timeColor{
+  color:#FF7F00;
+}
 .goods-detail-ctner{
   height: 100%;
   padding-bottom: rpx(100);
@@ -172,11 +175,12 @@ page{
                   color:#666666;
                   width: rpx(120);
                 }
-                view:nth-of-type(2){
-                  color:#FF7F00;
-                  width: rpx(160);
+                  view:nth-of-type(2){
+                    width: rpx(160);
 
-                }
+                  }
+
+
               }
             }
           }
@@ -520,7 +524,7 @@ page{
             color:#666666;
           }
           text:nth-of-type(2){
-            color:#FF7F00;
+            color:#FF7F00 !important;
           }
         }
       }

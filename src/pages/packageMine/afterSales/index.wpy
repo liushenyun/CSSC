@@ -4,7 +4,7 @@
         <view class="ot-same ot-a {{currentIndex == index ? 'active':''}}" wx:for='{{topArr}}' wx:key="index" @tap="changeCurA({{index}})">{{item}}</view>
       </view>
       <view class="order-top-con">
-        <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+
           <swiper
             indicator-dots="{{indicatorDots}}"
             autoplay="{{autoplay}}"
@@ -15,43 +15,47 @@
           >
             <block wx:for="{{topArr}}" wx:key='index'>
               <swiper-item>
+                <scroll-view scroll-y="true" lower-threshold="200" style = "height:{{height+400}}rpx;position: relative;" @scrolltolower="loadMore" scroll-with-animation = "true">
                 <view class="swiper-div-same" wx:if='{{pageList.length > 0}}'>
-                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
+                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">   <!--0-当前售后记录-->
                     <view class="order-com">
                       <AfterSale :item="subItem" :OrderComIndex="subIndex" :swiperIndex="currentIndex"></AfterSale>
                     </view>
                   </repeat>
+<!--                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem" wx:if="{{currentIndex == 1}}">  &lt;!&ndash;1-服务单列表&ndash;&gt;-->
+<!--                    <view class="order-com">-->
+<!--                      <AfterSale :item="subItem" :OrderComIndex="subIndex" :swiperIndex="currentIndex"></AfterSale>-->
+<!--                    </view>-->
+<!--                  </repeat>-->
                 </view>
                 <view class="after-no-wrap" wx:else>
                     <image src='../../../images/sh_no_icon.png'></image>
                     <view>暂无数据</view>
                 </view>
-                <!-- <NoTip></NoTip> -->
+                </scroll-view>
               </swiper-item>
             </block>
           </swiper>
-        </scroll-view>
       </view>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-// import NoTip from '@/components/OrderNoDataTip/index'
 import AfterSale from '@/components/AfterSaleCom/index'
-import { apiFindAfterSalesPageF, apiFindCompleteOrderListF } from '../../../services/mine/index'
+import { apiFindAfterSalesPageF,apiServeSalesPageF,wxSubscribeMessageF } from '../../../services/mine/index'
 export default class AfterSales extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '我的售后'
   };
   components = {
-    // NoTip: NoTip,
     AfterSale: AfterSale
   };
   data = {
-   topArr: ['售后申请', '处理中', '申请记录'],
+    height:wx.getSystemInfoSync().screenHeight,
+    showModal:true,
+    subscribeList:[],
+    topArr: ['售后申请', '处理中', '申请评价', '申请记录'],
    currentIndex: 0,
    imgUrls: [
       'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
@@ -65,10 +69,12 @@ export default class AfterSales extends wepy.page {
     pageList: [],
     pageParams: { // 1：申请中 0：所有申请记录
       page: 0,
-      limit: 10,
-      status: 0,
+      limit: 6,
+      status: "",
+      offset: 0,
       hasMore:false
-    }
+    },
+    orderDetailId:""
   };
 
   events = {
@@ -79,59 +85,100 @@ export default class AfterSales extends wepy.page {
   }
 
   methods = {
-    intervalChange(e) {
+    intervalChange(e) {  //左右滑动触发事件
       this.currentIndex = e.detail.current
       this.fetchA(e.detail.current)
     },
     changeCurA(i) {
       this.currentIndex = i
     },
-    
     loadMore() { // 加载更多
       if (!this.pageParams.hasMore) return
-      this.pageParams.page += 1
-      this.apiFindAfterSalesPageFA(this.apiOrderFindPageFA.bind(this))
+      let offset = this.pageParams.offset;
+      if(offset == 0){
+        offset = this.pageParams.limit;
+      }else{
+        offset = offset + this.pageParams.limit;
+      }
+      this.pageParams.offset = offset;
+      if(this.currentIndex == 0){ //如果当前索引值currentIndex是0调用售后记录列表  否则调用服务单列表
+        this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
+      }else{
+        this.apiServeSales(this.apiServeSales.bind(this))
+      }
     }
   };
   fetchA(currentIndex) {
     this.pageList = [];
-    if (currentIndex == 0) {
-      this.apiFindCompleteOrderListFA(this.apiFindCompleteOrderListFA.bind(this))
-    } else {
+    if (currentIndex == 0) {  //所有售后申请的记录
+      this.currentIndex = 0
+
       this.pageParams.page = 0
-      this.pageParams.status = currentIndex == 1 ? 1:0
-      this.pageParams.hasMore = false;
+      this.pageParams.limit = 6
+      this.pageParams.status = ""
+      this.pageParams.offset = 0
+      this.pageParams.hasMore = false
+
       this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
+    }else if(currentIndex == 1){ //滑动到处理中
+
+      this.pageParams.page = 0
+      this.pageParams.limit = 6
+      this.pageParams.offset = 0
+      this.pageParams.hasMore = false
+      this.currentIndex = 1
+      this.pageParams.status = 2                            //status状态 2-处理中  3-待评价 不传则为获取所有的服务单
+      this.apiServeSales(this.apiServeSales.bind(this))
+
+    }else if(currentIndex == 2){ //滑动到申请评价
+
+      this.pageParams.page = 0
+      this.pageParams.limit = 6
+      this.pageParams.offset = 0
+      this.pageParams.hasMore = false
+      this.currentIndex = 2
+      this.pageParams.status = 3
+      this.apiServeSales(this.apiServeSales.bind(this))
+    }else{  //滑动到申请记录
+
+      this.pageParams.status = ""
+      this.pageParams.page = 0
+      this.pageParams.limit = 6
+      this.pageParams.offset = 0
+      this.pageParams.hasMore = false
+      this.currentIndex = 3
+      this.apiServeSales(this.apiServeSales.bind(this))
     }
   }
-  apiFindCompleteOrderListFA(fun) {
-    apiFindCompleteOrderListF(fun).then((result) => {
-      this.pageList = result
-      this.$apply()
-    }).catch((err) => {
-      
-    });
-  }
-  apiFindAfterSalesPageFA(fun) {
-    apiFindAfterSalesPageF({
-      page: this.pageParams.page,
+
+  apiServeSales(fun) {  //处理中   获取服务单列表
+    apiServeSalesPageF({
+      status:  this.pageParams.status,
       limit:  this.pageParams.limit,
-      status:  this.pageParams.status
+      offset: this.pageParams.offset
     }, fun).then((result) => {
       let { rows, last, pageNumber } = result
       this.pageParams.page = pageNumber
       this.pageParams.hasMore = !last
-      let _rows = rows.map((val) => {
-        return {orderDetailList: [val]}
-      })
-      this.pageList = this.pageList.concat(_rows)
+      this.pageList = this.pageList.concat(result.rows)
+      this.$apply()
+    }).catch((err) => {});
+  }
+  apiFindAfterSalesPageFA(fun) { //售后申请记录  0
+    apiFindAfterSalesPageF({
+      limit:  this.pageParams.limit,
+      offset: this.pageParams.offset
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(result.rows)
       this.$apply()
     }).catch((err) => {});
   }
 
-  onLoad(option) {
-    // this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
-    this.apiFindCompleteOrderListFA(this.apiFindCompleteOrderListFA.bind(this))
+  onLoad() {
+    this.apiFindAfterSalesPageFA(this.apiFindAfterSalesPageFA.bind(this))
   }
 }
 </script>

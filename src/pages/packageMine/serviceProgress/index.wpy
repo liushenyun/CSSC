@@ -1,0 +1,82 @@
+<template>
+  <view class='logistics-ctner'>
+      <view class="logis-inner">
+
+        <view class="logis-status-outer">
+          <view class="logis-status">
+            <view>{{topStatus}}</view>
+            <view>{{description}}</view>
+          </view>
+        </view>
+        <view class="logis-info-outer" wx:for="{{pageList}}" wx:for-item="item">
+          <view class="logis-item">
+            <view class="point-outer">
+              <view class="point">
+                <view class="point-inner"></view>
+              </view>
+            </view>
+
+            <view class="logis-a">
+              <text>{{item.title}}</text>
+            </view>
+            <view class="logis-b">{{item.description}}</view>
+            <view class="logis-c">{{item.updateTime}}</view>
+          </view>
+        </view>
+
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+// import miniPro from '@/utils/wepy-pro.js';
+import { apiAfterSaleServeProcessF } from '../../../services/mine/index'
+export default class LogisticsInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '服务进度'
+  };
+  components = {
+  };
+  data = {
+    id: '',
+    logsObj: '',
+    pageList: [],
+    topStatus: '',
+    description:''
+  };
+  methods = {
+    continueBuyA() {
+      wepy.switchTab({ url: `/pages/index/index` })
+    },
+    checkOrderA() {
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+    }
+  };
+  apiAfterSaleServeProcessFA(fun) {
+    let t = this
+    apiAfterSaleServeProcessF(this.id, fun).then((result) => {
+      console.log(result)
+      // let List = [];
+      // for(let x in result){
+      //   let title = result[x].title
+      //   List.push(title)
+      // }
+      t.topStatus = result[0].title
+      t.description = result[0].description
+      t.pageList = result
+      this.$apply()
+    }).catch(() => { });
+  }
+  events = {}
+  onLoad(option) {
+    this.id = option.id
+    setTimeout(() => {
+      this.apiAfterSaleServeProcessFA(this.apiAfterSaleServeProcessFA.bind(this))
+    }, 10);
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

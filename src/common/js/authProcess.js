@@ -28,6 +28,8 @@ export default class Auth {
    */
   login(userInfo, fetchLofin = true) {
     let _globalData = wepy.$instance.globalData
+    console.log("_globalData")
+    console.log(_globalData)
     let _that = this
     return new Promise((resolve, reject) => {
       wx.login({
@@ -43,7 +45,8 @@ export default class Auth {
           } else {
             wx.getUserInfo({
               success: function (res) {
-                console.log("res")
+                console.log("调用getUserInfo的res回调")
+                console.log(res)
                 _globalData.userInfo = res
                 console.log("fetchLofin" + fetchLofin)
                 if (fetchLofin) {
@@ -80,6 +83,7 @@ export default class Auth {
           if (userInfo) { // 已经授权，可以直接调用 getUserInfo 获取头像昵称
             resolve(true)
             console.log("flag" + flag)
+            console.log("我已经授权同意按钮 开始调用登录")
             if (flag) {
               _that.login(null, flag)
             }

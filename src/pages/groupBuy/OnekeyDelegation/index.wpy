@@ -29,13 +29,20 @@
               </view>
             </view>
             <view class="T1-two-div">
-              <view wx:for="{{groupList}}" wx:key="index">
-                <image src='{{item.headImage}}'></image>
-                <view>{{item.nickName}}</view>
+              <view wx:for="{{groupList}}" wx:key="index" wx:if="{{idx <= 9 }}"  wx:for-index="idx" class="group-member">
+                <image src='{{item.headImage}}'  ></image>
+                <view class="nameText" wx:if="{{groupList.length <= 4}}">{{item.nickName}}</view>
+                <view wx:else>
+                  <view wx:if="{{idx == 0}}">团长</view>
+                </view>
               </view>
+<!--              <view wx:for="{{groupList}}" wx:key="index">-->
+<!--                <image src='{{item.headImage}}'></image>-->
+<!--                <view>{{item.nickName}}</view>-->
+<!--              </view>-->
               <view wx:v-if="{{surplus > 0}}">
                 <image src='../../../images/add1.png'></image>
-                <view>还差{{surplus}}人</view>
+                <view class="else">还差{{surplus}}人</view>
               </view>
             </view>
             <view></view>
@@ -44,11 +51,12 @@
             <view wx:if="{{isJoin && success}}">
               <text>拼团已成功，请等待发货</text>
             </view>
-            <view wx:if="{{isJoin && !success}}">
+            <view  wx:if="{{isJoin && !success}}">
               <button open-type='share' class="share-button">
                 <text>邀请好友参团</text>
               </button>
             </view>
+
             <view wx:if="{{!isJoin && success}}">
                 <text>拼团已结束</text>
             </view>
@@ -112,6 +120,8 @@
       groupNumber: '',
       surplus: '',
       groupList: [],
+      groupLLList: [
+      ],
       groupId: null,
       shareId: null,
       shareInfo: {},
@@ -177,17 +187,25 @@
         groupId: this.groupId
       };
       apiPurchaseShareInfoF(param,fun).then((result)=> {
+        let A = result.shareParam; //shareId=1234
+        let shareId = A.split("="); //分割成数组
         this.shareInfo.title = result.shareTitle;
         this.shareInfo.imageUrl = result.shareImageUrl;
-        this.shareInfo.shareParam = result.shareParam;
+        this.shareInfo.shareParam = shareId[1];
         this.$apply();
       }).catch(()=>{})
     };
     onShareAppMessage(res) {
+      let url = '/pages/groupBuy/OnekeyDelegation/index?shareId=' + this.shareInfo.shareParam;
+      let title = this.shareInfo.title;
+      let imageUrl = this.shareInfo.imageUrl;
+      console.log('url',url)
+      console.log('title',title)
+      console.log('imageUrl',imageUrl)
       return {
-        title: this.shareInfo.title,
-        path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
-        imageUrl: this.shareInfo.imageUrl
+        title: title,
+        path: url,
+        imageUrl: imageUrl
       }
     };
     watch = {
@@ -196,6 +214,7 @@
     };
 
     onLoad(options) {
+      console.log("options");
       console.log(options);
       if (options.groupId) {
         this.groupId = options.groupId;

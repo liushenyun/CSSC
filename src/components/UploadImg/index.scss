@@ -1,0 +1,46 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.multipleImg {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  .upload {
+    position: relative;
+    width:rpx(158);
+    height:rpx(158);
+    background:rgba(255,255,255,1);
+    box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+    border-radius:rpx(10);
+    margin: 0 20rpx 25rpx 0;
+    .addImg {
+      width: 158rpx;
+      height: 158rpx;
+    }
+    .deleteImg {
+      width: 30rpx;
+      height: 30rpx;
+      position: absolute;
+      top: rpx(-12);
+      right: rpx(-12);
+    }
+  }
+  .uploadDiv{
+    position: relative;
+    width:rpx(158);
+    height:rpx(158);
+    background:rgba(255,255,255,1);
+    box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+    border-radius:rpx(10);
+    padding: rpx(50);
+    image{
+      width: rpx(63);
+      height: rpx(55);
+    }
+    view{
+      font-size: rpx(18);
+      width: rpx(75);
+      color:rgba(153,153,153,1);
+    }
+  }
+}

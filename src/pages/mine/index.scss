@@ -73,6 +73,23 @@ page{
         color: #FFF;
         z-index: 1;
       }
+      .hy-btn-member{
+        font-size: rpx(25);
+        font-weight: bold;
+        line-height: rpx(38);
+        position: absolute;
+        top: rpx(70);
+        text-align: center;
+        left: rpx(10);
+        background:linear-gradient(-15deg,#FB9F70,#FE6F48);
+        color: #FFFFFF;
+        letter-spacing: rpx(1);
+        padding:rpx(12);
+        border-radius:rpx(19);
+        z-index: 100;
+        width: rpx(350);
+
+      }
       .hy-btn {
         right: rpx(14);
         background: #FFF;
@@ -165,11 +182,24 @@ page{
           margin-bottom: rpx(10);
         }
       }
-      .order_a image{ width: rpx(36); height: rpx(30); } 
-      .order_b image{ width: rpx(36); height: rpx(30); } 
-      .order_c image{ width: rpx(34); height: rpx(32); } 
-      .order_d image{ width: rpx(29); height: rpx(31); } 
-      .order_e image{ width: rpx(35); height: rpx(32); } 
+      .order_a image{ width: rpx(41); height: rpx(35); }
+      .order_b image{ width: rpx(41); height: rpx(35); }
+      .order_c image{ width: rpx(41); height: rpx(35); }
+      .order_d image{ width: rpx(41); height: rpx(35); }
+      .order_e image{ width: rpx(41); height: rpx(35); }
+      .order_a,.order_b,.order_c,.order_d,.order_e{
+        .A{
+          width: rpx(30);
+          height: rpx(30);
+          border-radius: 50%;
+          position: absolute;
+          margin-top: rpx(-60);
+          margin-left: rpx(35);
+          background: red;
+          color: #FFFFFF;
+          border: rpx(3) solid #FF840A;
+        }
+      }
     }
   }
 

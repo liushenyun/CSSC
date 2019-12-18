@@ -26,7 +26,7 @@ const GOODS_TOPIC_APP_ID = 'MiniProgram_Psychology' // 商品topic app_id
 // const MAIN_DOMAIN = 'http://wisf54.natappfree.cc' // 测试域名[ok]
 // const MAIN_DOMAIN = 'http://192.168.7.200:8080' // 测试域名[ok]
 const MAIN_DOMAIN = 'https://cm.chengmall.cn' // 正式域名
-
+const Version = '1.0'
 const WBVIEW_PAGE_URL = '/pages/webview/index'
 const WECHAT_ACCESS_TOKEN_NAME = `${BASE_NAME}_Access_TOKEN` // access_token存储名字
 
@@ -54,5 +54,6 @@ export {
   EVENT_QUEUE_NAME,
   TIP_GLYCEMIC_TEXT,
   INDICATOR_COLOR,
-  INDICATOR_ACTIVE_COLOR
+  INDICATOR_ACTIVE_COLOR,
+  Version
 }

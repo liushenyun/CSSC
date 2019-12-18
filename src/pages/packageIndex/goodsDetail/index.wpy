@@ -232,8 +232,8 @@ export default class GoodsDetail extends wepy.page {
     interval: 5000,
     duration: 1000,
     createData: {
-      channelId: '0',
-      orderDetailBoList: []
+      prepareType:'0',
+      orderDetail: []
     },
     colorId: '',
     wxData: "<p style='font-size: 32rpx; padding: 30rpx 0; text-align: center;'>此处可以在html2wxml.wpy中自行选择删除</p>",
@@ -308,16 +308,17 @@ export default class GoodsDetail extends wepy.page {
       this.apiGetGoodsShareFA(this.apiGetGoodsShareFA.bind(this))
     },
     goodsSureA() {
-      if (this.isWhichFlag == 1) {
+      let t = this
+      if (this.isWhichFlag == 1) {  //加入购物车
         if (this.goodsColorVoList.length > 0) {
           this.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
         } else {
           this.colorId = ''
         }
         this.apiCartSaveA(this.apiCartSaveA.bind(this))
-      } else if (this.isWhichFlag == 2) {
+      } else if (this.isWhichFlag == 2) {  //立即购买
         let _data = {
-          cartId: '',
+          colorId:'',
           goodsId: this.goodsId,
           specificationId: this.goodsSpecificationVoList[this.specCurrentIndex].id,
           goodsNumber: this.buyNum
@@ -325,11 +326,19 @@ export default class GoodsDetail extends wepy.page {
         if (this.goodsColorVoList.length > 0) {
           _data.colorId = this.goodsColorVoList[this.colorCurrentIndex].id
         }
-        this.createData.orderDetailBoList.push(_data)
-        this.$apply()
-        setTimeout(() => {
-          this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
-        }, 10)
+        let colorId = _data.colorId;
+        let goodsId = _data.goodsId;
+        let specificationId = _data.specificationId;
+        let goodsNumber = _data.goodsNumber;
+        let prepareType = "2"
+        wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?colorId=${colorId}&goodsId=${goodsId}&specificationId=${specificationId}&goodsNumber=${goodsNumber}&prepareType=${prepareType}` });
+
+        // this.createData.orderDetail.push(_data)
+        // // this.createData.orderDetailBoList.push(_data)
+        // this.$apply()
+        // setTimeout(() => {
+        //   this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
+        // }, 10)
       }
     },
     addCartA() {
@@ -341,8 +350,6 @@ export default class GoodsDetail extends wepy.page {
       this.showGoodsPop = true
     }
   }
-
-
   downLoadA() {
     var _this = this
     wepy.downloadFile({
@@ -389,8 +396,9 @@ export default class GoodsDetail extends wepy.page {
 
   apiCreateOrderA(fun) {
     apiCreateOrderF(this.createData, fun).then(msg => {
-      let _id = msg.id
+      // let _id = msg.id
       wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
+
     }).catch(() => { })
   }
 
@@ -544,7 +552,8 @@ export default class GoodsDetail extends wepy.page {
   }
 
   onShow() {
-    this.createData.orderDetailBoList = []
+    this.createData.orderDetail = []
+    // this.createData.orderDetailBoList = []
   }
 }
 </script>

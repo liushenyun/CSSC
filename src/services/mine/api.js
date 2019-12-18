@@ -10,10 +10,22 @@ const apiConfirmOrder = (orderId) => `${MAIN_DOMAIN}/api/buy/order/confirm_goods
 const apiCreateOrder = () => `${MAIN_DOMAIN}/api/buy/order/create`
 
 // 订单模块 => 订单详情
-const apiFindOrderDetail = (orderId) => `${MAIN_DOMAIN}/api/buy/order/find_order_pay_info/${orderId}`
+const apiFindOrderDetail = (orderId) => `${MAIN_DOMAIN}/api/buy/order/prepare`
 
-// 订单模块 => 分页查询商品信息
-const apiOrderFindPage = () => `${MAIN_DOMAIN}/api/buy/order/find_page`
+// 订单模块 => 查看 订单详情 新
+const apiMyOrderInfo = (orderMasterId) => `${MAIN_DOMAIN}/api/buy/order/infos?orderMasterId=${orderMasterId}`
+
+// 订单模块 => 查看 订单详情 （评价进来的商品准备信息 ）
+const apiMyOrderInfoComment = (orderChildId) => `${MAIN_DOMAIN}/api/buy/order/list/detail?orderChildId=${orderChildId}`
+
+// 订单模块 => 分页查询商品订单列表
+const apiOrderFindPage = () => `${MAIN_DOMAIN}/api/buy/order/page`
+
+// 订单模块 => 获取头部标题以及订单提醒
+const apiGetHearder = () => `${MAIN_DOMAIN}/api/buy/order/list/tips`
+
+// 订单模块 => 提醒商家发货
+const apiRemindDeliverGoods = (orderChildId) => `${MAIN_DOMAIN}/api/buy/order/remind?orderChildId=${orderChildId}`
 
 // 订单模块 => 查看物流信息
 const apiLogisticsInfo = (id) => `${MAIN_DOMAIN}/api/buy/order/get_logistics_info/${id}`
@@ -34,7 +46,8 @@ const apiFootDelete = (id) => `${MAIN_DOMAIN}/api/goods/browse/delete/${id}`
 const apiFootFindPage = (id) => `${MAIN_DOMAIN}/api/goods/browse/find_page`
 
 // 支付模块 => 创建支付订单
-const apiPayCreate = (id) => `${MAIN_DOMAIN}/api/pay/create`
+// const apiPayCreate = (id) => `${MAIN_DOMAIN}/api/pay/create`
+const apiPayCreate = (id) => `${MAIN_DOMAIN}/api/buy/order/create`
 
 // 支付模块 => 商品退款
 const apiRefund = (id) => `${MAIN_DOMAIN}/api/pay/refund/${id}`
@@ -72,14 +85,48 @@ const apiPartnerPay = () => `${MAIN_DOMAIN}/api/partner/apply/pay`
 // 合伙人申请模块 => 提交合伙人信息
 const apiPartnerSave = () => `${MAIN_DOMAIN}/api/partner/apply/save`
 
+// 商品售后模块 => 商品分页查询弹框获取所有物流公司
+const apiExpressCompany = () => `${MAIN_DOMAIN}/api/logistics/page`
+
+// 商品售后模块 => 商品售后 提交运单号等
+const apiExpressInfo = () => `${MAIN_DOMAIN}/api/after/sales/shipped`
+
 // 商品售后模块 => 商品售后api
-const apiSales = () => `${MAIN_DOMAIN}/api/sales/apply`
+const apiSales = () => `${MAIN_DOMAIN}/api/after/sales/apply`
+
+// 商品评价
+const apiGoodsComment = () => `${MAIN_DOMAIN}/api/goods/comment/save`
+
+// 售后服务单评价
+const apiAfterSaleGoodsComment = () => `${MAIN_DOMAIN}/api/after/sales/evaluate`
+
+// 商品售后模块 => 商品售后api （从修改申请入口进来）
+const apiSalesModify = () => `${MAIN_DOMAIN}/api/after/sales/update`
 
 // 商品售后模块 => 商品分页查询售后记录
-const apiFindAfterSalesPage = () => `${MAIN_DOMAIN}/api/sales/find_after_sales_page`
+const apiFindAfterSalesPage = () => `${MAIN_DOMAIN}/api/after/sales/list/order`
+
+// 商品售后模块 => 商品分页查询服务单列表
+const apiServeSalesPage = () => `${MAIN_DOMAIN}/api/after/sales/list`
+
+// 商品售后订单模块 => 查询服务单 详情
+const apiAfterSaleServeInfo = (id) => `${MAIN_DOMAIN}/api/after/sales/info?id=${id}`
+
+// 商品售后订单模块 => 查询服务单进度
+const apiAfterSaleServeProcess = (id) => `${MAIN_DOMAIN}/api/after/sales/progress?afterSalesId=${id}`
+
 
 // 商品售后模块 => 获取可申请售后的订单
 const apiFindCompleteOrderList = () => `${MAIN_DOMAIN}/api/sales/find_complete_order_list`
+
+// 商品售后订单模块 => 查看 申请售后订单详情
+const apiAfterSaleInfo = (orderDetailId,afterSalesId) => `${MAIN_DOMAIN}/api/after/sales/apply/prepare?orderDetailId=${orderDetailId}&afterSalesId=${afterSalesId}`
+
+// 商品售后订单模块 => 查看售后 服务订单详情 处理中 修改申请的
+const apiChangeAfterSaleInfo = (id) => `${MAIN_DOMAIN}/api/after/sales/info?id=${id}`
+
+// 商品售后订单模块 => 取消服务申请售后订单
+const apiAfterSalecancelOrder = (id) => `${MAIN_DOMAIN}/api/after/sales/cancel?id=${id}`
 
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeData = () => `${MAIN_DOMAIN}/api/wx/user/get_my_home_data`
@@ -111,6 +158,14 @@ const apiVipFinanceConfig = () => `${MAIN_DOMAIN}/api/vip/get_finance_config`
 // 会员模块 => 开通会员
 const apiVipPay = () => `${MAIN_DOMAIN}/api/vip/pay`
 
+// 微信文件上传
+const wxFileUpload = () => `${MAIN_DOMAIN}/api/image/upload`
+
+// 升级年卡会员模块
+const apiVipUpgradeYearMember = () => `${MAIN_DOMAIN}/api/vip/upgrade`
+
+// 订阅消息F
+const wxSubscribeMessage = (type) => `${MAIN_DOMAIN}/wx/subscribe/message?type=${type}`
 export {
   apiCancelOrder,
   apiConfirmOrder,
@@ -148,5 +203,23 @@ export {
   apiUploadPartnerHead,
   apiVipFinanceConfig,
   apiVipPay,
-  apiPartnerWithdrawalApply
+  apiPartnerWithdrawalApply,
+  apiVipUpgradeYearMember,
+  apiAfterSaleInfo,
+  wxFileUpload,
+  apiServeSalesPage,
+  apiAfterSaleServeInfo,
+  apiAfterSaleServeProcess,
+  apiExpressCompany,
+  apiExpressInfo,
+  apiMyOrderInfo,
+  apiSalesModify,
+  apiAfterSalecancelOrder,
+  apiGoodsComment,
+  apiMyOrderInfoComment,
+  apiGetHearder,
+  apiRemindDeliverGoods,
+  apiChangeAfterSaleInfo,
+  apiAfterSaleGoodsComment,
+  wxSubscribeMessage
 }

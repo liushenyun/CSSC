@@ -6,7 +6,13 @@
       scroll-y
       style="height: 100%;"
     >
+      <view class="ix-add-text"  wx:if="{{isShow}}">
+        <view class="animation" @tap="show">
+          <text>点击</text><image src="../../images/topdian.png" style="width: 40rpx;height: 15rpx;margin: 0 5rpx"></image>
+          <text>添加到我的小程序，快捷又方便 <text> x </text></text>
 
+        </view>
+      </view>
     <view class="ix-input-wrap">
       <view class="input-search" @tap='bindfocusInput'>
         <image src='../../images/nav_button_search_default.png' />
@@ -110,9 +116,25 @@
 
 
     </view>
-
   </scroll-view>
   </view>
+
+  <!--custom Modal    广告弹框start  -->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
+  </view>
+  <block wx:if="{{showModal}}">
+      <view class="modal-content">
+        <view class="heard">
+          <view @tap="goLink({{advertisements[0]}})">
+            <image src="{{advertisements[0].bannerPath}}" class="banner"></image>
+          </view>
+        </view>
+      </view>
+      <view class="cancel">
+        <image src="../../images/cha.png"  bindtap="hideModal"></image>
+      </view>
+  </block>
+  <!--custom Modal    广告弹框end  -->
 </template>
 
 <script>
@@ -143,6 +165,7 @@ export default class Index extends wepy.page {
       'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
       'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
     ],
+    isShow:true,
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
@@ -153,6 +176,8 @@ export default class Index extends wepy.page {
     homeGoodsCategoryList: [], // 分类推荐
     homeTale: [], // 文化衍生区
     homeVipGoodsInfoList: [], // 会员专区
+    showModal:false,
+    advertisements:[],//弹窗广告内容
     activities: [
       {
         img: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.jpg',
@@ -180,6 +205,19 @@ export default class Index extends wepy.page {
   computed = {};
 
   methods = {
+    goLink(item){ //跳转广告对应页面
+      let { link, linkType } = item
+      // linkType: 1-商品详情；2-外部链接; 3-小程序页面链接地址
+      if (link) {
+        if (linkType == 1) {
+          miniPro.toGoodsDetail(link)
+        } else if (linkType == 2) {
+          miniPro.toWebView(link)
+        } else if (linkType == 3) {
+          wepy.navigateTo({ url: link });
+        }
+      }
+    },
     swiperA(item) {
       // linkType: 1-商品详情；2-H5; 3-抽奖活动
       let { link, linkType } = item
@@ -224,16 +262,28 @@ export default class Index extends wepy.page {
     },
     toGroupBuy() {
       wepy.navigateTo({ url: `/pages/groupBuy/index/index` });
+    },
+    hideModal() {
+      this.showModal = false
+    },
+    show(){
+      console.log("触发了点击事件哦")
+      this.isShow = false
+      this.$apply()
     }
   }
 
   apiGetHomeDataFA(fun) {
     apiGetHomeDataF(fun).then(msg => {
-      let { homeBannerVoList, homeGoodsCategoryList, homeTale, homeVipGoodsInfoList } = msg
+      let { homeBannerVoList, homeGoodsCategoryList, homeTale, homeVipGoodsInfoList,advertisements } = msg
       this.homeBannerVoList = homeBannerVoList
       this.homeGoodsCategoryList = homeGoodsCategoryList
       this.homeTale = homeTale
       this.homeVipGoodsInfoList = homeVipGoodsInfoList
+      this.advertisements = advertisements
+      if(advertisements.length > 0){
+        this.showModal = true
+      }
       this.$apply()
     }).catch(() => { })
   }

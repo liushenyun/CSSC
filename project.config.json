@@ -4,7 +4,7 @@
 		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
-		"minified": false,
+		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": false,
@@ -40,8 +40,12 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 52,
+			"current": 49,
 			"list": [
 				{
 					"id": -1,
@@ -59,7 +63,7 @@
 				},
 				{
 					"id": -1,
-					"name": "成+",
+					"name": "C+专区",
 					"pathName": "pages/recom/index",
 					"query": "",
 					"scene": null
@@ -149,6 +153,48 @@
 					"scene": null
 				},
 				{
+					"id": -1,
+					"name": "我的订单详情",
+					"pathName": "pages/packageMine/OrderInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "服务进度",
+					"pathName": "pages/packageMine/serviceProgress/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "订单评价",
+					"pathName": "pages/packageMine/orderComment/index",
+					"query": "orderChildId=20191130132412583291",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "填写快递单号",
+					"pathName": "pages/packageMine/writeExpressNum/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "售后评价",
+					"pathName": "pages/packageMine/afterSaleOrderComment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "服务单详情",
+					"pathName": "pages/packageMine/serviceTickeInfo/index",
+					"query": "",
+					"scene": null
+				},
+				{
 					"id": 15,
 					"name": "商品详情",
 					"pathName": "pages/packageIndex/goodsDetail/index",
@@ -212,7 +258,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 30,
 					"name": "支付成功",
 					"pathName": "pages/packageMine/paySuccess/index",
 					"query": "",
@@ -289,10 +335,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 39,
 					"name": "退货",
 					"pathName": "pages/packageMine/returnGoods/index",
-					"query": "",
+					"query": "orderDetailId=20191125103254518109&type=2",
 					"scene": null
 				},
 				{
@@ -380,17 +426,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 48,
 					"name": "拼团详情",
 					"pathName": "pages/groupBuy/Info/index",
-					"query": "",
+					"query": "indexId=20191104184127031232",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 49,
 					"name": "一键参团",
 					"pathName": "pages/groupBuy/OnekeyDelegation/index",
-					"query": "",
+					"query": "groupId=20191107212935588852",
 					"scene": null
 				},
 				{
@@ -413,7 +459,35 @@
 					"pathName": "pages/groupBuy/OrderInfo/index",
 					"query": "orderChildId=20191102164435241521",
 					"scene": null
-				}
+				},
+				{
+					"id": -1,
+					"name": "会员等级",
+					"pathName": "pages/packageIntegral/memberRank/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "积分专区",
+					"pathName": "pages/packageIntegral/integralRegion/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "玩转成氏商城",
+					"pathName": "pages/packageIntegral/playChengMall/index",
+					"query": "",
+					"scene": null
+				},
+        {
+          "id": -1,
+          "name": "积分签到",
+          "pathName": "pages/packageIntegral/memberIntegralSignIn/index",
+          "query": "",
+          "scene": null
+        }
 			]
 		}
 	}

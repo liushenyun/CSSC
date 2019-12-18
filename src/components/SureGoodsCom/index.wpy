@@ -1,15 +1,13 @@
 <template>
   <view class="cat-item-ctner">
-
     <view class="order-status-order">
         <text>{{item.companyName}}</text>
         <image src='../../images/unfold.png'></image>
-        <!-- <text>交易成功</text> -->
     </view>
 
-    <view class="sure-same-outer goods-outer" wx:for="{{item.orderDetailList}}" wx:key="index" wx:for-item="subItem">
+    <view class="sure-same-outer goods-outer" wx:for="{{item.details}}" wx:key="index" wx:for-item="subItem">
         <view class='cat-m'>
-            <image src='{{subItem.goodsIco}}' />
+            <image src='{{subItem.goodsIcon}}' />
         </view>
         <view class="cat-m-t">
             <view class='goods-name'>
@@ -18,12 +16,12 @@
             </view>
             <view class='goods-des'>
                 <text>颜色：{{subItem.colorName}}</text>
-                <text>x{{subItem.goodsNumber}}</text>
+                <text>x{{subItem.count}}</text>
             </view>
         </view>
     </view>
-    
-<!-- 
+
+<!--
     <view class="sub-same s-num">
         <text>购买数据</text>
         <text>{{item.goodsNumber}}</text>
@@ -31,7 +29,8 @@
 
     <view class="sub-same s-type">
         <text>购买方式</text>
-        <text>免运费(快递发货)</text>
+      <text wx:if="{{item.freight == 0}}">免运费(快递发货)</text>
+      <text wx:else>运费： {{item.freight}}</text>
     </view>
 
     <view class="sub-same s-word">
@@ -40,10 +39,11 @@
     </view>
 
     <view class="order-num-outer">
-        <text>共{{item.goodsNumber}}件 合计:</text>
-        <text>￥{{item.orderAmount}}</text>
+        <text>共{{item.totalCount}}件 合计:</text>
+
+        <text>￥{{item.totalPrice}}</text>
     </view>
-    
+
   </view>
 </template>
 

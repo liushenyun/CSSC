@@ -1,31 +1,75 @@
 <template>
   <view class='after-action-ctner'>
+
+
      <view class='after-goods-outer'>
        <view class="after-tips">
          <text class="after-tips-word">本次售后服务将由<text>成氏商城</text>为您提供</text>
        </view>
      </view>
 
+    <view class="I2">
+      <view class="T1-one-div">
+        <view>
+          <image src='{{orderInfo.goodsIco}}'></image>
+          <view class="center-text">
+            <view style="font-size:24rpx;color:#333333;">{{orderInfo.goodsName}}</view>
+            <view>
+              <text style="font-size:20rpx;color:#000000;font-weight: bold">￥{{orderInfo.goodsPrice}}</text>
+            </view>
+          </view>
+          <view class="center-text">
+            <view style="font-size:20rpx;color:#666666;">
+              <text wx:if="{{orderInfo.colorName}}">颜色：{{orderInfo.colorName}} </text>
+              <text wx:if="{{orderInfo.specification}}" style="margin-left: 10rpx">{{orderInfo.specification}}</text>
+            </view>
+            <view>
+              <text style="font-size:20rpx;color:#666666;">X {{orderInfo.buyNumber}}</text>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+    <view class="T1-one-div-bottom">
+      <view style="margin-top: 10rpx">申请数量</view>
+      <AddCom></AddCom>
+    </view>
      <view class="after-action-outer">
        <view class="after-action-list">
-          <view @tap='toTuiA'><image src='../../../images/refund.png'></image><text>退货</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
-          <!-- <view @tap='toHuanA'><image src='../../../images/refund.png'></image><text>换货</text><text>退货</text><image src='../../../images/unfold.png'></image></view> -->
-          <view @tap='toBuA'><image src='../../../images/refund.png'></image><text>补发商品</text><text>退货</text><image src='../../../images/unfold.png'></image></view>
+         <view @tap='returnGoods'><image src='../../../images/tui.png'></image><text>退货</text><text>退回收到的商品/并退回货款</text><image src='../../../images/unfold.png'></image></view>
+         <view @tap='changeGoods'><image src='../../../images/chang.png'></image><text>换货</text><text>更换收到的商品</text><image src='../../../images/unfold.png'></image></view>
+         <view @tap='returnMoneyGoods'><image src='../../../images/tuimoney.png'></image><text>退款</text><text>原路退回商品货款</text><image src='../../../images/unfold.png'></image></view>
+         <view @tap='replacementGoods'><image src='../../../images/bu.png'></image><text>补发商品</text><text>卖家少发商品</text><image src='../../../images/unfold.png'></image></view>
+
        </view>
 
-       <view class="after-btn-outer">
-         <view> <image src='../../../images/service_light.png'></image> <text>联系客户</text> </view>
-         <view> <image src='../../../images/phone.png'></image> <text>拨打电话</text> </view>
-       </view>
-       
+<!--       <view class="after-btn-outer">-->
+<!--         <view> <image src='../../../images/service_light.png'></image> <text>联系客户</text> </view>-->
+<!--         <view> <image src='../../../images/phone.png'></image> <text>拨打电话</text> </view>-->
+<!--       </view>-->
+
+
      </view>
   </view>
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
+  </view>
+  <block wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="heard">
+        <button class="subscribeBtn" @tap='subscribe'>授权接收订阅消息</button>
+      </view>
+    </view>
+  </block>
 </template>
 
 <script>
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDataTip/index'
 import AfterSale from '@/components/AfterSaleCom/index'
+import AddCom from '@/components/AddCom/index'
+import UrlNavigate from '../../../utils/wepyNavigate';
+import {apiAfterSaleInfoF,wxSubscribeMessageF} from  '../../../services/mine'
 export default class AfterSalesAction extends wepy.page {
   config = {
     // navigationBarBackgroundColor: '#09103b',
@@ -34,28 +78,71 @@ export default class AfterSalesAction extends wepy.page {
   };
   components = {
     NoTip: NoTip,
-    AfterSale: AfterSale
+    AfterSale: AfterSale,
+    AddCom: AddCom
   };
   data = {
-    orderId: ''
+    showModal:true,
+    orderDetailId: '',
+    afterSalesId:"",
+    orderId: '',
+    orderInfo: {
+      goodsIco: "",
+      colorName:"",
+      goodsName: "",
+      specification: "",
+      buyNumber: '',
+      goodsPrice: ''
+    }
   };
 
   events = {
+    // 'addComEvent': (p1) => { this.buyNum = p1; this.$apply() }
   }
-
   methods = {
-    toTuiA(i) {
-      wepy.navigateTo({ url: `/pages/packageMine/returnGoods/index?id=${this.orderId}` });
+    returnGoods() {
+      UrlNavigate('/pages/packageMine/returnGoods/index',{orderDetailId:this.orderDetailId,afterSalesId:this.afterSalesId,type:2})
     },
-    // toHuanA() {
-    //   wepy.navigateTo({ url: '/pages/packageMine/exchangeGoods/index' });
-    // },
-    toBuA() {
-      wepy.navigateTo({ url: `/pages/packageMine/replacementGoods/index?id=${this.orderId}` });
+    changeGoods(){
+      UrlNavigate('/pages/packageMine/returnGoods/index',{orderDetailId:this.orderDetailId,afterSalesId:this.afterSalesId,type:3})
+    },
+    returnMoneyGoods(){
+      UrlNavigate('/pages/packageMine/returnGoods/index',{orderDetailId:this.orderDetailId,afterSalesId:this.afterSalesId,type:1})
+    },
+    replacementGoods(){
+      UrlNavigate('/pages/packageMine/returnGoods/index',{orderDetailId:this.orderDetailId,afterSalesId:this.afterSalesId,type:4})
     }
   };
+  apiAfterOrderInfo(fun) {
+    apiAfterSaleInfoF(this.orderDetailId,this.afterSalesId, fun).then((result) => {
+      this.orderInfo = result
+      this.$apply()
+    }).catch((err) => {});
+  }
+
+  subscribe(){
+    let list = this.subscribeList;
+    if(list.length > 3){
+      list = list.slice(0,2)
+    }
+    if (typeof wx.requestSubscribeMessage === 'function'){
+      wx.requestSubscribeMessage({
+        tmplIds: list,
+        success (res) {
+        }
+      })
+    }
+    this.showModal = false;
+  }
+
   onLoad(option) {
-    this.orderId = option.id
+    this.orderDetailId = option.orderDetailId
+    this.afterSalesId = option.afterSalesId
+
+    this.apiAfterOrderInfo(this.apiAfterOrderInfo.bind(this))
+    wxSubscribeMessageF(2).then(msg => {
+      this.subscribeList = msg;
+    });
   }
 }
 </script>

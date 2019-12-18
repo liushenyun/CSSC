@@ -14,12 +14,13 @@
       <button class="icx-btn-same-sure" @tap='continueBuyA'>继续逛逛</button>
       <button class="icx-btn-same-cancel" @tap='checkOrderA'>查看订单</button>
     </view>
-    
   </view>
+
 </template>
 
 <script>
 import wepy from 'wepy'
+import { wxSubscribeMessageF } from '../../../services/mine/index'
 export default class PaySuccess extends wepy.page {
   config = {
     navigationBarTitleText: '完成支付'
@@ -37,6 +38,7 @@ export default class PaySuccess extends wepy.page {
     }
   };
   onLoad() {
+
   }
 }
 </script>

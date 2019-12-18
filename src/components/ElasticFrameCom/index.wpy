@@ -1,0 +1,134 @@
+<template>
+  <view class="btn-div">
+    <view wx:if="{{corporationName}}"  catchtap="toShowModal">
+<!--      <input type="text"  disabled placeholder="请选择快递公司" value="{{corporationName}}">-->
+      <view class="name">{{corporationName}}</view>
+    </view>
+    <view bindtap="toShowModal" wx:else>
+<!--      <input type="text" placeholder="请选择快递公司"> -->
+      <view class="name" style="color: #808080;border: 3rpx solid #EEE">请选择快递公司</view>
+    </view>
+  </view>
+  <!--custom Modal    查看更多弹框  -->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
+
+  </view>
+  <view wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="heard">
+        <input type="text" placeholder="输入快递公司名" @input="express">
+        <view catchtap="search">搜索</view>
+      </view>
+      <scroll-view scroll-y="true" lower-threshold="200" style = "height:100%" @scrolltolower="loadMore" scroll-with-animation = "true">
+      <view class="content-index-bottom"  wx:for="{{pageList}}" wx:key="groupIndex">
+        <view  class="V4">
+          <view  class="right-content"  @tap="selected({{item}})">
+            <veiw class="time-content" style="text-align: center">
+              <text>{{item.corporationName}}</text>
+            </veiw>
+          </view>
+        </view>
+      </view>
+      </scroll-view>
+    </view>
+
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import { apiExpressCompanyF } from '../../services/mine/index'
+
+export default class AddCom extends wepy.component {
+  props = {
+      num: {
+          type: Number,
+          default: 1
+      },
+    selectVal:{
+        type: String,
+        default: {}
+    }
+  }
+  data = {
+    searchVal:'',
+    height:wx.getSystemInfoSync().screenHeight,
+    corporationName: "",
+    showModal:false,
+    pageParams: {
+      limit: 10,
+      offset: 0,
+      hasMore:false
+    },
+    pageList: []
+  }
+  methods = {
+    express(e){
+      this.searchVal = e.detail.value
+      console.log(e.detail.value);
+    },
+    search(){
+      this.pageParams.offset = 0;
+      this.pageList = [];
+      this.apiExpressCompanyA(this.apiExpressCompanyA.bind(this));
+    },
+    toShowModal(e) { //这里开始
+      this.showModal = true
+    },
+    hideModal() {
+      this.showModal = false
+      this.pageParams.offset = 0;
+      this.pageList = [];
+      this.apiExpressCompanyA(this.apiExpressCompanyA.bind(this));
+    },
+    selected(item) {
+      this.showModal = false
+      this.corporationName = item.corporationName;
+      this.$emit('corporationCode', item.corporationCode);
+      this.$emit('corporationName', item.corporationName);
+      },
+    loadMore() { // 加载更多分页快递公司信息
+      let offset = this.pageParams.offset;
+      if(offset == 0){
+        offset = this.pageParams.limit;
+      }else{
+        offset = offset + this.pageParams.limit;
+      }
+      this.pageParams.offset = offset;
+      this.apiExpressCompanyA(this.apiExpressCompanyA.bind(this))
+    }
+  }
+  apiExpressCompanyA(fun) {  //获取所有快递公司
+    apiExpressCompanyF({
+      limit:  this.pageParams.limit,
+      offset: this.pageParams.offset,
+      keyword: this.searchVal
+    }, fun).then((result) => {
+      let { rows, last, pageNumber } = result
+      this.pageParams.page = pageNumber
+      this.pageParams.hasMore = !last
+      this.pageList = this.pageList.concat(rows)
+      this.$apply()
+    }).catch((err) => {});
+  }
+
+  watch = {
+      item(newVal, oldVal) {
+
+      }
+  }
+  onLoad() {
+      this.number = this.num
+      this.$apply();
+    this.apiExpressCompanyA(this.apiExpressCompanyA.bind(this))
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './index.scss';
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+</style>

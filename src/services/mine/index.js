@@ -1,5 +1,6 @@
 import wepy from 'wepy'
 import Validate from '../Validate'
+import  {Version} from '../../common/js/config'
 import {
   apiCancelOrder,
   apiConfirmOrder,
@@ -37,7 +38,25 @@ import {
   apiUploadPartnerHead,
   apiVipFinanceConfig,
   apiVipPay,
-  apiPartnerWithdrawalApply
+  apiPartnerWithdrawalApply,
+  apiVipUpgradeYearMember,
+  apiAfterSaleInfo,
+  wxFileUpload,
+  apiServeSalesPage,
+  apiAfterSaleServeInfo,
+  apiAfterSaleServeProcess,
+  apiExpressCompany,
+  apiExpressInfo,
+  apiMyOrderInfo,
+  apiSalesModify,
+  apiAfterSalecancelOrder,
+  apiGoodsComment,
+  apiMyOrderInfoComment,
+  apiGetHearder,
+  apiRemindDeliverGoods,
+  apiChangeAfterSaleInfo,
+  apiAfterSaleGoodsComment,
+  wxSubscribeMessage
 } from './api'
 import packagePromise from '../packagePromise'
 // import { request } from '../request'
@@ -69,11 +88,49 @@ const apiConfirmOrderF = (id, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 订单模块 => 订单详情
-const apiFindOrderDetailF = (orderId, fun) => packagePromise((resolve, reject) => {
+
+// 我的订单 => 查看订单详情
+const apiMyOrderInfoF = (orderMasterId, fun) => packagePromise((resolve, reject) => {
   request({
-    url: apiFindOrderDetail(orderId),
-    method: 'GET'
+    url: apiMyOrderInfo(orderMasterId),
+    method: 'GET',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 我的订单 => 查看订单详情  (评价的准备信息 商品信息)
+const apiMyOrderInfoCommentF = (orderChildId, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiMyOrderInfoComment(orderChildId),
+    method: 'GET',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+// // 订单模块 => 订单详情
+// const apiFindOrderDetailF = (orderId, fun) => packagePromise((resolve, reject) => {
+//   request({
+//     url: apiFindOrderDetail(orderId),
+//     method: 'GET'
+//   }, fun)
+//     .then(msg => {
+//       resolve(msg)
+//     })
+//     .catch(err => reject(err))
+// })
+const apiFindOrderDetailF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiFindOrderDetail(),
+    method: 'POST',
+    header: {
+      'content-type': 'application/json'
+    },
+    data
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -101,9 +158,35 @@ const apiCreateOrderF = (data, fun) => packagePromise((resolve, reject) => {
 const apiOrderFindPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiOrderFindPage(),
-    method: 'POST',
+    method: 'GET',
     noOutData: true,
     data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 我的订单模块 => 查询 获取头部标题以及订单提醒
+const apiGetHearderF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGetHearder(),
+    method: 'GET',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 我的订单模块 => 提醒商家发货
+const apiRemindDeliverGoodsF = (orderChildId, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiRemindDeliverGoods(orderChildId),
+    method: 'POST',
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -190,27 +273,13 @@ const apiFootFindPageF = (data, fun) => packagePromise((resolve, reject) => {
 
 // 支付模块 => 创建支付订单
 const apiPayCreateF = (data, fun) => packagePromise((resolve, reject) => {
-  let _list = []
-  data.remarksList.forEach(val => {
-    if (val.remarks) {
-      _list.push({
-        orderChildId: val.id,
-        remarks: val.remarks
-      })
-    }
-  })
   request({
     url: apiPayCreate(),
     method: 'POST',
     header: {
       'content-type': 'application/json' // application/json
     },
-    data: {
-      orderId: data.orderId,
-      addressId: data.addressId,
-      payRemarksList: _list,
-      userId: 0
-    }
+    data
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -409,12 +478,129 @@ const apiPartnerSaveF = (data, fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
-// 商品售后模块 => 商品售后api
+// 商品售后模块 => 商品分页 弹框查询获取所有快递公司
+const apiExpressCompanyF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiExpressCompany(),
+    method: 'GET',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后模块 => 商品售后 填写快递单号 提交
+const apiExpressInfoF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiExpressInfo(),
+    method: 'POST',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后模块 => 商品售后 提交申请售后
 const apiSalesF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiSales(),
     method: 'POST',
+    header: {
+      'content-type': 'application/json' // application/json
+    },
     data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品评价 =>
+const apiGoodsCommentF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiGoodsComment(),
+    method: 'POST',
+    header: {
+      'content-type': 'application/json' // application/json
+    },
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 售后服务单评价 =>
+const apiAfterSaleGoodsCommentF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAfterSaleGoodsComment(),
+    method: 'POST',
+    // header: {
+    //   'content-type': 'application/json' // application/json
+    // },
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后模块 => 商品售后 提交申请售后 （从修改申请入口进来）
+const apiSalesModifyF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiSalesModify(),
+    method: 'POST',
+    header: {
+      'content-type': 'application/json' // application/json
+    },
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后模块 => 获取售后服务单列表 2-处理中  3-待评价 不传则为获取所有的服务单
+const apiServeSalesPageF = (data, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiServeSalesPage(),
+    method: 'GET',
+    noOutData: true,
+    data
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后订单 => 查看售后服务单详情
+const apiAfterSaleServeInfoF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAfterSaleServeInfo(id),
+    method: 'GET',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后订单 => 查看售后服务单服务进度
+const apiAfterSaleServeProcessF = (id, fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAfterSaleServeProcess(id),
+    method: 'GET',
   }, fun)
     .then(msg => {
       resolve(msg)
@@ -426,7 +612,7 @@ const apiSalesF = (data, fun) => packagePromise((resolve, reject) => {
 const apiFindAfterSalesPageF = (data, fun) => packagePromise((resolve, reject) => {
   request({
     url: apiFindAfterSalesPage(),
-    method: 'POST',
+    method: 'GET',
     noOutData: true,
     data
   }, fun)
@@ -448,6 +634,41 @@ const apiFindCompleteOrderListF = (fun) => packagePromise((resolve, reject) => {
     .catch(err => reject(err))
 })
 
+// 商品售后订单 => 查看售后订单详情
+const apiAfterSaleInfoF = (orderDetailId, afterSalesId,fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAfterSaleInfo(orderDetailId,afterSalesId),
+    method: 'GET',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后订单 => 查看售后 服务订单详情 处理中 修改申请的
+const apiChangeAfterSaleInfoF = (id,fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiChangeAfterSaleInfo(id),
+    method: 'GET',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
+
+// 商品售后订单 => 取消 售后服务单申请
+const apicancelOrderApplyF = (id,fun) => packagePromise((resolve, reject) => {
+  request({
+    url: apiAfterSalecancelOrder(id),
+    method: 'POST',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+})
 
 // 用户模块 => 获取我的页面数据
 const apiGetMyHomeDataF = (fun) => packagePromise((resolve, reject) => {
@@ -576,6 +797,57 @@ const apiPartnerWithdrawalApplyF = (data, fun) => packagePromise((resolve, rejec
     .catch(err => reject(err))
 })
 
+// 升级年卡会员
+const apiVipUpgradeYearMemberF = (fun) => packagePromise((resolve, reject) => {
+  console.log('aaaa')
+  request({
+    url: apiVipUpgradeYearMember(),
+    method: 'POST',
+  }, fun)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
+
+
+//文件图片上传
+const wxFileUploadF = (dataType,fun,fileUrl,fileName,cb) => packagePromise((resolve, reject) => {
+  const Access_Token = miniPro.getAccessToken()
+  wx.uploadFile({
+    url: wxFileUpload(), //仅为示例，非真实的接口地址
+    filePath: fileUrl,
+    name: fileName,
+    method: 'POST',//请求方式
+    header: {
+      'version': `${Version}`,
+      'Authorization': `${Access_Token}`,
+      'content-type': 'multipart/form-data', // application/json
+    },
+    formData: {
+      type: dataType
+    },
+    success (res){
+      const data = res.data
+      let string = JSON.parse(data);
+      cb(string)
+    }
+  })
+});
+
+/* 消息订阅 */
+const wxSubscribeMessageF = (type) => packagePromise((resolve, reject) => {
+  request({  //消息订阅
+    url: wxSubscribeMessage(type),
+    method: 'GET',
+  }, null)
+    .then(msg => {
+      resolve(msg)
+    })
+    .catch(err => reject(err))
+});
+
 export {
   apiCancelOrderF,
   apiConfirmOrderF,
@@ -605,6 +877,7 @@ export {
   apiFindAfterSalesPageF,
   apiFindCompleteOrderListF,
   apiGetMyHomeDataF,
+  apiAfterSaleInfoF,
   apiPartnerFindMoneyPageF,
   apiPartnerFindSpectatorsF,
   apiGetMoneyCategoryF,
@@ -613,5 +886,22 @@ export {
   apiUploadPartnerHeadF,
   apiVipFinanceConfigF,
   apiVipPayF,
-  apiPartnerWithdrawalApplyF
+  apiPartnerWithdrawalApplyF,
+  apiVipUpgradeYearMemberF,
+  wxFileUploadF,
+  apiServeSalesPageF,
+  apiAfterSaleServeInfoF,
+  apiAfterSaleServeProcessF,
+  apiExpressCompanyF,
+  apiExpressInfoF,
+  apiMyOrderInfoF,
+  apiSalesModifyF,
+  apicancelOrderApplyF,
+  apiGoodsCommentF,
+  apiMyOrderInfoCommentF,
+  apiGetHearderF,
+  apiRemindDeliverGoodsF,
+  apiChangeAfterSaleInfoF,
+  apiAfterSaleGoodsCommentF,
+  wxSubscribeMessageF
 }

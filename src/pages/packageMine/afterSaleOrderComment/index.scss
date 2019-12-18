@@ -1,0 +1,184 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+}
+.black .popup .star_submit { //评分开始
+  background: #09BB07;
+  border-radius: 40rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+  width: 240rpx;
+  height: auto;
+  margin-top: 72rpx;
+  line-height: 2.2;
+}
+.itembox {
+  display: flex;
+  align-items: center;
+}
+.scorePin{
+  font-size:26rpx;
+  font-weight: 600;
+}
+
+.star {
+  width: rpx(34);
+  height: rpx(35);
+  margin: 0 rpx(20) 0 0;
+  vertical-align: middle;
+}                           //评分结束
+.logistics-ctner {
+    padding: rpx(14) rpx(30);
+    background: #FFFFFF;
+}
+.logis-inner {
+    padding-bottom: rpx(30);
+    .cat-item-ctner{
+      width:rpx(690);
+      margin-top: rpx(-5);
+      padding: rpx(30) rpx(20) rpx(25) rpx(20);
+      background: #FFF;
+      border-radius: rpx(10);
+      .order-status-order {
+        height: rpx(28);
+        display: flex;
+        align-items: center;
+
+        margin-bottom: rpx(30);
+        text:nth-of-type(1) {
+          font-size: rpx(24);
+        }
+        text:nth-of-type(2) {
+          color: $color-word-four;
+          flex: 1;
+          text-align: right;
+          font-size: rpx(22);
+        }
+        image {
+          width: rpx(11);
+          height: rpx(18);
+          margin-left: rpx(10);
+        }
+      }
+      .goods-outer {
+        display: flex;
+        align-items: center;
+        padding: rpx(10) 0 rpx(30) 0;
+        position: relative;
+        @include borderBottomOnePx;
+      }
+      .cat-m {
+        width: rpx(124);
+        height: rpx(124);
+        margin: 0 rpx(26) 0 rpx(16);
+        image{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .cat-m-t{
+        view{
+          margin-bottom: rpx(20);
+
+        }
+      }
+      .goods-textarea{
+        textarea{
+          height: rpx(270);
+          width: 100%;
+          color: #333;
+          font-size: rpx(24);
+          background:rgba(255,255,255,1);
+          box-shadow:0px 2px 32px 0px rgba(215,215,215,0.49);
+          border-radius:8px;
+          padding: rpx(10) rpx(10);
+        }
+      }
+      .upload-session{
+        .upload-text{
+          margin-top: rpx(15);
+          color: #909090;
+        }
+        .multipleImg {
+          width: 100%;
+          display: flex;
+          flex-flow: row wrap;
+          .upload {
+            position: relative;
+            width:rpx(158);
+            height:rpx(158);
+            background:rgba(255,255,255,1);
+            box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+            border-radius:rpx(10);
+            margin: rpx(25) rpx(20) rpx(15) 0;
+            .addImg {
+              width: 158rpx;
+              height: 158rpx;
+            }
+            .deleteImg {
+              width: 30rpx;
+              height: 30rpx;
+              position: absolute;
+              top: rpx(-12);
+              right: rpx(-12);
+            }
+          }
+          .uploadDiv{
+            position: relative;
+            width:rpx(158);
+            height:rpx(158);
+            background:rgba(255,255,255,1);
+            box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+            border-radius:rpx(10);
+            padding: rpx(50);
+            margin-top: rpx(25);
+            image{
+              width: rpx(63);
+              height: rpx(55);
+            }
+            view{
+              font-size: rpx(18);
+              width: rpx(75);
+              color:rgba(153,153,153,1);
+            }
+          }
+        }
+      }
+    }
+
+}
+.logis-bottom{
+  padding: rpx(14) rpx(35);
+  border-top: rpx(10) solid #EEE;
+  margin-top: rpx(-40);
+  view{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: rpx(20);
+    view{
+      color: #333333;
+    }
+  }
+  view:nth-of-type(1){
+    margin: rpx(15) 0;
+    .else-comment{
+      font-size: rpx(28);
+    }
+    .else-five{
+      margin-right: rpx(20);
+      color: #999999;
+    }
+  }
+}
+.return-btn-outer {
+  margin-top: rpx(15);
+  button {
+    font-weight: bold;
+    border-radius: rpx(30);
+    width: 50%;
+    text-align: center;
+  }
+}

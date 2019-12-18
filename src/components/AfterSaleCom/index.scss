@@ -1,0 +1,130 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.cat-item-ctner{
+  position: relative;
+  @include borderBottomOnePx;
+  padding: rpx(30) rpx(20) rpx(5) rpx(20);
+  background: #FFF;
+  border-radius: rpx(10);
+  .order-status-order {
+    height: rpx(28);
+    display: flex;
+    align-items: center;
+    font-size: rpx(16);
+    margin-bottom: rpx(30);
+    // text:nth-of-type(1) {
+    //     font-size: rpx(16);
+    // }
+    text:nth-of-type(2) {
+      color: $color-word-alarm;
+      flex: 1;
+      text-align: right;
+    }
+    image {
+      width: rpx(11);
+      height: rpx(18);
+      margin-left: rpx(10);
+    }
+  }
+
+  .goods-outer {
+    padding: rpx(10) 0;
+    position: relative;
+    @include borderBottomOnePx;
+    .goods-cat{
+      display: flex;
+      justify-content: center;
+      padding-bottom: rpx(20);
+      border-bottom: rpx(3) solid #EEE;
+      .cat-m {
+        width: rpx(124);
+        height: rpx(124);
+        margin: 0 rpx(26) 0 rpx(16);
+        image{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .cat-m-t {
+        flex: 1;
+        .goods-name {
+          font-size: rpx(32);
+          color: $color-word-one;
+        }
+        .goods-des {
+          font-size: rpx(20);
+          height: rpx(20);
+          line-height: rpx(20);
+          color: $color-word-three;
+          margin: rpx(16) 0 rpx(20) 0;
+        }
+        .goods-name,
+        .goods-des {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+    .serve-text{
+      background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApQAAABWCAYAAABxcAaqAAADtklEQVR4nO3cMW4UZxjH4f8MztJwgARSuqAnKSh8ByNBJO7gFKQAUdGhEAooNqdwCERcIJJbokipKUEcIDQYISiMYY13dtf7DgwjPY9kyZ75dr5Xs175p5Xt5u2tzDNJsp0020kuJjmbJpO5K5MkTfepY6eXrJ1ds3DpnJOr7tOsMseiGZoFX3Zcd+mezfK9jp3vugdd+yzZY9n1m47jSdL0see8/bru57zjS6651l7z5l91n1Xv0xp79Hmtznl7vNbas/Z5D9e91rrPbeF7vOtaJ56hMkflNVp8fS96PvvY+8PhBY8/9uWqey1Yu8rPkw+HFtybXtaf8DFL9xniXB/n+1xzknWfc20fjztyjZdJniX5N8nDJH8l2c/W9MiqjTmPvJTktySbPUwBAMB4nUly/v3H1SRPk9xI8ufsonbm81NJ7rxfICYBAPjUZpIH2du5k72dU4cHZ9+hvJ3k+hcfCwCAsTlsxhvJx3coL0dMAgCwuuvZ27mcHATlJMm9YecBAGCE7mdvZ9ImuZLk+6GnAQBgdM4l+alNsj30JAAAjNZ2m+THoacAAGC0fmiTfDv0FAAAjNZ3bZLTQ08BAMBoTdrlawAAoJugBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQImgBACgRFACAFAiKAEAKBGUAACUCEoAAEoEJQAAJYISAIASQQkAQEmb5P+hhwAAYLT22yQvhp4CAIDRetEm+W/oKQAAGK0nbZJHQ08BAMBoPWqT7CZ5NvQkAACMzvMku22S/SS/DDwMAADjcy1b01eH/zZoN8ndIacBAGBU7mZrupsc/T+UN5NMh5kHAIAR+T0H7Zgk2Zg58SbJz0n+TvJrks0vOhYAAF+7p0luZmv6x+zBjTkLHyR5nORKkktJLiQ5l+Sbzz0hAABfldc5+MObf5I8zMGvSe5/uugd41g7h0NiwSkAAAAASUVORK5CYII=") ;
+      background-size: 100% 100%;
+      width: rpx(660);
+      padding: rpx(15) rpx(40);
+      view:nth-of-type(1){
+        font-size: rpx(24);
+        font-weight: bold;
+        color: #FFFFFF;
+        margin-bottom: rpx(5);
+      }
+      view:nth-of-type(2){
+        font-size: rpx(20);
+        color: #FFFFFF;
+        letter-spacing: rpx(2);
+        text{
+          font-size: rpx(24);
+          color: #6D3600;
+          font-weight: bold;
+        }
+      }
+    }
+    .order-button-outer {
+      display: flex;
+      justify-content: flex-end;
+      padding: rpx(10) rpx(5);
+      .order-btnAfterSale {
+        height: rpx(40);
+        width: rpx(150);
+        display: flex;
+        justify-content: center;
+        line-height: rpx(36);
+        font-size: rpx(20);
+        border: rpx(1) solid #A8A8A8;
+        color: #A8A8A8;
+        border-radius: rpx(20);
+        margin-right: rpx(10);
+      }
+      .order-btnJoinCart {
+        height: rpx(40);
+        width: rpx(150);
+        display: flex;
+        justify-content: center;
+        line-height: rpx(36);
+        font-size: rpx(20);
+        border: rpx(1) solid #FF7F00;
+        color: #FF7F00;
+        border-radius: rpx(20);
+        margin-right: rpx(10);
+      }
+
+    }
+  }
+
+  .goods-wrap {
+    padding: rpx(10) 0;
+    display: flex;
+    align-items: center;
+  }
+
+
+}

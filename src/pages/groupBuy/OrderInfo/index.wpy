@@ -214,10 +214,16 @@
       });
     };
     onShareAppMessage(res) {
+      let url = '/pages/groupBuy/OnekeyDelegation/index?shareId=' + this.shareInfo.shareParam;
+      let title = this.shareInfo.title;
+      let imageUrl = this.shareInfo.imageUrl;
+      console.log('url',url)
+      console.log('title',title)
+      console.log('imageUrl',imageUrl)
       return {
-        title: this.shareInfo.title,
-        path: '/pages/groupBuy/OnekeyDelegation/index?' + this.shareInfo.param,
-        imageUrl: this.shareInfo.imageUrl
+        title: title,
+        path: url,
+        imageUrl: imageUrl
       }
     };
     buyAgain(){
@@ -228,9 +234,15 @@
         groupId: this.activityGroupId
       };
       apiPurchaseShareInfoF(param,fun).then((result)=> {
+        let A = result.shareParam; //shareId=1234
+        let shareId = A.split("="); //分割成数组
         this.shareInfo.title = result.shareTitle;
         this.shareInfo.imageUrl = result.shareImageUrl;
-        this.shareInfo.shareParam = result.shareParam;
+        this.shareInfo.shareParam = shareId[1];
+
+        // this.shareInfo.title = result.shareTitle;
+        // this.shareInfo.imageUrl = result.shareImageUrl;
+        // this.shareInfo.shareParam = result.shareParam;
       }).catch(()=>{})
     };
     orderCancel(){

@@ -1,0 +1,47 @@
+<template>
+  <view class="play-ctner">
+    <view class="recom-same-center">
+      <view class="recom-play-cheng">
+        <view class="p1">玩转成氏商城</view>
+        <view class="p2">
+          <video src=""></video>
+        </view>
+      </view>
+    </view>
+    <view class="line"></view>
+
+    <view class="recom-same-center">
+      <view class="recom-play-cheng">
+        <view class="p1">玩转成氏商城</view>
+        <view class="p2">
+          <video src=""></video>
+        </view>
+      </view>
+    </view>
+    <view class="line"></view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy';
+  export default class playChengMall extends wepy.page {
+    config = {
+      navigationBarTitleText: '玩转成氏商城'
+    };
+    data = {
+      hasMore: false,
+      pageParams: {
+        page: 0
+      }
+    };
+
+    methods = {
+
+    };
+    async onLoad() {
+    }
+
+  }
+</script>
+<style lang="scss">
+  @import 'index';
+</style>

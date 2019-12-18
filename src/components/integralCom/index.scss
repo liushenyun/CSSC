@@ -1,0 +1,91 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+.content{
+  margin: rpx(18);
+  box-shadow:0 rpx(1) rpx(9) rpx(1) rgba(47,0,6,0.18);
+  display: inline-block;
+  border-radius: rpx(15);
+  .img{
+    width: rpx(328);
+    height: rpx(330);
+    position: relative;
+    image:nth-of-type(1){
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: rpx(15);
+      border-top-right-radius: rpx(15);
+    }
+    .bg-text{
+      position: absolute;
+      left: 0;
+      height: rpx(43);
+      width: rpx(115);
+      top: 0;
+      text{
+        position: absolute;
+        top: rpx(23);
+        left: rpx(14);
+        font-size: rpx(25);
+        font-weight: bold;
+        color: #FFFFFF;
+      }
+      image{
+        width: 100%;
+        height: 100%;
+        margin-top: rpx(18);
+      }
+    }
+
+  }
+  .C1{
+    color: #000000;
+    font-weight: bold;
+    font-size: rpx(26);
+    line-height: rpx(50);
+    margin-left: rpx(18);
+
+    overflow: hidden; //文本超出 省略号代替
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: rpx(300);//文本超出 省略号代替
+
+    text{
+      letter-spacing: rpx(8);
+    }
+  }
+  .C2{
+    margin-left: rpx(18);
+    line-height: rpx(30);
+    text:nth-of-type(1){
+      color: #FF7F00;
+      font-size: rpx(24);
+    }
+    text:nth-of-type(2){
+      text-decoration: line-through;
+      margin-left: rpx(15);
+      font-size: rpx(20);
+      color: #666666;
+    }
+
+  }
+  .C3{
+    font-size:rpx(26);
+    font-family:Microsoft YaHei;
+    font-weight:400;
+    color:#666666;
+    line-height:23px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text{
+      margin-left: rpx(18);
+    }
+    image{
+      width: rpx(120);
+      height: rpx(37);
+      text-align: right;
+    }
+  }
+}
+

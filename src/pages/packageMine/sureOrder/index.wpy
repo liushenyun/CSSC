@@ -6,9 +6,8 @@
           <text>{{addressStr ? addressStr : '请选择地址'}}</text>
           <image src='../../../images/unfold.png'></image>
         </view>
-
         <view class="order-outer">
-          <repeat for="{{orderDetailObj.orderChildList}}" key="index" index="index" item="item">
+          <repeat for="{{orderDetailObj}}" key="index" index="index" item="item">
               <SureCom :current="index" :item="item"></SureCom>
           </repeat>
         </view>
@@ -16,17 +15,29 @@
 
     <view class="sure-order-bnt">
       <text>合计：</text>
-      <text>￥{{orderDetailObj.orderAmount}}</text>
+      <text>￥{{totolPrice}}</text>
       <view @tap='submitOrderA' hover-class='icx-click-hover'>提交订单</view>
     </view>
   </view>
+
+  <!--custom Modal  授权弹框start  -->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
+  </view>
+  <block wx:if="{{showModal}}">
+    <view class="modal-content">
+      <view class="heard">
+        <button class="subscribeBtn" @tap='subscribe'>授权接收订阅消息</button>
+      </view>
+    </view>
+  </block>
+  <!--custom Modal    授权弹框end  -->
 </template>
 
 <script>
 import wepy from 'wepy'
 import NoTip from '@/components/OrderNoDataTip/index'
 import SureCom from '@/components/SureGoodsCom/index'
-import { apiFindOrderDetailF, apiPayCreateF, apiFindDefAddressF } from '../../../services/mine/index'
+import { apiFindOrderDetailF, apiPayCreateF, apiFindDefAddressF,wxSubscribeMessageF } from '../../../services/mine/index'
 import miniPro from '@/utils/wepy-pro.js';
 export default class SureOrder extends wepy.page {
   config = {
@@ -37,12 +48,22 @@ export default class SureOrder extends wepy.page {
     SureCom: SureCom
   };
   data = {
+    showModal: true,
+    subscribeList:"",
     orderId: '',
     orderDetailArr: [],
     orderDetailObj: {},
     addressStr: '',
     addressId: '',
-    payRemarksList: []
+    payRemarksList: [],
+    totolPrice:"",
+    cartIds:'',
+    params:{
+      orderList:[],
+      addressId:"",
+      orderMasterId:''
+    }
+
   };
   methods = {
     submitOrderA() {
@@ -52,19 +73,30 @@ export default class SureOrder extends wepy.page {
       wepy.navigateTo({ url: `/pages/packageMine/addressList/index` })
     }
   };
+  subscribe(){  //点击授权 订阅消息
+    let list = this.subscribeList;
+    if(list.length > 3){
+      list = list.slice(0,2)
+    }
+    if (typeof wx.requestSubscribeMessage === 'function'){
+      wx.requestSubscribeMessage({
+        tmplIds: list,
+        success (res) {
+        }
+      })
+    }
+    this.showModal = false;
+  }
   apiFindOrderDetailA(fun) {
-    apiFindOrderDetailF(this.orderId, fun).then((result) => {
-      let { orderChildList } = result
-      this.orderDetailArr = orderChildList
-      this.orderDetailObj = result
-      if (result.shippingAddressVo) {
-        // this.addressStr = `${result.shippingAddressVo.province} ${result.shippingAddressVo.city} ${result.shippingAddressVo.district}`
-        // this.addressId = result.shippingAddressVo.id
-      }
+    let dataBase = this.params;
+    apiFindOrderDetailF(dataBase, fun).then((result) => {
+      this.orderDetailObj = result.children
+      this.totolPrice = result.totalPrice
+      this.params.orderList = result.children
+      this.params.orderMasterId = result.orderMasterId
       this.$apply()
     }).catch(() => { });
   }
-
   apiFindDefAddressFA(fun) {
     apiFindDefAddressF(fun).then((result) => {
       this.addressStr = `${result.province} ${result.city} ${result.district}`
@@ -75,18 +107,21 @@ export default class SureOrder extends wepy.page {
     }).catch(() => { });
   }
   apiPayCreateA(fun) {
-    apiPayCreateF({
-      orderId: this.orderDetailObj.id,
-      addressId: this.addressId,
-      payRemarksList: [],
-      remarksList: this.orderDetailObj.orderChildList || [],
-      userId: 0
-    }, fun).then(msg => {
+    let list = this.params.orderList
+    let addressId = this.addressId
+    let orderMasterId = this.params.orderMasterId
+      let paramsData = {
+        orderList: list,
+        addressId: addressId,
+         orderMasterId: orderMasterId
+    }
+    apiPayCreateF(paramsData, fun).then(msg => {
       let data = msg
       miniPro.requestPayment(data).then((result) => {
         miniPro.showToast('调用成功')
         setTimeout(() => {
           wepy.navigateTo({ url: `/pages/packageMine/paySuccess/index` })
+
         }, 1500)
       }).catch(() => {
         miniPro.showToast('调用失败')
@@ -98,26 +133,37 @@ export default class SureOrder extends wepy.page {
   }
   events = {
     'order-detail-input': (value, index) => {
-      this.orderDetailArr[index].remarks = value
+      let list = this.params.orderList
+      list[index].remarks =
+
+      // this.orderDetailArr[index].remarks = value
       this.$apply()
     }
   }
   onLoad(option) {
-    this.orderId = option.orderId
+    this.params = option;
+    console.log("option",option.orderMasterId)
+    this.params.orderMasterId = option.orderMasterId
+    console.log("this.params.orderMasterId",this.params.orderMasterId)
+    this.cartIds = option.cartIds
     this.$apply()
     setTimeout(() => {
       this.apiFindOrderDetailA(this.apiFindOrderDetailA.bind(this))
     }, 30);
     this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
-    // 20190526145853664473
+
+    wxSubscribeMessageF(1).then(msg => {
+      this.subscribeList = msg;
+    });
   }
-  
+
   onShow() {
     let { addressStr, addressId } = wepy.$instance.globalData.addressObj
+
     if (addressId) {
       this.addressStr = addressStr
       this.addressId = addressId
-    } 
+    }
     // this.apiFindDefAddressFA(this.apiFindDefAddressFA.bind(this))
   }
 }

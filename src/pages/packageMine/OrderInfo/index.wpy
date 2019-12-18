@@ -1,0 +1,226 @@
+
+<template>
+  <view class="order-ctner container-same">
+    <wxs src="../../../utils/filter.wxs" module="tools"></wxs>
+      <view class="order-con-outer">
+        <view class="order-goods-outer">
+          <view class="img1">
+            <image src="../../../images/finish.png" wx:if="{{goodsList.status == 1}}"></image>
+            <image src="../../../images/cancleOrder.png" wx:if="{{goodsList.status == 2}}"></image>
+            <image src="../../../images/time.png" wx:if="{{goodsList.status == 0}}"></image>
+          </view>
+          <view  style="color: #F2F0F3;line-height: 35rpx;">{{goodsList.statusDesc}}</view>
+<!--          <block  wx:for="{{goodsList}}" wx:for-item="item">-->
+            <view class="text-btn" wx:for="{{goodsList.operations}}" wx:for-item="btnItem">
+              <view
+                    catchtap="orderBtnA({{btnItem}}, {{goodsList}})">
+                {{btnItem.desc}}
+              </view>
+            </view>
+<!--          </block>-->
+
+        </view>
+      </view>
+    <view class="cat-item-ctner" wx:for="{{goodsList.childInfos}}">
+      <view class="order-status-order">
+        <text>{{item.companyName}} > </text>
+      </view>
+      <view class="goods-outer" wx:for="{{item.detailInfos}}" wx:key='index' wx:for-item="subItem">
+        <view class='cat-m'>
+          <image src='{{subItem.goodsIco}}' />
+        </view>
+        <view class="cat-m-t">
+          <view class='goods-name'>
+            <text>{{subItem.goodsName}}</text>
+          </view>
+          <view class='goods-des'>
+            <text><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}}</text>
+              <text  style="color: #666666;font-size: 24rpx">  {{subItem.specification}}</text></text>
+          </view>
+          <view class='goods-des'>
+            <text style="color: #FC9125;font-weight: bold">￥{{subItem.price}}
+              </text>
+          </view>
+        </view>
+      </view>
+      <view style="float:left;" wx:if="{{item.groupPurchaseActivityId}}">团购</view>
+      <view class="order-button-outer"  wx:for="{{item.operations}}" wx:key='index' wx:for-item="btnItem">
+        <view  catchtap="orderBtnB({{btnItem}},{{item}})" class="order-btnSure" >{{btnItem.desc}}</view>
+      </view>
+
+    </view>
+
+    <view class="cat-item-bottom">
+      <view class="bottom-one">
+        <view><text>订单编号： {{goodsList.orderMasterId}}</text></view>
+        <view><text>下单时间： {{goodsList.createTime}}</text></view>
+        <view><text>支付方式： {{goodsList.payTypeDesc}}</text></view>
+        <view wx:if="{{goodsList.payTime}}"><text>支付时间： {{goodsList.payTime}}</text></view>
+      </view>
+      <view class="bottom-two">
+        <view class="two-1">
+          <view><text style="font-size: 26rpx">{{goodsList.buyerName}}  <text style="color: #666666">{{goodsList.buyerPhone}}</text></text></view>
+          <view><image src="../../../images/address.png"></image></view>
+        </view>
+        <view class="two-2">
+          <view style="color: #666666">收货地址：</view>
+          <view style="color: #666666">{{goodsList.buyerAddress}} </view>
+        </view>
+      </view>
+      <view class="bottom-two">
+        <view class="two-1" style="margin-bottom: 15rpx">
+          <view>商品总额：</view>
+          <view>¥{{goodsList.totalMoney}}</view>
+        </view>
+        <view class="two-1">
+          <view>运费：</view>
+          <view>¥{{goodsList.freight}}</view>
+        </view>
+      </view>
+      <view class="bottom-end">
+        <view>实付款：¥{{goodsList.totalMoney + goodsList.freight}}</view>
+      </view>
+
+    </view>
+    <view class="cart-like" wx:if="{{pageLikeList.length > 0}}">
+      <view class="cart-like-title">·猜您喜欢·</view>
+      <view class='cat-container'>
+        <view @tap="toGoodsDetail({{item}})" class="cat-like-item" wx:for="{{pageLikeList}}" wx:key="index">
+          <image src="{{item.goodsIco}}"></image>
+          <view class="cart-l-des">{{item.goodsName}}</view>
+          <view class="cart-l-price">￥{{item.price}}</view>
+        </view>
+      </view>
+    </view>
+
+
+
+  </view>
+
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import { apiGoodsLikePageF} from '../../../services/index/index'
+  import {apiMyOrderInfoF} from  '../../../services/mine'
+  import {
+    apiOrderFindPageF,
+    apiCancelOrderF, // 取消订单
+    apiConfirmOrderF, // 确认收货
+    apiRefundF, // 退款
+    apiRemindDeliverGoodsF //提醒商家发货
+  } from '../../../services/mine/index'
+  import UrlNavigate from '../../../utils/wepyNavigate';
+  import miniPro from '@/utils/wepy-pro.js';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的订单详情'
+    };
+    components = {
+    };
+    mixins = [];
+    data = {
+      confirmOrderId: '',
+      orderChildId:'',
+
+      goodsList:{},
+      pageLikeList: [],
+      pageParamsLike: {
+        page: 0,
+        limit: 400
+      }
+    };
+
+    methods = {
+      orderBtnA(btnItem, item) {  //顶部头部btn状态
+        if(btnItem.key == 1){ //立即支付
+          UrlNavigate('/pages/packageMine/sureOrder/index',{orderId:item.orderMasterId,prepareType:3});
+        }
+      },
+      orderBtnB(btnItemB, itemB){  //商品内容操作 btn状态
+        if (btnItemB.key == 6) {   //确认收货
+          this.confirmOrderId = itemB.orderChildId
+          this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
+        }else if(btnItemB.key == 4){//查看物流
+          UrlNavigate('/pages/packageMine/logisticsInfo/index',{id:itemB.orderChildId});
+        }else if(btnItemB.key == 2){ //评价
+          UrlNavigate('/pages/packageMine/orderComment/index',{orderChildId:itemB.orderChildId});
+        }else if(btnItemB.key == 5){ //提醒商家发货  已做
+          this.orderChildId = itemB.orderChildId
+          this.apiRemindDeliverGoodsFA(this.apiRemindDeliverGoodsFA.bind(this))
+        }
+      },
+      toGoodsDetail(item) { //猜你喜欢商品详情
+        miniPro.toGoodsDetail(item.id, item.groupPurchase)
+      }
+    };
+    apiConfirmOrderFA(fun) {  //确认收货
+      apiConfirmOrderF(this.confirmOrderId, fun).then((result) => {
+        miniPro.showToast('确认收货成功')
+        setTimeout(() => {
+          wepy.navigateTo({ url: '/pages/packageMine/order/index' });
+          this.$apply()
+        }, 1000)
+      }).catch((err) => {
+
+      });
+    }
+    apiRemindDeliverGoodsFA(fun) {  //提醒商家发货
+      let orderChildId = this.orderChildId
+      apiRemindDeliverGoodsF(orderChildId, fun).then((result) => {
+        miniPro.showToast('提醒商家发货成功')
+        setTimeout(() => {
+          wepy.navigateTo({ url: '/pages/packageMine/order/index' });
+        }, 1000);
+      }).catch((err) => {
+      });
+    }
+    apiMyOrderInfo(fun) { //商品api信息
+      let orderMasterId = this.orderMasterId
+      apiMyOrderInfoF(orderMasterId, fun).then((result) => {
+        console.log(result)
+        console.log("result")
+        this.goodsList = result
+        this.$apply()
+      }).catch((err) => {});
+    }
+    apiGoodsLikePageFA(fun) { //猜你喜欢
+      apiGoodsLikePageF({
+        page: this.pageParamsLike.page,
+        limit: this.pageParamsLike.limit
+      }, fun).then((result) => {
+        let { rows } = result
+        this.pageLikeList = rows
+        this.$apply();
+      }).catch(() => { });
+    };
+    watch = {
+    }
+    events = {
+    };
+
+    onShareAppMessage(res) {
+      let url = '/pages/groupBuy/OnekeyDelegation/index?shareId=' + this.shareInfo.shareParam;
+      let title = this.shareInfo.title;
+      let imageUrl = this.shareInfo.imageUrl;
+      console.log('url',url)
+      console.log('title',title)
+      console.log('imageUrl',imageUrl)
+      return {
+        title: title,
+        path: url,
+        imageUrl: imageUrl
+      }
+    };
+
+    onLoad(option) {
+      this.orderMasterId = option.orderMasterId
+      this.apiGoodsLikePageFA(this.apiGoodsLikePageFA.bind(this))
+      this.apiMyOrderInfo(this.apiMyOrderInfo.bind(this))
+    };
+
+  }
+</script>
+<style lang="scss">
+  @import './index.scss';
+</style>

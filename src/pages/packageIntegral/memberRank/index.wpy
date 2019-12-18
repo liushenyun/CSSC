@@ -1,0 +1,243 @@
+
+<template>
+  <view class="recom-ctner container-same">
+    <view class="recom-same-center">
+      <view class="center-around">
+        <view class="v-title">
+          <text>{{Info.MemberRating}}</text>
+        </view>
+        <view class="v-index">
+          <view class="v-left">
+            有效期至<text>{{Info.time}}</text>
+          </view>
+          <view class="v-right">
+            <text>下一等级</text>
+            <text>  {{Info.nextMemberRating}}</text>
+          </view>
+        </view>
+        <view class="index-line">
+          <view class="color-line" style="width: 30%"></view>
+        </view>
+        <view class="bottom-view">
+          <view class="grow-text">
+            <text>当前成长值</text>
+            <text> {{Info.currentGrowNum}}</text>
+          </view>
+          <view class="next-grow-text">
+            升级 <text>{{Info.nextGrowNum}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="center-1">
+        <text>等级特权</text>
+      </view>
+      <view class="center-2">
+        <view class="picture-text-index-2">
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/baoyou.png"></image>
+            </view>
+            <view>全场包邮</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/member-1yuan.png"></image>
+            </view>
+            <view>会员1元购</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/zhekou.png"></image>
+            </view>
+            <view>专享折扣</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/mian2.png"></image>
+            </view>
+            <view>免费试用</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/xianxia.png"></image>
+            </view>
+            <view>线下品鉴</view>
+          </view>
+        </view>
+        <view class="picture-text-index-2">
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/mian1.png"></image>
+            </view>
+            <view>
+              <text>免费领取</text>
+            </view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/exchange-goods.png"></image>
+            </view>
+            <view>退换货特权</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/kefu.png"></image>
+            </view>
+            <view>专属客服</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/exchange.png"></image>
+            </view>
+            <view>积分兑换</view>
+          </view>
+          <view class="every-2">
+            <view class="every-center-2">
+              <image src="../../../images/all-tequan.png"></image>
+            </view>
+            <view>全部特权</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+    <view class="recom-play-cheng">
+      <view class="p1">获取成长值</view>
+      <view class="content-index">
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/buyMember.png"></image></view>
+            <view class="left-text">
+              <view>购买会员消费</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/buyGoods.png"></image></view>
+            <view class="left-text">
+              <view>购买商品消费</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/share-goods.png"></image></view>
+            <view class="left-text">
+              <view>分享商品链接</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/share-memberCenter.png"></image></view>
+            <view class="left-text">
+              <view>分享会员中心链接</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/qian-green.png"></image></view>
+            <view class="left-text">
+              <view>签到</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/shop.png"></image></view>
+            <view class="left-text">
+              <view>逛商城</view>
+              <view>消费100元/10成长值</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import Auth from '../../../common/js/authProcess.js';
+import { apiTaleFindPageF } from '../../../services/classify';
+// import miniPro from '@/utils/wepy-pro.js';
+export default class Recom extends wepy.page {
+  config = {
+    navigationBarTitleText: '会员等级'
+  };
+  data = {
+    Info:{
+      time:"2020-01-06",
+      currentGrowNum:"1634",
+      nextGrowNum:"18000",
+      nextMemberRating:"年卡会员VIP4",
+      MemberRating:"年卡会员VIP3",
+      integralNum:"1367"
+    },
+
+    taleArr: [],
+    hasMore: false,
+    pageParams: {
+      page: 0
+    }
+  };
+
+  methods = {
+    toTaleDetailA(taleId) {
+      wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
+    },
+    loadMore() { // 加载更多
+      if (!this.hasMore) return
+      this.pageParams.page += 1
+      this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+    }
+  };
+
+  apiTaleFindPageFA(fun) {
+    apiTaleFindPageF({
+      page: this.pageParams.page,
+      limit: 100
+    }, fun).then((result) => {
+      let { rows, last } = result
+      this.hasMore = !last
+      this.taleArr = this.taleArr.concat(rows)
+      this.$apply()
+    }).catch(() => { });
+  }
+  async onLoad() {
+    this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+  }
+  // async onShow() {
+  //   this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+  // }
+}
+</script>
+<style lang="scss">
+@import 'index';
+</style>

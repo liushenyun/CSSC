@@ -21,13 +21,44 @@ page{
        align-items: center;
        display: flex;
        justify-content: space-between;
-       .ot-same {
-           padding: 0 rpx(10);
+       .ot-same{
            height: rpx(60);
            line-height: rpx(60);
            font-size: $size-one;
            border-bottom: rpx(2) solid #FFF;
+          display: flex;
+         padding-left: rpx(20);
+         padding-right: rpx(10);
+         .A{
+           width: rpx(30);
+           height: rpx(30);
+           border-radius: 50%;
+           position: fixed;
+           top: 0;
+           margin-left: rpx(40) !important;
+           padding: 0 rpx(7);
+           background: red;
+           color: #FFFFFF;
+           border: rpx(3) solid #FF840A;
+         }
        }
+      view:nth-of-type(2),view:nth-of-type(3),view:nth-of-type(4),view:nth-of-type(5)
+      {
+       .A{
+         width: rpx(30);
+         height: rpx(30);
+         border-radius: 50%;
+         position: fixed;
+         top: 0;
+         margin-left: rpx(60) !important;
+         padding: 0 rpx(7);
+         background: red;
+         color: #FFFFFF;
+         display: flex;
+         border: rpx(3) solid #FF840A;
+       }
+     }
+
        .ot-same.active {
            color: $color-word-alarm;
            border-color: $color-word-alarm

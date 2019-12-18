@@ -2,37 +2,49 @@
   <view class="cat-item-ctner">
 
     <view class="order-status-order">
-        <text>{{item.companyName}}</text>
-        <text>订单号：{{item.id}}</text>
-        <!-- <image src='../../images/unfold.png'></image>
-        <text>交易成功</text> -->
+        <text>{{item.companyName}} > </text>
+        <text style="font-weight: bold;font-size: 26rpx">{{item.statusDesc}}</text>
     </view>
-
-    <view class="goods-outer" wx:for="{{item.orderDetailList}}" wx:key='index' wx:for-item='subItem'>
+    <block  wx:if="{{item.details.length == 1 }}">
+      <view class="goods-outer" wx:for="{{item.details}}" wx:key='index' wx:for-item='subItem'>
         <view class='cat-m'>
-            <image src='{{subItem.goodsIco}}' />
+          <image src='{{subItem.goodsIcon}}' />
         </view>
         <view class="cat-m-t">
-            <view class='goods-name'>
-                <text>{{subItem.goodsName}}</text>
-                <text>￥{{subItem.price}}</text>
-            </view>
-            <view class='goods-des'>
-                <text><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}}</text></text>
-                <text>x{{subItem.goodsNumber}}</text>
-            </view>
+          <view class='goods-name'>
+            <text>{{subItem.goodsName}}</text>
+          </view>
+          <view class='goods-des'>
+            <text class="colorY" style="line-height:30rpx"><text wx:if="{{subItem.colorName}}">颜色：{{subItem.colorName}} </text>
+              <text> {{subItem.specification}}</text>
+            </text>
+          </view>
         </view>
-    </view>
+      </view>
+    </block>
+    <block wx:else> <!--   如果多个商品就合并-->
+      <view class="all-more" style="width: 100%;display: flex;flex-flow: row wrap;">
+        <view class="goods-outer-more" wx:for="{{item.details}}" wx:key='index' wx:for-item='subItem' style="margin-bottom:80rpx">
+          <view class='cat-m-more'>
+            <image src='{{subItem.goodsIcon}}' style="width: 123rpx !important;height:123rpx !important; margin:10rpx;"/>
+          </view>
+        </view>
+      </view>
+    </block>
+
 
     <view class="order-num-outer">
-        <text>共 {{item.goodsCount}} 件 合计:</text>
-        <text>￥{{item.orderAmount}}</text>
+        <text>共 {{item.totalCount}} 件商品 付款金额:</text>
+        <text>￥{{item.totalMoney}}</text>
     </view>
 
     <view style="float:left;" wx:if="{{item.groupPurchaseActivityId}}">团购</view>
     <view class="order-button-outer">
-        <view wx:for="{{btnObj[item.orderStatus + '']}}" wx:key='index' wx:for-item="btnItem" catchtap="orderBtnA({{btnItem}}, {{item}})" class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
-          {{btnItem.word}}
+        <view wx:for="{{item.operations}}" wx:key='index' wx:for-item="btnItem"
+              catchtap="orderBtnA({{btnItem}}, {{item}},{{item.details[0].goodsId}})"
+              class="order-btn {{btnItem.color == 'sure' ? 'order-btn-active' : (btnItem.color == 'order-cancel'?'order-cancel':'')}}" >
+          {{btnItem.value}}
+
         </view>
     </view>
 
@@ -58,41 +70,18 @@ export default class SureGoodsCom extends wepy.component {
       }
   }
   data = {
-      btnObj: {
-        '1': [
-            // {word: '取消订单', action: '1a'},
-            {word: '付款', action: '1b', color: 'sure'}
-        ],
-        '2': [
-            {word: '退款', action: '2a'}
-            // {word: '查看物流', action: '2b'}
-        ],
-        '3': [
-            {word: '订单已经取消', action: '3a', color: 'order-cancel'}
-        ],
-        '4': [
-            // {word: '延长收货', action: '4a'},
-            {word: '查看物流', action: '4b'},
-            {word: '确认收货', action: '4c', color: 'sure'}
-        ],
-        '5': [
-            {word: '评论', action: '5c'}
-        ]
-    },
   }
   methods = {
       numAdd() {
       },
       numReduce() {
       },
-      orderBtnA(btnItem, item) {
+      orderBtnA(btnItem, item,goodsId) {
         let param = {
           ...item,
           ...btnItem
         }
-          let _action  = btnItem.action
-          if (_action == '3a') return
-          this.$emit('order-btn-event', param, this.OrderComIndex)
+          this.$emit('statusId',btnItem, item,goodsId)  //新改
       }
   }
   watch = {
@@ -122,9 +111,7 @@ export default class SureGoodsCom extends wepy.component {
         align-items: center;
         font-size: rpx(16);
         margin-bottom: rpx(30);
-        // text:nth-of-type(1) {
-        //     font-size: rpx(16);
-        // }
+
         text:nth-of-type(2) {
             color: $color-word-alarm;
             flex: 1;
@@ -141,9 +128,9 @@ export default class SureGoodsCom extends wepy.component {
         align-items: center;
         padding: rpx(10) 0;
         position: relative;
-        @include borderBottomOnePx;
+        margin-bottom: rpx(70);
     }
-    .cat-m {
+    .cat-m{
         width: rpx(124);
         height: rpx(124);
         margin: 0 rpx(26) 0 rpx(16);
@@ -173,10 +160,12 @@ export default class SureGoodsCom extends wepy.component {
     }
     .order-num-outer {
         height: rpx(20);
-        line-height: rpx(20);
+        line-height: rpx(5);
         font-size: rpx(16);
         text-align: right;
-        margin: rpx(70) 0 rpx(24) 0;
+        margin: rpx(-20) 0 rpx(10) 0;
+        border-bottom: rpx(2) solid #F6F6F6;
+        padding-bottom: rpx(30);
         text:nth-of-type(2) {
             color: $color-word-alarm
         }
@@ -187,16 +176,19 @@ export default class SureGoodsCom extends wepy.component {
         .order-btn {
             height: rpx(40);
             line-height: rpx(36);
-            font-size: rpx(20);
-            padding: 0 rpx(16);
-            border: rpx(1) solid $color-word-one;
-            color: $color-word-one;
+            font-size: rpx(22);
+            color: #FFFFFF;
+            background: $color-word-alarm;
             border-radius: rpx(20);
             margin-right: rpx(17);
+          width: rpx(150);
+          display: flex;
+          justify-content: center;
         }
         .order-btn.order-btn-active {
-            color: $color-word-alarm;
-            border-color: $color-word-alarm;
+          font-size: rpx(22);
+          color: #FFFFFF;
+          border-color: $color-word-alarm;
         }
         .order-btn.order-cancel {
             opacity: 0.8;

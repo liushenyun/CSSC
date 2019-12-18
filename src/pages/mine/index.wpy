@@ -14,6 +14,9 @@
       <view class="hy-inner" @tap='membersA'>
         <image src='../../images/discount_bg1.png'></image>
         <text>{{membersText}}</text>
+
+        <view wx:if="{{isVipMonthCard}}" class="hy-btn-member" catchtap="upgradeYearMemberF">升级为年卡会员</view>
+
         <view wx:if="{{isMembers}}" class="hy-word">立即加入，立享折扣</view>
         <view wx:else class="hy-word">海量商品，多种优惠</view>
         <view wx:if="{{!isMembers}}" class="hy-btn">加入会员</view>
@@ -26,11 +29,11 @@
         <text>{{partnerText}}</text>
       </view>
     </view>
-    <!-- <button @tap='scanA'>扫一扫</button> -->
-    <!-- <button @tap='jumpH5A'>跳转H5页面</button> -->
+<!--     <button @tap='scanA'>扫一扫</button>-->
+<!--     <button @tap='jumpH5A'>跳转H5页面</button>-->
     <view class="m-order-outer">
       <view class="m-order-innder">
-        <view class="m-order-title m-order-title-order" @tap="toOrderTapA('0')">
+        <view class="m-order-title m-order-title-order" @tap="toOrderTapA(0)">
           <text>我的订单</text>
           <text>查看全部订单</text>
           <image src='../../images/unfold.png'></image>
@@ -38,24 +41,26 @@
         <view class="m-order-item">
           <view class="order_a" @tap="toOrderTapA(1)">
             <image src='../../images/pay.png'></image>
+            <view class="A" wx:if="{{heardContent[1].number > 0}}">{{heardContent[1].number}}</view>
             <view>待付款</view>
           </view>
-
           <view class="order_b" @tap="toOrderTapA(2)">
             <image src='../../images/send.png'></image>
+            <view class="A" wx:if="{{heardContent[2].number > 0}}">{{heardContent[2].number}}</view>
             <view>待发货</view>
           </view>
 
           <view class="order_c" @tap="toOrderTapA(3)">
             <image src='../../images/deliver.png'></image>
+            <view class="A" wx:if="{{heardContent[3].number > 0}}">{{heardContent[3].number}}</view>
             <view>待收货</view>
           </view>
 
           <view class="order_d" @tap="toOrderTapA(4)">
             <image src='../../images/evaluation.png'></image>
+            <view class="A" wx:if="{{heardContent[4].number > 0}}">{{heardContent[4].number}}</view>
             <view>待评价</view>
           </view>
-
           <view class="order_e" @tap.stop="toAfterSales()">
             <image src='../../images/refund.png'></image>
             <view>售后</view>
@@ -90,10 +95,7 @@
             <image src='../../images/footprint.png'></image>
             <view>我的足迹</view>
         </view>
-
       </view>
-
-
       <!-- <view class="m-service-item">
         <view class="service-e" @tap="toMoreA">
             <image src='../../images/similar.png'></image>
@@ -108,7 +110,8 @@
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
-import { apiGetMyHomeDataF, apiPartnerPayF } from '../../services/mine';
+import { apiGetMyHomeDataF, apiPartnerPayF,apiVipUpgradeYearMemberF,apiGetHearderF } from '../../services/mine';
+
 import miniPro from '../../utils/wepy-pro'
 
 export default class Mine extends wepy.page {
@@ -123,6 +126,7 @@ export default class Mine extends wepy.page {
     isMembers: false,
     membersText: '',
     partnerText: '',
+    heardContent:[],
     pageData: {
       userLevel: '', // 用户级别(0:普通用户 1：月卡会员 2：年卡会员)
       userType: '', // 用户类型(0:普通用户 1：普通合伙人 2：高级合伙人 3：代购合伙人)
@@ -130,7 +134,8 @@ export default class Mine extends wepy.page {
       withoutPayOrderCount: '', // 待支付订单数量
       withoutReceiveOrderCount: '', // 待收货订单数量
       withoutShippingOrderCount: '' // 待发货订单数量
-    }
+    },
+    isVipMonthCard: false
   };
 
   methods = {
@@ -141,13 +146,7 @@ export default class Mine extends wepy.page {
       }})
     },
     jumpH5A() {
-      
-      // http://testweixin.51vip.biz/home
-      // let url = 'http://testweixin.51vip.biz/index'
-      // let url = 'https://www.chengmall.cn/index.html'
       let url = 'https://www.baidu.com/'
-      // let url = 'https://developers.weixin.qq.com/miniprogram/dev/component/web-view.html'
-      // wepy.navigateTo({ url: `/pages/webview/index?url=${url}` });
       miniPro.toWebView(url)
     },
     toBulkOrderA() {
@@ -164,7 +163,6 @@ export default class Mine extends wepy.page {
       }
     },
     joinPartnerA() {
-      // let _userType = this.pageData.userType
       let _payStatus = this.pageData.payStatus
       let _status = this.pageData.status
       if (_status == 0) {
@@ -178,6 +176,9 @@ export default class Mine extends wepy.page {
           wepy.navigateTo({ url: '/pages/packageMine/joinPartnerBench/index' });
         }
       }
+    },
+    upgradeYearMemberF(){
+      this.upgradeYearMember(this.upgradeYearMember.bind(this));
     },
     toMoreA() {
       wepy.navigateTo({ url: '/pages/packageMine/more/index' });
@@ -193,9 +194,28 @@ export default class Mine extends wepy.page {
     },
     toOrderTapA(index) {
       wepy.navigateTo({ url: `/pages/packageMine/order/index?current=${index}` });
+    },
+    gooutUrl(){
+      wepy.navigateTo({ url: `/pages/packageMine/order/index?current=${index}` });
     }
   };
-
+  upgradeYearMember(fun) {
+    console.log('aaaa')
+    apiVipUpgradeYearMemberF(fun).then(msg => {
+      console.log(msg);
+      miniPro.requestPayment(msg).then((result) => {
+        miniPro.showToast('支付成功')
+        setTimeout(() => {
+          this.onShow()
+        }, 1500)
+      }).catch(() => {
+        miniPro.showToast('调用失败')
+        setTimeout(() => {
+          this.onShow()
+        }, 1500)
+      });
+    }).catch((e) => {console.log('e',e) })
+  };
   apiPartnerPayFA(fun) {
     apiPartnerPayF(fun).then(msg => {
       miniPro.requestPayment(msg).then((result) => {
@@ -209,10 +229,11 @@ export default class Mine extends wepy.page {
           this.onShow()
         }, 1500)
       });
-    }).catch(() => { })
+    }).catch((e) => {console.log('e',e) })
   }
 
   apiGetMyHomeDataFA(fun) {
+    this.isVipMonthCard = false
     apiGetMyHomeDataF(fun).then((result) => {
       this.pageData = result
       let _agnatioVip = result.agnatioVip
@@ -224,15 +245,17 @@ export default class Mine extends wepy.page {
       } else if (_userLevel == 1) {
         _membersText = '月卡会员'
         this.isMembers = true
+        this.isVipMonthCard = true
       } else if (_userLevel == 2) {
         _membersText = '年卡会员'
         this.isMembers = true
       } else {
         _membersText = ''
         this.isMembers = false
+
       }
       this.membersText = _membersText
-      
+
       let _text
       // let _userType = result.userType
       let _payStatus = result.payStatus
@@ -254,11 +277,21 @@ export default class Mine extends wepy.page {
       this.$apply()
     }).catch(() => {});
   }
+  apiGetHearderFA(fun) { //获取头部标题以及订单提醒number
+    let t = this
+    apiGetHearderF({
+    }, fun).then((result) => {
+      t.heardContent = result.data;
+      this.$apply()
+    }).catch((err) => {
+    });
+  }
   onLoad(option) {
     // pages/mine/index?qrScene=channel#1000
     wepy.$instance.globalData.qrScene = option.scene || ''
   }
   async onShow(option) {
+    this.apiGetHearderFA(this.apiGetHearderFA.bind(this)) //表头内容标题和提醒
     this.apiGetMyHomeDataFA(this.apiGetMyHomeDataFA.bind(this))
     this.$apply();
   }

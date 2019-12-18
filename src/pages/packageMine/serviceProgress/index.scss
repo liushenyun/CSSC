@@ -1,0 +1,138 @@
+@import '../../../common/css/rpx.scss';
+@import '../../../common/css/const.scss';
+@import '../../../common/css/mixin.scss';
+page{
+    height: 100%;
+}
+.logistics-ctner {
+    min-height: 100%;
+    padding: rpx(14) rpx(30);
+    background: #EEE;
+}
+.logis-inner {
+    padding-bottom: rpx(30);
+    .logis-status-outer {
+        min-height: rpx(60);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+        .logis-goods {
+            padding: rpx(30) 0;
+            text-align: center;
+            image {
+                width: rpx(124);
+                height: rpx(124);
+                margin-bottom: rpx(24);
+                background: red;
+            }
+        }
+        .logis-status {
+            padding: rpx(28) rpx(36);
+            color: #FFF;
+            background:linear-gradient(54deg,rgba(255,127,0,1),rgba(255,78,0,1));
+            view:nth-of-type(1) {
+                font-size: rpx(30);
+                margin-bottom: rpx(12);
+            }
+            view:nth-of-type(2) {
+                font-size: rpx(20)
+            }
+        }
+    }
+
+    .logis-which-outer {
+        min-height: rpx(20);
+        background: #FFF;
+        border-radius: rpx(10);
+        overflow: hidden;
+        margin: rpx(18) 0;
+        .which-one {
+            padding: rpx(22) rpx(30);
+            view:nth-of-type(1) {
+                font-size: rpx(30);
+            }
+            view:nth-of-type(2) {
+                color: $color-word-three;
+                font-size: $size-unit;
+                margin-top: rpx(20);
+            }
+        }
+        .which-two {
+            height: rpx(54);
+            line-height: rpx(54);
+            padding-left: rpx(12);
+            background: #F8F8F8;
+        }
+    }
+
+    .logis-info-outer {
+        min-height: rpx(80);
+        padding: rpx(20) rpx(40);
+        background: #FFF;
+        overflow: hidden;
+        .logis-item {
+            position: relative;
+            padding-left: rpx(38);
+            padding-bottom: rpx(40);
+            @include borderLeftOnePx;
+            &.active .point-outer {
+                .point {
+                    border-color: #FF8A16
+                }
+                .point-inner {
+                    background: #FF7F00
+                }
+            }
+            &.active .logis-c {
+                color: #FF7F00
+            }
+            .point-outer {
+                position: absolute;
+                left: 0;
+                top: 0;
+                transform: translateX(-50%);
+                width: rpx(41); // 24 + 8 * 2
+                height: rpx(41);
+                padding: rpx(8);
+                border-radius: 50%;
+                z-index: 20;
+                background: #FFF;
+            }
+            .point {
+                width: 100%;
+                height: 100%;
+                border: rpx(1) solid #A7A7A7;
+                border-radius: 50%;
+                box-sizing: border-box;
+                position: relative;
+                .point-inner {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: rpx(12);
+                    height: rpx(12);
+                    border-radius: 50%;
+                    background: #999;
+                }
+            }
+        }
+        .logis-a {
+            font-size: $size-one;
+            line-height: 1.2;
+            position: relative;
+            color: $color-word-one
+        }
+        .logis-b {
+            line-height: 1.2;
+            font-size: rpx(22);
+            margin: rpx(12) 0 rpx(10);
+            color: $color-word-three;
+        }
+        .logis-c {
+            line-height: 1.2;
+            font-size: rpx(20);
+            color: #999
+        }
+    }
+}

@@ -4,12 +4,12 @@
       <view class="moneny-item {{isActive == '1' ? 'active' : ''}}"  @tap="choiceA('1')">
         <view class="m-a">· 月卡 ·</view>
         <view class="m-b"><text>￥</text> <text>{{pageObj.vipMonthFee}}</text></view>
-        <view class="m-c">连续包月</view>
+        <view class="m-c">包月会员</view>
       </view>
       <view class="moneny-item {{isActive == '2' ? 'active' : ''}}" @tap="choiceA('2')">
         <view class="m-a">· 年卡 ·</view>
         <view class="m-b"><text>￥</text> <text>{{pageObj.vipAnnualFee}}</text></view>
-        <view class="m-c">连续包年</view>
+        <view class="m-c">包年会员</view>
       </view>
     </view>
     <button @tap='joinA' class="icx-btn-same-sure">立即加入</button>

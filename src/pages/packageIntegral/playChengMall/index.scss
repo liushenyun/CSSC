@@ -1,0 +1,35 @@
+@import '../../../common/css/rpx';
+@import '../../../common/css/const';
+@import '../../../common/css/mixin';
+ page,
+ .play-ctner {
+    height: 100%;
+    overflow-y: auto;
+ }
+.recom-same-center{
+  background: #FFF;
+  padding: rpx(20) $page-padding-lr rpx(5) $page-padding-lr;
+  .recom-play-cheng{
+    background: #FFF;
+    margin-bottom: rpx(36);
+    .p1{
+      margin-top: rpx(10);
+      font-size: rpx(26);
+      color: #000000;
+      font-weight: bold;
+      padding: 0 0 rpx(15) 0 ;
+    }
+    .p2{
+      video{
+        width: rpx(689);
+        height: rpx(314);
+        border-radius: rpx(10);
+      }
+    }
+  }
+
+}
+.line{
+  width: 100%;
+  border-bottom: rpx(7) solid #EEE;
+}

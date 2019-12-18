@@ -45,11 +45,11 @@ page{
           color: #FF4E00;
           font-size: rpx(24);
           font-weight: bold;
-          width: rpx(218);
+          width: rpx(238);
           height: rpx(47);
           background: #FFFFFF;
           border-radius: rpx(40);
-          margin-left: rpx(20);
+          //margin-left: rpx(20);
           text:nth-of-type(1){
             letter-spacing: rpx(2);
           }
@@ -188,7 +188,7 @@ page{
               text{
                 position: absolute;
                 right: rpx(30);
-                font-size: rpx(34);
+                font-size: rpx(24);
                 line-height: rpx(20);
                 color: #FFFFFF;
                 margin-top: rpx(15);

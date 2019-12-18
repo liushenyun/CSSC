@@ -14,13 +14,17 @@ export default class OrderNODataTip extends wepy.component {
   props = {
   }
   data = {
+    show:false
   }
   methods = {
-     
+
   }
   watch = {
   }
   onLoad() {
+    // setTimeout(() => {
+    //   this.show = true;
+    // },30);
   }
 }
 </script>

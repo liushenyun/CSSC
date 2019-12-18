@@ -1,0 +1,231 @@
+
+<template>
+  <view class="top">
+    <view class="topBg">
+      <view>可用积分</view>
+      <view>{{Info.integralNum}}</view>
+    </view>
+    <view class="top-text">
+      <view class="top-text-1">
+        <view>已连续签到</view>
+        <view>1天</view>
+      </view>
+      <view class="top-text-2">
+        <view class="text-date">
+          <view wx:for="{{dateArr}}" wx:for-item="item" wx:key="idx">{{item.dateNum}}</view>
+        </view>
+        <view class="text-icon">
+          <view class="one"></view>
+          <view class="line-icon" wx:for="{{IconArr}}" wx:for-item="subItem" wx:key="index">
+            <view class="line {{subItem.status ? 'active' : ''}}"></view>
+            <view class="{{subItem.status ? 'iconBg' : 'icon'}}">+{{subItem.text}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="recom-ctner container-same">
+    <view class="center">
+      <view class="btn"><button class="icx-btn-same-sure">立即签到</button></view>
+      <view class="advertisement">
+        <image src="../../../images/member-rating-all.png"></image>
+      </view>
+    </view>
+    <view class="recom-play-cheng">
+      <view class="p1">做任务赚积分</view>
+      <view class="content-index">
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/add-newUser.png"></image></view>
+            <view class="left-text">
+              <view>邀请成氏商城新用户</view>
+              <view>奖励100积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/buyMember.png"></image></view>
+            <view class="left-text">
+              <view>购买会员消费</view>
+              <view>消费100元/10积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/buyGoods.png"></image></view>
+            <view class="left-text">
+              <view>购买商品消费</view>
+              <view>消费100元/10积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/share-goods.png"></image></view>
+            <view class="left-text">
+              <view>分享商品链接</view>
+              <view>消费100元/10积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/share-memberCenter.png"></image></view>
+            <view class="left-text">
+              <view>分享会员中心链接</view>
+              <view>消费100元/10积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+        <view class="content-1">
+          <view class="content-left">
+            <view class="img"><image src="../../../images/shop.png"></image></view>
+            <view class="left-text">
+              <view>逛商城</view>
+              <view>消费100元/10积分</view>
+            </view>
+          </view>
+          <view class="content-right">
+            <button class="icx-btn-same-sure">立即获取</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='integral-ctner'>
+      <view class="integral-top-title">积分使用</view>
+      <view class="integral-top-outer">
+        <view class="ot-same ot-a"
+              wx:for='{{heardContent}}' wx:key="subIndex" @tap="changeCurA({{index}})">
+          <text class="{{currentIndex == index ? 'active':''}}">{{item.typeDesc}} </text>
+          <text> | </text>
+        </view>
+      </view>
+      <integralCom></integralCom>
+      <view class="integral-top-con">
+        <swiper
+          indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}"
+          duration="{{duration}}"
+          current="{{currentIndex}}"
+          bindchange="intervalChange"
+        >
+          <block wx:for="{{heardContent}}"  wx:for-item="item" wx:key="Idx">
+            <block wx:for="{{item.typeDesc}}" wx:for-item="subTem" wx:key="SubIdx">
+              <swiper-item>
+                <scroll-view scroll-y="true"  style="height: 100%;" @scrolltolower="loadMore" >
+                  <view class="swiper-div-same" > <!-- wx:if="{{pageList.length > 0}}" -->
+                    <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
+                      <view class="order-com" @tap="toOrderInfo">
+                        <!--                        <integralCom></integralCom>-->
+                      </view>
+                    </repeat>
+                  </view>
+                  <NoTip></NoTip> <!--  wx:else -->
+                </scroll-view>
+              </swiper-item>
+            </block>
+          </block>
+        </swiper>
+      </view>
+    </view>
+
+  </view>
+
+</template>
+
+<script>
+import wepy from 'wepy';
+import Auth from '../../../common/js/authProcess.js';
+import { apiTaleFindPageF } from '../../../services/classify';
+// import miniPro from '@/utils/wepy-pro.js';
+export default class Recom extends wepy.page {
+  config = {
+    navigationBarTitleText: '积分签到'
+  };
+  data = {
+    Info:{
+      time:"2020-01-06",
+      currentGrowNum:"1634",
+      nextGrowNum:"18000",
+      nextMemberRating:"年卡会员VIP4",
+      MemberRating:"年卡会员VIP3",
+      integralNum:"13676"
+    },
+    dateArr: [],
+    IconArr:[
+      {text:1,status:"yes"},
+      {text:2,status:"yes"},
+      {text:3,status:"yes"},
+      {text:4},
+      {text:5},
+      {text:6}
+    ],
+    heardContent:[
+      {typeDesc:"积分兑换"},
+      {typeDesc:"兑换有奖"},
+      {typeDesc:"商品积分"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+      {typeDesc:"积分兑现"},
+    ],
+    currentIndex: 0,
+    hasMore: false,
+    pageParams: {
+      page: 0
+    }
+  };
+  methods = {
+    toTaleDetailA(taleId) {
+      wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
+    },
+  };
+  computeDate(){
+    let NowDate = new Date();
+    let dateMonth = NowDate.getMonth() + 1;//今月
+    let dateYesterDay = NowDate.getDate() - 1;//昨天
+    let dateNowDay = NowDate.getDate();//今天
+    let dateNowDay1 = NowDate.getDate() + 1;
+    let dateNowDay2 = NowDate.getDate() + 2;
+    let dateNowDay3 = NowDate.getDate() + 3;
+    let dateNowDay4 = NowDate.getDate() + 4;
+    let dateNowDay5 = NowDate.getDate() + 5;
+    let dateArray = [
+      {dateNum:dateMonth + "." + dateYesterDay},
+      {dateNum:"今日"},
+      {dateNum:dateMonth + "." + dateNowDay1},
+      {dateNum:dateMonth + "." + dateNowDay2},
+      {dateNum:dateMonth + "." + dateNowDay3},
+      {dateNum:dateMonth + "." + dateNowDay4},
+      {dateNum:dateMonth + "." + dateNowDay5}
+    ];
+    this.dateArr = dateArray
+  }
+  async onLoad() {
+    this.computeDate(this.computeDate.bind(this))
+  }
+}
+</script>
+<style lang="scss">
+@import 'index';
+</style>

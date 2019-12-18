@@ -94,6 +94,8 @@ export default class Index extends wepy.page {
 
   methods = {
     toSureOrderA() {
+      console.log("fwaef")
+      console.log(this.rowsArr)
       this.apiCreateOrderA(this.apiCreateOrderA.bind(this))
     },
     checkAll() {
@@ -105,10 +107,14 @@ export default class Index extends wepy.page {
   };
 
   apiCreateOrderA(fun) {
-    apiCreateOrderF(this.createData, fun).then(msg => {
-      let _id = msg.id
-      wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${_id}` });
-    }).catch(() => { })
+    let ids = [];
+    for(let x in this.rowsArr){
+      if(this.rowsArr[x].check){
+        ids.push(this.rowsArr[x].id);
+      }
+    }
+    console.log(ids);
+    wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?prepareType=1&cartIds=${ids}`});
   }
   apiCartFindPageA(fun) {
     let _pageNum = this.pageNum
@@ -170,6 +176,9 @@ export default class Index extends wepy.page {
           })
         }
       });
+      if(_totalMoney){
+        _totalMoney = _totalMoney.toFixed(2)
+      }
       this.totalMoney = _totalMoney
       this.createData.orderDetailBoList = _createData
     }
@@ -177,6 +186,7 @@ export default class Index extends wepy.page {
   events = {
     'calt-item-check': (index, check) => {
       this.rowsArr[index].check = check
+
       this.$apply()
     },
     'num-change-event': (index, type) => {

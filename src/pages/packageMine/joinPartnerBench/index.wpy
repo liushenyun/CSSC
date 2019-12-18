@@ -177,7 +177,7 @@ export default class JoinPartnerBench extends wepy.page {
       this.headImgParams.imgUrl = result.headImage
       this.$apply()
     }).catch((err) => {
-      
+
     });
   }
   onLoad() {

@@ -6,82 +6,415 @@
        </view>
      </view>
 
+    <view class="I2">
+      <view class="T1-one-div">
+        <view>
+          <image src='{{orderInfo.goodsIco}}'></image>
+          <view class="center-text">
+            <view style="font-size:24rpx;color:#333333;">{{orderInfo.goodsName}}</view>
+            <view>
+              <text style="font-size:20rpx;color:#000000;font-weight: bold">￥{{orderInfo.goodsPrice}}</text>
+            </view>
+          </view>
+          <view class="center-text">
+            <view style="font-size:20rpx;color:#666666;">
+              <text wx:if="{{orderInfo.colorName}}">颜色：{{orderInfo.colorName}} </text>
+              <text wx:if="{{orderInfo.specification}}" style="margin-left: 10rpx">{{orderInfo.specification}}</text>
+            </view>
+            <view>
+              <text style="font-size:20rpx;color:#666666;">X {{orderInfo.buyNumber}}</text>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+    <view class="T1-one-div-bottom">
+      <view style="margin-top: 10rpx">申请数量</view>
+      <AddCom></AddCom>
+    </view>
+
+
      <view class="return-action-outer">
        <view class="return-action-list">
           <view class="return-o" @tap='toTuiA'>
-            <image src='../../../images/refund.png'></image>
-              <text>退货</text>
+              <text>申请原因</text>
               <view class="picker-outer">
                  <picker @change="bindPickerChange" value="{{reasonIndex}}" range="{{reasonArray}}">
                   <view class="picker">
-                    当前选择：{{reasonArray[reasonIndex]}}
+                    {{reasonArray[reasonIndex]}}
                   </view>
                 </picker>
               </view>
               <image src='../../../images/unfold.png'></image>
             </view>
        </view>
-      
+
        <view class="return-des-outer">
          <view>问题描述</view>
-         <textarea class='icx-input' placeholder-class='icx-placeholder'  bindinput="bindinput" placeholder="请输入问题，描述" />
+         <textarea class='icx-input' style="position: relative;z-index: 50;" placeholder-class='icx-placeholder'
+                   @input="bindinput" placeholder="请描述申请售后服务的具体原因，文字，语音，视频至少填一项 还可以上传最多9张图片哦~"
+          value="{{orderInfo.afterSalesDesc}}" wx:if="{{showModal == false}}"
+         />
+
+         <view class="multipleImg">  <!-- 上传图片start -->
+          <view class='upload' wx:for="{{imageList}}">
+             <!--显示缩略图-->
+             <image src="{{item.url}}" class="addImg" mode="aspectFill" bindtap="previewImg" data-index='{{index}}' data-item='{{item}}'/>
+             <!--删除-->
+             <image src="../../../images/del.png" class="deleteImg" mode="aspectFill" bindtap="deleteImg" data-index='{{index}}' data-item='{{item}}'/>
+           </view>
+           <!--上传图片-->
+           <view class='uploadDiv' bindtap="uploadImgs">
+             <image src='../../../images/photo.png' class="addImg" mode="aspectFill"/>
+             <view>照片视频</view>
+           </view>
+         </view>    <!-- 上传图片end -->
+        <view class="img-text">为了帮您更好的解决问题，请务必上传照片凭证</view>
+        <view class="return-text">
+          <view>退款方式</view>
+          <view><image src="../../../images/wechat.png"></image><text>微信退款</text></view>
+        </view>
+       </view>
+       <view class="return-des-bottom" wx:if="{{Type == 3 || Type == 4}}"  @tap="toAddressA">
+         <view class="bottom-one">收货地址</view>
+         <view class="bottom-two">
+           <view>联系人： {{orderInfo.userConsignee}}</view>
+           <view id="address-img"><image src="../../../images/address.png"></image></view>
+         </view>
+         <view class="bottom-three">电话： {{orderInfo.userConsigneePhone}}</view>
+         <view class="bottom-four" id="address">
+           <view>地址： </view>
+           <view>{{orderInfo.userConsigneeAddress}}</view>
+         </view>
+
+       </view>
+
+       <view class="return-des-bottom"  @tap="toShowModal">
+         <view class="bottom-one">联系方式</view>
+           <view class="bottom-two">
+             <view>联系人： {{orderInfo.contact}}</view>
+             <view><image src="../../../images/right.png"></image></view>
+           </view>
+           <view class="bottom-three">电话： {{orderInfo.contactPhone}}</view>
+       </view>
+       <view class="return-end-text">
+         提交服务后，售后专员与您电话沟通，请保持电话畅通
        </view>
        <view class="return-btn-outer">
          <button hover-class='icx-click-hover' @tap='submitA' class="icx-btn-same-sure">提交</button>
        </view>
      </view>
   </view>
+  <!--custom Modal   修改联系人方式弹框  -->
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showModal}}">
+
+  </view>
+  <view wx:if="{{showModal}}">
+    <view class="modal-content">
+        <view class="content-index-bottom">
+            <veiw class="time-content">
+              <text>联系人：</text><input type="text" value="{{orderInfo.contact}}" @input="UserName">
+            </veiw>
+            <veiw class="time-content">
+              <text>电 话 ：</text><input type="number" maxlength="11" value="{{orderInfo.contactPhone}}" @input="UserPhone">
+            </veiw>
+          <view class="btn-bottom">
+            <view class="return-btn-outer">
+              <button hover-class='icx-click-hover' @tap='hideModal' style="background: #EEE !important;">取消</button>
+            </view>
+            <view class="return-btn-outer" @tap='hideModal'>
+              <button hover-class='icx-click-hover' class="icx-btn-same-sure" @tap="sure">确定</button>
+            </view>
+          </view>
+        </view>
+
+
+    </view>
+  </view>
+  <!--custom Modal   修改联系人方式弹框  -->
+
 </template>
 
 <script>
 import wepy from 'wepy'
-import { apiSalesF } from '../../../services/mine/index'
+import { apiAfterSaleInfoF,apiSalesF,wxFileUploadF,apiSalesModifyF,apiChangeAfterSaleInfoF } from '../../../services/mine'
 import miniPro from '../../../utils/wepy-pro'
+import AddCom from '@/components/AddCom/index'
 export default class ReturnGoods extends wepy.page {
   config = {
-    // navigationBarBackgroundColor: '#09103b',
-    // navigationBarTextStyle: '#FFF',
     navigationBarTitleText: '退货'
   };
   components = {
+    AddCom: AddCom
+  };
+  events = {
+    'addComEvent': (p1) => { this.pageParams.number = p1; this.$apply() }
   };
   data = {
+    subscribeList:[],
+    showModal:false,
+    hideAdd: false, // 是否隐藏添加图片的图标
+    upload: [], // 上传的图(url)
+    chooseImgs: [], // 用户选择上传的图片(缩略图)
+    orderInfo: {
+      goodsIco: "",
+      colorName:"",
+      goodsName: "",
+      specification: "",
+      buyNumber: '',
+      goodsPrice: '',
+      contact:"",
+      contactPhone:"",
+      userConsigneeAddress:"",
+      userConsignee:"",
+      userConsigneePhone:"",
+
+      afterSalesDesc:""
+    },
+    selectUser:{
+      selectuserConsigneeAddress:"",
+      selectuserConsignee:"",
+      selectuserConsigneePhone:""
+    },
+    orderDetailId:"",
+    afterSalesId:null,
+    Type:"",
     reasonArray: ['卖家少发货品', '七天无理由退货', '商品与描述不符合', '数量问题', '卖家发错货'],
     reasonIndex: 0,
+    imageList:[],
     pageParams: {
+      type:"",
       orderDetailId: '',
-      afterSalesReason: '卖家少发货品',
+      afterSalesId: '',
+      afterSalesReason: '卖家少发货品', //默认选择这个
       afterSalesDesc: '',
-      afterSaleType: 1
+      number:1,  //数量默认为1
+      imageVos:[],
+      fileLength:"",
+      contact:"",
+      contactPhone:"",
+      userConsigneeAddress:"",
+      userConsignee:"",
+      userConsigneePhone:"",
     }
   };
   methods = {
+    UserName(e){
+      this.pageParams.contact = e.detail.value
+    },
+    UserPhone(e){
+      this.pageParams.contactPhone = e.detail.value
+    },
+    sure(){
+      if(this.pageParams.contact){
+        this.orderInfo.contact = this.pageParams.contact
+      }else{
+        this.orderInfo.contact = this.orderInfo.contact
+      }
+      if(this.pageParams.contactPhone){
+        this.orderInfo.contactPhone = this.pageParams.contactPhone
+      }else{
+        this.orderInfo.contactPhone = this.orderInfo.contactPhone
+      }
+    },
     bindPickerChange: function(e) {
       let _value = e.detail.value
       this.reasonIndex = _value
       this.pageParams.afterSalesReason = this.reasonArray[_value]
-    },        
+    },
     bindinput(e) {
       this.pageParams.afterSalesDesc = e.detail.value
+      this.orderInfo.afterSalesDesc =  e.detail.value
     },
     submitA() {
-      this.apiSalesFA(this.apiSalesFA.bind(this))
-    }
+      this.pageParams.contact  =  this.orderInfo.contact
+      this.pageParams.contactPhone = this.orderInfo.contactPhone
+      if(this.orderInfo.userConsignee){
+        this.pageParams.userConsignee  = this.orderInfo.userConsignee//姓名
+      }
+      if(this.orderInfo.userConsigneePhone){
+        this.pageParams.userConsigneePhone = this.orderInfo.userConsigneePhone //电话
+      }
+      if(this.orderInfo.userConsigneeAddress){
+        this.pageParams.userConsigneeAddress  = this.orderInfo.userConsigneeAddress//地址
+      }
+      if(this.afterSalesId){  //如果存在这个afterSalesId参数 就是修改进来的 调用updata 否则调用apply
+        this.apiSalesModifyFA(this.apiSalesModifyFA.bind(this))
+      }else{
+        this.apiSalesFA(this.apiSalesFA.bind(this))
+      }
+    },
+    writeExpressNum(){
+      wepy.navigateTo({ url: `/pages/packageMine/writeExpressNum/index` })
+    },
+    toAddressA(){
+      wepy.navigateTo({ url: `/pages/packageMine/addressList/index` });
+    },
+    toShowModal(e) { //这里开始
+      this.showModal = true
+    },
+    hideModal() {
+      this.showModal = false
+    },
   }
-  apiSalesFA(fun) {
+  apiSalesFA(fun) { //提交申请
+    let images = this.imageList;
+    this.pageParams.imageVos = images;
     apiSalesF(this.pageParams, fun).then((result) => {
       miniPro.showToast('申请成功');
       setTimeout(() => {
-        wepy.switchTab({ url: `/pages/mine/index` })
-        // wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+        wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
       }, 1000);
     }).catch((err) => {
-      miniPro.showToast('申请售后失败');
+      miniPro.showToast(err);
     });
   }
-  onLoad(option) {
-    this.pageParams.orderDetailId = option.id
+  apiSalesModifyFA(fun) { //提交申请（修改入口进来的）
+    let images = this.imageList;
+    this.pageParams.afterSalesDesc  = this.orderInfo.afterSalesDesc
+    console.log(this.pageParams.afterSalesDesc);
+    this.pageParams.imageVos = images;
+    apiSalesModifyF(this.pageParams, fun).then((result) => {
+      miniPro.showToast('申请成功');
+      setTimeout(() => {
+        wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+      }, 1000);
+    }).catch((err) => {
+      miniPro.showToast(err);
+    });
   }
+  apiAfterOrderInfo(fun) { //申请售后进来的
+    apiAfterSaleInfoF(this.orderDetailId,this.afterSalesId, fun).then((result) => {
+      this.orderInfo = result
+      this.$apply()
+    }).catch((err) => {});
+  }
+  apiChangeAfterSaleInfo(fun) { //修改申请 售后  进来的
+    apiChangeAfterSaleInfoF(this.afterSalesId, fun).then((result) => {
+      this.orderInfo = result
+      this.imageList = result.imageList
+      this.$apply()
+    }).catch((err) => {});
+  }
+
+  wxFileUpload(dataType,fun,fileUrl,fileName,cb){
+    wxFileUploadF(dataType,fun,fileUrl,fileName,cb)
+  }
+  onLoad(option) {
+    this.orderDetailId = option.orderDetailId
+    if(option.afterSalesId){
+      this.afterSalesId = option.afterSalesId
+    }
+    this.Type = option.type
+    this.pageParams.orderDetailId = option.orderDetailId
+    this.pageParams.afterSalesId = option.afterSalesId
+    this.pageParams.id = option.afterSalesId
+    this.pageParams.type = option.type
+    if(this.afterSalesId){  //获取商品准备信息 如果有afterSalesId就是修改申请进来的，否则就是申请售后的
+      this.apiChangeAfterSaleInfo(this.apiChangeAfterSaleInfo.bind(this))  //修改申请调用
+    }else{
+      this.apiAfterOrderInfo(this.apiAfterOrderInfo.bind(this))  //正常申请调用
+    }
+      let title = '';
+      if(this.Type == 2){
+        title = "退货"
+      }else if(this.Type == 3){
+        title = "换货"
+      }else if(this.Type == 1){
+        title = "退款"
+      }else if(this.Type == 4){
+        title = "补发商品"
+      }
+      wx.setNavigationBarTitle({
+        title: title
+      })
+  }
+  onShow() {
+    let { addressStr, addressId, name,phone } = wepy.$instance.globalData.addressObj;
+    if (name) {
+      this.orderInfo.userConsignee = name
+    }else{
+      this.orderInfo.userConsignee = this.orderInfo.userConsignee
+    }
+    if (phone) {
+      this.orderInfo.userConsigneePhone = phone
+    }else{
+      this.orderInfo.userConsigneePhone = this.orderInfo.userConsigneePhone
+    }
+    if (addressStr) {
+      this.orderInfo.userConsigneeAddress = addressStr
+    }else{
+      this.orderInfo.userConsigneeAddress = this.orderInfo.userConsigneeAddress
+    }
+
+  }
+
+  /*****************************************************上传图片模块**************************************/
+  /* ================== 多图上传 ================== */
+  uploadImgs() {
+    const that = this;
+    const {chooseImgs} = this.data;
+    wx.chooseImage({
+      count: 9 - chooseImgs.length, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        const newChooseImgs = res.tempFilePaths;
+        const imgInfo = res.tempFiles;
+        newChooseImgs.forEach(item => {
+          that.wxFileUpload("1",that.wxFileUpload.bind(that),item,"file",function(res) {
+            let d = res.data;
+            let obj = {
+              type:1,
+              path:d.param,
+              url:d.url
+            }
+            that.imageList.push(obj);
+            // that.pageParams.imagesAll.push(obj);
+            that.$apply()
+          })
+        });
+        if(that.pageParams.afterSalesDesc == '' || that.pageParams.afterSalesDesc == null){
+          that.orderInfo.afterSalesDesc = that.orderInfo.afterSalesDesc
+        }else{
+          that.orderInfo.afterSalesDesc = that.pageParams.afterSalesDesc
+        }
+      }
+    })
+  }
+  /* ================== 点击图片放大预览 ================== */
+  previewImg(e) {
+    const contentImg = e.currentTarget.dataset.item.url;
+    console.log("点击图片放大预览", e);
+    wx.previewImage({
+      current: contentImg, //当前图片地址
+      urls: [contentImg], //所有要预览的图片的地址集合 数组形式
+      success: function (res) {
+      },
+      fail: function (res) {
+      },
+      complete: function (res) {
+      },
+    })
+  }
+  /* ================== 点击图片删除 ================== */
+  deleteImg(e) {
+
+    const index = e.currentTarget.dataset.index;
+    console.log(e,"index")
+    console.log(index,"index")
+    const {upload, imageList} = this.data;
+    upload.splice(index, 1);
+    imageList.splice(index, 1);
+    // console.log("点击图片删除", index);
+    this.setData({
+      upload,
+      imageList,
+      hideAdd: imageList.length === 9, // 是否隐藏添加图片的图标
+    })
+  }
+  /*****************************************************上传图片模块**************************************/
 }
 </script>
 <style lang="scss" scoped>

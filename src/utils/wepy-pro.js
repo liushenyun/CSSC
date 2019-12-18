@@ -9,7 +9,8 @@
 import wepy from 'wepy'
 import {
   WECHAT_ACCESS_TOKEN_NAME,
-  TOAST_DURATION
+  TOAST_DURATION,
+  Version
 } from '../common/js/config'
 import Auth from '../common/js/authProcess.js'
 // import getErrorText, { REPEAT_GROUP } from './errors'
@@ -17,7 +18,6 @@ import Auth from '../common/js/authProcess.js'
 // console.log('errors', getErrorText(REPEAT_GROUP))
 let proFun = () => {
   let miniPro = {} // 挂载一些函数
-
   // showToast
   miniPro.showToast = (title, icon = 'none', duration = TOAST_DURATION) => {
     wepy.hideToast()
@@ -109,6 +109,7 @@ let proFun = () => {
   }
 
   miniPro.requestPayment = (data) => {
+    console.log("data",data);
     return new Promise((resolve, reject) => {
       wepy.requestPayment({
         'timeStamp': data.timeStamp,
@@ -125,6 +126,7 @@ let proFun = () => {
       })
     })
   }
+
 
   /**
    * 请求
@@ -151,6 +153,7 @@ let proFun = () => {
         method: options.method || 'GET',
         data: options.data,
         header: {
+          'version' : Version,
           'Authorization': `${Access_Token}`,
           'content-type': 'application/x-www-form-urlencoded', // application/json
           ..._header
@@ -172,7 +175,7 @@ let proFun = () => {
               reject(data)
             }
 
-          } else if (statusCode == 401) {
+          } else if (statusCode == 401) { //可能token失效重新登录
             wepy.setStorageSync('isGettingToken', false)
             Auth.getInstance().checkWebchatAuth(true, fun, true)
           } else if (statusCode === 403) { // 未绑定需要绑定操作（手机号，验证码）
@@ -226,6 +229,7 @@ let proFun = () => {
         filePath: options.filePath,
         name: 'partnerHeadFile',
         header: {
+          'version' : Version,
           'Authorization': `${Access_Token}`,
           'content-type': 'multipart/form-data', // application/json
           ..._header

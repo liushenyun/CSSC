@@ -2,14 +2,117 @@
 <template>
   <view class="recom-ctner container-same">
     <wxs src="../../utils/filter.wxs" module="tools"></wxs>
-    <scroll-view  scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-         
-         <!-- <view wx:if="{{hasRefesh}}" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;">
-          <icon type="waiting" size="45"/><text>刷新中...</text></view>
-        <view wx:else  style="display:none" ><text></text></view> -->
 
+    <view class="recom-same-top">
+      <view class="recom-same-content">
+        <view class="recom-des-round">
+          <view class="recom-des">
+            <view class="t1">
+              <view class="t1-one">
+                <image src="../../images/attention_favor_fill.png"></image>
+              </view>
+              <view class="t1-two">
+                <view>{{Info.nickName}}</view>
+                <view>我的推荐码：{{Info.userId}}</view>
+              </view>
+              <view class="t1-three" @tap="toShareLink">
+                <image src="../../images/share.png"></image>
+                <button>分享获积分</button>
+              </view>
+            </view>
+            <view class="t2">
+              <view class="t2-one">
+                <image src="../../images/new-people.png"></image>
+                <view class="icx-btn-same-sure">新人必读</view>
+              </view>
+              <view class="t2-two">
+                <button class="icx-btn-same-sure">进入工作台</button>
+              </view>
+              <view class="t2-three">
+                <image src="../../images/commonProblem.png"></image>
+                <view class="icx-btn-same-sure">常见问题</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+    <view class="recom-same-center">
+      <view class="center-around">
+        <view class="topImg">
+          {{Info.MemberRating}}
+        </view>
+        <view class="index-line">
+          <view class="color-line" style="width: 30%"></view>
+        </view>
+        <view class="bottom-view">
+          <view class="grow-text">
+            <text>成长值</text>
+            <text> {{Info.left}}/{{Info.right}}</text>
+          </view>
+          <view class="picture-text-index">
+              <view class="every">
+                <view class="every-center">
+                  <view><image src="../../images/attention_favor_fill.png"></image></view>
+                </view>
+                <view>会员礼</view>
+              </view>
+            <view class="every">
+              <view class="every-center">
+                <view><image src="../../images/attention_favor_fill.png"></image></view>
+              </view>
+              <view>专属秒杀</view>
+            </view>
+            <view class="every">
+              <view class="every-center">
+                <view><image src="../../images/member-1yuan.png"></image></view>
+              </view>
+              <view>1元购</view>
+            </view>
+            <view class="every">
+              <view class="every-center">
+                <view><image src="../../images/xianxia.png"></image></view>
+              </view>
+              <view>新品试用</view>
+            </view>
+            <view class="every">
+              <view class="every-center">
+                <view><image src="../../images/all-tequan.png"></image></view>
+              </view>
+              <view>全部特权</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="center-1">
+        <text>成氏商城C+积分</text>
+        <text> {{Info.integralNum}}</text>
+        <button class="icx-btn-same-sure" @tap="toIntegral">领取积分</button>
+      </view>
+      <view class="center-2">
+        <view class="picture-text-index-2">
+          <view class="every-2" wx:for="{{goodsArr}}" wx:for-item="item">
+            <view class="every-center-2">
+              <image src="../../images/attention_favor_fill.png"></image>
+            </view>
+            <view>{{item.goodsName}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="recom-play-cheng">
+      <view class="p1">玩转成氏商城</view>
+      <view class="p2">
+        <video src="http://mvvideo1.meitudata.com/575c2b652d7375255.mp4"></video>
+      </view>
+    </view>
+    <scroll-view  scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
+        <view class="we">我们的故事</view>
          <view class="recom-same" wx:for="{{taleArr}}" @tap='toTaleDetailA({{item.id}})'  wx:for-index="index" wx:for-item="item" wx:key="index">
-          <view class="recom-title">
+
+           <view class="recom-title">
               <image src='{{item.authorHead}}'></image>
               <text>{{item.authorName}}</text>
               <image src='../../images/attention_favor_fill.png'></image>
@@ -31,28 +134,77 @@
 
     </scroll-view>
   </view>
+  <!-- 分享弹框 -->
+  <view class="share-outer" wx:if="{{shareObj.isShowSharePop}}">
+    <view class="share-inner">
+      <view class="share-img-con">
+        <image src="{{shareObj.goodShareUrl}}"></image>
+      </view>
+      <view class="share-btn-wrap">
+        <view class="sure-btns">
+          <view class="btn">
+            <button class="icx-clear-after-border" open-type="share">
+              <image src='../../images/we_icon.png'></image>
+              <view>微信</view>
+            </button>
+          </view>
+          <view class="btn" @tap='saveA'>
+            <image src='../../images/save_icon.png'></image>
+            <view>保存</view>
+          </view>
+        </view>
+        <view class="cancel-btn" @tap='cancelShareLink'>取消分享</view>
+        <view class="open-btn-wrap" wx:if="{{shareObj.isShowOpen}}">
+          <button class="icx-btn-same-sure" bindtap="openSetting">打开设置页，获取相机权限</button>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
 import wepy from 'wepy';
 import Auth from '../../common/js/authProcess.js';
 import { apiTaleFindPageF } from '../../services/classify';
-// import miniPro from '@/utils/wepy-pro.js';
-
+import miniPro from '../../utils/wepy-pro'
 export default class Recom extends wepy.page {
   config = {
-    navigationBarTitleText: '推荐'
+    navigationBarTitleText: 'C+专区'
   };
 
   data = {
+    Info:{
+      img:"",
+      nickName:"成小媚",
+      userId:"17684",
+      left:"1634",
+      right:"18000",
+      MemberRating:"年卡会员VIP3",
+      integralNum:"1367"
+    },
+    goodsArr:[
+      {goodsName:"卫衣产品"},
+      {goodsName:"面膜产品"},
+      {goodsName:"化妆品"},
+      {goodsName:"水果产品"},
+      {goodsName:"蔬菜产品"}
+    ],
     taleArr: [],
     hasMore: false,
     pageParams: {
       page: 0
+    },
+    shareObj: {
+      goodShareImg: '',
+      goodShareUrl:'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/goods/share/20190731162949761791/8f5a8a12b460476a9f2d5dee40b2e6ab.png',
+      isShowSharePop: false,
+      isShowOpen: false
     }
   };
-
   methods = {
+    toIntegral(){
+      wepy.navigateTo({ url: `/pages/packageIntegral/memberIntegralSignIn/index` });
+    },
     toTaleDetailA(taleId) {
       wepy.navigateTo({ url: `/pages/packageRecom/taleDetail/index?taleId=${taleId}` });
     },
@@ -60,8 +212,76 @@ export default class Recom extends wepy.page {
       if (!this.hasMore) return
       this.pageParams.page += 1
       this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+    },
+    toShareLink(){
+      this.shareObj.isShowSharePop = true
+    },
+    cancelShareLink() {
+      this.shareObj.isShowSharePop = false
+    },
+    saveA() {
+      let _this = this
+      //获取相册授权
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.authorize({
+              scope:'scope.writePhotosAlbum',
+              success() {
+                _this.downLoadA()
+              },
+              fail() {
+                _this.downLoadA()
+              }
+            })
+          } else {
+            _this.downLoadA()
+          }
+        }
+      })
+    },
+    openSetting() {
+      let _this = this
+      wepy.openSetting({
+        success(settingdata) {
+          _this.shareObj.isShowOpen = false
+          _this.$apply()
+          if (settingdata.authSetting['scope.writePhotosAlbum']) {
+            _this.downLoadA()
+          } else {
+            miniPro.showToast('获取权限失败，无法保存')
+          }
+        }
+      })
     }
   };
+  downLoadA() {
+    var _this = this
+    wepy.downloadFile({
+      url: _this.shareObj.goodShareUrl,
+      success: function (res) {
+        //图片保存到本地
+        wepy.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: function (data) {
+            miniPro.showToast('保存成功');
+            setTimeout(() => {
+              _this.shareObj.isShowSharePop = false;
+              _this.$apply()
+            }, 800)
+          },
+          fail: function (err) {
+            if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              _this.shareObj.isShowOpen = true
+              _this.$apply()
+            }
+          },
+          complete(res){
+          }
+        })
+      }
+    })
+  }
 
   apiTaleFindPageFA(fun) {
     apiTaleFindPageF({
@@ -74,10 +294,12 @@ export default class Recom extends wepy.page {
       this.$apply()
     }).catch(() => { });
   }
-
   async onLoad() {
     this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
   }
+  // async onShow() {
+  //   this.apiTaleFindPageFA(this.apiTaleFindPageFA.bind(this))
+  // }
 }
 </script>
 <style lang="scss">

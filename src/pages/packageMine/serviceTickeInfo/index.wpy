@@ -1,0 +1,137 @@
+<template>
+  <view class='logistics-ctner'>
+      <view class="logis-inner">
+
+        <view class="logis-status-outer">
+          <view class="logis-status">
+            <view>{{goodsList.typeStatusDesc}}</view>
+          </view>
+        </view>
+
+        <view class="logis-which-outer">
+          <view class="which-one" @tap="goServeProcess({{goodsList.id}})">
+            <view>{{goodsList.lastProgress.title}}</view>
+            <view>{{goodsList.lastProgress.description}}</view>
+          </view>
+        </view>
+
+        <view class="cat-item-ctner">
+          <view class="order-status-order">
+            <text style="font-weight: bold">商品信息</text>
+          </view>
+          <view class="goods-outer">
+            <view class='cat-m'>
+              <image src='{{goodsList.goodsIco}}' />
+            </view>
+            <view class="cat-m-t">
+              <view class='goods-name'>
+                <text>{{goodsList.goodsName}}</text>
+              </view>
+              <view class='goods-des'>
+                <text>
+                  <text wx:if="{{goodsList.colorName}}">颜色：{{goodsList.colorName}}</text>
+                  <text wx:if="{{goodsList.specification}}"> {{goodsList.specification}}</text>
+
+                </text>
+              </view>
+              <view class='goods-des'>
+                <text style="color: #FC9125;font-weight: bold">￥{{goodsList.goodsPrice}}</text>
+              </view>
+
+            </view>
+          </view>
+
+        </view>
+        <view class="cat-item-bottom">
+          <view class="bottom-one">
+            <view><text>服务单号：</text> <text>{{goodsList.id}}</text></view>
+            <view><text>申请时间：</text> <text>{{goodsList.createTime}}</text></view>
+            <view><text>服务类型：</text> <text>{{goodsList.typeDesc}}</text></view>
+            <view wx:if="{{goodsList.type == 3}}"><text>换新商品：</text>
+              <text>{{goodsList.changeGoodsName}} . {{goodsList.changeColorName}} . {{goodsList.changeSpecification}}</text>
+            </view>
+            <view><text>收货地址：</text> <text> {{goodsList.userConsigneeAddress}}</text></view>
+            <view><text>联 系 人：</text> <text> {{goodsList.contact}}</text></view>
+            <view><text>联系电话：</text> <text>{{goodsList.contactPhone}}</text></view>
+          </view>
+          <view class="order-button-outer">
+            <view  @tap="cancelApply({{subItem.id}})" class="order-btnJoinCart" wx:if="{{goodsList.operation == 2}}">修改</view>
+            <view  @tap="deliverGoods({{goodsList}})" class="order-btnJoinCart" wx:if="{{goodsList.operation == 3}}">买家发货</view>
+            <view  @tap="cancelApply({{subItem.id}})" class="order-btnJoinCart" wx:if="{{goodsList.operation == 8}}">买家评价</view>
+          </view>
+        </view>
+
+      </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+// import miniPro from '@/utils/wepy-pro.js';
+import { apiAfterSaleServeInfoF } from '../../../services/mine/index'
+export default class LogisticsInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '服务单详情'
+  };
+  components = {
+  };
+  data = {
+    serveId: '',
+    TopObj: {
+      serveText:"服务已完成，感谢您对成氏商城的支持。",
+      reviewComment:"尊敬的客户您好，很抱歉你的商品出现..."
+    },
+    pageList: [],
+    topStatus: '完成',
+    goodsList:{
+      // infoList:[
+      //   {
+      //     goodsImg:"https://cdn.xiaolouyou.com/o_1dput847s116s1ekl4nbat7keuc.png",
+      //     goodsname:"迪奥唇口红",
+      //     colorName:"99亚光色",
+      //     orderAmount:"269"
+      //   }
+      // ],
+      // orderNum:"20190016879426",
+      // applyTime:"2019-06-03 03:00:00",
+      // type:"换货",
+      // changeGoods:"商品换货信息介绍",
+      // expressAddress:"广东省 深圳市 南山区 西丽街道 聚创金谷创意园A808",
+      // name:"莫小明",
+      // phone:"13160515696"
+      lastProgress:{}
+    }
+  };
+  methods = {
+    continueBuyA() {
+      wepy.switchTab({ url: `/pages/index/index` })
+    },
+    checkOrderA() {
+      wepy.navigateTo({ url: `/pages/packageMine/order/index` });
+    },
+    goServeProcess(id){
+      wepy.navigateTo({ url: `/pages/packageMine/serviceProgress/index?id=${id}` });
+    },
+    deliverGoods(item){
+      wepy.navigateTo({ url: `/pages/packageMine/writeExpressNum/index?id=${item.id}&orderDetailId=${item.orderDetailId}&type=${item.type}` });
+    }
+  };
+  apiAfterSaleServeInfoFA(fun) {
+    let id = this.serveId
+    apiAfterSaleServeInfoF(id, fun).then((result) => {
+      this.goodsList = result
+      this.goodsList.lastProgress = result.lastProgress
+      this.$apply()
+    }).catch(() => { });
+  }
+  events = {}
+  onLoad(option) {
+    this.serveId = option.serveId
+    this.apiAfterSaleServeInfoFA(this.apiAfterSaleServeInfoFA.bind(this))
+
+  }
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

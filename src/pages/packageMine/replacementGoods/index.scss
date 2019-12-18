@@ -7,6 +7,49 @@ page{
 .replacement-goods-ctner {
     height: 100%;
     background: #EEE;
+  .I2{
+    background:#FFFFFF;
+    height: rpx(150);
+    .T1-one-div{
+      height: 92%;
+      border-bottom: rpx(2) solid #FAFAFA;
+      padding: 0 rpx(45);
+      view:nth-of-type(1){
+        image{
+          height: rpx(124);
+          width: rpx(124) !important;
+          margin-right: rpx(10);
+          float: left;
+          border-radius: rpx(10);
+        }
+        .center-text{
+          display: flex;
+          justify-content: space-between;
+          view:nth-of-type(1){
+            color: #333333;
+            font-size: rpx(24);
+            margin-bottom: rpx(15);
+
+          }
+          view:nth-of-type(2){
+            color: #666666;
+            font-size: rpx(18);
+
+          }
+
+        }
+      }
+
+    }
+
+  }
+  .T1-one-div-bottom{
+    background:#FFFFFF;
+    height: rpx(60);
+    display: flex;
+    padding: 0 rpx(45);
+    justify-content: space-between;
+  }
     .replacement-goods-outer {
         min-height: rpx(100);
         background: #FFF;
@@ -39,17 +82,14 @@ page{
                 align-items: center;
                 position: relative;
                 image:nth-of-type(1) {
-                    width: rpx(28);
-                    height: rpx(24);
-                    margin-right: rpx(10);
-                }
-                image:nth-of-type(2) {
                     width: rpx(12);
                     height: rpx(18);
                 }
                 text:nth-of-type(1) {
-                    font-size: $size-one;
-                    font-weight: bolder;
+                  font-size: rpx(24);
+                  color: #333333;
+                  font-weight: bolder;
+                  margin-left: rpx(20);
                 }
                 .picker-outer {
                     flex: 1;
@@ -65,7 +105,7 @@ page{
                 }
             }
         }
-        
+
         .replacement-des-outer {
             min-height: rpx(100);
             background: #FFF;

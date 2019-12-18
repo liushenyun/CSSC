@@ -1,0 +1,241 @@
+<template>
+  <view class='return-goods-ctner' style="background: #EEE">
+     <view class="return-action-outer">
+       <view class="return-des-bottom">
+         <view class="bottom-one">商家收货地址</view>
+         <view class="bottom-two">
+           <view>联系人： {{orderInfo.afterSalesCompanyContact}}</view>
+           <view id="address-img"><image src="../../../images/address.png"></image></view>
+         </view>
+         <view class="bottom-three">电话： {{orderInfo.afterSalesCompanyPhone}}</view>
+         <view class="bottom-four" id="address">
+           <view>地址： </view>
+           <view>{{orderInfo.afterSalesCompanyAddress}}</view>
+         </view>
+
+       </view>
+       <view class="return-des-outer">
+         <view>快递信息</view>
+         <view class="btn-div">
+           <view>物流公司</view>
+             <ElasticFrameCom></ElasticFrameCom>      <!--组件化引入弹框显示物流公司-->
+           <view>物流单号</view>
+           <view><input type="text" placeholder="请输入正确的物流单号"  @input="bindinput" value="{{value}}"></view>
+         </view>
+         <view class="multipleImg">  <!-- 上传图片start -->
+           <view class='upload' wx:for="{{imageList}}" wx:key>
+             <!--显示缩略图-->
+             <image src="{{item.url}}" class="addImg" mode="aspectFill" bindtap="previewImg" data-index='{{index}}' data-item='{{item}}'/>
+             <!--删除-->
+             <image src="../../../images/del.png" class="deleteImg" mode="aspectFill" bindtap="deleteImg" data-index='{{index}}' data-item='{{item}}'/>
+           </view>
+           <!--上传图片-->
+           <view class='uploadDiv' bindtap="uploadImgs">
+             <image src='../../../images/photo.png' class="addImg" mode="aspectFill"/>
+             <view>照片视频</view>
+           </view>
+         </view>    <!-- 上传图片end -->
+       </view>
+
+       <view class="return-btn-outer">
+         <button hover-class='icx-click-hover' @tap='submitA' class="icx-btn-same-sure">提交</button>
+       </view>
+     </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { apiExpressInfoF,wxFileUploadF,apiChangeAfterSaleInfoF } from '../../../services/mine'
+import miniPro from '../../../utils/wepy-pro'
+import ElasticFrameCom from '@/components/ElasticFrameCom/index'
+export default class ReturnGoods extends wepy.page {
+  config = {
+    navigationBarTitleText: '填写快递信息'
+  };
+  components = {
+    ElasticFrameCom: ElasticFrameCom
+  };
+  events = {
+    'corporationCode': (expressCompanyCode) => { this.expressCompanyCode = expressCompanyCode; this.$apply() },
+    'corporationName': (expressCompany) => { this.expressCompany = expressCompany; this.$apply() }
+  };
+  data = {
+    value:"",
+    expressCompany:"",//  子组件传过来的快递公司名称跟code值
+    expressCompanyCode:"",
+    hideAdd: false, // 是否隐藏添加图片的图标
+    upload: [], // 上传的图(url)
+    chooseImgs: [],
+    imageList:[], // 用户选择上传的图片(缩略图)
+    id:'',
+    orderInfo: {
+      goodsIco: "",
+      colorName:"",
+      goodsName: "",
+      specification: "",
+      buyNumber: '',
+      goodsPrice: ''
+    },
+    orderDetailId:"",
+    pageParams: {
+      id: "",
+      type:"",
+      orderDetailId: '',
+      userExpressCompany:"",
+      userExpressCompanyCode:"",
+      userExpressNum:"",
+      imagesAll:[],
+      imagesStr:"",
+
+      contact:"",
+      contactPhone:"",
+      address:""
+    },
+  };
+  methods = {
+    bindPickerChange: function(e) {
+      let _value = e.detail.value
+      this.reasonIndex = _value
+      this.pageParams.afterSalesReason = this.reasonArray[_value]
+    },
+    submitA() {
+      this.pageParams.userExpressCompany = this.expressCompany
+      this.pageParams.userExpressCompanyCode = this.expressCompanyCode
+      console.log(this.pageParams);
+      this.apiExpressInfoFA(this.apiExpressInfoFA.bind(this))
+    },
+    writeExpressNum(){
+      wepy.navigateTo({ url: `/pages/packageMine/writeExpressNum/index?type=${item.type}` })
+    },
+    bindinput(e) {
+      let value = e.detail.value;
+      let val = value.replace(/[^\w_]/g,'')
+      if(value != val){
+        miniPro.showToast("只能输入数字或者字母！")
+        this.value = '';
+      }else{
+        this.pageParams.userExpressNum = value;
+      }
+    },
+
+  }
+
+  apiChangeAfterSaleInfo(fun) { //服务单详情 买家发货进来 信息
+    apiChangeAfterSaleInfoF(this.id, fun).then((result) => {
+      this.orderInfo = result
+      this.$apply()
+    }).catch((err) => {});
+  }
+  apiExpressInfoFA(fun) {
+    let images = this.pageParams.imagesAll;
+    let imagesStr = "";
+    for(let x in images){
+      let i = images[x];
+      let p = i.path;
+      imagesStr += p + ",";
+    }
+    this.pageParams.imagesStr = imagesStr;
+      apiExpressInfoF(this.pageParams, fun).then((result) => {
+        miniPro.showToast('提交成功');
+        setTimeout(() => {
+          wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+        }, 1000);
+      }).catch((err) => {
+        miniPro.showToast(err);
+      });
+  }
+  wxFileUpload(dataType,fun,fileUrl,fileName,cb){
+    wxFileUploadF(dataType,fun,fileUrl,fileName,cb)
+  }
+  onLoad(option) {
+    this.id = option.id
+    this.orderDetailId = option.orderDetailId //获取商品准备信息
+    this.apiChangeAfterSaleInfo(this.apiChangeAfterSaleInfo.bind(this))
+    this.pageParams.orderDetailId = option.orderDetailId
+    this.pageParams.id = option.id
+    this.pageParams.type = option.type
+  }
+  onShow() {
+    let { addressStr, addressId, name,phone } = wepy.$instance.globalData.addressObj;
+    if (name) {
+      this.orderInfo.userConsignee = name
+    }else{
+      this.orderInfo.userConsignee = this.orderInfo.userConsignee
+    }
+    if (phone) {
+      this.orderInfo.userConsigneePhone = phone
+    }else{
+      this.orderInfo.userConsigneePhone = this.orderInfo.userConsigneePhone
+    }
+    if (addressStr) {
+      this.orderInfo.userConsigneeAddress = addressStr
+    }else{
+      this.orderInfo.userConsigneeAddress = this.orderInfo.userConsigneeAddress
+    }
+  }
+
+  /*****************************************************上传图片模块**************************************/
+  /* ================== 多图上传 ================== */
+  uploadImgs() {
+    const that = this;
+    const {chooseImgs} = this.data;
+    wx.chooseImage({
+      count: 9 - chooseImgs.length, // 默认9
+      sizeType: ['original', 'compressed'], //  可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        const newChooseImgs = res.tempFilePaths;
+        const imgInfo = res.tempFiles;
+        // let type = 2;
+        newChooseImgs.forEach(item => {
+          that.wxFileUpload("2",that.wxFileUpload.bind(that),item,"file",function(res) {
+            console.log("resfawefwaefwae")
+            console.log(res)
+            let d = res.data;
+            let obj = {
+              type:1,
+              path:d.param,
+              url:d.url
+            }
+            that.imageList.push(obj);
+            that.pageParams.imagesAll.push(obj);
+            that.$apply()
+          })
+        });
+
+
+      }
+    })
+  }
+  /* ================== 点击图片放大预览 ================== */
+  previewImg(e) {
+    const contentImg = e.currentTarget.dataset.item.url;
+    wx.previewImage({
+      current: contentImg, //当前图片地址
+      urls: [contentImg], //所有要预览的图片的地址集合 数组形式
+      success: function (res) {
+      },
+      fail: function (res) {
+      },
+      complete: function (res) {
+      },
+    })
+  }
+  /* ================== 点击图片删除 ================== */
+  deleteImg(e) {
+    const index = e.currentTarget.dataset.index;
+    const {upload, imageList} = this.data;
+    upload.splice(index, 1);
+    imageList.splice(index, 1);
+    this.setData({
+      upload,
+      imageList,
+    })
+  }
+  /*****************************************************上传图片模块**************************************/
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

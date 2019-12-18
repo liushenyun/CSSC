@@ -41,10 +41,15 @@ export default class AddressList extends wepy.page {
   };
   methods = {
     checked(item) {
+      console.log(item);
       let _address = `${item.province} ${item.city} ${item.district} ${item.address}`
       let _addressId = item.id
+      let _name = item.name
+      let _phone = item.phone
       wepy.$instance.globalData.addressObj.addressStr = _address
       wepy.$instance.globalData.addressObj.addressId = _addressId
+      wepy.$instance.globalData.addressObj.name = _name
+      wepy.$instance.globalData.addressObj.phone = _phone
       this.$apply()
       setTimeout(() => {
         wepy.navigateBack();
@@ -62,7 +67,9 @@ export default class AddressList extends wepy.page {
       prevPage.addressStr = '45456'
       prevPage.setData({
         addressStr: 'dskjl',
-        addressId: ''
+        addressId: '',
+        name:'',
+        phone:''
       })
       // this.$wxpage = prevPage;
       this.$apply();

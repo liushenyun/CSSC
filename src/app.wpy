@@ -71,6 +71,15 @@ export default class extends wepy.app {
         ]
       },
       {
+        root: 'pages/packageIntegral',
+        pages: [
+          'memberRank/index',
+          'integralRegion/index',
+          'playChengMall/index',
+          'memberIntegralSignIn/index'
+        ]
+      },
+      {
         root: 'pages/packageMine',
         pages: [
           'joinMembers/index',
@@ -96,6 +105,7 @@ export default class extends wepy.app {
           'bulkOrder/index',
           'collection/index',
           'footprint/index',
+          'OrderInfo/index',
           'order/index',
           'paySuccess/index',
           'payFail/index',
@@ -103,7 +113,12 @@ export default class extends wepy.app {
           'afterSalesAction/index',
           'sureOrder/index',
           'posters/index',
-          'withdrawal/index'
+          'withdrawal/index',
+          'serviceProgress/index',
+          'serviceTickeInfo/index',
+          'orderComment/index',
+          'writeExpressNum/index',
+          'afterSaleOrderComment/index'
         ]
       },
       {
@@ -136,7 +151,7 @@ export default class extends wepy.app {
         },
         {
           pagePath: 'pages/recom/index',
-          text: '成+',
+          text: 'C+专区',
           // iconPath: 'https://csmall-1259120104.cos.ap-guangzhou.myqcloud.com/home/1.png',
           iconPath: './images/logo.jpg',
           selectedIconPath: './images/logo_new.png'

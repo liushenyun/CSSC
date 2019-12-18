@@ -63,7 +63,7 @@ page{
               text{
                 position: absolute;
                 right: rpx(30);
-                font-size: rpx(34);
+                font-size: rpx(24);
                 line-height: rpx(20);
                 color: #FFFFFF;
                 margin-top: rpx(15);
@@ -76,7 +76,8 @@ page{
           display: flex;
           justify-content: space-around;
           padding-bottom: rpx(30);
-          border-bottom: rpx(10) solid #F2F2F2;
+          width: 80%;
+          margin-left: rpx(125);
           view{
             image{
               width: rpx(76);
@@ -89,31 +90,34 @@ page{
               line-height: rpx(50);
             }
           }
-          view:nth-of-type(3){
-            view{
-              color: #333333 !important;
-            }
+          .else{
+            color: #333333 !important;
           }
 
         }
       }
       .T2{
+        border-top: rpx(10) solid #F2F2F2;
         padding-bottom: rpx(10);
         image{
           width: rpx(13);
           height: rpx(15);
           text-align: center;
         }
-        text-align: center;
+
         .share-button{
           background:#FF7F00;
           color: #fff;
           border-radius:rpx(31);
           padding: 0;
+          width: rpx(594);
+          height: rpx(78);
         }
         .share-button::after {
           border: 0;
         }
+
+        text-align: center;
         view:nth-of-type(1){
           margin: rpx(15) auto;
           display: flex;
@@ -123,7 +127,7 @@ page{
           color: #FFFFFF;
           font-weight: bold;
           width: rpx(594);
-          height: rpx(78);
+          height: rpx(95);
           border-radius: rpx(40);
           font-size: rpx(30);
         }
@@ -236,5 +240,17 @@ page{
       }
     }
   }
+
+}
+
+.nameText{
+  overflow: hidden; //文本超出 省略号代替
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: rpx(80);//文本超出 省略号代替
+}
+.group-member{
+  float: left;
+  margin-left: -58rpx;
 
 }

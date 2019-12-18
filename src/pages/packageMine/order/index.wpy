@@ -1,7 +1,13 @@
 <template>
   <view class='order-ctner'>
       <view class="order-top-outer">
-        <view class="ot-same ot-a {{currentIndex == index ? 'active':''}}" wx:for='{{topArr}}' wx:key="index" @tap="changeCurA({{index}})">{{item}}</view>
+        <view class="ot-same ot-a {{currentIndex == index ? 'active':''}}"
+              wx:for='{{heardContent}}' wx:key="index" @tap="changeCurA({{index}})">
+          {{item.typeDesc}}
+          <view class="A" wx:if="{{item.number > 0 }}">
+            <view>{{item.number}}</view>
+          </view>
+        </view>
       </view>
       <view class="order-top-con">
         <swiper
@@ -11,21 +17,21 @@
           current="{{currentIndex}}"
           bindchange="intervalChange"
         >
-          <block wx:for="{{topArr}}" wx:key='index'>
-            <swiper-item>
-              <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore">
-                <view class="swiper-div-same">
-                  <!-- <repeat for="{{pageList}}" wx:key="index" wx:for-index="subIndex" wx:for-item="subItem"> -->
-                  <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
-                    <view class="order-com" @tap="toOrderInfo({{subItem}})">
-                      <OrderCom :item="subItem" :OrderComIndex="subIndex"></OrderCom>
-                    </view>
-                  </repeat>
-                  <NoTip wx:if="{{pageList.length == 0}}"></NoTip>
-                </view>
-              </scroll-view>
-
-            </swiper-item>
+          <block wx:for="{{heardContent}}"  wx:for-item="item">
+            <block wx:for="{{item.typeDesc}}" wx:for-item="subTem">
+              <swiper-item>
+                <scroll-view scroll-y="true" style="height: 100%;" @scrolltolower="loadMore" >
+                  <view class="swiper-div-same" wx:if="{{pageList.length > 0}}">
+                    <repeat for="{{pageList}}" key='subIndex' index="subIndex" item="subItem">
+                      <view class="order-com" @tap="toOrderInfo({{subItem}})">
+                        <OrderCom :item="subItem" :OrderComIndex="subIndex"></OrderCom>
+                      </view>
+                    </repeat>
+                  </view>
+                  <NoTip wx:else></NoTip>
+                </scroll-view>
+              </swiper-item>
+            </block>
           </block>
         </swiper>
       </view>
@@ -33,16 +39,18 @@
 </template>
 
 <script>
-import wepy from 'wepy'
+import wepy from 'wepy';
 import '../../../common/js/authProcess.js'
 import NoTip from '@/components/OrderNoDataTip/index'
 import OrderCom from '@/components/OrderGoodCom/index'
 import miniPro from '@/utils/wepy-pro.js'
+import UrlNavigate from '../../../utils/wepyNavigate';
 import {
   apiOrderFindPageF,
-  apiCancelOrderF, // 取消订单
+  apiCancelOrderF, //  取消订单
   apiConfirmOrderF, // 确认收货
-  apiRefundF // 退款
+  apiGetHearderF, //头部标题以及订单提醒
+  apiRemindDeliverGoodsF //提醒商家发货
 } from '../../../services/mine/index'
 export default class Order extends wepy.page {
   config = {
@@ -53,50 +61,44 @@ export default class Order extends wepy.page {
     OrderCom: OrderCom
   };
   data = {
-    topArr: ['全部', '待付款', '待发货', '待收货', '待评价'],
     currentIndex: 0,
     indicatorDots: false,
     autoplay: false,
     duration: 100,
-    orderStatusObj: [0, 1, 2, 4, 5], // 状态（0：全部订单 1：待支付 2：待发货 4：待收货 5：待评论）
+    heardContent:[],
+    topArr: [],
+    statusObj: [], // 状态（-1：全部订单 0：待支付 4：待收货 5：已完成 3：已取消）
     pageList: [],
     cancelOrderId: '',
     orderActionId: '',
     confirmOrderId: '',
+    orderChildId:'',
     btnClickCurrenIndex: -1,
     pageParams: {
       page: 0,
+      offset:0,
       limit: 10,
-      orderStatus: 0,
+      status: 0,
       hasMore:false
     },
     currentItem: ''
   };
   events = {
-    'order-btn-event': (item, index) => {
-      this.currentItem = item;
-      let groupPurchaseActivityId = item.groupPurchaseActivityId;
-      this.btnClickCurrenIndex = index
-      let _action = item.action
-      if (_action == "1b") { // 付款
-        if(groupPurchaseActivityId){
-          wepy.navigateTo({ url: `/pages/groupBuy/ConfirmOrder/index?orderId=${item.parentId}` });
-        }else{
-          wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
-        }
-      } else if (_action == "1a") { // 取消订单
-        this.cancelOrderId = item.id
-        this.apiCancelOrderFA(this.apiCancelOrderFA.bind(this))
-      } else if (_action == "2a") { // 退款
-        this.orderActionId = item.id
-        this.apiRefundFA(this.apiRefundFA.bind(this))
-      } else if (_action == '5b') {
-        // wepy.navigateTo({ url: `/pages/packageMine/sureOrder/index?orderId=${item.parentId}` });
-      } else if (_action == '4c') {
-        this.confirmOrderId = item.id
+    'statusId':(btnItem,item,goodsId) => {
+      if (btnItem.key == 6) {  //确认收货
+        this.confirmOrderId = item.orderChildId
         this.apiConfirmOrderFA(this.apiConfirmOrderFA.bind(this))
-      } else if (_action == '4b' || _action == '2b') { // 查看物流
-        wepy.navigateTo({ url: `/pages/packageMine/logisticsInfo/index?id=${item.id}` });
+      }else if(btnItem.key == 4){   //查看物流
+        UrlNavigate('/pages/packageMine/logisticsInfo/index',{id:item.orderChildId});
+      }else if(btnItem.key == 1){ //立即支付
+        UrlNavigate('/pages/packageMine/sureOrder/index',{orderId:item.orderMasterId,prepareType:3});
+      }else if(btnItem.key == 2){ //评价
+        UrlNavigate('/pages/packageMine/orderComment/index',{orderChildId:item.orderChildId});
+      }else if(btnItem.key == 5){ //提醒商家发货
+        this.orderChildId = item.orderChildId
+        this.apiRemindDeliverGoodsFA(this.apiRemindDeliverGoodsFA.bind(this))
+      }else if(btnItem.key == 3){  //再次购买
+        miniPro.toGoodsDetail(goodsId, 0);
       }
     }
   }
@@ -106,8 +108,10 @@ export default class Order extends wepy.page {
     },
     intervalChange(e) {
       this.currentIndex = e.detail.current
-      this.pageParams.orderStatus = this.orderStatusObj[e.detail.current]
+      this.pageParams.status = this.statusObj[e.detail.current]
       this.pageParams.page = 0
+      this.pageParams.offset = 0
+      this.pageParams.limit = 10
       this.pageParams.hasMore = false
       this.pageList = []
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
@@ -117,12 +121,18 @@ export default class Order extends wepy.page {
     },
     loadMore() { // 加载更多
       if (!this.pageParams.hasMore) return
-      this.pageParams.page += 1
+      let offset = this.pageParams.offset;
+      if(offset == 0){
+        offset = this.pageParams.limit;
+      }else{
+        offset = offset + this.pageParams.limit;
+      }
+      this.pageParams.offset = offset;
       this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
     },
     toOrderInfo (e){
-      console.log(e);
-      if (e.orderStatus == 3 || e.orderStatus == 2){
+      wepy.navigateTo({ url: `/pages/packageMine/OrderInfo/index?orderMasterId=${e.orderMasterId}` });
+      if (e.status == 3 || e.status == 2){  //判断是否是团购订单
         let groupPurchaseActivityId = e.groupPurchaseActivityId;
         if (groupPurchaseActivityId){
           wepy.navigateTo({ url: `/pages/groupBuy/OrderInfo/index?orderChildId=${e.id}` });
@@ -130,11 +140,31 @@ export default class Order extends wepy.page {
       }
     }
   };
+
+  apiGetHearderFA(fun) { //获取头部标题以及订单提醒
+    let t = this
+    let newStatus = [];
+    apiGetHearderF({
+    }, fun).then((result) => {
+      t.heardContent = result.data;
+      let statusArr = result.data;
+      for(let i in statusArr){
+        let arr = statusArr[i].status;
+        newStatus.push(arr)
+      }
+      t.statusObj = newStatus;
+      // t.pageParams.status = newStatus[0];//默认status状态取返回的数组第一个
+      t.pageParams.status = this.statusObj[this.currentIndex]
+      this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this)) //订单商品列表
+      this.$apply()
+    }).catch((err) => {
+    });
+  }
   apiOrderFindPageFA(fun) {
     apiOrderFindPageF({
-      page: this.pageParams.page,
+      offset: this.pageParams.offset,
       limit:  this.pageParams.limit,
-      orderStatus:  this.pageParams.orderStatus
+      status:  this.pageParams.status
     }, fun).then((result) => {
       let { rows, last, pageNumber } = result
       this.pageParams.page = pageNumber
@@ -142,22 +172,20 @@ export default class Order extends wepy.page {
       this.pageList = this.pageList.concat(rows)
       this.$apply()
     }).catch((err) => {
-
     });
   }
-
-  apiRefundFA(fun) {
-    apiRefundF(this.orderActionId, fun).then((result) => {
-      miniPro.showToast('退款成功')
+  apiRemindDeliverGoodsFA(fun) {  //提醒商家发货
+    let orderChildId = this.orderChildId
+    let t = this
+    apiRemindDeliverGoodsF(orderChildId, fun).then((result) => {
+      miniPro.showToast('提醒商家发货成功')
       setTimeout(() => {
-        this.pageList[this.btnClickCurrenIndex].orderStatus = 3
-        this.$apply()
+        t.pageList = [];
+        this.apiGetHearderFA(this.apiGetHearderFA.bind(this))
       }, 1000);
     }).catch((err) => {
-
     });
   }
-
   apiCancelOrderFA(fun) {
     apiCancelOrderF(this.cancelOrderId, fun).then((result) => {
     }).catch((err) => {
@@ -165,23 +193,25 @@ export default class Order extends wepy.page {
     });
   }
 
-  apiConfirmOrderFA(fun) {
+  apiConfirmOrderFA(fun) {  //确认收货
+    let  t = this
     apiConfirmOrderF(this.confirmOrderId, fun).then((result) => {
-      miniPro.showToast('确认成功')
+      miniPro.showToast('确认收货成功')
       setTimeout(() => {
-        this.pageList.splice(this.btnClickCurrenIndex, 1)
+        t.pageParams.hasMore = false
+        t.pageList = []
+        this.apiGetHearderFA(this.apiGetHearderFA.bind(this))
+        // this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this));
         this.$apply()
       }, 1000)
     }).catch((err) => {
 
     });
   }
-
-
   onLoad(option) {
     this.currentIndex = option.current || 0
-    this.pageParams.orderStatus = this.orderStatusObj[this.currentIndex]
-    this.apiOrderFindPageFA(this.apiOrderFindPageFA.bind(this))
+    this.apiGetHearderFA(this.apiGetHearderFA.bind(this)) //表头内容标题和提醒
+
   }
 }
 </script>

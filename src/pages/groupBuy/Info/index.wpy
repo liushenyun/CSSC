@@ -30,6 +30,7 @@
           <view class="right-index"  wx:if="{{ day !==0 && hours !== 0 }}">
             <view class="rightText">
               <text>距离结束仅剩</text>
+
               <br>
               <text>{{timeText}}</text>
             </view>
@@ -39,7 +40,7 @@
 
         <view class="tuan-des-outer">
           <text>【{{info.groupNumber}}人团】{{info.goodsName}}</text>
-            <text>{{info.groupPrice}}元/个</text>
+            <text>{{info.groupPrice}}元/{{info.unit}}</text>
           <view class="already-number">
             <text>已团{{info.goodsSales}}件</text>
           </view>
@@ -62,7 +63,7 @@
                   <view>差{{item.lackNumber}}人成团</view>
                   <veiw class="time-content">
                     <text>剩余时间：</text>
-                    <text>{{timeText}}</text>
+                    <text class="timeColor">{{timeText}}</text>
                   </veiw>
                 </view>
                 <image src="../../../images/gocan.png" alt=""  @tap='goDelegation({{item}})'></image>

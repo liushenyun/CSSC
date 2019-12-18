@@ -1,0 +1,217 @@
+<template>
+  <view class='logistics-ctner'>
+      <view class="logis-inner">
+        <view class="cat-item-ctner">
+          <view class='goods-des'>
+            <text>售后评分</text>
+          </view>
+          <view class='goods-des' style="margin-bottom: 20rpx">
+            <view class='itembox'>
+              <view wx:for="{{imgs}}" wx:key="{{item.id}}" @tap="select" data-index="{{item.id}}">
+                <image class="star" src="{{item.id>starId?src2:src1}}"></image>
+              </view>
+            </view>
+          </view>
+          <view class="goods-textarea">
+            <textarea placeholder="请输入您的评论" @input="bindInput"/>
+          </view>
+          <view class="upload-session">
+            <view class="upload-text">添加视频/图片 (0/9)</view>
+            <view class="multipleImg">  <!-- 上传图片start -->
+              <view class='upload' wx:for="{{imageList}}" wx:key>
+                <!--显示缩略图-->
+                <image src="{{item.url}}" class="addImg" mode="aspectFill" bindtap="previewImg" data-index='{{index}}' data-item='{{item}}'/>
+                <!--删除-->
+                <image src="../../../images/del.png" class="deleteImg" mode="aspectFill" bindtap="deleteImg" data-index='{{index}}' data-item='{{item}}'/>
+              </view>
+              <!--上传图片-->
+              <view class='uploadDiv' bindtap="uploadImgs">
+                <image src='../../../images/photo.png' class="addImg" mode="aspectFill"/>
+                <view>照片视频</view>
+              </view>
+            </view>    <!-- 上传图片end -->
+          </view>
+        </view>
+      </view>
+  </view>
+
+  <view class="return-btn-outer">
+    <button hover-class='icx-click-hover' @tap='submitA' class="icx-btn-same-sure">提交</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {wxFileUploadF,apiAfterSaleGoodsCommentF} from  '../../../services/mine'
+import miniPro from '../../../utils/wepy-pro'
+
+export default class LogisticsInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '售后评价'
+  };
+  components = {
+    // Grade:Grade
+  };
+  data = {
+    id:"",
+    evaluate:1,
+    evaluateDesc:"",
+    imgs: [{
+      id: 1
+    }, {
+      id: 2
+    }, {
+      id: 3
+    }, {
+      id: 4
+    }, {
+      id: 5
+    }],
+    starId: 0,      //src1 已点亮  src2未点亮
+    src1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAiCAYAAADVhWD8AAAEbElEQVRYhZ2XTYhWVRjH/8/bWzQlahQURRjZzAhWExk2UkFCiQS5qyACQdqIi6BahEFR0NdCJiJIGknXlRBEUIlYBKYglm0MF4226ItqlRZ1zv/f4r333PN135nxhct7z3PPPc/vPJ/32O8Hn8CiPwkQmmt0b6P/e0G9DGEDpDMgXod00NjMIwAq3BsbmTSSU1j9zEdBzfAiIQBpFYivglLpLiM+hHQHiFMxjLF5hy1EJI9+gx6KCEThxbAzL8BjNyjAN8+8Grnm4AU4wTw7uSPgGrkjrLkfA6PUvI0Si3YDL4C6Gl7Pmk8g2muzeW60BiiBiOE8R1f0G3YQmTuIzDrdv0kvghp0po8tCIB6C9Rs+zzZDJN5GUysUIC1CnKIdmHhclC7kMRBE5ydVe8GNWPUqRSiDeIodhIYRhAV5RFEu8grEAZhcUULp7t+E9TmXohKAA+TNBwHMfq/CtTTIzf2QrTX/SBmjTpWhei1TMUtYeE4JYUXCgjlEDGc5uCxKRoXc1IYrxJiNF4F6npIN4FYY9QUiKfigpWaP4Fox7OgjsLrtBELoBZA/QjqnFE/w+O/GMb+OPBYC/EIpNtBTEO6FcQNoFaOLVj9EKnrfCWLqF/gtQDqqBFvX7n/yFn7871HV4A6BmJ9UjWVL7yENK1ZzI+Z00H+C2rjEF5zoNZ3buqBKOAE82MgomqdyyyCbGSXGbV/CKcns4KVZtNilvBjUtePAfW5uzUzhNdfRq0o2kDFQktRmCjw+Xo1a4U5J4bmuQPE+0vy/zIV1jbVuajY+M4BnD6A405zajopQ3OzpsOWHbcboxmHLlyVMcjgFLp4NGfrxCdfnxw2Zt4LyoGYT3fQs+sQwLV4St+rWTsbb5349Phno6Ln2C64D5QZ9S6yAC0XW0ThuHROx1smPj9+qKvALvHbPKhLQL0TFqsXrKXWjwpEmP+wUQFk1Chd8eJeoxyo+YtWGLmvp1I/AOIwpKw3OdZMuA/EWng9t4SCtUjKRxACQD0O6nB4lsKUFbJZ7IdehWXBWsQSSb36KYFL3cT6Yh739NWPZTXJfK70oBFfBnlumZpCUOuWUbD6IVRYaCr5Cigtky3mNQQxXaRzOy8/MeSuLFoLYtl0cqirWSarH2tBra5lUi2z6hYqPtLb+0mTrgBxoZpNlfoxubwelUHEH+nlN9IEpCkQ3xYwaZ0J9WNdHWJMrCibl3zKRjKFuClgBj1N8b5UprIBhlOhDpnXq+b4W3ayRHLiZPSMmhnFZprag6Ize8EcZwqI5ChLwOkbc9pmXlvg9Ty8bobTbnj9gzCXKUhwLSZDUaxZJvk88DrSKg0Q3bzv4bTDvO6E18dwbHd8HtRr5nWLee2BlwtlIiqSjSu/CEej6Gfnt22q1YqVRpwBdW0UK79CesOIuaKGtPESjSGtAfESpO3htCoAwklIG9BwXHr2dAdz4aHZvtS9BsIuUNeB+s6IA6D+zg51NYgucEfj2yBsh3AjpBMQ9gBdV4ph/gdl6achYslwgwAAAABJRU5ErkJggg==',  //已点击
+    src2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAiCAYAAADVhWD8AAACIklEQVRYhcXYT4hNYRjH8c+9TUIyZCMSMeNPZITGFIpismFnY0Pi1DSLKVmNopQ/G5GkuUwNa6ysNIlSk8U0YkMWGOXPWIoIC4tzr67bec/cc6dz769Onfd53+d5v533nPd5n1MolUpmoB04iy14jYu4lyVAFEX/7ttmANKOJ1XtrbiLTXjeSMDiDGAGA/bLjQZsFGYRTgb6dqO7mTBnpvG92kjQRmBmo3+aMdvQ1QyYc3X6XckaOCvMQpyoc+wu9OQJczrj+ExfVto+044lWIHlWI2BjDA9GMNLvC1f7zGJT/hdPbhQtQMfxEaswQYsxfyMk2fR5zLcGK5FUfSuUCqV5uEp1uc48XT6he6ieF1bCQKzMFLEsRaDVNRVxLdWU5Q1XsTRVlOU1VfEHfS1GGRfFEUTlU1vCMdbCPKA/ze9YRRwo4kgvVEUjVYatengpuYt2X6MVhuS0sEQ/ojB8tIePKw1hhLlsPhwnYcOJYGkwcCbfFh8DHWkwWzPAQT2hjrSYNbmAEJ8FElUCKZNfJTIQ8G4IZhVWJAPi07MzQLTmRMIzBFYqhBMXu9LRZlgdmYIPIrz+JLBJ7GmCsHUU4A9wwH04hRWiuvvn3X4Jr4GIZhHKYFeic9Am3G/yv4dF9CBS+KUEtLjLDADmKqxTYkLuHUYSZnog/inQAduJ/RP4HqSY6hu+iouV/qxGC9wCz9SIGo1iSPip3QYyzBebifqL3RwWdp5zNMdAAAAAElFTkSuQmCC", //未点击
+//以上是评分
+    selected:"",
+    hideAdd: false, //  是否隐藏添加图片的图标
+    upload: [], // 上传的图(url)
+    chooseImgs: [],
+    imageList:[],// 用户选择上传的图片(缩略图)
+    pageParams:{
+      id:"",//
+      imagesAll:[],
+      images:[],
+    }
+  };
+  events = {
+
+  }
+  methods = {
+    submitA(){
+      this.apiAfterSaleGoodsCommentFA(this.apiAfterSaleGoodsCommentFA.bind(this))
+    },
+    bindInput(e) {
+      console.log(e.detail.value)
+      this.evaluateDesc = e.detail.value
+    },
+    select(e) {
+      console.log(e)
+      this.starId = e.currentTarget.dataset.index; //点亮几颗星星的下标索引值
+      let evaluate = this.starId
+      this.evaluate = evaluate
+      this.$apply();
+    }
+  };
+  apiAfterSaleGoodsCommentFA(fun) { //提交评价
+    let param = {}
+    param.id = this.id;
+    param.evaluate = this.evaluate;
+    param.evaluateDesc = this.evaluateDesc
+    let images = this.pageParams.imagesAll;
+    let imagesStr = "";
+    for(let x in images){
+      let i = images[x];
+      let p = i.path;
+      imagesStr += p + ",";
+    }
+    param.evaluateImage = imagesStr;
+    console.log("param",param)
+    apiAfterSaleGoodsCommentF(param, fun).then((result) => {
+      miniPro.showToast('评价成功');
+      setTimeout(() => {
+        wepy.navigateTo({ url: '/pages/packageMine/afterSales/index' });
+      }, 1000);
+    }).catch((err) => {
+      miniPro.showToast(err);
+    });
+  }
+  wxFileUpload(dataType,fun,fileUrl,fileName,cb){
+    wxFileUploadF(dataType,fun,fileUrl,fileName,cb)
+  }
+  onLoad(option) {
+    this.id = option.id
+  }
+
+  /*****************************************************上传图片模块**************************************/
+  /* ================== 多图上传 ================== */
+  uploadImgs() {
+    const that = this;
+    const {chooseImgs} = this.data;
+    wx.chooseImage({
+      count: 9 - chooseImgs.length, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        const newChooseImgs = res.tempFilePaths;
+        const imgInfo = res.tempFiles;
+        // 判断选择的图片是否符合要求
+        for (let i = 0; i < imgInfo.length; i++) {
+          console.log("尺寸", imgInfo[i].size);
+          // 判断图片尺寸
+          if (imgInfo[i].size / 1024 / 1024 >= 10) {
+            miniPro.showToast("图片超过10MB啦")
+            return
+          }
+          // 判断图片格式
+          const imgSplit = imgInfo[i].path.split(".");
+          const imgSLen = imgSplit.length;
+          if (["jpg", "jpeg", "png"].includes(imgSplit[imgSLen - 1])) {
+            console.log("格式正确");
+          } else {
+            miniPro.showToast("请选择正确的图片格式上传")
+            return
+          }
+        }
+        // let type = 2;
+        newChooseImgs.forEach(item => {
+          that.wxFileUpload("2",that.wxFileUpload.bind(that),item,"file",function(res) {
+            console.log("res")
+            console.log(res)
+            let d = res.data;
+            let obj = {
+              type:1,
+              path:d.param,
+              url:d.url
+            }
+            that.imageList.push(obj);
+            that.pageParams.imagesAll.push(obj);
+            that.$apply()
+          })
+        });
+
+
+      }
+    })
+  }
+  /* ================== 点击图片放大预览 ================== */
+  previewImg(e) {
+    const contentImg = e.currentTarget.dataset.item.url;
+    // console.log("点击图片放大预览", contentImg);
+    wx.previewImage({
+      current: contentImg, //当前图片地址
+      urls: [contentImg], //所有要预览的图片的地址集合 数组形式
+      success: function (res) {
+      },
+      fail: function (res) {
+      },
+      complete: function (res) {
+      },
+    })
+  }
+  /* ================== 点击图片删除 ================== */
+  deleteImg(e) {
+    const index = e.currentTarget.dataset.index;
+    const {upload, imageList} = this.data;
+    upload.splice(index, 1);
+    imageList.splice(index, 1);
+    // console.log("点击图片删除", index);
+    this.setData({
+      upload,
+      imageList,
+    })
+  }
+  /*****************************************************上传图片模块**************************************/
+}
+</script>
+<style lang="scss" scoped>
+@import './index'
+</style>

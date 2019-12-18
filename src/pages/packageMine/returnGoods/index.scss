@@ -2,11 +2,52 @@
 @import '../../../common/css/const.scss';
 @import '../../../common/css/mixin.scss';
 page{
-    height: 100%;
 }
 .return-goods-ctner {
-    height: 100%;
     background: #EEE;
+  .I2{
+    background:#FFFFFF;
+    height: rpx(150);
+    .T1-one-div{
+      height: 92%;
+      border-bottom: rpx(2) solid #FAFAFA;
+      padding: 0 rpx(45);
+      view:nth-of-type(1){
+        image{
+          height: rpx(124);
+          width: rpx(124) !important;
+          margin-right: rpx(10);
+          float: left;
+          border-radius: rpx(10);
+        }
+        .center-text{
+          display: flex;
+          justify-content: space-between;
+          view:nth-of-type(1){
+            color: #333333;
+            font-size: rpx(24);
+            margin-bottom: rpx(15);
+
+          }
+          view:nth-of-type(2){
+            color: #666666;
+            font-size: rpx(18);
+
+          }
+
+        }
+      }
+
+    }
+
+  }
+  .T1-one-div-bottom{
+    background:#FFFFFF;
+    height: rpx(60);
+    display: flex;
+    padding: 0 rpx(45);
+    justify-content: space-between;
+  }
     .return-goods-outer {
         min-height: rpx(100);
         background: #FFF;
@@ -38,18 +79,20 @@ page{
                 display: flex;
                 align-items: center;
                 position: relative;
+                //image:nth-of-type(1) {
+                //    width: rpx(28);
+                //    height: rpx(24);
+                //    margin-right: rpx(10);
+                //}
                 image:nth-of-type(1) {
-                    width: rpx(28);
-                    height: rpx(24);
-                    margin-right: rpx(10);
-                }
-                image:nth-of-type(2) {
                     width: rpx(12);
                     height: rpx(18);
                 }
                 text:nth-of-type(1) {
-                    font-size: $size-one;
+                    font-size: rpx(24);
+                    color: #333333;
                     font-weight: bolder;
+                    margin-left: rpx(20);
                 }
                 .picker-outer {
                     flex: 1;
@@ -65,13 +108,13 @@ page{
                 }
             }
         }
-        
+
         .return-des-outer {
             min-height: rpx(100);
             background: #FFF;
             margin-top: rpx(16);
             border-radius: rpx(10);
-            padding: rpx(36) rpx(30);
+            padding: rpx(36) rpx(30) 0 rpx(30);
             view {
                 font-weight:bolder;
                 line-height: rpx(28);
@@ -82,15 +125,226 @@ page{
                 width: 100%;
                 box-sizing: border-box;
             }
+
+          .multipleImg {
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            .upload {
+              position: relative;
+              width:rpx(158);
+              height:rpx(158);
+              background:rgba(255,255,255,1);
+              box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+              border-radius:rpx(10);
+              margin: rpx(25) rpx(20) rpx(15) 0;
+              .addImg {
+                width: 158rpx;
+                height: 158rpx;
+              }
+              .deleteImg {
+                width: 30rpx;
+                height: 30rpx;
+                position: absolute;
+                top: rpx(-12);
+                right: rpx(-12);
+              }
+            }
+            .uploadDiv{
+              position: relative;
+              width:rpx(158);
+              height:rpx(158);
+              background:rgba(255,255,255,1);
+              box-shadow:0 rpx(2) rpx(32) 0 rgba(215,215,215,0.49);
+              border-radius:rpx(10);
+              padding: rpx(50);
+              margin-top: rpx(25);
+              image{
+                width: rpx(63);
+                height: rpx(55);
+              }
+              view{
+                font-size: rpx(18);
+                width: rpx(75);
+                color:rgba(153,153,153,1);
+              }
+            }
+          }
+          .img-text{
+            color: #FA575B;
+            font-weight: bold;
+            padding: 0 0 rpx(20) 0;
+            font-size: rpx(20);
+            border-bottom: rpx(3) solid #F3F3F3;
+          }
+          .return-text{
+            display: flex;
+            justify-content: space-between;
+            view:nth-of-type(1){
+              color: #666666;
+            }
+            view:nth-of-type(2){
+              color: #000000;
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+              image{
+                width: rpx(45);
+                height: rpx(36);
+                margin-right: rpx(10);
+              }
+            }
+          }
+
+
+
+        }
+        .return-des-bottom{
+          background: #FFF;
+          margin-top: rpx(-4);
+          border-radius: rpx(10);
+          .bottom-two,.bottom-three,.bottom-four{
+            color: #333333;
+            padding:0 rpx(15);
+            margin-bottom: rpx(25);
+          }
+          .bottom-one{
+            padding:rpx(40) 0 rpx(35) rpx(15);
+            border-bottom: rpx(4) solid #FAFAFA;
+            font-weight: bold;
+            color: #000000;
+          }
+          .bottom-two{
+            display: flex;
+            justify-content: space-between;
+            margin-top: rpx(15);
+            image{
+              width: rpx(11);
+              height: rpx(18);
+            }
+            #address-img{
+              image{
+                width: rpx(22);
+                height: rpx(28);
+              }
+            }
+          }
+          .bottom-three{
+            padding-bottom: rpx(20);
+            image{
+              border-radius: rpx(10);
+              width: rpx(174);
+              height: rpx(174);
+            }
+          }
+          #address{
+            display: flex;
+            margin-top: rpx(-10);
+            padding-bottom: rpx(15);
+
+            view:nth-of-type(1){
+            }
+            view:nth-of-type(2){
+              flex: 1;
+            }
+          }
+
+        }
+        .return-end-text{
+          color: #FF7F00;
+          font-size: rpx(20);
+          text-align: center;
+          letter-spacing: rpx(3);
+          margin: rpx(10) auto;
         }
         .return-btn-outer {
-            margin-top: rpx(60);
+          margin-top: rpx(15);
             button {
-                width: 70%;
-                margin-left: 15%;
+              font-weight: bold;
+              border-radius: rpx(30);
+                width: 50%;
+                text-align: center;
             }
         }
 
     }
-
 }
+/* 自定义模态框 start */
+.btn-div{
+  view:nth-of-type(1){
+    line-height: rpx(28);
+    width: rpx(630);
+    padding: rpx(10) 0;
+    .name{
+      border: rpx(3) solid #EEE;
+      width: 100%;
+      font-size: rpx(24);
+    }
+  }
+}
+.modal-mask {  //阴影
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 2147483647;
+  color: #fff;
+}
+.modal-content {  //弹框
+  position: fixed;
+  top: 55%;
+  left: 0;
+  z-index: 2147483647;
+  width: 608rpx;
+  height: 25%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background: #fff;
+  margin: -180rpx 70rpx;
+  border-radius: 10rpx;
+  .content-index-bottom{
+    min-height: rpx(100);
+    width: 608rpx;
+    margin-left: rpx(5);
+    padding: rpx(50) rpx(15) rpx(20) rpx(15);
+    .time-content{
+      display: flex;
+      align-items: center;
+      margin-bottom: rpx(40);
+      input{
+        flex: 1;
+        border-bottom: rpx(2) solid #EEE;
+      }
+    }
+    .btn-bottom{
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      width: 95%;
+      view{
+        width: 50%;
+        margin: rpx(15);
+      }
+    }
+  }
+
+  .bottom{
+    padding-bottom:15rpx;
+    text-align: center;
+    color: #666666;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    background: white;
+    view{
+      overflow: hidden;
+    }
+  }
+}
+/* 自定义模态框 end */
+
+

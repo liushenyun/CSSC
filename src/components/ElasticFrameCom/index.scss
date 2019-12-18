@@ -1,0 +1,121 @@
+@import '../../common/css/rpx.scss';
+@import '../../common/css/const.scss';
+@import '../../common/css/mixin.scss';
+/* 自定义模态框 start */
+.btn-div{
+  view:nth-of-type(1){
+    line-height: rpx(28);
+    width: rpx(630);
+    padding: rpx(10) 0;
+    overflow: hidden;
+    .name{
+      border: rpx(3) solid #EEE;
+        width: 100%;
+      font-size: rpx(24);
+    }
+  }
+
+}
+.modal-mask {  //阴影
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 2147483647;
+  color: #fff;
+}
+.modal-content {  //弹框
+  position: fixed;
+  top: 30%;
+  left: 0;
+  z-index: 2147483647;
+  width: 608rpx;
+  height: 62%;
+  overflow: scroll;
+  overflow-x: hidden;
+  background: #fff;
+  margin: -180rpx 70rpx;
+  border-radius: 10rpx;
+  .heard{
+    width: rpx(500);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding:rpx(20);
+    top: 0;
+    position: absolute;
+    z-index: 2147483648;
+    background: white;
+    input{
+      border-bottom:rpx(3) solid #EEE;
+      width: rpx(350);
+      margin-top:rpx(20)
+    }
+    view{
+      background: #EEE;
+      border: rpx(3) solid #EEE;
+      width: rpx(200);
+      height: rpx(70);
+      text-align: center;
+      border-radius: rpx(10);
+      margin-left: rpx(10);
+      padding: rpx(17);
+      font-size: rpx(26);
+      font-weight: bold;
+      color: #666666;
+    }
+  }
+  scroll-view{
+    margin-top: rpx(85);
+  }
+  .content-index-bottom{
+    min-height: rpx(100);
+    display: flex;
+    border-bottom: 1px solid #E8E8E8;
+    width: 608rpx;
+    margin-left: rpx(5);
+    .V4{
+      .right-content{
+        width: 100%;
+        height: 100%;
+        .time-content{
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          text{
+            color:#666666;
+            font-weight: bold;
+            font-size: rpx(35);
+          }
+
+        }
+      }
+      image{
+        margin-right: rpx(20);
+      }
+    }
+  }
+
+  .bottom{
+    padding-bottom:15rpx;
+    text-align: center;
+    color: #666666;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    background: white;
+    view{
+      overflow: hidden;
+    }
+  }
+}
+
+/* 自定义模态框 end */
+

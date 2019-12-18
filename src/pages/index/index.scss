@@ -4,6 +4,45 @@
 page,
 .index-ctner{
     height: 100%;
+  .ix-add-text{
+    width: 100%;
+    height: rpx(30);
+    display: flex;
+    justify-content: flex-end;
+    .animation{
+      position: fixed;
+      z-index: 2147483647;
+      top: 0;
+      animation: move 3s ease-in-out infinite;
+      width: 65%;
+      font-size: rpx(18);
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmIAAABNCAYAAAAFMwgsAAADtklEQVR4nO3du4tcZQCH4XcnOgEbK8FLEBJT2kRjYWEjYmWRQNTGyspCEQUNgp0gqIWNWliJlRJNIoIgFtoKXsA6goXiH2CaRNZYTEY3Eq+ZM9+aeR7YZjl851e+MIdzti5cuBAATOGXvXes4pj91YXquys5ZHbuq1VsgZWajR4AAH9hf/VZ9Ul189gpsHpCDIDdahlht1YHq4+rG0YOglUTYgDsRjsjbOn26qPq+hGDYApCDIDd5nIRtnS4+rC6bp2DYCpCDIDd5EB/HmFL91Snqvk6BsGUhBgAu8WB6tP+OsKW7q/eqfZMuggmJsQA2A3+TYQtHa3eqramGATrIMQAGO2/RNjSI9UbiTH+p4QYACNdSYQtPVa9tJo5sF5CDIBRVhFhS89Uz6/gHFgrIQbACKuMsKUXqidXeB5MTogBsG5TRNjSq9WjE5wLkxBiAKzTlBFWi4f236wenuh8WCkhBsC6TB1hS3uqt6sHJr4PXDEhBsA6rCvClubVu9W9a7of/Cdb2/NDozcAcHVbd4TtdLa6r/p8wL3hb/1ZiM2rIxf/7q5uzje9AAD+qbPV99XXLb6N+kF1/o8XXS7EjlYvVwcnHggAsCnOVMerkzv/ufMZsT0t3kx8MhEGALBKB6v3W7TWbx+rv2bHBS9Wz655FADAJlm21vH6/afJY9WJUYsAADbMg9V7W9vzQ/Pq22rf4EEAAJvih+rArEWRiTAAgPW5pXpo1uIVFQAArNeRWXXX6BUAABvo8Ky6cfQKAIANdNOs2jt6BQDABpr76DcAwCBCDABgECEGADCIEAMAGESIAQAMIsQAAAYRYgAAgwgxAIBBhBgAwCBCDABgECEGADCIEAMAGESIAQAMIsQAAAYRYgAAgwgxAIBBhBgAwCBCDABgECEGADCIEAMAGESIAQAMIsQAAAYRYgAAgwgxAIBBhBgAwCBCDABgECEGADCIEAMAGESIAQAMIsQAAAYRYgAAgwgxAIBBhBgAwCBCDABgECEGADCIEAMAGESIAQAMIsQAAAYRYgAAg8yqn0aPAADYQOdn1Y+jVwAAbKAfZ9U3o1cAAGygL2bV6dErAAA20Omt7fmhefVttW/0GgCADfFDddusOl89PXgMAMAmeao6t3x9xYnqlYFjAAA2xSst2uuS94g9V702ZA4AwGZ4vUVzVZeG2Hb1RHWsOrPmUQAAV7Mz1YPV4y2aq6qt7fmhy108v3jx0erO6pbq2uk3AgBcFX5u8UD+l9WpFj9Fnv/jRb8CfUBgADw4rEUAAAAASUVORK5CYII=");
+      height: rpx(40);
+      background-size: 100% 100%;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+      padding: rpx(10) rpx(15);
+      border-radius: rpx(10);
+    }
+    @keyframes move {
+      0%{
+        right: rpx(30);
+      }
+      20%{
+        right: rpx(50);
+      }
+      40%{
+        right: rpx(30);
+      }
+      60%{
+        right: rpx(50);
+      }
+      100%{
+        right: rpx(20);
+      }
+    }
+  }
     .ix-input-wrap{
         position: relative;
         padding: rpx(12) rpx(45);
@@ -166,3 +205,67 @@ page,
         }
     }
 }
+/* 自定义模态框 start */
+.modal-mask {  //阴影
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.6;
+  overflow: hidden;
+  z-index: 2147483647;
+  color: #fff;
+}
+.modal-content {  //弹框
+  position: fixed;
+  top: 30%;
+  left: 0;
+  z-index: 2147483647;
+  //width: 70%;
+  //height: 50%;
+  width: rpx(558);
+  height: rpx(654);
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin: -10% 15%;
+  border-radius: 10rpx;
+  .heard{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    view:nth-of-type(1){
+      width: 100%;
+      height: 100%;
+      image{
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+
+  }
+
+}
+.cancel{
+  position: fixed;
+  top: 82%;
+  left: 0;
+  z-index: 2147483647;
+  width: 70%;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: -10% 15%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  image{
+    width: rpx(60);
+    height: rpx(60);
+  }
+}
+/* 自定义模态框 end */

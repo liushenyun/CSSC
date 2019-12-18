@@ -186,7 +186,7 @@ export default class AddressEdit extends wepy.page {
       apiAddressSetDefaultF('20190602182635650747', fun).then((result) => {
       }).catch(() => { });
     }
-  
+
   bindcolumnchange(e) {
     const column = e.detail.column
     const index = e.detail.value
