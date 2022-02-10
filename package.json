@@ -37,7 +37,7 @@
     "eslint-plugin-standard": "^2.0.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "weapp-qrcode": "^1.0.0",
     "wepy-compiler-babel": "^1.5.1",
